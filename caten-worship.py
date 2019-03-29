@@ -22,9 +22,5 @@ def index():
 def list_all_songs():
     return render_template("all_songs.html", songs=db)
 
-@app.route("/vartest")
-def varTest():
-    return str(os.environ.get("SECRET_KEY"))
-
 if __name__ == "__main__":
     app.run()
