@@ -1,7 +1,10 @@
+import os
+
 class Config(object):
     class Default(object):
         DEBUG = False
         TESTING = False
+        SECRET_KEY = os.environ.get("SECRET_KEY")
         SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     class Production(Default):
