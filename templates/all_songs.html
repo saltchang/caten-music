@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}所有詩歌列表{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title">
+        <h1 class="mt-3">所有詩歌列表</h1>
+        <a href="/">回首頁</a>
+    </div>
+    <table class="table mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">語言</th>
+                <th scope="col">檔號</th>
+                <th scope="col">曲名</th>
+                <th scope="col">調性</th>
+                <th scope="col">專輯</th>
+                <th scope="col">歌詞</th>
+                <th scope="col">下載</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for song in songs %}
+                <tr>
+                    <th scope="row">{{ song["uid"] }}</th>
+                    {% if song["language"] == "Chinese" %}
+                        <td>國語</th>
+                    {% endif %}
+                    {% if song["language"] == "Taiwanese" %}
+                    <td>台語</th>
+                    {% endif %}
+                    <td>{{ song["num_c"] }} - {{ song["num_i"] }}</td>
+                    <td>{{ song["title"] }}</td>
+                    <td>{{ song["tonality"] }}</td>
+                    <td>{{ song["album"] }}</td>
+                    <td><a class="text-success" href="#">查看</a></td>
+                    <td>
+                        <a class="text-warning" href="{{ song['ppt_url'] }}">
+                            <i class="fas fa-file-powerpoint"></i>
+                             投影片
+                        </a>
+                        &nbsp;&nbsp;
+                        <a class="text-info" href="{{ song['sheet_music_url'] }}">
+                            <i class="fas fa-file-alt"></i>
+                             歌譜
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

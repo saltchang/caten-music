@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}首頁{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title" style="margin-top: 150px;">
+        <h1 style="font-size: 3rem;">歡迎使用茄典教會詩歌資料庫</h1>
+    </div>
+    
+    <!-- <div id="search-block" class="container" style="padding: 5% 15% 5% 15%">
+        <form class="row" action="search_engine" method="get">
+            <div class="input-group col-md-10">
+                <div class="input-group-prepend">
+                    <div>
+                        <select class="form-control mr-2" id="exampleFormControlSelect1" name="function">
+                            <option value="by_title">搜尋歌名</option>
+                            <option value="by_id">搜尋ID</option>
+                            <option value="by_tonality">搜尋調性</option>
+                            <option value="by_anykey">搜尋任意關鍵字</option>
+                            <option value="by_album">搜尋專輯</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="text" class="form-control rounded ml-1 mr-2" aria-label="Text input with segmented dropdown button" name="keyword">
+            </div>
+            <button class="btn btn-outline-success col-md-2" type="submit">搜尋</button>
+        </form>
+    </div> -->
+
+    <!-- <p class="text-muted m-1" style="font-size: 0.9rem;">您也可以</p> -->
+    <button onclick="window.location.href='{{ url_for_all_songs }}';" class="btn btn-outline-primary m-4 btn-lg" type="submit">瀏覽所有詩歌</button>
+    
+
+</div>
+{% endblock %}

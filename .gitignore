@@ -1,0 +1,8 @@
+# 虛擬環境
+venv
+
+# 資料
+sheetdata
+
+# 機密
+secret.txt

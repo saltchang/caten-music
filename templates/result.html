@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}搜尋結果{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title">
+        <h1>搜尋結果：{{ searched_keyword }}</h1>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">編號</th>
+                <th scope="col">曲名</th>
+                <th scope="col">調性</th>
+                <th scope="col">專輯</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for song in songs %}
+                <tr>
+                    <th scope="row">{{ song["uid"] }}</th>
+                    <td>{{ song["title"] }}</td>
+                    <td>{{ song["tonality"] }}</td>
+                    <td>{{ song["album"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
