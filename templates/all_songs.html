@@ -38,12 +38,12 @@
                     <td>{{ song["album"] }}</td>
                     <td><a class="text-success" href="#">查看</a></td>
                     <td>
-                        <a class="text-warning" href="{{ song['ppt_url'] }}">
+                        <a class="text-warning" href="{{ url_for('download_ppt', id_=song['uid']) }}">
                             <i class="fas fa-file-powerpoint"></i>
                              投影片
                         </a>
                         &nbsp;&nbsp;
-                        <a class="text-info" href="{{ song['sheet_music_url'] }}">
+                        <a class="text-info" href="{{ url_for('download_sheetmusic', id_=song['uid']) }}">
                             <i class="fas fa-file-alt"></i>
                              歌譜
                         </a>

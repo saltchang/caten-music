@@ -6,3 +6,9 @@ sheetdata
 
 # 機密
 secret.txt
+
+# vscode
+.vscode
+
+# .DS_Store
+.DS_Store

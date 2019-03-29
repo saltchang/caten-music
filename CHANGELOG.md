@@ -4,6 +4,23 @@
 
 - By David KuangYen Chang
 
+## [Unrelease]
+
+### Todo
+
+- 以彈出視窗預覽歌譜，並提供下載按鈕
+
+### Added
+
+- 建立 Dropbox API
+- 新增 兩個功能：顯示歌譜、下載PPT
+- 建立 img.html 暫作測試用途
+
+### Changed
+
+- 修改 all_songs.html
+- 更新 requirements.txt
+
 ## [0.0.3] - 2019-03-29
 
 ### Added
