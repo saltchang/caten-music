@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 
-import os
+import os, dropbox
 
 from importDB import importDB
 from config import Config
@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config.from_object(Config.Production)
 
 db = importDB()
+
+dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
 
 # 首頁 HomePage
 @app.route("/")
