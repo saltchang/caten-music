@@ -1,6 +1,6 @@
 # Changelog
 
-這是"茄典教會詩歌資料系統"的工作日誌
+這是"茄典教會詩歌資料系統"的開發日誌
 
 - By David KuangYen Chang
 

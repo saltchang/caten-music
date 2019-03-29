@@ -2,10 +2,6 @@
 
 這是一個基於 Python Flask, Heroku 的詩歌資料庫系統。
 
-## Authors
-
-- **David KuangYen Chang** - *Initial work*
-
 ## Release
 
 ### [0.0.3] - 2019-03-29
@@ -22,4 +18,8 @@
 
 - 首次發佈
 
-詳細開發日誌請查看 CHANGELOG.md
+詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
+
+## Authors
+
+- **David KuangYen Chang** - *Initial work*
