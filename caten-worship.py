@@ -8,10 +8,13 @@ from config import Config
 
 app = Flask(__name__)
 
+# App Configure
 app.config.from_object(Config.Development)
 
+# Database
 db = importDB()
 
+# Dropbox API
 dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
 
 # 首頁 HomePage
@@ -22,7 +25,12 @@ def index():
 # 列出所有詩歌
 @app.route("/allsongs")
 def list_all_songs():
-    return render_template("all_songs.html", songs=db)
+    li_ = []
+    li_target = []
+    for i in range(len(db)):
+        li_.append("ex" + str(i))
+        li_target.append("#ex" + str(i))
+    return render_template("all_songs.html", songs=db, li_=li_, li_target=li_target)
 
 # 下載PPT
 @app.route("/download/ppt/<id_>")

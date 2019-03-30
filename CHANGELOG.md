@@ -6,20 +6,29 @@
 
 ## [Unrelease]
 
+## [0.0.4] - 2019-03-30
+
 ### Todo
 
-- 以彈出視窗預覽歌譜，並提供下載按鈕
+- 以彈出視窗預覽歌譜，並提供下載按鈕（測試中）
+- 預計移除 table 結構，改採 list 結構..
 
 ### Added
 
 - 建立 Dropbox API
 - 新增 兩個功能：顯示歌譜、下載PPT
 - 建立 img.html 暫作測試用途
+- 新增 Navbar
+- 建立 static 資料：網站LOGO
 
 ### Changed
 
 - 修改 all_songs.html
 - 更新 requirements.txt
+
+### Fixed
+
+- 調整響應式介面
 
 ## [0.0.3] - 2019-03-29
 
