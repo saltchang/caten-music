@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}所有詩歌列表{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title">
+        <h1 class="" style="margin-top: 100px;">所有詩歌列表</h1>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">語言</th>
+                    <th scope="col" class="d-none d-md-table-cell">檔號</th>
+                    <th scope="col">曲名</th>
+                    <th scope="col">調性</th>
+                    <th scope="col" class="d-none d-lg-table-cell">專輯</th>
+                    <th scope="col" class="d-none d-lg-table-cell">歌詞</th>
+                    <th scope="col" class="d-none d-lg-table-cell">下載</th>
+                    <th scope="col" class="d-lg-none"><i class="fas fa-angle-down d-none"></i></th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                {% for song in songs %}
+                <tr style="height: 5rem;">
+
+                    {% if song["language"] == "Chinese" %}
+                    <td class="align-middle">國<span class="d-none d-lg-inline">語</span></td>
+                    {% endif %}
+
+                    {% if song["language"] == "Taiwanese" %}
+                    <td class="align-middle">台<span class="d-none d-lg-inline">語</span></td>
+                    {% endif %}
+
+                    <td class="d-none d-md-table-cell align-middle">{{ song["num_c"] }}-{{ song["num_i"] }}</td>
+
+                    <th class="align-middle" style="width: 35%;">{{ song["title"] }}</th>
+
+                    <td class="align-middle">{{ song["tonality"] }}</td>
+
+                    <td class="d-none d-lg-table-cell align-middle">{{ song["album"] }}</td>
+
+                    <td class="d-none d-lg-table-cell align-middle">
+                        <a class="text-success" href="#">
+                            <i class="fas fa-file-alt"></i>
+                        </a>
+                    </td>
+
+                    <td class="d-none d-lg-table-cell align-middle">
+                        <a class="text-warning" href="{{ url_for('download_ppt', id_=song['uid']) }}">
+                            <i class="fas fa-file-powerpoint"></i>
+                            <span class="d-none d-xl-inline"> 投影片</span>
+                        </a>
+                        &nbsp;&nbsp;
+                        <a class="text-info" href="{{ url_for('download_sheetmusic', id_=song['uid']) }}">
+                            <i class="fas fa-music"></i>
+                            <span class="d-none d-xl-inline"> 歌譜</span>
+                        </a>
+                    </td>
+
+                    <td scope="col" class="d-lg-none align-middle" style="color: rgb(70, 87, 186);">
+                        <a class="" data-toggle="collapse" href="{{ '#t' + '%d' | format(song['uid']) }}" role="button" aria-expanded="false" aria-controls="{{'t' + '%d' | format(song['uid']) }}">
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </td>
+                    <div class="collapse" id="{{'t' + '%d' | format(song['uid']) }}">
+                        <div class="card card-body">
+                            {{ song['uid'] }}
+                        </div>
+                    </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

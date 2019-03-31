@@ -3,12 +3,75 @@
 {% block title %}所有詩歌列表{% endblock %}
 
 {% block content%}
-<div class="container text-center">
+<div class="container-fluid text-center">
     <div id="home-title">
-        <h1 class="" style="margin-top: 100px;">所有詩歌列表</h1>
+        <h2 class="" style="margin-top: 100px;">所有詩歌列表</h2>
     </div>
 
-    <div class="table-responsive">
+    <div class="card">
+        <h5 class="card-header">
+            前來敬拜
+        </h5>
+        <div class="card-body py-0">
+                <div class="row pt-2 pb-1">
+                    <div class="col p-1 text-right">國</div>
+                    <div class="col p-1 text-left">10 - 66</div>
+                    <div class="col p-1 text-right">G</div>
+                    <div class="col p-1 text-left">調</div>
+                    <div class="col-1 p-1">
+                        <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card-body pt-0">
+                    <div class="row py-3" style="border-top: 1px solid rgba(0,0,0,.125)">
+                        <div class="col p-1 text-right">詞：</div>
+                        <div class="col p-1 text-left">鄭懋柔</div>
+                        <div class="col-2 p-1 text-right">曲：</div>
+                        <div class="col p-1 text-left">游智婷</div>
+                        <div class="col-1"></div>
+                    </div>
+                <p class="card-text text-left">
+                    哈利路亞，哈利路亞，前來敬拜永遠的君王，
+                    哈利路亞，哈利路亞，大聲宣告主榮耀降臨。
+                </p>
+                <p class="card-text text-left">
+                    榮耀尊貴，能力權柄歸於你，
+                    你是我的救主，我的救贖，
+                    榮耀尊貴，能力權柄歸於你，
+                    你是配得，你是配得，你是配得我的敬拜。 
+                </p>
+                <p class="card-text text-left">
+                    榮耀尊貴，美麗無比，神的兒子，耶穌我的主，
+                    榮耀尊貴，美麗無比，神的兒子，耶穌我的主。
+                </p>
+                <div class="row pb-2" style="font-size: 0.7rem;">
+                    <div class="col-3 p-1 text-right">
+                        詩集：
+                    </div>
+                    <div class="col p-1 text-left">
+                        讚美之泉20 - 新的事將要成就
+                    </div>
+                </div>
+                <div class="row pt-3" style="border-top: 1px solid rgba(0,0,0,.125)">
+                    <div class="col px-4">
+                        <a class="text-warning" href="#">
+                            <i class="fas fa-file-powerpoint"></i> 投影片
+                        </a>
+                    </div>
+                    <div class="col px-4">
+                        <a class="text-info" href="#">
+                            <i class="fas fa-file-alt"></i> 歌譜
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <table class="table mt-3">
             <thead class="thead-dark">
                 <tr>
@@ -22,17 +85,17 @@
                     <th scope="col" class="d-lg-none"><i class="fas fa-angle-down d-none"></i></th>
                 </tr>
             </thead>
-        
+
             <tbody>
                 {% for song in songs %}
                 <tr style="height: 5rem;">
 
                     {% if song["language"] == "Chinese" %}
-                    <td class="align-middle">國<span class="d-none d-lg-inline">語</span></td>
+                    <td class="align-middle">國語</td>
                     {% endif %}
 
                     {% if song["language"] == "Taiwanese" %}
-                    <td class="align-middle">台<span class="d-none d-lg-inline">語</span></td>
+                    <td class="align-middle">台語</td>
                     {% endif %}
 
                     <td class="d-none d-md-table-cell align-middle">{{ song["num_c"] }}-{{ song["num_i"] }}</td>
@@ -62,7 +125,8 @@
                     </td>
 
                     <td scope="col" class="d-lg-none align-middle" style="color: rgb(70, 87, 186);">
-                        <a class="" data-toggle="collapse" href="{{ '#t' + '%d' | format(song['uid']) }}" role="button" aria-expanded="false" aria-controls="{{'t' + '%d' | format(song['uid']) }}">
+                        <a class="" data-toggle="collapse" href="{{ '#t' + '%d' | format(song['uid']) }}" role="button"
+                            aria-expanded="false" aria-controls="{{'t' + '%d' | format(song['uid']) }}">
                             <i class="fas fa-chevron-down"></i>
                         </a>
                     </td>
@@ -75,6 +139,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
+    
 </div>
 {% endblock %}
