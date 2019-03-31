@@ -35,15 +35,24 @@ def list_all_songs():
 # 下載PPT
 @app.route("/download/ppt/<id_>")
 def download_ppt(id_):
-    result = dbx.files_get_temporary_link("/caten-worship/ppt/ppt_" + id_ + ".ppt")
-    return redirect(result.link)
+    try:
+        result = dbx.files_get_temporary_link("/caten-worship/ppt/ppt_" + id_ + ".ppt")
+        return redirect(result.link)
+    except Exception as e:
+        print(e)
+        return "<h1>很抱歉，這首詩歌目前沒有投影片資料可供下載。<h1>", 404
 
-# 下載圖片
+# 下載歌譜
 @app.route("/download/sheetmusic/<id_>")
 def download_sheetmusic(id_):
-    result = dbx.files_get_temporary_link("/caten-worship/sheet-music/sheetmusic_" + id_ + ".jpg")
-    link = result.link
-    return render_template("img.html", link=link)
+    try:  
+        result = dbx.files_get_temporary_link("/caten-worship/sheet-music/sheetmusic_" + id_ + ".jpg")
+        link = result.link
+        return render_template("img.html", link=link)
+    except Exception as e:
+        print(e)
+        return "<h1>很抱歉，這首詩歌目前沒有歌譜資料可供下載。<h1>", 404
+    
 
 if __name__ == "__main__":
     app.run()

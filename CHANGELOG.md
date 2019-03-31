@@ -6,6 +6,30 @@
 
 ## [Unrelease]
 
+## [0.0.5] - 2019-03-31
+
+### Todo
+
+- 測試：以彈出視窗預覽歌譜
+- 資料庫結構更新：歌詞、作詞、作曲
+- 新增：供使用者回報歌曲資料錯誤功能
+
+### Added
+
+- 新增 static/js/main.js
+- 新增 投影片及歌譜下載的 try & except
+- 新增 static/image/log/favicon.ico
+
+### Changed
+
+- 重建列表結構及樣式（ table -> list card ）
+- 調整 RWD 效果以手機使用者角度為主
+- 調整介面顏色
+
+### Removed
+
+- 移除 all_songs.html 中的歌曲 table 架構
+
 ## [0.0.4] - 2019-03-30
 
 ### Todo
