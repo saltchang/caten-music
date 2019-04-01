@@ -12,7 +12,8 @@ app = Flask(__name__)
 app.config.from_object(Config.Development)
 
 # Database
-db = importDB()
+db = importDB("chinese.json", "taiwanese.json")
+db_sample = importDB("sample.json")
 
 # Dropbox API
 dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
@@ -25,12 +26,7 @@ def index():
 # 列出所有詩歌
 @app.route("/allsongs")
 def list_all_songs():
-    li_ = []
-    li_target = []
-    for i in range(len(db)):
-        li_.append("ex" + str(i))
-        li_target.append("#ex" + str(i))
-    return render_template("all_songs.html", songs=db, li_=li_, li_target=li_target)
+    return render_template("all_songs.html", songs=db, sample=db_sample)
 
 # 下載PPT
 @app.route("/download/ppt/<id_>")
@@ -52,6 +48,10 @@ def download_sheetmusic(id_):
     except Exception as e:
         print(e)
         return "<h1>很抱歉，這首詩歌目前沒有歌譜資料可供下載。<h1>", 404
+
+@app.route("/report/<id_>")
+def report_song(id_):
+    return "你回報了id：" + str(id_) + "的歌曲資訊。"
     
 
 if __name__ == "__main__":

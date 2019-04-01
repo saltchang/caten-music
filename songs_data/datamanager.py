@@ -101,17 +101,24 @@ def data_manager(data, id_, title, tonality, album, language):
     
     for i in range(data_length):
         data_.append({
-            "uid": int(id_[0][i]),
-            "num_c": id_[1][i],
-            "num_i": id_[2][i],
-            "title": title[i],
-            "artist": "",
-            "lyrics": [],
-            "tonality": tonality[i],
-            "album": album[i],
-            "ppt_url": "",
-            "sheet_music_url": "",
-            "language": language
+            "uid": str(id_[0][i]), # 唯一識別編號
+            "num_c": str(id_[1][i]), # 檔號：集
+            "num_i": str(id_[2][i]), # 檔號：首
+            "title": title[i], # 標題、曲名
+            "year": "", # 年份
+            "singer": "", # 演唱者
+            "lyricist": "", # 作詞者
+            "composer": "", # 作曲者
+            "translater": "", # 翻譯者
+            "lyrics": [], # 歌詞
+            "tonality": tonality[i], # 調性
+            "tempo": "", # 速度
+            "time_signature": "", # 拍號
+            "album": album[i], # 專輯、詩集
+            "publisher": "", # 出版者、發行者
+            "ppt_url": "", # 投影片連結
+            "sheet_music_url": "", # 歌譜連結
+            "language": language # 語言
         })
 
     return data_

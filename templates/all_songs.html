@@ -9,63 +9,92 @@
         <h2 class="mb-4" style="margin-top: 100px;">所有詩歌列表</h2>
     </div>
 
-    <div class="card" style="border-color: #1b1b5cbf;">
+    <hr>
+
+<!-- sample -->
+    <div class="card my-3" style="border-color: #1b1b5cbf;">
         <h5 class="card-header" style="background-color: #e3f2fd;">
-            前來敬拜
+            {{ sample[0]['title'] }}
         </h5>
         <div class="card-body py-0">
-                <div class="row pt-2 pb-1">
-                    <div class="col-1 col-md-3 col-lg-4"></div>
-                    <div class="col p-1"><span>國 </span><span>10 - 66</span></div>
-                    <div class="col-1"></div>
-                    <div class="col p-1"><span>G</span><span> 調</span></div>
-                    <div class="col-2 p-1 show-more-song-content">
-                        <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: #272783;">
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-1 col-lg-2"></div>
+            <div class="row pt-2 pb-1">
+                <div class="col-1 col-md-3 col-lg-4"></div>
+                <div class="col p-1">
+                    <span>
+                        {% if sample[0]["language"] == "Chinese" %}
+                        國
+                        {% endif %}
+                        {% if sample[0]["language"] == "Taiwanese" %}
+                        台
+                        {% endif %}
+                    </span>
+                    <span>
+                        {{ sample[0]["num_c"] }} - {{ sample[0]["num_i"] }}
+                    </span>
                 </div>
+                <div class="col-1"></div>
+                <div class="col p-1">
+                    <span>{{ sample[0]["tonality"] }}</span>
+                    <span> 調</span>
+                </div>
+                <div class="col-2 p-0 show-more-song-content">
+                    <a class="" data-toggle="collapse" href="{{ '#st' + sample[0]['uid'] }}" role="button"
+                        aria-expanded="false" aria-controls="{{'st' + sample[0]['uid'] }}"
+                        style="color: #272783; font-size: 1.4rem; transition: 700ms;">
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                </div>
+                <div class="col-md-1 col-lg-2"></div>
+            </div>
         </div>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="{{'st' + sample[0]['uid'] }}">
             <div class="card-body pt-0">
                 <div class="row py-3" style="border-top: 1px solid rgba(0,0,0,.125)">
-                    <div class="col p-1 text-right"><span>詞：</span><span>鄭懋柔</span></div>
+                    <div class="col p-1 text-right">
+                        <span>詞：</span>
+                        <span>{{ sample[0]['lyricist'] }}</span>
+                    </div>
                     <div class="col-1 p-1"></div>
-                    <div class="col p-1 text-left"><span>曲：</span><span>游智婷</span></div>
+                    <div class="col p-1 text-left">
+                        <span>曲：</span>
+                        <span>{{ sample[0]['composer'] }}</span>
+                    </div>
                 </div>
+                
                 <div class="container px-sm-5">
-                    <p class="card-text text-left">
-                        哈利路亞，哈利路亞，前來敬拜永遠的君王，<br>
-                        哈利路亞，哈利路亞，大聲宣告主榮耀降臨。<br>
-                    </p>
-                    <p class="card-text text-left">
-                        榮耀尊貴，能力權柄歸於你，<br>
-                        你是我的救主，我的救贖，<br>
-                        榮耀尊貴，能力權柄歸於你，<br>
-                        你是配得，你是配得，你是配得我的敬拜。<br>
-                    </p>
-                    <p class="card-text text-left">
-                        榮耀尊貴，美麗無比，神的兒子，耶穌我的主，<br>
-                        榮耀尊貴，美麗無比，神的兒子，耶穌我的主。<br>
-                    </p>
+                    <!-- 歌詞 -->
+                    {% for part in sample[0]['lyrics'] %}
+                        <p class="card-text text-left">
+                        {% for line in part[1:] %}
+                            {{ line }} <br>
+                        {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <!--  -->
                     <div class="pb-2 text-left" style="font-size: 0.7rem;">
                         <span>
                             詩集：
                         </span>
                         <span>
-                            讚美之泉20 - 新的事將要成就
+                            {{ sample[0]['album'] }}
                         </span>
                     </div>
                     <div class="row pt-3" style="border-top: 1px solid rgba(0,0,0,.125)">
                         <div class="col px-4">
-                            <a class="text-warning" href="{{ url_for('download_ppt', id_='1010066') }}">
+                            <a class="text-warning" href="{{ url_for('download_ppt', id_=sample[0]['uid']) }}">
                                 <i class="fas fa-file-powerpoint"></i> 投影片
                             </a>
                         </div>
                         <div class="col px-4">
-                            <a class="text-info" href="{{ url_for('download_sheetmusic', id_='1010066') }}">
+                            <a class="text-info" href="{{ url_for('download_sheetmusic', id_=sample[0]['uid']) }}">
                                 <i class="fas fa-file-alt"></i> 歌譜
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col px-4">
+                            <a class="text-danger" href="{{ url_for('report_song', id_=sample[0]['uid']) }}">
+                                <i class="fas fa-flag"></i> 回報歌曲資訊
                             </a>
                         </div>
                     </div>
@@ -73,6 +102,7 @@
             </div>
         </div>
     </div>
+
 
     <hr>
 
@@ -99,41 +129,38 @@
                 <div class="col-1"></div>
                 <div class="col p-1"><span>{{ song["tonality"] }}</span><span> 調</span></div>
                 <div class="col-2 p-1 show-more-song-content">
-                    <a class="" data-toggle="collapse" href="{{ '#t' + '%d' | format(song['uid']) }}" role="button" aria-expanded="false" aria-controls="{{'t' + '%d' | format(song['uid']) }}" style="color: #272783;">
+                    <a class="" data-toggle="collapse" href="{{ '#t' + song['uid'] }}" role="button"
+                        aria-expanded="false" aria-controls="{{'t' + song['uid'] }}"
+                        style="color: #272783; font-size: 1.4rem; transition: 700ms;">
                         <i class="fas fa-chevron-down"></i>
                     </a>
                 </div>
                 <div class="col-md-1 col-lg-2"></div>
             </div>
         </div>
-        <div class="collapse" id="{{'t' + '%d' | format(song['uid']) }}">
+        <div class="collapse" id="{{'t' + song['uid'] }}">
             <div class="card-body pt-0">
                 <div class="row py-3" style="border-top: 1px solid rgba(0,0,0,.125)">
-                    <div class="col p-1 text-right"><span>詞：</span><span>鄭懋柔</span></div>
+                    <div class="col p-1 text-right"><span>詞：</span><span>{{ song['lyricist'] }}</span></div>
                     <div class="col-1 p-1"></div>
-                    <div class="col p-1 text-left"><span>曲：</span><span>游智婷</span></div>
+                    <div class="col p-1 text-left"><span>曲：</span><span>{{ song['composer'] }}</span></div>
                 </div>
                 <div class="container px-sm-5">
-                    <p class="card-text text-left">
-                        哈利路亞，哈利路亞，前來敬拜永遠的君王，<br>
-                        哈利路亞，哈利路亞，大聲宣告主榮耀降臨。<br>
-                    </p>
-                    <p class="card-text text-left">
-                        榮耀尊貴，能力權柄歸於你，<br>
-                        你是我的救主，我的救贖，<br>
-                        榮耀尊貴，能力權柄歸於你，<br>
-                        你是配得，你是配得，你是配得我的敬拜。<br>
-                    </p>
-                    <p class="card-text text-left">
-                        榮耀尊貴，美麗無比，神的兒子，耶穌我的主，<br>
-                        榮耀尊貴，美麗無比，神的兒子，耶穌我的主。<br>
-                    </p>
+                    <!-- 歌詞 -->
+                    {% for part in song['lyrics'] %}
+                        <p class="card-text text-left">
+                            {% for line in part[1:] %}
+                            {{ line }} <br>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <!--  -->
                     <div class="pb-2 text-left" style="font-size: 0.7rem;">
                         <span>
                             詩集：
                         </span>
                         <span>
-                            讚美之泉20 - 新的事將要成就
+                            {{ song['album'] }}
                         </span>
                     </div>
                     <div class="row pt-3" style="border-top: 1px solid rgba(0,0,0,.125)">
@@ -145,6 +172,13 @@
                         <div class="col px-4">
                             <a class="text-info" href="{{ url_for('download_sheetmusic', id_=song['uid']) }}">
                                 <i class="fas fa-file-alt"></i> 歌譜
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col px-4">
+                            <a class="text-danger" href="{{ url_for('report_song', id_=song['uid']) }}">
+                                <i class="fas fa-flag"></i> 回報歌曲資訊
                             </a>
                         </div>
                     </div>

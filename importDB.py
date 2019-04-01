@@ -1,9 +1,11 @@
 import json
 
-def importDB():
-    file_dir_base = "./songs_data/new/"
-    file_dir = ["songs_chinese_new.json", "songs_taiwanese_new.json"]
+def importDB(*args, **kwargs):
+    file_dir_base = "./songs_data/json/formated/"
+    file_dir = []
     file = []
+    for arg in args:
+        file_dir.append(arg)
     db = []
     for i in range(len(file_dir)):
         f_dir = file_dir_base + file_dir[i]
