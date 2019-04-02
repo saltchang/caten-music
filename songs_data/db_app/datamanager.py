@@ -109,7 +109,7 @@ def data_manager(data, id_, title, tonality, album, language):
             "singer": "", # 演唱者
             "lyricist": "", # 作詞者
             "composer": "", # 作曲者
-            "translater": "", # 翻譯者
+            "translator": "", # 翻譯者
             "lyrics": [], # 歌詞
             "tonality": tonality[i], # 調性
             "tempo": "", # 速度

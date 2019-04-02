@@ -10,10 +10,13 @@
 
 - 測試：以彈出視窗預覽歌譜
 - 新增：搜尋引擎
+- 新增：將網路所爬蟲得到的歌曲資料整理匯入詩歌資料庫中
 
 ### Added
 
 - 新增 excel 資料匯入程式
+- 新增 Song Crawler 歌曲資訊爬蟲程式 /songs_data/db_app/song_crawler
+- 建立 /songs_data/json/library/songDB_got.json 作為歌曲的資料庫之一
 
 ### Changed
 
