@@ -1,7 +1,7 @@
 import json
 
 def importDB(*args, **kwargs):
-    file_dir_base = "./songs_data/json/formated/"
+    file_dir_base = "./songs_data/json/DB/"
     file_dir = []
     file = []
     for arg in args:

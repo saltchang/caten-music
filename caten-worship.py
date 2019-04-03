@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config.from_object(Config.Development)
 
 # Database
-db = importDB("chinese.json", "taiwanese.json")
+db = importDB("worshipDB.json")
 db_sample = importDB("sample.json")
 
 # Dropbox API

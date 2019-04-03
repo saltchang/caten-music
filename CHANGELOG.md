@@ -10,13 +10,17 @@
 
 - 測試：以彈出視窗預覽歌譜
 - 新增：搜尋引擎
-- 新增：將網路所爬蟲得到的歌曲資料整理匯入詩歌資料庫中
+
+## [0.0.6] - 2019-04-03
 
 ### Added
 
 - 新增 excel 資料匯入程式
-- 新增 Song Crawler 歌曲資訊爬蟲程式 /songs_data/db_app/song_crawler
+- 新增 Song Crawler 歌曲資訊爬蟲程式 /songs_data/db_app/song_crawler/
+- 新增 db_matcher.py：比對資料庫資料的程式 /songs_data/db_app/db_matcher.py
 - 建立 /songs_data/json/library/songDB_got.json 作為歌曲的資料庫之一
+- 匯集網路爬蟲資料完成
+- 建立 worshipDB.json 為主資料庫 /songs_data/json/DB/worshipDB.json
 
 ### Changed
 
@@ -24,6 +28,8 @@
 - 資料庫結構更新：增加 "歌詞、作詞、作曲、出版、演唱、速度、拍號、年份"
 - 將歌詞從資料庫的歌詞陣列中以迴圈方式讀取出來
 - 修改：改善折疊清單之互動按鈕觸發範圍以及效果
+- 更名 datamanager.py > db_creator.py
+- 更新資料庫
 
 ## [0.0.5] - 2019-03-31
 
