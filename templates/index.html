@@ -7,8 +7,22 @@
     <div id="home-title" style="margin-top: 150px; margin-bottom: 50px;">
         <h1 style="font-size: 2.5rem;">Caten Worship</h1>
     </div>
-    <button onclick="window.location.href='{{ url_for_all_songs }}';" class="btn btn-outline-primary m-4 btn-lg" type="submit">
-        瀏覽所有詩歌
-    </button>
+
+    <div class="container text-center">
+        <form action="{{ url_for('searchEngine') }}" method="GET">
+            <div class="form-group row m-0">
+                <div class="col-sm-1 col-lg-2"></div>
+                <div class="col p-0 p-md-3">
+                    <div class="row m-0 justify-content-around">
+
+                        <input name="q" type="text" class="form-control col-12 col-md-8 mb-4" id="search-text" placeholder="">
+                        <button type="submit" class="btn btn-outline-success mb-4 col-5 col-sm-4 col-md-3">搜尋詩歌</button>
+
+                    </div>
+                </div>
+                <div class="col-sm-1 col-lg-2"></div>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

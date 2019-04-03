@@ -4,6 +4,7 @@ from flask import Flask, jsonify, render_template, request, redirect, url_for, s
 import os, dropbox
 
 from importDB import importDB
+from searchEngine import SearchCore
 from config import Config
 
 app = Flask(__name__)
@@ -18,12 +19,12 @@ db_sample = importDB("sample.json")
 # Dropbox API
 dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
 
-# 首頁 HomePage
+# 首頁
 @app.route("/")
 def index():
     return render_template("index.html", url_for_all_songs=url_for("list_all_songs"))
 
-# 列出所有詩歌
+# 瀏覽所有詩歌
 @app.route("/allsongs")
 def list_all_songs():
     return render_template("all_songs.html", songs=db, sample=db_sample)
@@ -49,6 +50,17 @@ def download_sheetmusic(id_):
         print(e)
         return "<h1>很抱歉，這首詩歌目前沒有歌譜資料可供下載。<h1>", 404
 
+@app.route("/search")
+def searchEngine():
+    searchMethod = "title"
+    keyword = request.args.get("q")
+    result = SearchCore(db, "title", keyword)
+    if result:
+        return render_template("result.html", keyword=keyword, songs=result, songs_num=len(result))
+    else:
+        return render_template("result.html", keyword=keyword, songs=[], songs_num=0)
+
+# 回報歌曲資訊
 @app.route("/report/<id_>")
 def report_song(id_):
     return "你回報了id：" + str(id_) + "的歌曲資訊。"

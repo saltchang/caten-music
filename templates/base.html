@@ -25,8 +25,14 @@
             
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <!-- <li class="nav-item active">
                             <a class="nav-link" href="/">首頁 <span class="sr-only">(current)</span></a>
+                        </li> -->
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('list_all_songs') }}">瀏覽所有詩歌 <span
+                                    class="sr-only">(current)</span></a>
                         </li>
                     </ul>
                 </div>

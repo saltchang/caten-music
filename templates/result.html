@@ -1,32 +1,102 @@
 {% extends "base.html" %}
 
-{% block title %}搜尋結果{% endblock %}
+{% block title %}搜尋詩歌{% endblock %}
 
 {% block content%}
+
 <div class="container text-center">
     <div id="home-title">
-        <h1>搜尋結果：{{ searched_keyword }}</h1>
+        <h4 class="mb-4" style="margin-top: 100px;">搜尋結果 ： {{ keyword }}</h4>
+        <p>找到 {{ songs_num }} 首歌</p>
     </div>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">編號</th>
-                <th scope="col">曲名</th>
-                <th scope="col">調性</th>
-                <th scope="col">專輯</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            {% for song in songs %}
-                <tr>
-                    <th scope="row">{{ song["uid"] }}</th>
-                    <td>{{ song["title"] }}</td>
-                    <td>{{ song["tonality"] }}</td>
-                    <td>{{ song["album"] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <hr>
+
+    <!-- List -->
+
+    {% for song in songs %}
+    <div class="row m-0">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col card my-3 p-0" style="border-color: #1b1b5cbf;">
+        <h5 class="card-header" style="background-color: #e3f2fd;">
+            {{ song['title'] }}
+        </h5>
+        <div class="card-body py-0">
+            <div class="row pt-2 pb-1">
+                <div class="col-1 col-md-3"></div>
+                <div class="col p-1">
+                    <span>
+                        {% if song["language"] == "Chinese" %}
+                        國
+                        {% endif %}
+                        {% if song["language"] == "Taiwanese" %}
+                        台
+                        {% endif %}
+                    </span>
+                    <span>{{ song["num_c"] }} - {{ song["num_i"] }}</span></div>
+                <div class="col-1"></div>
+                <div class="col p-1"><span>{{ song["tonality"] }}</span><span> 調</span></div>
+                <div class="col-2 p-1 show-more-song-content">
+                    <a class="" data-toggle="collapse" href="{{ '#t' + song['uid'] }}" role="button"
+                        aria-expanded="false" aria-controls="{{'t' + song['uid'] }}"
+                        style="color: #272783; font-size: 1.4rem; transition: 700ms;">
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                </div>
+                <div class="col-md-1 col-lg-2"></div>
+            </div>
+        </div>
+        <div class="collapse" id="{{'t' + song['uid'] }}">
+            <div class="card-body pt-0">
+                <div class="row py-3" style="border-top: 1px solid rgba(0,0,0,.125)">
+                    <div class="col p-1 text-right"><span>詞：</span><span>{{ song['lyricist'] }}</span></div>
+                    <div class="col-1 p-1"></div>
+                    <div class="col p-1 text-left"><span>曲：</span><span>{{ song['composer'] }}</span></div>
+                </div>
+                <div class="container px-sm-5">
+                    <!-- 歌詞 -->
+                    {% for part in song['lyrics'] %}
+                    <p class="card-text text-left">
+                        {% for line in part[1:] %}
+                        {{ line }} <br>
+                        {% endfor %}
+                    </p>
+                    {% endfor %}
+                    <!--  -->
+                    <div class="pb-2 text-left" style="font-size: 0.7rem;">
+                        <span>
+                            詩集：
+                        </span>
+                        <span>
+                            {{ song['album'] }}
+                        </span>
+                    </div>
+                    <div class="row pt-3" style="border-top: 1px solid rgba(0,0,0,.125)">
+                        <div class="col px-4">
+                            <a class="text-warning" href="{{ url_for('download_ppt', id_=song['uid']) }}">
+                                <i class="fas fa-file-powerpoint"></i> 投影片
+                            </a>
+                        </div>
+                        <div class="col px-4">
+                            <a class="text-info" href="{{ url_for('download_sheetmusic', id_=song['uid']) }}">
+                                <i class="fas fa-file-alt"></i> 歌譜
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col px-4">
+                            <a class="text-danger" href="{{ url_for('report_song', id_=song['uid']) }}">
+                                <i class="fas fa-flag"></i> 回報歌曲資訊
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-2"></div>
+    </div>
+    {% endfor %}
+
 </div>
 {% endblock %}
