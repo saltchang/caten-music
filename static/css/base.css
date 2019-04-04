@@ -1,0 +1,46 @@
+html {
+    min-width: 320px;
+}
+
+body {
+    background: #f7f4e3;
+    color: #344042;
+}
+
+footer {
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+}
+
+hr {
+    margin: 0;
+}
+
+/* Navbar */
+#navbarSupportedContent a {
+    color: #344042;
+}
+
+.navbar {
+    background-color: #9CAE92;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url(../image/icon/menuicon.png);
+    opacity: 0.6;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    width: 20px;
+    height: 20px;
+}
+
+.navbar-brand {
+    opacity: 0.85;
+    font-size: 1.5rem;
+}
+
+.navbar-hr {
+    margin-bottom: 0.5rem;
+}

@@ -1,0 +1,61 @@
+.search-infomation {
+    margin-top: 100px;
+}
+
+.card {
+    background-color: #ffffff00;
+    border: none;
+    border-radius: .5rem;
+    min-width: 255px;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .15)
+}
+
+.card .card-header {
+    background-color: #C0AFA1;
+    border-radius: .5rem .5rem 0 0;
+    border-bottom: none;
+}
+
+.card .card-body {
+    background-color: #f0ebc3;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.card .card-body-border-bottom {
+    border-radius: 0 0 .5rem .5rem;
+}
+
+.card .card-body-hide-content {
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.song-info {
+    line-height: 2rem;
+}
+
+.lyrics-text {
+    font-size: 0.9rem;
+}
+
+.show-more-song-content a {
+    color: #a5679b;
+    font-size: 1.4rem;
+    transition: 700ms;
+}
+
+.show-more-song-color a {
+    color: #7e0c0c;
+}
+
+.album-info {
+    font-size: 0.7rem;
+}
+
+/* bottom */
+.back-to-home {
+    display: block;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}

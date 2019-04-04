@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="static/css/home.css">
+{%  endblock  %}
+
 {% block title %}首頁{% endblock %}
 
 {% block content%}
 <div class="container text-center">
-    <div id="home-title" style="margin-top: 150px; margin-bottom: 50px;">
-        <h1 style="font-size: 2.5rem;">Caten Worship</h1>
+    <div id="home-title">
+        <h1>Caten Worship</h1>
     </div>
 
     <div class="container text-center">

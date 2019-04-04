@@ -1,8 +1,15 @@
 # 茄典教會詩歌資料系統
 
-這是一個基於 Python Flask, Heroku, Dropbox API 的詩歌資料庫系統。
+這是一個基於 Python Flask, Bootstrap, Heroku, Dropbox API 的詩歌資料庫系統。
 
 ## Release
+
+### [0.0.8] - 2019-04-04
+
+- 更改 介面配色
+- 優化 搜尋引擎
+- 優化 系統架構
+- 新增 一些icon
 
 ### [0.0.7] - 2019-04-03
 

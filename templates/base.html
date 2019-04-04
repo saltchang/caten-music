@@ -1,64 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
+
 <head>
     {% block head %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Caten Worship - {% block title %}{% endblock title%}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='image/logo/favicon.ico') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="shortcut icon" href="static/image/icon/favicon.ico">
+    <link rel="stylesheet" href="static/css/base.css">
     {% endblock head%}
 </head>
+
 <body>
     {% block navbar %}
-            <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #e3f8fdd2;">
-                <a class="navbar-brand" href="/">
-                    <img src="static/image/logo/Black_NB_fix.svg" width="35" height="30" class="d-inline-block align-top" alt="">
-                    Caten Worship
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <!-- <li class="nav-item active">
-                            <a class="nav-link" href="/">首頁 <span class="sr-only">(current)</span></a>
-                        </li> -->
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ url_for('list_all_songs') }}">瀏覽所有詩歌 <span
-                                    class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <nav class="navbarstyle navbar navbar-expand-md navbar-light fixed-top">
+        <a class="navbar-brand" href="/">
+            <img src="static/image/icon/Black_NB_fix.svg" width="27" height="23" class="d-inline-block align-center mb-1"
+                alt="Caten Worship">
+            Caten Worship
+        </a>
+        <a class="d-md-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
+            aria-controls="navbarSupportedContent" id="navbar-menu-btn">
+            <span class="navbar-toggler-icon"></span>
+        </a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <hr class="navbar-hr">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link navbar-item-style" href="{{ url_for('list_all_songs') }}">
+                        <i class="far fa-copy"></i>
+                        &nbsp;所有詩歌
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     {% endblock navbar %}
-    
+
 
     <div id="content">
         {% block content %}{% endblock content%}
     </div>
-    
+
     {% block footer %}
-        <footer style="text-align: center; margin-top: 150px; margin-bottom: 20px;">
-            <p>&copy; 2019 David KuangYen Chang.</p>
-        </footer>
-    {% endblock footer%}
+    <footer>
+        <p>&copy; 2019 &nbsp;Salt.</p>
+    </footer>
+    {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="static/js/main.js"></script>
 </body>
+
 </html>

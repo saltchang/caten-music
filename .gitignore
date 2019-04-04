@@ -1,5 +1,6 @@
 # 虛擬環境
 venv
+.env
 
 # 資料
 sheetdata

@@ -10,6 +10,30 @@
 
 - 測試：以彈出視窗預覽歌譜
 
+## [0.0.8] - 2019-04-04
+
+### Added
+
+- 新增 Pipfile 和 Pipfile.lock
+- 將 CSS 從 html 中獨立出來至 /static/css/*.css
+- 新增 menuicon.png
+
+### Removed
+
+- 移除 requirements.txt
+- 移除 template: allsongs.html
+
+### Changed
+
+- 將所有 template 之副檔名更改 *.html > *.jinja
+- 將運行環境更改為pipenv
+- 將 allsongs.html 整合至 result.html 中
+- 更改介面配色：扁平化色調
+
+### Fixed
+
+- 修正搜尋引擎之錯誤情形以及避免空關鍵字觸發所有結果 searchEngine.py
+
 ## [0.0.7] - 2019-04-03
 
 ### Added

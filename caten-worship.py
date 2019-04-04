@@ -27,7 +27,7 @@ def index():
 # 瀏覽所有詩歌
 @app.route("/allsongs")
 def list_all_songs():
-    return render_template("all_songs.html", songs=db, sample=db_sample)
+    return render_template("result.html", songs=db, sample=db_sample, display_mode="allsongs")
 
 # 下載PPT
 @app.route("/download/ppt/<id_>")
@@ -56,9 +56,9 @@ def searchEngine():
     keyword = request.args.get("q")
     result = SearchCore(db, "title", keyword)
     if result:
-        return render_template("result.html", keyword=keyword, songs=result, songs_num=len(result))
+        return render_template("result.html", keyword=keyword, songs=result, songs_num=len(result), display_mode="search")
     else:
-        return render_template("result.html", keyword=keyword, songs=[], songs_num=0)
+        return render_template("result.html", keyword=keyword, songs=[], songs_num=0, display_mode="search")
 
 # 回報歌曲資訊
 @app.route("/report/<id_>")

@@ -1,16 +1,30 @@
 import re
 
+
+# 關鍵字過濾器
 def keywordFilter(keyword):
-    keyword = keyword.replace("or", " ")
-    keyword = keyword.replace(u"\u3000", " ")
-    keyword = keyword.replace("+", " ")
+    replaceList = [u"\u3000", "+"]
+    for string in replaceList:
+        keyword = keyword.replace(string, " ")
 
     keywords = keyword.split(" ")
-    
-    return keywords
 
+    if len(keywords) > 0:
+        for i in range(len(keywords)):
+            j = 0
+            if keywords[j] == "":
+                keywords.pop(j)
+            else:
+                j += 1
+        return keywords
+    else:
+        return False
+
+
+# 以標題搜尋
 def titleSearch(db, keywords):
     result = []
+
     for song in db:
         matchs = []
         for word in keywords:
@@ -24,10 +38,12 @@ def titleSearch(db, keywords):
         return False
 
 
+# 引擎核心
 def SearchCore(db, method, keyword):
     keywords = keywordFilter(keyword)
 
-    if method == "title":
+    if method == "title" and keywords:
         result = titleSearch(db, keywords)
-
-    return result
+        return result
+    else:
+        return False

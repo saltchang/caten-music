@@ -6,7 +6,8 @@ function collapseArrowToDown(event) {
     console.log("dont-show clicked")
     $(this).children(".fas").removeClass("fa-chevron-up");
     $(this).children(".fas").addClass("fa-chevron-down");
-    $(this).removeClass("text-danger");
+    $(this).parent().removeClass("show-more-song-color");
+    $(this).parent().parent().parent().addClass("card-body-border-bottom");
 }
 
 $("div.show-more-song-content").on("click", "a[aria-expanded='false']", collapseArrowToUp);
@@ -14,5 +15,6 @@ function collapseArrowToUp(event) {
     console.log("show clicked")
     $(this).children(".fas").removeClass("fa-chevron-down");
     $(this).children(".fas").addClass("fa-chevron-up");
-    $(this).addClass("text-danger");
+    $(this).parent().addClass("show-more-song-color");
+    $(this).parent().parent().parent().removeClass("card-body-border-bottom");
 }
