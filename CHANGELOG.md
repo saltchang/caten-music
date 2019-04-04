@@ -17,6 +17,7 @@
 - 新增 Pipfile 和 Pipfile.lock
 - 將 CSS 從 html 中獨立出來至 /static/css/*.css
 - 新增 menuicon.png
+- 新增 YouTube 連結功能
 
 ### Removed
 

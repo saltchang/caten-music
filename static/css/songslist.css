@@ -37,6 +37,8 @@
 
 .lyrics-text {
     font-size: 0.9rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 400;
 }
 
 .show-more-song-content a {
@@ -51,6 +53,23 @@
 
 .album-info {
     font-size: 0.7rem;
+}
+
+.ppt-icon {
+    color: #d85a20;
+}
+
+.sheet-music-icon {
+    color: #2e8592;
+}
+
+.youtube-icon {
+    color: #c00000;
+}
+
+.report-icon {
+    color: #ac3030;
+    font-size: 0.8rem;
 }
 
 /* bottom */

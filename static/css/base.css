@@ -5,6 +5,8 @@ html {
 body {
     background: #f7f4e3;
     color: #344042;
+    /* font-family: 'Noto Serif TC', serif; */
+    font-family: 'Noto Sans TC', 'EB Garamond', 'Arial', sans-serif;
 }
 
 footer {
@@ -28,7 +30,7 @@ hr {
 }
 
 .navbar-light .navbar-toggler-icon {
-    background-image: url(../image/icon/menuicon.png);
+    background-image: url("/static/image/icon/menuicon.png");
     opacity: 0.6;
     margin-right: 5px;
     margin-bottom: 3px;
@@ -38,7 +40,8 @@ hr {
 
 .navbar-brand {
     opacity: 0.85;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-family: 'EB Garamond', sans-serif, serif;
 }
 
 .navbar-hr {

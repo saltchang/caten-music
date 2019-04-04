@@ -11,8 +11,12 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="shortcut icon" href="static/image/icon/favicon.ico">
-    <link rel="stylesheet" href="static/css/base.css">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,500" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC:400,500&amp;subset=chinese-traditional"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/icon/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     {% endblock head%}
 </head>
 
@@ -20,7 +24,8 @@
     {% block navbar %}
     <nav class="navbarstyle navbar navbar-expand-md navbar-light fixed-top">
         <a class="navbar-brand" href="/">
-            <img src="static/image/icon/Black_NB_fix.svg" width="27" height="23" class="d-inline-block align-center mb-1"
+            <img src="{{ url_for('static', filename='image/icon/Black_NB_fix.svg') }}"
+                width="27" height="23" class="d-inline-block align-center mb-1"
                 alt="Caten Worship">
             Caten Worship
         </a>
@@ -67,7 +72,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="static/js/main.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
