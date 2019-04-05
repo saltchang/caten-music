@@ -37,12 +37,32 @@ def titleSearch(db, keywords):
     else:
         return False
 
+# 依語言瀏覽
+def surfLanguage(db, keyword):
+    result = []
 
-# 引擎核心
-def SearchCore(db, method, keyword):
+    for song in db:
+        if song["language"] == keyword:
+            result.append(song)
+    
+    if len(result) > 0:
+        return result
+    else:
+        return False
+
+# 瀏覽核心
+def SurfCore(db, scope, keyword):
+    if scope == "language":
+        result = surfLanguage(db, keyword)
+        return result
+    else:
+        return False
+
+
+# 搜尋核心
+def SearchCore(db, scope, keyword):
     keywords = keywordFilter(keyword)
-
-    if method == "title" and keywords:
+    if scope == "title" and keywords:
         result = titleSearch(db, keywords)
         return result
     else:

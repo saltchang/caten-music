@@ -5,7 +5,7 @@ import os
 import dropbox
 
 from importDB import importDB
-from searchEngine import SearchCore
+from searchEngine import SearchCore, SurfCore
 from config import Config
 
 app = Flask(__name__)
@@ -57,6 +57,7 @@ def prereg():
 def list_all_songs():
     return render_template("result.html", songs=jsonDB, sample=db_sample, display_mode="allsongs")
 
+
 # 下載PPT
 @app.route("/download/ppt/<id_>")
 def download_ppt(id_):
@@ -78,16 +79,28 @@ def download_sheetmusic(id_):
         print(e)
         return "<h1>很抱歉，這首詩歌目前沒有歌譜資料可供下載。<h1>", 404
 
-# 搜尋引擎
+# 瀏覽
+@app.route("/surfer")
+def surfer():
+    return render_template("surfer.html")
+
+# 搜尋
 @app.route("/search")
 def searchEngine():
-    searchMethod = "title"
-    keyword = request.args.get("q")
-    result = SearchCore(jsonDB, "title", keyword)
-    if result:
-        return render_template("result.html", keyword=keyword, songs=result, songs_num=len(result), display_mode="search")
+    mode = request.args.get("m") # 模式 = { "search": 搜尋, "surf": 瀏覽 } 
+    scope = request.args.get("s") # 範圍 = { "title": 依標題, "language": 依語言}
+    keyword = request.args.get("q") # 關鍵字
+    
+    if mode == "search" and scope:
+        result = SearchCore(jsonDB, scope, keyword)
+    elif mode == "surf" and scope:
+        result = SurfCore(jsonDB, scope, keyword)
     else:
-        return render_template("result.html", keyword=keyword, songs=[], songs_num=0, display_mode="search")
+        return redirect("/")
+
+    if not result:
+        result = []
+    return render_template("result.html", songs=result, songs_num=len(result), mode=mode, scope=scope, keyword=keyword)
 
 # 回報歌曲資訊
 @app.route("/report/<id_>")

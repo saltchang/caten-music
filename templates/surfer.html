@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="static/css/surfer.css">
+{%  endblock  %}
+
+{% block title %}瀏覽{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="surf-title">
+        <h4>請選擇要瀏覽的詩歌類別</h4>
+    </div>
+
+    <div class="container text-center">
+        <div id="language-surfer">
+            <form action="{{ url_for('searchEngine') }}" method="GET">
+                <input type="text" class="d-none" name="m" value="surf">
+                <input type="text" class="d-none" name="s" value="language">
+                <div class="row">
+                    <div class="col-sm-1 col-md-2 col-lg-3"></div>
+                    <div class="col px-0 px-lg-3">
+                        <button type="submit" class="btn chinese-surf-btn" name="q"
+                            value="Chinese">
+                            國語
+                        </button>
+                        </div>
+                    <div class="col px-0 px-lg-3">
+                        <button type="submit" class="btn taiwanese-surf-btn" name="q"
+                            value="Taiwanese">
+                            台語
+                        </button>
+                    </div>
+                    <div class="col-sm-1 col-md-2 col-lg-3"></div>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

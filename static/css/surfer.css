@@ -1,0 +1,17 @@
+#surf-title {
+    margin-top: 150px;
+    margin-bottom: 50px;
+}
+
+.chinese-surf-btn {
+    background-color: #c2ab82;
+}
+
+.taiwanese-surf-btn {
+    background-color: #a082bd;
+}
+
+.btn {
+    width: 80%;
+    height: 2.5rem;
+}

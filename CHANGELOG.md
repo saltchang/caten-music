@@ -9,17 +9,28 @@
 ### Todo
 
 - 測試: 以彈出視窗預覽歌譜
-- 建立 Postgres 資料庫(測試中)
+
+## [0.0.9] - 2019-04-05
 
 ### Added
 
 - 新增 字型: "EB Garamond", "Noto Sans TC", "Noto Serif TC" from Google Fonts
 - 新增 CSS Reset /static/css/reset.css
 - 新增 package: psycopg2
+- 新增 app.route("/surfer") 瀏覽功能
+- 新增 surfer.html 介面, static/css/surfer.css
+- 新增 surfCore 瀏覽引擎
+- 新增 Heroku Postgresql 資料庫, 已完成資料庫連接測試
+- 新增 users.html 作資料庫測試用途
 
 ### Changed
 
 - 更改 App name: caten-worship.py > catenWorship.py
+- 優化 搜尋引擎
+
+### Removed
+
+- 移除 瀏覽所有詩歌
 
 ## [0.0.8] - 2019-04-04
 

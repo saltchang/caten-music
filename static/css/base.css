@@ -52,3 +52,7 @@ hr {
 .navbar-hr {
     margin-bottom: 0.5rem;
 }
+
+.fa-shoe-prints {
+    transform: rotate(315deg);
+}
