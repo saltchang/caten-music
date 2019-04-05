@@ -1,3 +1,10 @@
+_:-ms-fullscreen,:root .ie11up {
+    font-family: 'Noto Sans TC',
+        'EB Garamond',
+        'Airal',
+        sans-serif;
+}
+
 html {
     min-width: 320px;
 }
@@ -5,8 +12,6 @@ html {
 body {
     background: #f7f4e3;
     color: #344042;
-    /* font-family: 'Noto Serif TC', serif; */
-    font-family: 'Noto Sans TC', 'EB Garamond', 'Arial', sans-serif;
 }
 
 footer {

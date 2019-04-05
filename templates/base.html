@@ -3,6 +3,7 @@
 
 <head>
     {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Caten Worship - {% block title %}{% endblock title%}</title>
@@ -43,7 +44,7 @@
                 <li class="nav-item active">
                     <a class="nav-link navbar-item-style" href="{{ url_for('list_all_songs') }}">
                         <i class="far fa-copy"></i>
-                        &nbsp;所有詩歌
+                        所有詩歌
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>

@@ -1,5 +1,6 @@
 import os
 
+
 class Config(object):
     class Default(object):
         DEBUG = False

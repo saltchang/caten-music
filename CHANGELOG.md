@@ -8,7 +8,18 @@
 
 ### Todo
 
-- 測試：以彈出視窗預覽歌譜
+- 測試: 以彈出視窗預覽歌譜
+- 建立 Postgres 資料庫(測試中)
+
+### Added
+
+- 新增 字型: "EB Garamond", "Noto Sans TC", "Noto Serif TC" from Google Fonts
+- 新增 CSS Reset /static/css/reset.css
+- 新增 package: psycopg2
+
+### Changed
+
+- 更改 App name: caten-worship.py > catenWorship.py
 
 ## [0.0.8] - 2019-04-04
 
@@ -29,7 +40,7 @@
 - 將所有 template 之副檔名更改 *.html > *.jinja
 - 將運行環境更改為pipenv
 - 將 allsongs.html 整合至 result.html 中
-- 更改介面配色：扁平化色調
+- 更改介面配色: 扁平化色調
 
 ### Fixed
 
@@ -41,7 +52,7 @@
 
 - 建立 搜尋引擎 searchEngine.py
 - 新增 app.route("/search")
-- 新增 首頁：搜尋
+- 新增 首頁: 搜尋
 
 ### Changed
 
@@ -54,7 +65,7 @@
 
 - 新增 excel 資料匯入程式
 - 新增 Song Crawler 歌曲資訊爬蟲程式 /songs_data/db_app/song_crawler/
-- 新增 db_matcher.py：比對資料庫資料的程式 /songs_data/db_app/db_matcher.py
+- 新增 db_matcher.py: 比對資料庫資料的程式 /songs_data/db_app/db_matcher.py
 - 建立 /songs_data/json/library/songDB_got.json 作為歌曲的資料庫之一
 - 匯集網路爬蟲資料完成
 - 建立 worshipDB.json 為主資料庫 /songs_data/json/DB/worshipDB.json
@@ -62,9 +73,9 @@
 ### Changed
 
 - 修改 .gitignore
-- 資料庫結構更新：增加 "歌詞、作詞、作曲、出版、演唱、速度、拍號、年份"
+- 資料庫結構更新: 增加 "歌詞、作詞、作曲、出版、演唱、速度、拍號、年份"
 - 將歌詞從資料庫的歌詞陣列中以迴圈方式讀取出來
-- 修改：改善折疊清單之互動按鈕觸發範圍以及效果
+- 修改: 改善折疊清單之互動按鈕觸發範圍以及效果
 - 更名 datamanager.py > db_creator.py
 - 更新資料庫
 
@@ -78,7 +89,7 @@
 
 ### Changed
 
-- 重建列表結構及樣式（ table -> list card ）
+- 重建列表結構及樣式(table -> list card)
 - 調整 RWD 效果以手機使用者角度為主
 - 調整介面顏色
 
@@ -91,10 +102,10 @@
 ### Added
 
 - 建立 Dropbox API
-- 新增 兩個功能：顯示歌譜、下載PPT
+- 新增 兩個功能: 顯示歌譜、下載PPT
 - 建立 img.html 暫作測試用途
 - 新增 Navbar
-- 建立 static 資料：網站LOGO
+- 建立 static 資料: 網站LOGO
 
 ### Changed
 
@@ -118,7 +129,7 @@
 ### Fixed
 
 - 將 secret key 從 config.py 中移除
-- 整理檔案結構，重新部署
+- 整理檔案結構, 重新部署
 
 ## [0.0.2] - 2019-03-27
 
@@ -133,7 +144,7 @@
 
 - 修改 datamanager.py 功能
 - 修改資料庫檔案
-- 修改介面：所有詩歌列表
+- 修改介面: 所有詩歌列表
 
 ## [0.0.1] - 2019-03-25
 
@@ -150,7 +161,7 @@
 
 ## Initial Information
 
-- 這是一個基於 Python Flask, Heroku 的網路應用，提供給茄典教會敬拜及音樂服事同工使用
+- 這是一個基於 Python Flask, Heroku 的網路應用, 提供給茄典教會敬拜及音樂服事同工使用
 
 ## Cheat sheet
 
