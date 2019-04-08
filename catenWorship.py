@@ -64,6 +64,12 @@ def download_ppt(id_):
     try:
         result = dbx.files_get_temporary_link("/caten-worship/ppt/ppt_" + id_ + ".ppt")
         return redirect(result.link)
+    except Exception as e1:
+        pass
+    try:
+        result = dbx.files_get_temporary_link(
+            "/caten-worship/ppt/ppt_" + id_ + ".pptx")
+        return redirect(result.link)
     except Exception as e:
         print(e)
         return "<h1>很抱歉，這首詩歌目前沒有投影片資料可供下載。<h1>", 404

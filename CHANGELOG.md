@@ -10,6 +10,14 @@
 
 - 測試: 以彈出視窗預覽歌譜
 
+### Added
+
+- 更新 ppt 資料
+
+### Changed
+
+- 更改 Dropbox API Token
+
 ## [0.0.9] - 2019-04-05
 
 ### Added
