@@ -2,7 +2,19 @@
 
 這是一個基於 Python Flask, Bootstrap, Heroku, Dropbox API 的詩歌資料庫系統。
 
+詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
+
+## Authors
+
+- **David KuangYen Chang** - *Initial work*
+
 ## Release
+
+### [0.0.10] - 2019-04-09
+
+- 更改 介面樣式
+- 新增 依語言、集數瀏覽詩歌
+- 更新 投影片資料庫
 
 ### [0.0.9] - 2019-04-05
 
@@ -56,9 +68,3 @@
 ### [0.0.1] - 2019-03-25
 
 - 首次發佈
-
-詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
-
-## Authors
-
-- **David KuangYen Chang** - *Initial work*
