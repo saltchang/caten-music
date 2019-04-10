@@ -4,9 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import dropbox
 
+from config import Config
+from model import User
+
+
 from importDB import importDB
 from searchEngine import SearchCore, SurfCore
-from config import Config
+
 
 app = Flask(__name__)
 
@@ -21,16 +25,6 @@ db_sample = importDB("sample.json")
 # Dropbox API
 dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
 
-# 建立DB物件
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True)
-
-    def __init__(self, email):
-        self.email = email
-    
-    def __repr__(self):
-        return "<E-mail %r>" % self.email
 
 # 首頁
 @app.route("/")
