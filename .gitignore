@@ -1,6 +1,11 @@
 # 虛擬環境
-venv
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # 資料
 sheetdata
@@ -8,12 +13,13 @@ sheetdata
 # 機密
 secret.txt
 
-# vscode
+# vscode 設定
 .vscode
 
-# .DS_Store
+# .DS_Store from MacOS
 .DS_Store
 
-# __pycache__
+# Flask.Python Stack
 __pycache__/
 *.py[cod]
+*$py.class

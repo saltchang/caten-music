@@ -1,1 +1,1 @@
-web: gunicorn catenWorship:app
+web: gunicorn main:app

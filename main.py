@@ -1,21 +1,36 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for, send_file
-from flask_sqlalchemy import SQLAlchemy
-
+# -*- coding: utf-8 -*-
+# Python import
 import os
+
+# Import Dropbox
 import dropbox
 
+# Flask Framework and the Extensions
+from flask import (Flask, jsonify, render_template,
+                   request, redirect, url_for, send_file)
+from flask_sqlalchemy import SQLAlchemy
+import flask_login
+
+from models import User
+
+# Import App Config
 from config import Config
-from model import User
 
-
+# Import importDB to manage songs json data
 from importDB import importDB
+
+# Import SearchEngine
 from searchEngine import SearchCore, SurfCore
 
-
+# Main App
 app = Flask(__name__)
 
 # App Configure
-app.config.from_object(Config.Development)
+app.config.from_object(os.environ.get("APP_SETTING"))
+
+# Login Manager
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
 
 # Database
 db = SQLAlchemy(app)
@@ -32,14 +47,16 @@ def index():
     return render_template("index.html", url_for_all_songs=url_for("list_all_songs"))
 
 # 註冊
-@app.route("/reg", methods=["GET" ,"POST"])
+@app.route("/reg", methods=["GET", "POST"])
 def prereg():
     email = None
     if request.method == "POST":
-        email = request.form["email"]
+        email = str(request.form.get("email"))
+        username = str(request.form.get("username"))
+        password = str(request.form.get("password"))
         # 檢查 email 是否已存在？
         if not db.session.query(User).filter(User.email == email).count():
-            reg = User(email)
+            reg = User(username=username, email=email, password=str(password))
             db.session.add(reg)
             db.session.commit()
             return render_template("users.html", users=db.session.query(User))
@@ -56,7 +73,8 @@ def list_all_songs():
 @app.route("/download/ppt/<id_>")
 def download_ppt(id_):
     try:
-        result = dbx.files_get_temporary_link("/caten-worship/ppt/ppt_" + id_ + ".ppt")
+        result = dbx.files_get_temporary_link(
+            "/caten-worship/ppt/ppt_" + id_ + ".ppt")
         return redirect(result.link)
     except Exception as e1:
         pass
@@ -71,8 +89,9 @@ def download_ppt(id_):
 # 下載歌譜
 @app.route("/download/sheetmusic/<id_>")
 def download_sheetmusic(id_):
-    try:  
-        result = dbx.files_get_temporary_link("/caten-worship/sheet-music/sheetmusic_" + id_ + ".jpg")
+    try:
+        result = dbx.files_get_temporary_link(
+            "/caten-worship/sheet-music/sheetmusic_" + id_ + ".jpg")
         link = result.link
         return render_template("img.html", link=link)
     except Exception as e:
@@ -87,10 +106,10 @@ def surfer():
 # 搜尋
 @app.route("/search")
 def searchEngine():
-    mode = request.args.get("m") # 模式 = { "search": 搜尋, "surf": 瀏覽 } 
-    scope = request.args.get("s") # 範圍 = { "title": 依標題, "language": 依語言}
-    keyword = request.args.get("q") # 關鍵字
-    
+    mode = request.args.get("m")  # 模式 = { "search": 搜尋, "surf": 瀏覽 }
+    scope = request.args.get("s")  # 範圍 = { "title": 依標題, "language": 依語言}
+    keyword = request.args.get("q")  # 關鍵字
+
     if mode == "search" and scope:
         result = SearchCore(jsonDB, scope, keyword)
     elif mode == "surf" and scope:
@@ -106,7 +125,8 @@ def searchEngine():
 @app.route("/report/<id_>")
 def report_song(id_):
     return "你回報了id：" + str(id_) + "的歌曲資訊。"
-    
 
+
+# Run App
 if __name__ == "__main__":
     app.run()

@@ -13,6 +13,19 @@
 - 功能: 依多重條件選歌
 - 功能: 登入、註冊
 
+### Added
+
+- 新增 flask-login
+- 建立 models.py, 預備使用 flask-sqlalchemy
+- 建立 password_handler.py 用作密碼加密以及檢驗
+
+### Changed
+
+- 修改 .gitignore
+- 更名 catenWorship.py > main.py
+- 修改 config.py
+- 調整 app 架構
+
 ## [0.0.10] - 2019-04-09
 
 ### Added
