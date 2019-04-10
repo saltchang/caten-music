@@ -30,18 +30,16 @@
 
         {% if mode == "surf" %}
         <h4 class="mb-4 search-infomation">
-            所有&nbsp;
             <span>
                 {% if scope == "language" %}
-                    {% if keyword == "Chinese" %}
+                    {% if keyword.find("c") != -1 %}
                         國語
                     {% endif %}
-                    {% if keyword == "Taiwanese" %}
+                    {% if keyword.find("t") != -1 %}
                         台語
                     {% endif %}
                 {% endif %}
             </span>
-            &nbsp;詩歌
         </h4>
         <p>共有 {{ songs_num }} 首歌</p>
         {% endif %}

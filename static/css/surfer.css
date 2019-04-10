@@ -3,15 +3,20 @@
     margin-bottom: 50px;
 }
 
-.chinese-surf-btn {
+.taiwanese-surf-btn {
     background-color: #c2ab82;
 }
 
-.taiwanese-surf-btn {
-    background-color: #a082bd;
+.chinese-surf-btn {
+    background-color: #b18dd3;
 }
 
 .btn {
     width: 80%;
     height: 2.5rem;
+}
+
+.surferClass a {
+    color: #a5679b;
+    transition: 700ms;
 }

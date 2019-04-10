@@ -40,10 +40,21 @@ def titleSearch(db, keywords):
 # 依語言瀏覽
 def surfLanguage(db, keyword):
     result = []
+    
+    language = ""
+    langCode = keyword[0]
+    collection = keyword.replace(keyword[0], "")
+    if langCode == "c":
+        language = "Chinese"
+    elif langCode == "t":
+        language = "Taiwanese"
+    else:
+        return False
 
     for song in db:
-        if song["language"] == keyword:
-            result.append(song)
+        if song["language"] == language:
+            if song["num_c"] == collection:
+                result.append(song)
     
     if len(result) > 0:
         return result
