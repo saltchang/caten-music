@@ -7,7 +7,9 @@
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-## Release
+- 當前版本 v0.1.0
+
+## Released
 
 ### [0.1.0] - 2019-04-12
 
