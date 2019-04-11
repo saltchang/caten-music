@@ -1,14 +1,18 @@
-# 茄典教會詩歌資料系統
+# Caten Worship
 
-這是一個基於 Python Flask, Bootstrap, Heroku, Dropbox API 的詩歌資料庫系統。
+本專案為基於 Python Flask, Heroku 的網站,
+網址為 [http://caten-worship.herokuapp.com](http://caten-worship.herokuapp.com)
+
+提供給 [茄典教會](https://caten-church.com) 使用
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-## Authors
-
-- **David KuangYen Chang** - *Initial work*
-
 ## Release
+
+### [0.1.0] - 2019-04-12
+
+- 重建 App 架構
+- 重建 資料庫
 
 ### [0.0.10] - 2019-04-09
 

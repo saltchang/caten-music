@@ -1,8 +1,10 @@
+# helper/importJSON.py
+
 import json
 
 
 def importJSON(*args, **kwargs):
-    file_dir_base = "./caten_worship/songs_data/json/DB/"
+    file_dir_base = "data/"
     file_dir = []
     file = []
     for arg in args:

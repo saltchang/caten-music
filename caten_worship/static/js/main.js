@@ -1,4 +1,4 @@
-
+// static/js/main.js
 
 // Collapse 按鈕 icon 變換
 // Songs list

@@ -1,3 +1,5 @@
+<!-- templates/result.html -->
+
 {% extends "base.html" %}
 
 {%  block  head  %}
@@ -34,10 +36,15 @@
                 {% if scope == "language" %}
                     {% if keyword.find("c") != -1 %}
                         國語
+                        &nbsp;
+                        第 {{ c }} 集
                     {% endif %}
                     {% if keyword.find("t") != -1 %}
                         台語
+                        &nbsp;
+                        第 {{ c }} 集
                     {% endif %}
+                        
                 {% endif %}
             </span>
         </h4>
@@ -121,14 +128,14 @@
                         <hr>
                         <div class="row pt-3">
                             <div class="col px-3">
-                                <a class="ppt-icon" href="{{ url_for('download_ppt', id_=song['uid']) }}">
+                                <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song['uid']) }}">
                                     <i class="fas fa-file-powerpoint"></i>
                                     <div>投影片</div>
                                 </a>
                             </div>
                             <div class="col px-3">
                                 <a class="sheet-music-icon"
-                                    href="{{ url_for('download_sheetmusic', id_=song['uid']) }}">
+                                    href="#">
                                     <i class="fas fa-file-alt"></i>
                                     <div>歌譜</div>
                                 </a>
@@ -144,7 +151,7 @@
                         <hr class="mt-3 mb-3">
                         <div class="row pt-1">
                             <div class="col px-4">
-                                <a class="report-icon" href="{{ url_for('report_song', id_=song['uid']) }}">
+                                <a class="report-icon" href="#">
                                     <i class="fas fa-flag"></i>&nbsp;回報
                                 </a>
                             </div>

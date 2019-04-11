@@ -1,30 +1,60 @@
-# Changelog
+# 開發日誌
 
-這是"茄典教會詩歌資料系統"的開發日誌
+**[Caten Worship](http://caten-worship.herokuapp.com)**
 
-- By David KuangYen Chang
+本專案為基於 Python Flask, Heroku 的網站,
+提供給 [茄典教會](https://caten-church.com) 使用
 
 ## [Unrelease]
 
 ### Todo
 
 - 功能: 以彈出視窗預覽歌譜
+- 功能: 回報歌曲問題
+- 功能: 管理員權限(編輯歌曲資料)
 - 功能: 新增歌曲
-- 功能: 依多重條件選歌
-- 功能: 登入、註冊
+- 功能: 依複合條件搜尋歌曲
+- 功能: 會員(註冊, 認證, 登入, 登出)
+- 功能: 歌單(建立歌單, 分享歌單)
 
-### Added
-
-- 新增 flask-login
-- 建立 models.py, 預備使用 flask-sqlalchemy
-- 建立 password_handler.py 用作密碼加密以及檢驗
+## [0.1.0] - 2019-04-12
 
 ### Changed
 
-- 修改 .gitignore
-- 更名 catenWorship.py > main.py
-- 修改 config.py
-- 調整 app 架構
+- 重建 Flask App 架構 - 模組化
+- 導入 Flask Blueprint
+- 重建 資料庫
+
+```txt
+caten-worship/
+  __init__.py
+  helper/
+    __init__.py
+    importJSON.py
+    ...
+  models/
+    __init__.py
+    songs.py
+    users.py
+    ...
+  routes/
+    __init__.py
+    home.py
+    search.py
+    ...
+  services/
+    __init__.py
+    searchEngine.py
+    ...
+  templates/
+    base.html
+    index.html
+    ...
+  static/
+    css/
+    image/
+    js/
+```
 
 ## [0.0.10] - 2019-04-09
 
@@ -198,14 +228,3 @@
 - 建立 requirements.txt
 - 建立 README.md
 - 建立 runtime.txt, Procfile
-
-## Initial Information
-
-- 這是一個基於 Python Flask, Heroku 的網路應用, 提供給茄典教會敬拜及音樂服事同工使用
-
-## Cheat sheet
-
-- Added
-- Changed
-- Fixed
-- Removed

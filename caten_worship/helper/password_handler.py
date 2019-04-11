@@ -1,3 +1,5 @@
+# helper/password_handler.py
+
 import hashlib
 
 def hash_generator(password):
