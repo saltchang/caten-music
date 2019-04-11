@@ -5,6 +5,8 @@
 本專案為基於 Python Flask, Heroku 的網站,
 提供給 [茄典教會](https://caten-church.com) 使用
 
+- 當前版本 v0.1.0
+
 ## [Unrelease]
 
 ### Todo
