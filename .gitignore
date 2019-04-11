@@ -23,3 +23,8 @@ secret.txt
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Other files
+other/
+
+instance/

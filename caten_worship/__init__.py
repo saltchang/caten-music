@@ -1,41 +1,38 @@
 # -*- coding: utf-8 -*-
-# Python import
 import os
-
-# Import Dropbox
-import dropbox
-
-# Flask Framework and the Extensions
 from flask import (Flask, jsonify, render_template,
                    request, redirect, url_for, send_file)
 from flask_sqlalchemy import SQLAlchemy
-import flask_login
+from flask_mail import Mail, Message
 
-from models import User
 
-# Import App Config
-from config import Config
+import dropbox
 
 # Import importDB to manage songs json data
-from importDB import importDB
+from caten_worship.importJSON import importJSON
 
 # Import SearchEngine
-from searchEngine import SearchCore, SurfCore
+from caten_worship.searchEngine import SearchCore, SurfCore
 
-# Main App
-app = Flask(__name__)
-
-# App Configure
+# App and Config
+app = Flask(__name__, instance_relative_config=True)
 app.config.from_object(os.environ.get("APP_SETTING"))
 
-# Login Manager
-login_manager = flask_login.LoginManager()
-login_manager.init_app(app)
+# ensure the instance folder exists
+try:
+    os.makedirs(app.instance_path)
+except OSError:
+    pass
+
+mail = Mail(app)
+from caten_worship.poster import send_async_email, send_mail
 
 # Database
-db = SQLAlchemy(app)
-jsonDB = importDB("worshipDB.json")
-db_sample = importDB("sample.json")
+import caten_worship.database
+db = database.db
+User = database.User
+songsDB = importJSON("worshipDB.json")
+sampleDB = importJSON("sample.json")
 
 # Dropbox API
 dbx = dropbox.Dropbox(os.environ.get("DROPBOX_ACCESS_TOKEN"))
@@ -49,24 +46,25 @@ def index():
 # 註冊
 @app.route("/reg", methods=["GET", "POST"])
 def prereg():
+    username = None
     email = None
+    password = None
+    reg = None
     if request.method == "POST":
-        email = str(request.form.get("email"))
-        username = str(request.form.get("username"))
-        password = str(request.form.get("password"))
-        # 檢查 email 是否已存在？
-        if not db.session.query(User).filter(User.email == email).count():
-            reg = User(username=username, email=email, password=str(password))
-            db.session.add(reg)
-            db.session.commit()
-            return render_template("users.html", users=db.session.query(User))
+        email = request.values.get("email")
+        username = request.values.get("username")
+        password = request.values.get("password")
+        reg = User(username=username, email=email, password=str(password))
+        db.session.add(reg)
+        db.session.commit()
+        return render_template("users.html", users=db.session.query(User))
     return render_template("reg.html")
 
 
 # 瀏覽所有詩歌
 @app.route("/allsongs")
 def list_all_songs():
-    return render_template("result.html", songs=jsonDB, sample=db_sample, display_mode="allsongs")
+    return render_template("result.html", songs=songsDB, sample=sampleDB, display_mode="allsongs")
 
 
 # 下載PPT
@@ -111,9 +109,9 @@ def searchEngine():
     keyword = request.args.get("q")  # 關鍵字
 
     if mode == "search" and scope:
-        result = SearchCore(jsonDB, scope, keyword)
+        result = SearchCore(songsDB, scope, keyword)
     elif mode == "surf" and scope:
-        result = SurfCore(jsonDB, scope, keyword)
+        result = SurfCore(songsDB, scope, keyword)
     else:
         return redirect("/")
 
@@ -126,7 +124,20 @@ def searchEngine():
 def report_song(id_):
     return "你回報了id：" + str(id_) + "的歌曲資訊。"
 
+# Email 測試
+@app.route("/send/mail")
+def mail_poster():
+    #  主旨
+    msg_title = 'Caten Worship 帳號註冊認證'
+    #  寄件者，若參數有設置就不需再另外設置
+    msg_sender = 'catenforjesus@gmail.com'
+    #  收件者，格式為list，否則報錯
+    msg_recipients = ['kk3684635@gmail.com']
 
-# Run App
-if __name__ == "__main__":
-    app.run()
+    send_mail(sender=msg_sender,
+              recipients=msg_recipients,
+              subject=msg_title,
+              template='poster.html',
+              user_name='Salt')
+    
+    return 'You Send Message By Flask-Mail'
