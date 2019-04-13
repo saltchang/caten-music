@@ -1,5 +1,7 @@
 # models/mails.py
 
+import os
+
 from flask_mail import Mail
 from flask import Flask
 

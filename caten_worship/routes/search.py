@@ -2,12 +2,10 @@
 
 from flask import Blueprint, render_template, abort, request
 from jinja2 import TemplateNotFound
-from caten_worship import services, models
+from caten_worship import services
 
 search_bp = Blueprint("search_bp", __name__,
                         template_folder='templates')
-
-songsDB = models.create_songs_db()
 
 @search_bp.route('/search')
 def search():
@@ -23,9 +21,9 @@ def search():
 
     if scope:
         if mode == "search":
-            result = services.SearchCore(songsDB, scope, keyword)
+            result = services.search_songs(scope, keyword)
         elif mode == "surf":
-            result = services.SurfCore(songsDB, scope, keyword)
+            result = services.surf_songs(scope, keyword)
     else:
         return redirect("/")
 

@@ -1,0 +1,19 @@
+<!-- templates/403.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+{%  endblock  %}
+
+{% block title %}Forbidden{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div class="text-center pt-5">
+        <h5 class="mt-5">錯誤代碼：403</h5>
+        <h3>{{ error_message }}</h3>
+        <p class="mt-5">您要回到 <a href="{{ url_for('home_bp.seeHome') }}">首頁</a> 嗎?</p>
+    </div>
+</div>
+{% endblock %}

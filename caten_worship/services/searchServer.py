@@ -1,10 +1,11 @@
-# services/searchEngine.py
+# services/searchServer.py
 
 import re
+from caten_worship.models import songsDB
 
 
 # 關鍵字過濾器
-def keywordFilter(keyword):
+def keyword_filter(keyword):
     replaceList = [u"\u3000", "+"]
     for string in replaceList:
         keyword = keyword.replace(string, " ")
@@ -24,10 +25,10 @@ def keywordFilter(keyword):
 
 
 # 以標題搜尋
-def titleSearch(db, keywords):
+def search_title(keywords):
     result = []
 
-    for song in db:
+    for song in songsDB:
         matchs = []
         for word in keywords:
             matchs.append(re.search(word, song["title"]))
@@ -40,7 +41,7 @@ def titleSearch(db, keywords):
         return False
 
 # 依語言瀏覽
-def surfLanguage(db, keyword):
+def surf_language(keyword):
     result = []
     
     language = ""
@@ -53,7 +54,7 @@ def surfLanguage(db, keyword):
     else:
         return False
 
-    for song in db:
+    for song in songsDB:
         if song["language"] == language:
             if song["num_c"] == collection:
                 result.append(song)
@@ -64,19 +65,19 @@ def surfLanguage(db, keyword):
         return False
 
 # 瀏覽核心
-def SurfCore(db, scope, keyword):
+def surf_songs(scope, keyword):
     if scope == "language":
-        result = surfLanguage(db, keyword)
+        result = surf_language(keyword)
         return result
     else:
         return False
 
 
 # 搜尋核心
-def SearchCore(db, scope, keyword):
-    keywords = keywordFilter(keyword)
+def search_songs(scope, keyword):
+    keywords = keyword_filter(keyword)
     if scope == "title" and keywords:
-        result = titleSearch(db, keywords)
+        result = search_title(keywords)
         return result
     else:
         return False

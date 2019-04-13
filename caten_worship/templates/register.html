@@ -1,0 +1,37 @@
+<!-- templates/register.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+{%  endblock  %}
+
+{% block title %}註冊{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title">
+        <h1>Caten Worship</h1>
+        <h3>註冊帳號</h3>
+    </div>
+
+    <div class="container text-center">
+        <form action="{{ url_for('register_bp.register') }}" method="POST">
+            <div class="form-group">
+                <label for="input-username">使用者名稱</label>
+                <input name="username" type="text" class="form-control" id="input-username" aria-describedby="usernameHelp" placeholder="請輸入您的使用者名稱">
+            </div>
+            <div class="form-group">
+                <label for="input-email">Email</label>
+                <input name="email" type="email" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="請輸入您的 Email">
+                <small id="emailHelp" class="form-text text-muted">本站不會將您的 Email 分享給他人</small>
+            </div>
+            <div class="form-group">
+                <label for="input-password">密碼</label>
+                <input name="password" type="text" class="form-control" id="input-password" placeholder="請輸入您的密碼">
+            </div>
+                <button type="submit" class="btn btn-border-primary">註冊</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
