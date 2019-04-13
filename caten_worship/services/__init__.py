@@ -1,3 +1,3 @@
 # services/__init__.py
 
-from .searchEngine import SearchCore, SurfCore
+from .searchServer import SearchCore, SurfCore

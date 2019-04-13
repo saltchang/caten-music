@@ -10,7 +10,7 @@ search_bp = Blueprint("search_bp", __name__,
 songsDB = models.create_songs_db()
 
 @search_bp.route('/search')
-def searchEngine():
+def search():
 
     # 模式 = { "search": 搜尋, "surf": 瀏覽 }
     mode = request.args.get("m")
