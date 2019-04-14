@@ -1,15 +1,19 @@
 # Caten Worship
 
-本專案為基於 Python Flask, Heroku 的網站,
+本專案為基於 Python Flask, Heroku, PostgreSQL 的網站,
 網址為 [http://caten-worship.herokuapp.com](http://caten-worship.herokuapp.com)
 
 提供給 [茄典教會](https://caten-church.com) 使用
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-- 當前版本 v0.1.0
+- 當前生產版本 v0.1.0
 
 ## Released
+
+### [0.1.1] - 2019-04-14
+
+- 完成註冊功能
 
 ### [0.1.0] - 2019-04-12
 

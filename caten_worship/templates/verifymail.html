@@ -1,3 +1,5 @@
+<!-- templates/verifymail.html -->
+
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
@@ -14,7 +16,7 @@
 
         <div class="" style="text-align: center;">
             <h3>{{ username }}, 歡迎你, 請點擊下面連結來啟用您的帳號, 謝謝</h3>
-            <h4>{{ url_for(".activate_account_bp.activate_account", token=token) }}</h4>
+            <h4>{{ url_for("activate_account_bp.activate_account", token=token, _external=True) }}</h4>
         </div>
     </div>
 </body>

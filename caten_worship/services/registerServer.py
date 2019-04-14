@@ -2,15 +2,17 @@
 
 from caten_worship.models import User, db
 
+
 class Validator:
 
     def username(self, username_to_validate):
         if User.query.filter_by(username=username_to_validate).first():
             return False
-    
+
     def email(self, email_to_validate):
         if User.query.filter_by(email=email_to_validate).first():
             return False
+
 
 class RegisterHandler:
 
@@ -18,10 +20,10 @@ class RegisterHandler:
 
         user = User(username=username, email=email, password=password)
 
-        return user.create_activate_token()
-
         db.session.add(user)
         db.session.commit()
+
+        return user.create_activate_token()
 
 
 class Activator:

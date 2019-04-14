@@ -25,9 +25,7 @@ def register():
         if Validator().email(email_to_validate=email) == False:
             return render_template("403.html", error_message="電子信箱已被註冊"), 403
         
-        RegisterHandler().register_user(username=username, email=email, password=password)
-        
-        token = RegisterHandler().register_user.create_activate_token()
+        token = RegisterHandler().register_user(username=username, email=email, password=password)
 
         send_mail(sender='Sender@domain.com',
                   recipients=[email],
