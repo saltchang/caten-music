@@ -16,9 +16,9 @@ class Validator:
 
 class RegisterHandler:
 
-    def register_user(self, username, email, password):
+    def register_user(self, username, email, password, displayname):
 
-        user = User(username=username, email=email, password=password)
+        user = User(username=username, email=email, password=password, displayname=displayname)
 
         db.session.add(user)
         db.session.commit()

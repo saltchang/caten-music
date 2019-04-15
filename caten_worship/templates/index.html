@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="static/css/home.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {%  endblock  %}
 
 {% block title %}首頁{% endblock %}

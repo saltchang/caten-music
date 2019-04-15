@@ -11,7 +11,7 @@
 
 ### Next Todo
 
-- 註冊前表單驗證
+- 註冊前表單驗證(目前進行至register_js.js)
 
 ### All Feature Todo
 
