@@ -1,0 +1,20 @@
+<!-- templates/active_success.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+{%  endblock  %}
+
+{% block title %}Forbidden{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div class="text-center pt-5">
+        <h5 class="mt-5">帳號啟動失敗</h5>
+        <h3>啟動驗證碼錯誤或已經失效</h3>
+        <h3>原因可能是超過24小時沒有啟動帳號</h3>
+        <p class="mt-5">你要回到 <a href="{{ url_for('home_bp.seeHome') }}">首頁</a> 嗎?</p>
+    </div>
+</div>
+{% endblock %}

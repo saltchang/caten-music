@@ -1,6 +1,6 @@
 # routes/register.py
 
-from flask import Blueprint, render_template, abort, request, redirect, jsonify
+from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app
 from jinja2 import TemplateNotFound
 from caten_worship.services import Validator, RegisterHandler, send_mail
 from caten_worship.helper import formatCheck
@@ -53,7 +53,7 @@ def register():
                   username=username,
                   token=token)
         try:
-            return "請前往您註冊的信箱：" + email + " , 來啟用您的帳號，謝謝。", 201
+            return render_template("after_register.html"), 201
         except TemplateNotFound:
             abort(404)
     

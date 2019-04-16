@@ -1,7 +1,7 @@
 <!-- templates/verifymail.html -->
 
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-Hant-TW" style="max-width: 700px;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,18 @@
     <title>Caten Worship 帳號註冊認證信</title>
 </head>
 <body>
-    <div class="" style="text-align: center; margin-top: 4rem;">
+    <div class="" style="text-align: center; margin-top: 4rem; width: 80%; margin: auto;">
         <div id="title" style="text-align: center;">
             <h1>Caten Worship</h1>
         </div>
 
         <div class="" style="text-align: center;">
             <h3>{{ username }}, 歡迎你, 請點擊下面連結來啟用您的帳號, 謝謝</h3>
-            <h4>{{ url_for("activate_account_bp.activate_account", token=token, _external=True) }}</h4>
+            <p style="width: 300px;">
+                <a href="{{ url_for('activate_account_bp.activate_account', token=token, _external=True) }}">
+                    點此啟用您的帳號
+                </a>
+            </p>
         </div>
     </div>
 </body>

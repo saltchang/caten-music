@@ -1,0 +1,19 @@
+<!-- templates/active_success.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+{%  endblock  %}
+
+{% block title %}Forbidden{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div class="text-center pt-5">
+        <h5 class="mt-5">帳號已經成功啟動</h5>
+        <h3>感謝你的註冊！</h3>
+        <p class="mt-5">你要回到 <a href="{{ url_for('home_bp.seeHome') }}">首頁</a> 嗎?</p>
+    </div>
+</div>
+{% endblock %}

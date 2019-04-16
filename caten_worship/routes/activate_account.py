@@ -14,7 +14,7 @@ def activate_account(token):
     if check_result:
         Activator().activate_user(check_result)
 
-        return "帳號啟動完成！謝謝！"
+        return render_template("active_success.html")
 
     else:
-        return "錯誤：啟動連結已過期或錯誤。"
+        return render_template("active_fail.html")

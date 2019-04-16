@@ -2,6 +2,7 @@
 
 let last_focus = null
 
+// 按下註冊按鈕
 $("#form-register").on("click", "button#btn-register", registerPreValidator);
 function registerPreValidator(event) {
     let username = $("input#input-register-username");
@@ -25,7 +26,7 @@ function registerPreValidator(event) {
     let password_validated = passwordValidator(password.val(), confirm_password);
 
     // confirm password
-    let confirm_password_validated = confirm_passwordValidator(confirm_password.val(), password.val())
+    let confirm_password_validated = confirm_passwordValidator(confirm_password, password)
     
     console.log("username: " + username_validated);
     console.log("email: " + email_validated);
@@ -59,11 +60,13 @@ function registerPreValidator(event) {
     
 }
 
+// 關閉alert警告
 $("#home-title").on("click", "button.close-danger-alert", closeAlert);
 function closeAlert(event) {
     $(this).parent("div").removeClass("show")
 }
 
+// 在input打字
 $("#form-register").on("keydown", "input", preValidatorImm);
 function preValidatorImm(event) {
 
@@ -88,48 +91,72 @@ function preValidatorImm(event) {
     else if (confirm_password_focus) {
         last_focus = "confirm-password"
     }
-
-    console.log("keypress")
     
 }
 
+// 切換至別的input
 $("#form-register").on("focusout", immValidator);
 function immValidator() {
     checked = true;
-    element = $("input#input-register-" + last_focus)
-    value = element.val()
+    element = $("input#input-register-" + last_focus);
+    value = element.val();
 
     if (last_focus == "username") {
         checked = usernameValidator(value);
+        for_username_and_email(value, "xxx");
     }
     else if (last_focus == "email") {
         checked = emailValidator(value);
+        for_username_and_email("xxx", value);
     }
     else if (last_focus == "displayname") {
-        checked = displaynameValidator(value)
+        checked = displaynameValidator(value);
+        for_other();
     }
     else if (last_focus == "password") {
-        checked = passwordValidator(value, $("input#input-register-confirm-password"))
+        checked = passwordValidator(value, $("input#input-register-confirm-password"));
+        for_other();
     }
     else if (last_focus == "confirm-password") {
-        checked = confirm_passwordValidator(value, $("input#input-register-password").val())
+        checked = confirm_passwordValidator($("input#input-register-confirm-password"), $("input#input-register-password"));
     }
 
-    if (!checked) {
-        element.removeClass("is-valid");
-        element.addClass("is-invalid");
-        element.parent().children("small.valid-feedback").hide();
-        element.parent().children("small.invalid-feedback").show();
+    function for_username_and_email(username_val, email_val){
+        if (!checked) {
+            if (email_val == "xxx") {
+                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')");
+            }
+            if (username_val == "xxx") {
+                element.parent().children("small.invalid-feedback").html("請填入正確的Email，用以啟動帳號");
+            }
+            element.removeClass("is-valid");
+            element.addClass("is-invalid");
+            element.parent().children("small.valid-feedback").hide();
+            element.parent().children("small.invalid-feedback").show();
+        }
+        else {
+            ajax_validate_when_switch_focus(username_val, email_val, element);
+        }
     }
-    else {
-        element.removeClass("is-invalid");
-        element.addClass("is-valid");
-        element.parent().children("small.invalid-feedback").hide();
-        element.parent().children("small.valid-feedback").show();
+
+    function for_other(){
+        if (!checked) {
+            element.removeClass("is-valid");
+            element.addClass("is-invalid");
+            element.parent().children("small.valid-feedback").hide();
+            element.parent().children("small.invalid-feedback").show();
+        }
+        else {
+            element.removeClass("is-invalid");
+            element.addClass("is-valid");
+            element.parent().children("small.invalid-feedback").hide();
+            element.parent().children("small.valid-feedback").show();
+        }
     }
+    
 }
 
-
+// 驗證帳號格式
 function usernameValidator(username) {
     let username_validated = false;
     let usernameRule = /^[A-Za-z_0-9]{4,25}$/;
@@ -140,6 +167,7 @@ function usernameValidator(username) {
     return username_validated
 }
 
+// 驗證email格式
 function emailValidator(email) {
     let email_validated = false;
 
@@ -163,6 +191,7 @@ function emailValidator(email) {
     return email_validated
 }
 
+// 驗證顯示名稱格式
 function displaynameValidator(displayname) {
     let displayname_validated = false;
     let displaynameRule = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
@@ -188,6 +217,7 @@ function displaynameValidator(displayname) {
     return displayname_validated
 }
 
+// 驗證密碼格式
 function passwordValidator(password, confirm_password) {
     let password_validated = false;
     let passwordRule = /^([a-zA-Z0-9!_@#\$%\^&\*]){8,65}$/;
@@ -199,22 +229,36 @@ function passwordValidator(password, confirm_password) {
     if (password != confirm_value) {
         confirm_password.removeClass("is-valid");
         confirm_password.addClass("is-invalid");
-        confirm_password.parent().children("small").removeClass("valid-feedback");
-        confirm_password.parent().children("small").addClass("invalid-feedback");
+        confirm_password.parent().children("small.valid-feedback").hide();
+        confirm_password.parent().children("small.invalid-feedback").show();
     }
 
     return password_validated
 }
 
+// 驗證密碼確認
 function confirm_passwordValidator(confirm_password, password) {
+    confirm_password_val = confirm_password.val()
+    password = password.val()
     let confirm_password_validated = false;
-    if (password == confirm_password && password.length > 0) {
+    if (password == confirm_password_val && password.length > 0) {
         confirm_password_validated = true;
+        confirm_password.removeClass("is-invalid");
+        confirm_password.addClass("is-valid");
+        confirm_password.parent().children("small.invalid-feedback").hide();
+        confirm_password.parent().children("small.valid-feedback").show();
+    }
+    else {
+        confirm_password.removeClass("is-valid");
+        confirm_password.addClass("is-invalid");
+        confirm_password.parent().children("small.valid-feedback").hide();
+        confirm_password.parent().children("small.invalid-feedback").show();
     }
 
     return confirm_password_validated
 }
 
+// 最後註冊時的帳號、email重複檢查並post至註冊route
 function get_ajax_validate(username, email) {
     $.ajax({type: "POST",
     async: true,   
@@ -225,11 +269,11 @@ function get_ajax_validate(username, email) {
         username_ajax_valid = msg.username
         email_ajax_valid = msg.email
         if (!username_ajax_valid) {
-            $("div#register-alert").html("帳號已經被註冊<button class='close close-danger-alert'>&times;</button>");
+            $("div#register-alert").html("很抱歉，該使用者帳號已經被註冊<button class='close close-danger-alert'>&times;</button>");
             $("div#register-alert").addClass("show");
         }
         else if (!email_ajax_valid) {
-            $("div#register-alert").html("E-mail已經被註冊<button class='close close-danger-alert'>&times;</button>");
+            $("div#register-alert").html("很抱歉，該E-mail已經被註冊<button class='close close-danger-alert'>&times;</button>");
             $("div#register-alert").addClass("show");
         }
         else if (username_ajax_valid && email_ajax_valid) {
@@ -251,9 +295,56 @@ $("#form-register").on("keypress", "input", function(e){
     }
 });
 
+// 最後一個input Enter 直接submit
 $("#form-register").on("keypress", "input.focus-id-5", function(e){
     if (e.keyCode == 13) {
         console.log("last click");
         $("#btn-register").trigger("click");
     }
 });
+
+function ajax_validate_when_switch_focus(username, email, element) {
+    $.ajax({type: "POST",
+    async: true,   
+    dataType: "json",
+    url: "ajax/validate/register/" + username + "/" + email,
+    contentType: 'application/json; charset=UTF-8',
+    success: function(msg) {
+        if (email == "xxx") {
+            username_ajax_valid = msg.username
+            if (!username_ajax_valid) {
+                element.removeClass("is-valid");
+                element.addClass("is-invalid");
+                element.parent().children("small.valid-feedback").hide();
+                element.parent().children("small.invalid-feedback").html("很抱歉，這個帳號已被註冊");
+                element.parent().children("small.invalid-feedback").show();
+            }
+            else {
+                element.removeClass("is-invalid");
+                element.addClass("is-valid");
+                element.parent().children("small.invalid-feedback").hide();
+                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')");
+                element.parent().children("small.valid-feedback").show();
+            }
+        }
+
+        if (username == "xxx") {
+            email_ajax_valid = msg.email
+            if (!email_ajax_valid) {
+                element.removeClass("is-valid");
+                element.addClass("is-invalid");
+                element.parent().children("small.valid-feedback").hide();
+                element.parent().children("small.invalid-feedback").html("很抱歉，這個E-mail已被註冊");
+                element.parent().children("small.invalid-feedback").show();
+            }
+            else {
+                element.removeClass("is-invalid");
+                element.addClass("is-valid");
+                element.parent().children("small.invalid-feedback").hide();
+                element.parent().children("small.invalid-feedback").html("請填入正確的Email，用以啟動帳號");
+                element.parent().children("small.valid-feedback").show();
+            }
+        }
+    }
+    })
+}

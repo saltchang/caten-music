@@ -7,9 +7,19 @@
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-- 當前生產版本 v0.1.0
+- 當前生產版本 v0.1.2
 
 ## Released
+
+### [0.1.2] - 2019-04-17
+
+- 更新 註冊功能
+- 新增 前端註冊表單驗證功能
+- 新增 後端註冊表單驗證功能
+- 新增 註冊時即時AJAX驗證功能
+- 新增 一些訊息templates
+- 修改 網站Logo
+- 調整 前端介面
 
 ### [0.1.1] - 2019-04-14
 

@@ -36,6 +36,8 @@ hr {
 
 .navbar {
     background-color: #9CAE92;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .navbar-light .navbar-toggler-icon {
@@ -49,9 +51,41 @@ hr {
 
 .navbar-brand {
     opacity: 0.85;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    color: #421800;
     font-family: 'EB Garamond', sans-serif, serif;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    padding-right: 0.7rem;
+    padding-top: 0;
+    padding-bottom: 0;
 }
+
+.brand-logo-img {
+    margin-bottom: .5rem;
+    margin-left: .4rem;
+}
+
+.brand-logo-border {
+    margin-top: .7rem;
+    margin-bottom: .5rem;
+}
+
+.brand-menu-container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+
+@media (min-width: 768px){
+.brand-logo-border {
+    border-right: solid 1px rgba(0,0,0,0.2);
+}
+.brand-menu-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+}
+
 
 .navbar-hr {
     margin-bottom: 0.5rem;
@@ -59,4 +93,5 @@ hr {
 
 .fa-shoe-prints {
     transform: rotate(315deg);
+    margin-right: -0.3rem;
 }
