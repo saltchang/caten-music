@@ -3,6 +3,7 @@
 from flask import Blueprint, render_template, abort, request, redirect, jsonify
 from jinja2 import TemplateNotFound
 from caten_worship.services import Validator, RegisterHandler, send_mail
+from caten_worship.helper import formatCheck
 
 register_bp = Blueprint("register_bp", __name__,
                         template_folder='templates')
@@ -18,11 +19,21 @@ def register():
     password = ""
 
     if request.method == "POST":
-        username = request.values.get("username")
-        email = request.values.get("email")
-        displayname = request.values.get("displayname")
-        password = request.values.get("password")
-        confirm_password = request.values.get("confirm-password")
+        try:
+            username = request.values.get("username")
+            email = request.values.get("email")
+            displayname = request.values.get("displayname")
+            password = request.values.get("password")
+            confirm_password = request.values.get("confirm-password")
+
+            check_result = formatCheck(username, email, displayname, password)
+        
+        except:
+            return render_template("403.html", error_message="Don't Play With Me.")
+
+        for k, v in check_result.items():
+            if not v:
+                return render_template("403.html", error_message="Wrong " + k.replace("_check", ""))
 
         if not password == confirm_password:
             return render_template("403.html", error_message="輸入的確認密碼不正確，請再試一次")
@@ -50,19 +61,15 @@ def register():
         return render_template("register.html")
 
 
-@ajax_validate_register_bp.route("/ajax/validate/register/<username_>/<email_>")
+@ajax_validate_register_bp.route("/ajax/validate/register/<username_>/<email_>", methods=["POST"])
 def ajax_validate_register(username_, email_):
 
-    result = []
+    result = {"username": False, "email": False}
 
-    if Validator().username(username_to_validate=username_) == False:
-        result.append({"username": False})
-    else:
-        result.append({"username": True})
+    if not Validator().username(username_to_validate=username_) == False:
+        result["username"] = True
     
-    if Validator().email(email_to_validate=email_) == False:
-        result.append({"email": False})
-    else:
-        result.append({"email": True})
+    if not Validator().email(email_to_validate=email_) == False:
+        result["email"] = True
 
     return jsonify(result)

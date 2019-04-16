@@ -1,22 +1,146 @@
 // static/js/register_js.js
 
+let last_focus = null
+
 $("#form-register").on("click", "button#btn-register", registerPreValidator);
 function registerPreValidator(event) {
-    let username = $("input#input-register-username").val();
-    let email = $("input#input-register-email").val();
-    let displayname = $("input#input-register-displayname").val();
-    let password = $("input#input-register-password").val();
-    let confirm_password = $("input#input-register-confirm-password").val();
+    let username = $("input#input-register-username");
+    let email = $("input#input-register-email");
+    let displayname = $("input#input-register-displayname");
+    let password = $("input#input-register-password");
+    let confirm_password = $("input#input-register-confirm-password");
+
+    let all_input_valid = false
 
     // username
+    let username_validated = usernameValidator(username.val());
+
+    // email
+    let email_validated = emailValidator(email.val());
+
+    // displayname
+    let displayname_validated = displaynameValidator(displayname.val());
+
+    // password
+    let password_validated = passwordValidator(password.val(), confirm_password);
+
+    // confirm password
+    let confirm_password_validated = confirm_passwordValidator(confirm_password.val(), password.val())
+    
+    console.log("username: " + username_validated);
+    console.log("email: " + email_validated);
+    console.log("displayname: " + displayname_validated);
+    console.log("password: " + password_validated);
+    console.log("confirm_password: " + confirm_password_validated);
+
+    if (!username_validated) {
+        $("div#register-alert").html("帳號格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
+        $("div#register-alert").addClass("show");
+    }
+    else if (!email_validated) {
+        $("div#register-alert").html("Email格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
+        $("div#register-alert").addClass("show");
+    }
+    else if (!displayname_validated) {
+        $("div#register-alert").html("名稱格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
+        $("div#register-alert").addClass("show");
+    }
+    else if (!password_validated) {
+        $("div#register-alert").html("密碼格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
+        $("div#register-alert").addClass("show");
+    }
+    else if (!confirm_password_validated) {
+        $("div#register-alert").html("兩次輸入的密碼不相符<button class='close close-danger-alert'>&times;</button>");
+        $("div#register-alert").addClass("show");
+    }
+    else {
+        get_ajax_validate(username.val(), email.val())
+    }
+    
+}
+
+$("#home-title").on("click", "button.close-danger-alert", closeAlert);
+function closeAlert(event) {
+    $(this).parent("div").removeClass("show")
+}
+
+$("#form-register").on("keydown", "input", preValidatorImm);
+function preValidatorImm(event) {
+
+    let username_focus = $("input#input-register-username").is(':focus');
+    let email_focus = $("input#input-register-email").is(':focus');
+    let displayname_focus = $("input#input-register-displayname").is(':focus');
+    let password_focus = $("input#input-register-password").is(':focus');
+    let confirm_password_focus = $("input#input-register-confirm-password").is(':focus');
+    
+    if (username_focus) {
+        last_focus = "username"
+    }
+    else if (email_focus) {
+        last_focus = "email"
+    }
+    else if (displayname_focus) {
+        last_focus = "displayname"
+    }
+    else if (password_focus) {
+        last_focus = "password"
+    }
+    else if (confirm_password_focus) {
+        last_focus = "confirm-password"
+    }
+
+    console.log("keypress")
+    
+}
+
+$("#form-register").on("focusout", immValidator);
+function immValidator() {
+    checked = true;
+    element = $("input#input-register-" + last_focus)
+    value = element.val()
+
+    if (last_focus == "username") {
+        checked = usernameValidator(value);
+    }
+    else if (last_focus == "email") {
+        checked = emailValidator(value);
+    }
+    else if (last_focus == "displayname") {
+        checked = displaynameValidator(value)
+    }
+    else if (last_focus == "password") {
+        checked = passwordValidator(value, $("input#input-register-confirm-password"))
+    }
+    else if (last_focus == "confirm-password") {
+        checked = confirm_passwordValidator(value, $("input#input-register-password").val())
+    }
+
+    if (!checked) {
+        element.removeClass("is-valid");
+        element.addClass("is-invalid");
+        element.parent().children("small.valid-feedback").hide();
+        element.parent().children("small.invalid-feedback").show();
+    }
+    else {
+        element.removeClass("is-invalid");
+        element.addClass("is-valid");
+        element.parent().children("small.invalid-feedback").hide();
+        element.parent().children("small.valid-feedback").show();
+    }
+}
+
+
+function usernameValidator(username) {
     let username_validated = false;
     let usernameRule = /^[A-Za-z_0-9]{4,25}$/;
     if (username.search(usernameRule) != -1) {
         username_validated = true;
     }
 
+    return username_validated
+}
 
-    // email
+function emailValidator(email) {
     let email_validated = false;
 
     let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
@@ -30,13 +154,16 @@ function registerPreValidator(event) {
     // ((\.|-)[A-Za-z0-9]+)*：@ 之後出現 0 個以上的「.」或是「-」配上大小寫英文及數字的組合
     // \.[A-Za-z]+$/：@ 之後出現 1 個以上的「.」配上大小寫英文及數字的組合，結尾需為大小寫英文
 
-    if (email.length > 2 && email.length < 64) {
+    if (email.length > 2 && email.length < 65) {
         if(email.search(emailRule) != -1){
             email_validated = true;
         }
     }
 
-    // displayname
+    return email_validated
+}
+
+function displaynameValidator(displayname) {
     let displayname_validated = false;
     let displaynameRule = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
     let chineseREX = /^[\u4e00-\u9fa5]+$/;
@@ -58,30 +185,75 @@ function registerPreValidator(event) {
         }
     }
 
-    // password
+    return displayname_validated
+}
+
+function passwordValidator(password, confirm_password) {
     let password_validated = false;
     let passwordRule = /^([a-zA-Z0-9!_@#\$%\^&\*]){8,65}$/;
     if (password.search(passwordRule) != -1) {
         password_validated = true;
     }
 
+    confirm_value = confirm_password.val()
+    if (password != confirm_value) {
+        confirm_password.removeClass("is-valid");
+        confirm_password.addClass("is-invalid");
+        confirm_password.parent().children("small").removeClass("valid-feedback");
+        confirm_password.parent().children("small").addClass("invalid-feedback");
+    }
+
+    return password_validated
+}
+
+function confirm_passwordValidator(confirm_password, password) {
     let confirm_password_validated = false;
-    if (password == confirm_password) {
+    if (password == confirm_password && password.length > 0) {
         confirm_password_validated = true;
     }
 
-    if (username_validated == false) {
-        $("input#input-register-username").addClass("is-invalid");
-    }
-    else {
-        $("input#input-register-username").removeClass("is-invalid");
-    }
-    
-
-    console.log("username: " + username_validated);
-    console.log("email: " + email_validated);
-    console.log("displayname: " + displayname_validated);
-    console.log("password: " + password_validated);
-    console.log("confirm_password: " + confirm_password_validated);
-
+    return confirm_password_validated
 }
+
+function get_ajax_validate(username, email) {
+    $.ajax({type: "POST",
+    async: true,   
+    dataType: "json",
+    url: "ajax/validate/register/" + username + "/" + email,
+    contentType: 'application/json; charset=UTF-8',
+    success: function(msg) {
+        username_ajax_valid = msg.username
+        email_ajax_valid = msg.email
+        if (!username_ajax_valid) {
+            $("div#register-alert").html("帳號已經被註冊<button class='close close-danger-alert'>&times;</button>");
+            $("div#register-alert").addClass("show");
+        }
+        else if (!email_ajax_valid) {
+            $("div#register-alert").html("E-mail已經被註冊<button class='close close-danger-alert'>&times;</button>");
+            $("div#register-alert").addClass("show");
+        }
+        else if (username_ajax_valid && email_ajax_valid) {
+            $("#form-register").submit();
+        }
+    }
+    })
+}
+
+
+// Enter 切換輸入
+$("#form-register").on("keypress", "input", function(e){
+    if (e.keyCode == 13) {
+        for (let i = 1; i <= 5; i++) {
+            if ($(this).hasClass("focus-id-" + String(i))) {
+                $(this).parent().parent().children().children("input.focus-id-" + String(i + 1)).focus();
+            }
+        }
+    }
+});
+
+$("#form-register").on("keypress", "input.focus-id-5", function(e){
+    if (e.keyCode == 13) {
+        console.log("last click");
+        $("#btn-register").trigger("click");
+    }
+});
