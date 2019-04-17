@@ -220,7 +220,7 @@ function displaynameValidator(displayname) {
 // 驗證密碼格式
 function passwordValidator(password, confirm_password) {
     let password_validated = false;
-    let passwordRule = /^([a-zA-Z0-9!_@#\$%\^&\*]){8,65}$/;
+    let passwordRule = /^([a-zA-Z0-9!_@#\$%\^&\*\+\-\/\:]){8,65}$/;
     if (password.search(passwordRule) != -1) {
         password_validated = true;
     }

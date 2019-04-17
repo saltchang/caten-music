@@ -26,7 +26,7 @@ def formatCheck(username, email, displayname, password):
         if stringLen <= 16:
             check_result["displayname_check"] = True
     
-    if re.fullmatch(r"^([a-zA-Z0-9!_@#\$%\^&\*]){8,65}$", password):
+    if re.fullmatch(r"^([a-zA-Z0-9!_@#\$%\^&\*\+\-\/\:]){8,65}$", password):
         check_result["password_check"] = True
 
     return check_result
