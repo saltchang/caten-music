@@ -1,4 +1,4 @@
-# services/validateServer.py
+# services/registerServer.py
 
 from caten_worship.models import User, db
 

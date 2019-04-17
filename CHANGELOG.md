@@ -1,6 +1,6 @@
 # 開發日誌
 
-**[Caten Worship](http://caten-worship.herokuapp.com)**
+**[Caten Worship](https://caten-worship.herokuapp.com)**
 
 本專案為基於 Python Flask, Heroku 的網站,
 提供給 [茄典教會](https://caten-church.com) 使用
@@ -33,6 +33,7 @@
 ### Changed
 
 - 修改 註冊密碼可容許符號: "_!@#$%^&*+-/:"
+- 新增 Heroku ACM, 更改網址
 
 ## [0.1.2] - 2019-04-17
 
