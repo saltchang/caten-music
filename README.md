@@ -1,7 +1,7 @@
 # Caten Worship
 
 本專案為基於 Python Flask, Heroku, PostgreSQL 的網站,
-網址為 [http://caten-worship.herokuapp.com](https://caten-worship.herokuapp.com)
+網址為 [https://caten-worship.herokuapp.com](https://caten-worship.herokuapp.com)
 
 提供給 [茄典教會](https://caten-church.com) 使用
 
