@@ -1,0 +1,26 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+{%  endblock  %}
+
+{% block title %}所有使用者{% endblock %}
+
+{% block content%}
+<div class="container text-center">
+    <div id="home-title">
+        <h3>所有使用者</h3>
+    </div>
+
+    <div class="container text-center">
+        <ul>
+            {% for user in all_users %}
+                <li>username: {{ user.username }}, email: {{ user.email }}</li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+</div>
+{% endblock %}

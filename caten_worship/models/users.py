@@ -20,13 +20,19 @@ class User(db.Model):
     displayname = db.Column(db.String(16), nullable=False)
     activated = db.Column(db.Boolean, default=False)
 
+
     @property
     def password(self):
         raise AttributeError("Password is not a readable attribute.")
 
+
     @password.setter
     def password(self, password):
+
         self.password_hash = helper.hash_generator(password)
+
+        return self.password_hash
+
 
     def verify_password(self, password):
         """
@@ -36,9 +42,18 @@ class User(db.Model):
         """
         return helper.check_password(password, self.password_hash)
 
+
     def create_activate_token(self, expires_in=3600*24):
         token_generator = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
-        return token_generator.dumps({"user_id": self.id})
+        id_ = self.id
+        return token_generator.dumps({"user_id": id_})
+
+
+    def save(self):
+
+        db.session.add(self)
+        db.session.commit()
+
 
     def __repr__(self):
         return 'User: %s, Email: %s' % (self.username, self.email)

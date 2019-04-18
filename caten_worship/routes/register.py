@@ -2,13 +2,17 @@
 
 from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app
 from jinja2 import TemplateNotFound
-from caten_worship.services import Validator, RegisterHandler, send_mail
+from caten_worship.services import Validator, send_mail
 from caten_worship.helper import formatCheck
+from caten_worship import models
 
 register_bp = Blueprint("register_bp", __name__,
                         template_folder='templates')
 
 ajax_validate_register_bp = Blueprint("ajax_validate_register_bp", __name__,
+                        template_folder='templates')
+
+list_all_users_bp = Blueprint("list_all_users_bp", __name__,
                         template_folder='templates')
 
 @register_bp.route('/register', methods=["GET", "POST"])
@@ -44,7 +48,11 @@ def register():
         if Validator().email(email_to_validate=email) == False:
             return render_template("403.html", error_message="電子信箱已被註冊"), 403
         
-        token = RegisterHandler().register_user(username=username, email=email, password=password, displayname=displayname)
+        new_user = models.User(username=username, email=email, displayname=displayname, password=password)
+
+        token = new_user.create_activate_token()
+
+        new_user.save()
 
         send_mail(sender='Sender@domain.com',
                   recipients=[email],
@@ -73,3 +81,10 @@ def ajax_validate_register(username_, email_):
         result["email"] = True
 
     return jsonify(result)
+
+@list_all_users_bp.route("/list/all/users")
+def list_all_users():
+    all_users = models.User.query.all()
+
+    return render_template("list_all_users.html", all_users=all_users)
+
