@@ -1,6 +1,7 @@
 # helper/__init__.py
 
-from .importJSON import importJSON
-from .password_handler import check_password, hash_generator
-from .activate_check import validate_activate_token
-from .registerFormatCheck import formatCheck
+from .json_importer import importJSON
+from .password_handler import createPasswordHash, checkPasswordHash
+from .activate_checker import checkActivateToken
+from .register_format_checker import checkFormat
+from .exist_checker import checkExist

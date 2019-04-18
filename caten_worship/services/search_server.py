@@ -1,4 +1,4 @@
-# services/searchServer.py
+# services/search_server.py
 
 import re
 from caten_worship.models import songsDB
@@ -41,9 +41,11 @@ def search_title(keywords):
         return False
 
 # 依語言瀏覽
+
+
 def surf_language(keyword):
     result = []
-    
+
     language = ""
     langCode = keyword[0]
     collection = keyword.replace(keyword[0], "")
@@ -58,13 +60,15 @@ def surf_language(keyword):
         if song["language"] == language:
             if song["num_c"] == collection:
                 result.append(song)
-    
+
     if len(result) > 0:
         return result
     else:
         return False
 
 # 瀏覽核心
+
+
 def surf_songs(scope, keyword):
     if scope == "language":
         result = surf_language(keyword)

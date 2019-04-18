@@ -1,4 +1,4 @@
-# models/dbxAPI.py
+# models/dbx.py
 
 import dropbox, os
 

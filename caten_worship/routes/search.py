@@ -5,7 +5,8 @@ from jinja2 import TemplateNotFound
 from caten_worship import services
 
 search_bp = Blueprint("search_bp", __name__,
-                        template_folder='templates')
+                      template_folder='templates')
+
 
 @search_bp.route('/search')
 def search():
@@ -19,20 +20,36 @@ def search():
     # 關鍵字
     keyword = request.args.get("q")
 
+    # 預設 c 值
+    c = ""
+
+    # 確認 scope
     if scope:
+
+        # 搜尋模式
         if mode == "search":
             result = services.search_songs(scope, keyword)
+
+            if not result:
+                result = []
+
+        # 瀏覽模式
         elif mode == "surf":
             result = services.surf_songs(scope, keyword)
+
+            if not result:
+                result = []
+                c = ""
+
+            else:
+                c = result[1]["num_c"]
+
+        else:
+            return redirect("/")
+
     else:
         return redirect("/")
 
-    if not result:
-        result = []
-        c = ""
-    else:
-        c = result[1]["num_c"]
-    
     try:
         return render_template("result.html", songs=result, songs_num=len(result), mode=mode, scope=scope, keyword=keyword, c=c)
     except TemplateNotFound:

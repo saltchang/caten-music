@@ -1,4 +1,4 @@
-# services/mail.py
+# services/mail_server.py
 
 # https://hackmd.io/c/HJiZtEngG/https%3A%2F%2Fhackmd.io%2Fs%2FBkYRYDmBf
 
@@ -8,6 +8,7 @@ from flask_mail import Message
 from caten_worship import models
 
 mail = models.mail
+
 
 def send_mail(sender, recipients, subject, template, **kwargs):
     """
@@ -29,6 +30,7 @@ def send_mail(sender, recipients, subject, template, **kwargs):
     thread.start()
 
     return thread
+
 
 def send_mail_thread(app, mailcontent):
     """

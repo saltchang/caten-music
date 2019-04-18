@@ -266,17 +266,17 @@ function get_ajax_validate(username, email) {
     url: "ajax/validate/register/" + username + "/" + email,
     contentType: 'application/json; charset=UTF-8',
     success: function(msg) {
-        username_ajax_valid = msg.username
-        email_ajax_valid = msg.email
-        if (!username_ajax_valid) {
+        username_ajax_exist = msg.username
+        email_ajax_exist = msg.email
+        if (username_ajax_exist) {
             $("div#register-alert").html("很抱歉，該使用者帳號已經被註冊<button class='close close-danger-alert'>&times;</button>");
             $("div#register-alert").addClass("show");
         }
-        else if (!email_ajax_valid) {
+        else if (email_ajax_exist) {
             $("div#register-alert").html("很抱歉，該E-mail已經被註冊<button class='close close-danger-alert'>&times;</button>");
             $("div#register-alert").addClass("show");
         }
-        else if (username_ajax_valid && email_ajax_valid) {
+        else if (!username_ajax_exist && !email_ajax_exist) {
             $("#form-register").submit();
         }
     }
@@ -311,8 +311,8 @@ function ajax_validate_when_switch_focus(username, email, element) {
     contentType: 'application/json; charset=UTF-8',
     success: function(msg) {
         if (email == "xxx") {
-            username_ajax_valid = msg.username
-            if (!username_ajax_valid) {
+            username_ajax_exist = msg.username
+            if (username_ajax_exist) {
                 element.removeClass("is-valid");
                 element.addClass("is-invalid");
                 element.parent().children("small.valid-feedback").hide();
@@ -329,8 +329,8 @@ function ajax_validate_when_switch_focus(username, email, element) {
         }
 
         if (username == "xxx") {
-            email_ajax_valid = msg.email
-            if (!email_ajax_valid) {
+            email_ajax_exist = msg.email
+            if (email_ajax_exist) {
                 element.removeClass("is-valid");
                 element.addClass("is-invalid");
                 element.parent().children("small.valid-feedback").hide();

@@ -1,6 +1,6 @@
 # models/songs.py
 
-import caten_worship.helper as helper
+from caten_worship import helper
 
 
 songsDB = helper.importJSON("worshipDB.json")

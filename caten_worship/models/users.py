@@ -1,18 +1,20 @@
 # models/users.py
 
-import os
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, current_app
-from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired, BadSignature
+from flask import current_app
 
+from itsdangerous import TimedJSONWebSignatureSerializer as sign
+from itsdangerous import SignatureExpired, BadSignature
+
+from caten_worship.db import db
 from caten_worship import helper
 
-app = Flask(__name__)
-app.config.from_object(os.environ.get("APP_SETTING"))
-db = SQLAlchemy(app)
 
 class User(db.Model):
+
+    # SQL Table Name
     __tablename__ = "users"
+
+    # 資料欄位設定
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(24), unique=True, nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
@@ -20,40 +22,41 @@ class User(db.Model):
     displayname = db.Column(db.String(16), nullable=False)
     activated = db.Column(db.Boolean, default=False)
 
-
+    # 定義 password 為不可讀
     @property
     def password(self):
         raise AttributeError("Password is not a readable attribute.")
 
-
+    # 自動由密碼產生 hash
     @password.setter
     def password(self, password):
+        self.password_hash = helper.createPasswordHash(password)
 
-        self.password_hash = helper.hash_generator(password)
-
-        return self.password_hash
-
+    # 使用雜湊驗算確認輸入之密碼是否正確
 
     def verify_password(self, password):
-        """
-        密碼驗證，驗證使用者輸入的密碼跟資料庫內的加密密碼是否相符
-        :param password: 使用者輸入的密碼
-        :return: True/False
-        """
-        return helper.check_password(password, self.password_hash)
+        return helper.checkPasswordHash(password, self.password_hash)
 
+    # 產生帳號啟動碼
 
-    def create_activate_token(self, expires_in=3600*24):
-        token_generator = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
-        id_ = self.id
-        return token_generator.dumps({"user_id": id_})
+    def create_activate_token(self, expires_in=3600 * 24):
+        token_generator = sign(
+            current_app.config['SECRET_KEY'], expires_in=expires_in)
+        return token_generator.dumps({"user_id": self.id})
 
+    # 預註冊到資料庫（特殊用途）
+
+    def flush(self):
+        db.session.add(self)
+        db.flush()
+
+    # 註冊到資料庫
 
     def save(self):
-
         db.session.add(self)
         db.session.commit()
 
+    # 自身物件表示
 
     def __repr__(self):
-        return 'User: %s, Email: %s' % (self.username, self.email)
+        return '<ID: %s, Username: %s, Email: %s>' % (self.id, self.username, self.email)

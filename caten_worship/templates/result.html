@@ -33,7 +33,7 @@
         {% if mode == "surf" %}
         <h4 class="mb-4 search-infomation">
             <span>
-                {% if scope == "language" %}
+                {% if scope == "language" and not c == "" %}
                     {% if keyword.find("c") != -1 %}
                         國語
                         &nbsp;

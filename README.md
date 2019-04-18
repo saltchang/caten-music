@@ -7,9 +7,16 @@
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-- 當前生產版本 v0.1.2
+- 當前生產版本 v0.1.3
 
 ## Released
+
+### [0.1.3] - 2019-04-19
+
+- 調整 系統架構
+- 加入 網站 SSL from Heroku ACM
+- 調整 資料庫
+- 更改 註冊密碼可容許更多符號
 
 ### [0.1.2] - 2019-04-17
 

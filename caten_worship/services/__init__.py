@@ -1,5 +1,4 @@
 # services/__init__.py
 
-from .searchServer import search_songs, surf_songs
-from .mailServer import send_mail
-from .registerServer import Validator, RegisterHandler
+from .search_server import search_songs, surf_songs
+from .mail_server import send_mail
