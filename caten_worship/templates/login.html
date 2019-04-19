@@ -1,0 +1,49 @@
+<!-- templates/login.html -->
+
+{% extends "base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{%  endblock  %}
+
+{% block title %}登入{% endblock %}
+
+{% block content%}
+
+<div class="container">
+    <div id="home-title" class="mt-5 mb-5 pt-5">
+        <h3>登入 CatenWorship</h3>
+        <div id="login-alert" class="alert alert-danger fade alert-fixed" role="alert">
+            <button class="close close-danger-alert">&times;</button>
+        </div>
+    </div>
+
+    <div class="card px-0 px-md-2 px-lg-5">
+        <form id="form-login" action="#" method="POST">
+
+            <!-- username or email-->
+            <div class="form-group mt-4">
+                <label for="input-login-primary" class="ml-2">帳號 或 E-mail</label>
+                <input name="primary" type="text" class="form-control focus-id-1" id="input-login-primary" aria-describedby="primaryHelp" autofocus="true">
+            </div>
+
+            <!-- password -->
+            <div class="form-group mt-4">
+                <label for="input-login-password" class="ml-2">密碼</label>
+                <input name="password" type="password" class="form-control focus-id-2" id="input-login-password">
+            </div>
+            <!-- log in -->
+            <button id="btn-login" type="button" class="btn btn-outline-info">
+                登入
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+{{ super () }}
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock script %}

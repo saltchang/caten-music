@@ -1,4 +1,4 @@
-// static/js/register_js.js
+// static/js/register.js
 
 let last_focus = null
 
