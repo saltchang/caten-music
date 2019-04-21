@@ -9,35 +9,41 @@
 
 {% block title %}登入{% endblock %}
 
+{% block navbar %}{% endblock navbar %}
+
 {% block content%}
 
-<div class="container">
-    <div id="home-title" class="mt-5 mb-5 pt-5">
-        <h3>登入 CatenWorship</h3>
+<div class="container container-static">
+    <div class="home-title" class="">
+        <h4>登入</h4>
         <div id="login-alert" class="alert alert-danger fade alert-fixed" role="alert">
             <button class="close close-danger-alert">&times;</button>
         </div>
     </div>
 
-    <div class="card px-0 px-md-2 px-lg-5">
+    <div class="card px-4">
         <form id="form-login" action="#" method="POST">
 
             <!-- username or email-->
             <div class="form-group mt-4">
-                <label for="input-login-primary" class="ml-2">帳號 或 E-mail</label>
+                <label for="input-login-primary" class="ml-2">使用者帳號 或 電子郵件</label>
                 <input name="primary" type="text" class="form-control focus-id-1" id="input-login-primary" aria-describedby="primaryHelp" autofocus="true">
             </div>
 
             <!-- password -->
             <div class="form-group mt-4">
-                <label for="input-login-password" class="ml-2">密碼</label>
+                <label class="label-password ml-2" for="input-login-password">密碼<a href="#" class="forgot-password">忘記密碼？</a></label>
                 <input name="password" type="password" class="form-control focus-id-2" id="input-login-password">
             </div>
+
             <!-- log in -->
-            <button id="btn-login" type="button" class="btn btn-outline-info">
+            <button id="btn-login" type="button" class="btn btn-success">
                 登入
             </button>
         </form>
+
+        <span class="new-to-here">新加入嗎？ <a href="#">點我註冊</a></span>
+        <span class="new-to-here"><a class="have-problem" href="#">遇到問題？</a></span>
     </div>
 </div>
 

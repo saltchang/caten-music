@@ -8,11 +8,16 @@ _:-ms-fullscreen,
         sans-serif;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 html {
     min-width: 320px;
 }
 
 body {
+    min-width: 320px;
     background: #f7f4e3;
     color: #344042;
 }
@@ -37,6 +42,7 @@ hr {
     background-color: #9CAE92;
     padding-top: 0;
     padding-bottom: 0;
+    min-width: 320px;
 }
 
 .navbar-light .navbar-toggler-icon {
