@@ -22,7 +22,7 @@ function loginPreValidator(event) {
 
 
     if (!primary_validated || !password_validated) {
-        $("div#login-alert").html("登入資訊錯誤<button class='close close-danger-alert'>&times;</button>");
+        $("div#login-alert").html("所輸入的資訊不符合格式<button class='close close-danger-alert'>&times;</button>");
         $("div#login-alert").addClass("show");
     }
     else {
@@ -83,7 +83,7 @@ function get_ajax_validate_login(primary, password, primary_type) {
         console.log("password = " + password)
         console.log(login_pass)
         if (!login_pass) {
-            $("div#login-alert").html("錯誤的登入資訊<button class='close close-danger-alert'>&times;</button>");
+            $("div#login-alert").html("帳號、電子郵件或密碼錯誤<button class='close close-danger-alert'>&times;</button>");
             $("div#login-alert").addClass("show");
             console.log("login failed!")
         }
@@ -93,4 +93,10 @@ function get_ajax_validate_login(primary, password, primary_type) {
         }
     }
     })
+}
+
+// 關閉alert警告
+$(".home-title").on("click", "button.close-danger-alert", closeAlert);
+function closeAlert(event) {
+    $(this).parent("div").removeClass("show")
 }

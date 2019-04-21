@@ -44,6 +44,10 @@ a {
     width: 100%;
 }
 
+.alert-danger {
+    height: 3rem;
+}
+
 #btn-login {
     font-size: .9rem;
     width: 150px;
