@@ -24,12 +24,29 @@
 </head>
 
 <body>
+    {% block alert_container %}
+    <div class="alert-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-setting fade show" role="alert">
+            {{ message }}
+            <button class="close close-this-alert">&times;</button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    {% endblock alert_container %}
+
+
+
     {% block navbar %}
     <nav class="navbarstyle navbar navbar-expand-md navbar-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand brand-logo-border" href="/">
-                <img src="{{ url_for('static', filename='image/icon/CatenWorshipLogoBlack.png') }}" width="34" height="32"
-                    class="d-inline-block align-center brand-logo-img" alt="Caten Worship">
+                <img src="{{ url_for('static', filename='image/icon/CatenWorshipLogoBlack.png') }}" width="34"
+                    height="32" class="d-inline-block align-center brand-logo-img" alt="Caten Worship">
                 Caten Worship
             </a>
             <a class="d-md-none" data-toggle="collapse" href="#navbarSupportedContent" role="button"
@@ -58,6 +75,15 @@
 
                 <ul class="navbar-nav ml-auto">
 
+                    {% if not current_user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link navbar-item-style" href="{{ url_for('login_bp.login') }}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            &nbsp;登入
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item active">
                         <a class="nav-link navbar-item-style" href="{{ url_for('register_bp.register') }}">
                             <i class="fas fa-feather-alt"></i>
@@ -65,6 +91,22 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    {% endif %}
+
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="btn-navbar-user-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ current_user.displayname }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <form action="{{ url_for('logout_bp.logout') }}" method="post"><button type="submit"
+                                    class="dropdown-item" href="">登出</button></form>
+                        </div>
+                    </li>
+                    {% endif %}
 
                 </ul>
 
@@ -94,6 +136,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     {% endblock script %}
 </body>
 

@@ -31,12 +31,6 @@ function loginPreValidator(event) {
     
 }
 
-// 關閉alert警告
-$("#home-title").on("click", "button.close-danger-alert", closeAlert);
-function closeAlert(event) {
-    $(this).parent("div").removeClass("show")
-}
-
 
 // 驗證帳號格式
 function primaryValidator(primary) {
@@ -88,7 +82,7 @@ function get_ajax_validate_login(primary, password, primary_type) {
             console.log("login failed!")
         }
         else if (login_pass) {
-            // $("#form-login").submit();
+            $("#form-login").submit();
             console.log("login passed!")
         }
     }

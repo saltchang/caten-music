@@ -20,7 +20,9 @@ class User(db.Model):
     email = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(64), nullable=False)
     displayname = db.Column(db.String(16), nullable=False)
-    activated = db.Column(db.Boolean, default=False)
+    is_authenticated = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=False)
+    is_anonymous = db.Column(db.Boolean, default=False)
 
     # 定義 password 為不可讀
     @property
@@ -40,9 +42,13 @@ class User(db.Model):
     # 產生帳號啟動碼
 
     def create_activate_token(self, expires_in=3600 * 24):
-        token_generator = sign(
-            current_app.config['SECRET_KEY'], expires_in=expires_in)
+        token_generator = sign(current_app.config['SECRET_KEY'], expires_in=expires_in)
         return token_generator.dumps({"user_id": self.id})
+
+    # 取得用戶唯一識別碼
+
+    def get_id(self):
+        return self.username
 
     # 預註冊到資料庫（特殊用途）
 

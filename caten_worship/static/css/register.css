@@ -1,12 +1,12 @@
 /* static/css/register_css.css */
 
 .alert-fixed {
-    position:fixed; 
-    top: 4rem; 
-    left: 0px; 
+    position: fixed;
+    top: 4rem;
+    left: 0px;
     width: 100%;
-    z-index:9999; 
-    border-radius:0px;
+    z-index: 9000;
+    border-radius: 0px;
     opacity: .85;
 }
 

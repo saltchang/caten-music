@@ -22,7 +22,9 @@
     </div>
 
     <div class="card px-4">
-        <form id="form-login" action="#" method="POST">
+        <form id="form-login" action="{{ url_for('login_bp.login') }}" method="POST">
+            
+            <input class="d-none" name="next-url" value="{{ next_url }}">
 
             <!-- username or email-->
             <div class="form-group mt-4">
@@ -37,12 +39,12 @@
             </div>
 
             <!-- log in -->
-            <button id="btn-login" type="button" class="btn btn-success">
+            <button id="btn-login" type="button" class="btn btn-success main-btn">
                 登入
             </button>
         </form>
 
-        <span class="new-to-here">新加入嗎？ <a href="#">點我註冊</a></span>
+        <span class="new-to-here">新加入嗎？ <a href="{{ url_for('register_bp.register') }}">點我註冊</a></span>
         <span class="new-to-here"><a class="have-problem" href="#">遇到問題？</a></span>
     </div>
 </div>

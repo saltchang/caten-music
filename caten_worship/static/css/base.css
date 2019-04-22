@@ -33,6 +33,17 @@ hr {
     margin: 0;
 }
 
+button#btn-navbar-user-dropdown, button#btn-navbar-user-dropdown:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+input, input:focus, .form-control, .form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 /* Navbar */
 #navbarSupportedContent a {
     color: #344042;
@@ -100,4 +111,23 @@ hr {
 .fa-shoe-prints {
     transform: rotate(315deg);
     margin-right: -0.3rem;
+}
+
+/* alert */
+
+.alert-container {
+    position:fixed; 
+    top: 15%; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius: .5rem;
+    opacity: .95;
+    transition: 700ms;
+}
+
+.alert-setting {
+    text-align: center;
+    height: 3.5rem;
+    transition: 700ms;
 }

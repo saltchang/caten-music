@@ -2,6 +2,7 @@
 
 from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app
 from jinja2 import TemplateNotFound
+from flask_login import current_user
 
 from caten_worship import services
 from caten_worship import helper
@@ -27,7 +28,7 @@ def register():
     email = ""
     password = ""
 
-    # method = "POST"
+    # method == "POST"
     if request.method == "POST":
 
         # 取得註冊表單資料
@@ -93,6 +94,10 @@ def register():
 
     # method = "GET"
     else:
+
+        if current_user.is_authenticated:
+            return redirect("/")
+
         # 產生註冊表單
         try:
             return render_template("register.html")

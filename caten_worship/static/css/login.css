@@ -48,7 +48,7 @@ a {
     height: 3rem;
 }
 
-#btn-login {
+.main-btn {
     font-size: .9rem;
     width: 150px;
     padding: 0;

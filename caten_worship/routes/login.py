@@ -1,7 +1,10 @@
 # routes/login.py
 
-from flask import Blueprint, render_template, abort, jsonify, request
+from flask import Blueprint, render_template, abort, jsonify, request, redirect
 from jinja2 import TemplateNotFound
+from flask_login import login_user, current_user
+
+import datetime
 
 from caten_worship import helper
 
@@ -16,12 +19,56 @@ ajax_validate_login_bp = Blueprint("ajax_validate_login_bp", __name__,
 @login_bp.route("/login", methods=["GET" ,"POST"])
 def login():
 
+    # method == "POST"
     if request.method == "POST":
-        return "login-post"
+
+        # 取得登入表單資料
+        try:
+            primary = request.values.get("primary")
+            password = request.values.get("password")
+            next_url = request.values.get("next-url")
+
+            # 後端確認所有資料的格式，雖然前端已經過濾過
+            check_result = helper.checkLoginFormat(primary, password)
+
+        # 當有人故意送出奇怪的request
+        except Exception as error:
+            print(error)
+            return render_template("403.html", error_message="Don't Play With Me.")
+
+
+        # 如果有欄位的資料錯誤，則回傳之前端
+        if check_result["primary_check"] == "failed" or \
+            not check_result["password_check"]:
+            return render_template("403.html", error_message="Wrong login imformation.")
+
+        user_to_login = helper.checkLogin(check_result["primary_check"], primary, password)
+
+        if not user_to_login:
+            return render_template("403.html", error_message="Wrong login imformation.")
+        
+        if not user_to_login.is_authenticated:
+            return render_template("account_not_activated.html")
+
+        # 以上所有註冊資料確認完成，可以註冊帳號
+        else:
+            login_user(user_to_login, remember=True, duration=datetime.timedelta(weeks=4))
+
+            if next_url == "None":
+                return redirect("/")
+
+            if not helper.is_safe_url(next_url):
+                return abort(400)
+            else:
+                return redirect(next_url)
 
     else:
+
+        if current_user.is_authenticated:
+            return redirect("/")
+
         try:
-            return render_template('login.html')
+            return render_template('login.html', next_url=request.args.get("next"))
 
         except TemplateNotFound:
             abort(404)

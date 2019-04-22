@@ -1,6 +1,6 @@
 # routes/home.py
 
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, flash
 from jinja2 import TemplateNotFound
 
 home_bp = Blueprint("home_bp", __name__,
@@ -10,6 +10,7 @@ home_bp = Blueprint("home_bp", __name__,
 @home_bp.route('/')
 def seeHome():
     try:
+        flash("歡迎來到首頁", "success")
         return render_template('index.html')
 
     except TemplateNotFound:

@@ -137,3 +137,11 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+*:focus {
+    outline: none;
+}
+
+* {
+    outline: none;
+}
