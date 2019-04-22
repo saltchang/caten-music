@@ -87,7 +87,7 @@ def register():
 
         # 註冊完成，通知使用者收取認證信
         try:
-            return render_template("after_register.html"), 201
+            return render_template("after_register.html", msg_text="註冊資料已送出"), 201
 
         except TemplateNotFound:
             abort(404)

@@ -9,8 +9,12 @@ class checkExist:
 
         if models.User.query.filter_by(username=username).first():
             return True
+        else:
+            return False
 
     def email(self, email):
 
         if models.User.query.filter_by(email=email).first():
             return True
+        else:
+            return False

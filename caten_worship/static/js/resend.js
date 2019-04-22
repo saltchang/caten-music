@@ -4,14 +4,10 @@
 $("#form-resend").on("click", "button#btn-resend", resendPreValidator);
 function resendPreValidator(event) {
 
-    console.log("btn-resend clicked!");
-
     let email = $("input#input-email");
 
     // email
     let email_validated = emailValidator(email.val());
-
-    console.log("email_validated: " + email_validated);
 
 
     if (!email_validated) {
@@ -30,8 +26,6 @@ function emailValidator(email) {
     let email_validated = false;
     let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]{3,66}$/;
 
-    console.log(email)
-
     if (email.search(emailRule) != -1){
         email_validated = true;
     }
@@ -49,15 +43,12 @@ function get_ajax_validate_email(email) {
     contentType: 'application/json; charset=UTF-8',
     success: function(msg) {
         email_pass = msg
-        console.log(email_pass)
         if (!email_pass) {
             $("div#login-alert").html("很抱歉，你輸入的電子郵件尚未註冊<button class='close close-danger-alert'>&times;</button>");
             $("div#login-alert").addClass("show");
-            console.log("resend failed!")
         }
         else if (email_pass) {
             $("#form-resend").submit();
-            console.log("resend!")
         }
     }
     })

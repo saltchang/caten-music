@@ -1,6 +1,6 @@
 # routes/activate_account.py
 
-from flask import Blueprint, render_template, abort, request, jsonify
+from flask import Blueprint, render_template, abort, request, jsonify, flash, redirect
 from jinja2 import TemplateNotFound
 
 from caten_worship import helper
@@ -61,7 +61,10 @@ def resend_activate_mail():
                                username=username,
                                token=token)
 
-            return render_template("after_register.html")
+            return render_template("after_register.html", msg_text="啟動信已成功寄出")
+        else:
+            flash("Email錯誤或尚未註冊", "danger")
+            return redirect("/activate/account/mail/resend")
 
     else:
         return render_template("resend_mail.html")

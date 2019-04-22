@@ -27,12 +27,6 @@ function registerPreValidator(event) {
 
     // confirm password
     let confirm_password_validated = confirm_passwordValidator(confirm_password, password)
-    
-    console.log("username: " + username_validated);
-    console.log("email: " + email_validated);
-    console.log("displayname: " + displayname_validated);
-    console.log("password: " + password_validated);
-    console.log("confirm_password: " + confirm_password_validated);
 
     if (!username_validated) {
         $("div#register-alert").html("帳號格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
@@ -296,7 +290,6 @@ $("#form-register").on("keypress", "input", function(e){
 // 最後一個input Enter 直接submit
 $("#form-register").on("keypress", "input.focus-id-5", function(e){
     if (e.keyCode == 13) {
-        console.log("last click");
         $("#btn-register").trigger("click");
     }
 });
