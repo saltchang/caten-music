@@ -83,3 +83,16 @@ $(".home-title").on("click", "button.close-danger-alert", closeAlert);
 function closeAlert(event) {
     $(this).parent("div").removeClass("show")
 }
+
+
+// Enter 切換輸入
+$("#form-login").on("keypress", "input", function(e){
+    if (e.keyCode == 13) {
+        if ($(this).hasClass("focus-id-1")) {
+            $(this).parent().parent().children().children("input.focus-id-2").focus();
+        }
+        else if ($(this).hasClass("focus-id-2")) {
+            $("#btn-login").trigger("click");
+        }
+    }
+});

@@ -5,7 +5,8 @@ from .users import User
 
 login_manager = LoginManager()
 login_manager.login_view = "login_bp.login"
-login_manager.login_message = {"message": "請先登入", "category": "danger"}
+login_manager.login_message = "請先登入以繼續，謝謝！"
+login_manager.login_message_category = "danger"
 
 @login_manager.user_loader
 def load_user(user_id):

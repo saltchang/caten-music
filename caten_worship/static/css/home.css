@@ -1,7 +1,9 @@
 /* static/css/home.css */
 
-#home-title {
-    margin-top: 150px;
-    margin-bottom: 50px;
-    font-family: 'EB Garamond', sans-serif, serif;
+.home-text-logo {
+    background-color: #00000000;
+    width: 70%;
+    max-width: 300px;
+    min-width: 180px;
+    text-align: -webkit-center;
 }

@@ -1,6 +1,6 @@
 # routes/register.py
 
-from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app
+from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app, flash
 from jinja2 import TemplateNotFound
 from flask_login import current_user
 
@@ -100,6 +100,7 @@ def register():
 
         # 產生註冊表單
         try:
+            flash("register", "primary")
             return render_template("register.html")
 
         except TemplateNotFound:

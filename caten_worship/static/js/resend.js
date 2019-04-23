@@ -59,3 +59,10 @@ $(".home-title").on("click", "button.close-danger-alert", closeAlert);
 function closeAlert(event) {
     $(this).parent("div").removeClass("show")
 }
+
+// Enter 切換輸入
+$("#form-resend").on("keypress", "input", function(e){
+    if (e.keyCode == 13) {
+        $("#btn-resend").trigger("click");
+    }
+});

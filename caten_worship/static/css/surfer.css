@@ -1,20 +1,13 @@
 /* static/css/surfer.css */
 
-
-#surf-title {
-    margin-top: 150px;
-    margin-bottom: 50px;
-}
-
 .taiwanese-surf-btn {
     background-color: #c2ab82;
+    width: 80%;
+    height: 2.5rem;
 }
 
 .chinese-surf-btn {
     background-color: #b18dd3;
-}
-
-.btn {
     width: 80%;
     height: 2.5rem;
 }

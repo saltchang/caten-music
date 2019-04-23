@@ -1,6 +1,6 @@
 # routes/login.py
 
-from flask import Blueprint, render_template, abort, jsonify, request, redirect
+from flask import Blueprint, render_template, abort, jsonify, request, redirect, flash
 from jinja2 import TemplateNotFound
 from flask_login import login_user, current_user
 
@@ -68,6 +68,7 @@ def login():
             return redirect("/")
 
         try:
+            flash("login", "primary")
             return render_template('login.html', next_url=request.args.get("next"))
 
         except TemplateNotFound:

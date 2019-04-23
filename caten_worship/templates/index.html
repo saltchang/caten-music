@@ -11,8 +11,8 @@
 
 {% block content%}
 <div class="container text-center">
-    <div id="home-title">
-        <h1>Caten Worship</h1>
+    <div class="title-under-navbar">
+        <h1><img class="home-text-logo" src="{{ url_for('static', filename='image/icon/CatenWorshipTextLogo.png') }}" alt=""></h1>
     </div>
 
     <div class="container text-center">
@@ -23,7 +23,7 @@
                 <div class="col-sm-1 col-lg-2"></div>
                 <div class="col p-0 p-md-3">
                     <div class="row m-0 justify-content-around">
-                        <input name="q" type="text" class="form-control col-12 col-md-8 mb-4" id="search-text" placeholder="" autofocus="true">
+                        <input name="q" type="text" class="input-search-songs-text form-control col-12 col-md-10 mb-4" id="search-text" placeholder="" autofocus="true">
                         <button type="submit" class="btn btn-outline-success mb-4 col-5 col-sm-4 col-md-3">搜尋詩歌</button>
                     </div>
                 </div>

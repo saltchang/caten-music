@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="640px" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>CatenWorshipLogo</title>
+    <desc>Created by Salt.</desc>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="橢圓形" fill="#24292E" cx="320" cy="320" r="320"></circle>
+        <path d="M301,97 L301,33 L338,33 L338,97 L409,97 L409,137 L338,137 L338,305 L301,305 L301,137 L230,137 L230,97 L301,97 Z" id="合併形狀" fill="#FFFFFF"></path>
+        <text id="WORSHIP" font-family="Optima-Bold, Optima" font-size="108" font-weight="bold" fill="#FFFFFF">
+            <tspan x="71.7397188" y="501">WORSHIP</tspan>
+        </text>
+        <text id="CATEN" font-family="Optima-Bold, Optima" font-size="108" font-weight="bold" fill="#FFFFFF">
+            <tspan x="158.700329" y="404">CATEN</tspan>
+        </text>
+    </g>
+</svg>

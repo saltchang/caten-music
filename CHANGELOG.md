@@ -11,10 +11,7 @@
 
 ### Next Todo
 
-- flash 功能改善
-- 需要登入的flash訊息修正
-- 登入以及重寄啟動信, enter表單傳送
-- email或電子郵件, 名稱統一
+- 會員資料: 編輯、管理
 
 ### All Feature Todo
 
@@ -30,7 +27,17 @@
 - 建立 登入功能
 - 建立 登出功能
 - 建立 重寄帳號啟動信
+- 新增 alert 進入 base layout
 - 新增 dev-login 分支, 嘗試 github flow
+
+### Changed
+
+- 更改 前端結構及樣式
+- 更改 Logo 及 favicon.ico
+
+### Fixed
+
+- 修正 表單按 Enter 正確經過認證後提交
 
 ## [0.1.3] - 2019-04-19
 
