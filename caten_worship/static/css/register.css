@@ -10,6 +10,10 @@
     opacity: .85;
 }
 
+.container-static {
+    max-width: 360px;
+}
+
 #btn-register {
     display: block;
     margin-top: 3rem;

@@ -10,7 +10,6 @@ home_bp = Blueprint("home_bp", __name__,
 @home_bp.route('/')
 def seeHome():
     try:
-        flash("歡迎來到首頁", "success")
         return render_template('index.html')
 
     except TemplateNotFound:

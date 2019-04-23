@@ -1,0 +1,25 @@
+/* static/css/alert.css */
+
+/* alert */
+
+.alert-container {
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: fixed;
+    top: 70px;
+    width: 100%;
+    z-index: 9999;
+}
+
+.alert-setting {
+    margin: 1rem auto 1rem auto;
+    max-width: 320px;
+    min-width: 290px;
+    text-align: center;
+    vertical-align: middle;
+    height: 54px;
+    border-radius: .75rem;
+    opacity: .95;
+    transition: 700ms;
+}

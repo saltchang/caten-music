@@ -55,13 +55,16 @@ def login():
             login_user(user_to_login, remember=True, duration=datetime.timedelta(weeks=4))
 
             if next_url == "None":
+                flash("歡迎回來，" + user_to_login.displayname, "success")
                 return redirect("/")
 
             if not helper.is_safe_url(next_url):
                 return abort(400)
             else:
+                flash("歡迎回來，" + user_to_login.displayname, "success")
                 return redirect(next_url)
 
+    # method == "GET"
     else:
 
         if current_user.is_authenticated:

@@ -7,65 +7,73 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 {%  endblock  %}
 
-{% block title %}註冊{% endblock %}
+{% block title %} - 註冊{% endblock %}
 
 {% block content%}
 
 <div class="container text-center">
     <div class="title-under-navbar">
-        <h3>註冊帳號</h3>
+        <h3>註冊</h3>
         <small>請填寫下列註冊表單以完成註冊</small>
 
         <div id="register-alert" class="alert alert-danger fade alert-fixed" role="alert">
-        <button class="close close-danger-alert">&times;</button>
+            <button class="close close-danger-alert">&times;</button>
         </div>
 
     </div>
 </div>
 
-<div class="container">
-    <div class="container px-0 px-md-2 px-lg-5">
+    <div class="container container-static">
         <form id="form-register" action="{{ url_for('register_bp.register') }}" method="POST">
 
             <!-- 使用者帳號 username -->
             <div class="form-group mt-4">
                 <label for="input-register-username" class="ml-2">使用者帳號</label>
-                <input name="username" type="text" class="form-control focus-id-1" id="input-register-username" aria-describedby="usernameHelp" placeholder="請輸入您的使用者帳號" autofocus="true">
-                <small id="usernameHelp2-in" class="form-text text-left pl-2 invalid-feedback">4-24個英文或數字，接受底線('_')</small>
+                <input name="username" type="text" class="form-control focus-id-1" id="input-register-username"
+                    aria-describedby="usernameHelp" placeholder="請輸入您的使用者帳號" autofocus="true">
+                <small id="usernameHelp2-in"
+                    class="form-text text-left pl-2 invalid-feedback">4-24個英文或數字，接受底線('_')</small>
+                <small id="usernameHelp" class="form-text text-left pl-2"><b>註冊之後無法更改你的帳號。</b></small>
                 <small id="usernameHelp2" class="form-text text-left pl-2 valid-feedback">OK</small>
-                <small id="usernameHelp" class="form-text text-left pl-2"><b>註冊後無法更改。</b></small>
             </div>
 
             <!-- E-mail email-->
             <div class="form-group mt-4">
                 <label for="input-register-email" class="ml-2">電子郵件地址</label>
-                <input name="email" type="email" class="form-control focus-id-2" id="input-register-email" aria-describedby="emailHelp" placeholder="請輸入您的 E-mail">
-                <small id="emailHelp-in" class="form-text text-left pl-2 invalid-feedback">請填入正確的電子郵件地址，用以啟動帳號</small>
+                <input name="email" type="email" class="form-control focus-id-2" id="input-register-email"
+                    aria-describedby="emailHelp" placeholder="請輸入您的 E-mail">
+                <small id="emailHelp-in"
+                    class="form-text text-left pl-2 invalid-feedback">請填入可正確收信的電子郵件地址，用以啟動帳號</small>
                 <small id="emailHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
-            <!-- 顯示名稱 displayname -->
+            <!-- 顯示名稱（名字） displayname -->
             <div class="form-group mt-4">
-                <label for="input-register-displayname" class="ml-2">顯示名稱</label>
-                <input name="displayname" type="text" class="form-control focus-id-3" id="input-register-displayname" aria-describedby="displaynameHelp" placeholder="請輸入您想顯示的名稱">
-                <small id="displaynameHelp2-in" class="form-text text-left pl-2 invalid-feedback">2-16個英數字元或8個中文字，接受底線("_")</small>
+                <label for="input-register-displayname" class="ml-2">名字</label>
+                <input name="displayname" type="text" class="form-control focus-id-3" id="input-register-displayname"
+                    aria-describedby="displaynameHelp" placeholder="請輸入您的名字">
+                <small id="displaynameHelp2-in"
+                    class="form-text text-left pl-2 invalid-feedback">2-16個英數字元或8個中文字，接受底線("_")</small>
+                <small id="displaynameHelp" class="form-text text-left pl-2"><b>註冊之後可以更改你的名字。</b></small>
                 <small id="displaynameHelp2" class="form-text text-left pl-2 valid-feedback">OK</small>
-                <small id="displaynameHelp" class="form-text text-left pl-2"><b>註冊後可以更改。</b></small>
             </div>
 
             <!-- 密碼 password -->
             <div class="form-group mt-4">
                 <label for="input-register-password" class="ml-2">密碼</label>
-                <input name="password" type="password" class="form-control focus-id-4" id="input-register-password" placeholder="請輸入您的密碼">
-                <small id="passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">至少8個字元，可以使用英文字母、數字和(_!@#$%^&*+-/:)</small>
+                <input name="password" type="password" class="form-control focus-id-4" id="input-register-password"
+                    placeholder="請輸入您的密碼">
+                <small id="passwordHelp-in"
+                    class="form-text text-left pl-2 invalid-feedback">至少8個字元，可以使用英文字母、數字和(_!@#$%^&*+-/:)</small>
                 <small id="passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
             <!-- 確認密碼 confirm-password -->
             <div class="form-group mt-4">
                 <label for="input-register-confirm-password" class="ml-2">再次輸入密碼</label>
-                <input name="confirm-password" type="password" class="form-control focus-id-5" id="input-register-confirm-password" placeholder="請再次輸入您的密碼">
-                <small id="confirm-passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">密碼比對不符合</small>
+                <input name="confirm-password" type="password" class="form-control focus-id-5"
+                    id="input-register-confirm-password" placeholder="請再次輸入您的密碼">
+                <small id="confirm-passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">兩次輸入的密碼不相符</small>
                 <small id="confirm-passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
@@ -75,7 +83,6 @@
 
         </form>
     </div>
-</div>
 
 {% endblock %}
 

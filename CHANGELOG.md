@@ -11,6 +11,7 @@
 
 ### Next Todo
 
+- db migration
 - 會員資料: 編輯、管理
 
 ### All Feature Todo
@@ -27,6 +28,7 @@
 - 建立 登入功能
 - 建立 登出功能
 - 建立 重寄帳號啟動信
+- 建立 使用者個人檔案資料庫 models.UserProfile
 - 新增 alert 進入 base layout
 - 新增 dev-login 分支, 嘗試 github flow
 

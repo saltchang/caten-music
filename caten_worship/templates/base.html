@@ -4,134 +4,31 @@
 <html lang="zh-Hant-TW">
 
 <head>
+
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Caten Worship - {% block title %}{% endblock title%}</title>
+    <title>Caten Worship{% block title %}{% endblock title%}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,500" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC:400,500&amp;subset=chinese-traditional"
-        rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='image/icon/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+    {% block css %}
+
+    {% include "style.html" %}
+
+    {% endblock css %}
+
     {% endblock head%}
+
 </head>
 
 <body>
     {% block alert_container %}
-    <div class="alert-container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-setting fade show" role="alert">
-            {{ message }}
-            <button class="close close-this-alert">&times;</button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div>
+    {% include "alert.html" %}
     {% endblock alert_container %}
 
-
-
     {% block navbar %}
-    <nav class="navbarstyle navbar navbar-expand-sm navbar-light fixed-top">
-        <a class="navbar-brand brand-logo-border" href="/">
-            <svg width="32px" height="32px" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>CatenWorshipLogo</title>
-                <desc>Created by Salt.</desc>
-                <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <circle id="BG" fill="#24292E" cx="320" cy="320" r="320"></circle>
-                    <path d="M301,97 L301,33 L338,33 L338,97 L409,97 L409,137 L338,137 L338,305 L301,305 L301,137 L230,137 L230,97 L301,97 Z" id="CROSS" fill="#FFFFFF"></path>
-                    <text id="WORSHIP" font-family="Optima-Bold, Optima" font-size="108" font-weight="bold" fill="#FFFFFF">
-                        <tspan x="71.7397188" y="501">WORSHIP</tspan>
-                    </text>
-                    <text id="CATEN" font-family="Optima-Bold, Optima" font-size="108" font-weight="bold" fill="#FFFFFF">
-                        <tspan x="158.700329" y="404">CATEN</tspan>
-                    </text>
-                </g>
-            </svg>
-        </a>
-        <a class="d-sm-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
-            aria-controls="navbarSupportedContent" id="navbar-menu-btn">
-            <span class="navbar-toggler-icon"></span>
-        </a>
-
-
-        <div class="collapse navbar-collapse brand-menu-container" id="navbarSupportedContent">
-
-            <hr class="navbar-hr mt-2">
-
-            <ul class="navbar-nav mr-auto">
-
-                <form action="{{ url_for('search_bp.search') }}" method="GET">
-                    <input class="d-none" type="text" name="m" value="search">
-                    <input class="d-none" type="text" name="s" value="title">
-                    <input name="q" type="text" class="input-search-songs-text form-control navbar-search" placeholder="搜尋...">
-                </form>
-            
-                <hr class="navbar-hr mt-2">
-
-                <li class="nav-item active">
-                    <a class="nav-link navbar-item-style" href="{{ url_for('surfer_bp.surfer') }}">
-                        <i class="fas fa-shoe-prints"></i>
-                        &nbsp;瀏覽
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
-            </ul>
-
-            <hr class="navbar-hr">
-
-            <ul class="navbar-nav ml-auto">
-
-                {% if not current_user.is_authenticated %}
-                <li class="nav-item active">
-                    <a class="nav-link navbar-item-style" href="{{ url_for('login_bp.login') }}">
-                        <i class="fas fa-sign-in-alt"></i>
-                        登入
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
-                <hr class="navbar-hr">
-
-                <li class="nav-item active">
-                    <a class="nav-link navbar-item-style" href="{{ url_for('register_bp.register') }}">
-                        <i class="fas fa-feather-alt"></i>
-                        註冊
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                {% endif %}
-
-                {% if current_user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <button class="dropdown-toggle" type="button" id="btn-navbar-user-dropdown"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ current_user.displayname }}
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <form action="{{ url_for('logout_bp.logout') }}" method="post"><button type="submit"
-                                class="dropdown-item" href="">登出</button></form>
-                    </div>
-                </li>
-                {% endif %}
-
-            </ul>
-
-        </div>
-    </nav>
+    {% include "navbar.html" %}
     {% endblock navbar %}
 
 
@@ -140,22 +37,13 @@
     </div>
 
     {% block footer %}
-    <footer>
+    <footer id="footer">
         <p>&copy; 2019 &nbsp;Salt.</p>
     </footer>
     {% endblock %}
 
     {% block script %}
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% include "script.html" %}
     {% endblock script %}
 </body>
 

@@ -9,6 +9,7 @@ from caten_worship import helper
 from caten_worship import models
 
 User = models.User
+UserProfile = models.UserProfile
 checkExist = helper.checkExist()
 
 register_bp = Blueprint("register_bp", __name__,
@@ -72,6 +73,10 @@ def register():
 
         # 提交新使用者至資料庫中儲存
         new_user.save()
+
+        # 產生新的使用者檔案並提交儲存
+        new_user_profile = UserProfile(user_id=new_user.id)
+        new_user_profile.save()
 
         # 產生一個帳號啟動的 token
         token = new_user.create_activate_token()
