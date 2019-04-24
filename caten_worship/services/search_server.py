@@ -44,6 +44,10 @@ def search_title(keywords):
 
 
 def surf_language(keyword):
+
+    if not keyword:
+        return False
+
     result = []
 
     language = ""

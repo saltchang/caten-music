@@ -11,7 +11,7 @@
 
 ### Next Todo
 
-- UnitTest
+- UnitTest(正在進行)
 - db migration
 - 會員資料: 編輯、管理
 
@@ -32,6 +32,7 @@
 - 建立 使用者個人檔案資料庫 models.UserProfile
 - 新增 alert 進入 base layout
 - 新增 dev-login 分支, 嘗試 github flow
+- 新增 單元測試: routes.search
 
 ### Changed
 
