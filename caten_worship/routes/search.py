@@ -1,6 +1,6 @@
 # routes/search.py
 
-from flask import Blueprint, render_template, abort, request
+from flask import Blueprint, render_template, abort, request, redirect
 from jinja2 import TemplateNotFound
 from caten_worship import services
 
