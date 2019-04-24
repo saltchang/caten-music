@@ -24,6 +24,12 @@
 - 功能: 依複合條件搜尋歌曲
 - 功能: 歌單(建立, 保存, 分享, 編輯, 刪除)
 
+## [0.1.4] - 2019-04-25
+
+### Remark
+
+- 此版本不會部署至 Heroku
+
 ### Added
 
 - 建立 登入功能
@@ -33,11 +39,13 @@
 - 新增 alert 進入 base layout
 - 新增 dev-login 分支, 嘗試 github flow
 - 新增 單元測試: routes.search
+- 新增 database.py CLI tool, 用途為快速刪除或建立資料庫
 
 ### Changed
 
 - 更改 前端結構及樣式
 - 更改 Logo 及 favicon.ico
+- 調整 後端資料庫
 
 ### Fixed
 

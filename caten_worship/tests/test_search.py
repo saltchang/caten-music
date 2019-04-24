@@ -35,19 +35,19 @@ search_and_surf_params = [("search", "title", "來 敬拜",
                            "EOF templates/result.html", "這世代要呼求祢",
                            "國語", "台語"),
 
-                           ("surf", "language", "xyz",
+                          ("surf", "language", "xyz",
                            "EOF templates/result.html", "共有", "0", "耶穌"),
 
-                           ("surf", "language", "",
+                          ("surf", "language", "",
                            "EOF templates/result.html", "共有", "0", "耶穌"),
 
-                           ("", "language", "c11",
+                          ("", "language", "c11",
                            "EOF templates/index.html", "", "", "耶穌"),
 
-                           ("surf", "", "c11",
+                          ("surf", "", "c11",
                            "EOF templates/index.html", "", "", "耶穌"),
 
-                           ("surf", "xyz", "c11",
+                          ("surf", "xyz", "c11",
                            "EOF templates/result.html", "共有", "0", "耶穌"),
                           ]
 

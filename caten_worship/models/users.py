@@ -7,7 +7,7 @@ from flask import current_app
 from itsdangerous import TimedJSONWebSignatureSerializer as sign
 from itsdangerous import SignatureExpired, BadSignature
 
-from caten_worship.db import db
+from .base import db
 from caten_worship import helper
 
 

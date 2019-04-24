@@ -2,7 +2,7 @@
 
 from flask import current_app
 
-from caten_worship.db import db
+from .base import db
 from caten_worship import helper
 
 

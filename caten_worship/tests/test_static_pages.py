@@ -18,7 +18,7 @@ def test_surfer_page(client):
 
     res = client.get("/surfer", follow_redirects=True)
     res = res.data.decode()
-    
+
     # db = get_db()
 
     assert "EOF templates/surfer.html" in res
