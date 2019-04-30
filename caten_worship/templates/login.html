@@ -24,7 +24,7 @@
     <div class="card px-4">
         <form id="form-login" action="{{ url_for('login_bp.login') }}" method="POST">
             
-            <input class="d-none" name="next-url" value="{{ next_url }}">
+            <input class="d-none" name="next_url" value="{{ next_url }}">
 
             <!-- username or email-->
             <div class="form-group mt-4">
@@ -55,3 +55,7 @@
 {{ super () }}
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/login.html -->
+{% endblock EOF_TAG %}

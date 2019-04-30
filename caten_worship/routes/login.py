@@ -26,7 +26,7 @@ def login():
         try:
             primary = request.values.get("primary")
             password = request.values.get("password")
-            next_url = request.values.get("next-url")
+            next_url = request.values.get("next_url")
 
             # 後端確認所有資料的格式，雖然前端已經過濾過
             check_result = helper.checkLoginFormat(primary, password)

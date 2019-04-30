@@ -38,7 +38,7 @@ def register():
             email = request.values.get("email")
             displayname = request.values.get("displayname")
             password = request.values.get("password")
-            confirm_password = request.values.get("confirm-password")
+            confirm_password = request.values.get("confirm_password")
 
             # 後端確認所有資料的格式，雖然前端已經過濾過
             check_result = helper.checkFormat(

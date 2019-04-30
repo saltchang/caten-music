@@ -9,7 +9,7 @@ function registerPreValidator(event) {
     let email = $("input#input-register-email");
     let displayname = $("input#input-register-displayname");
     let password = $("input#input-register-password");
-    let confirm_password = $("input#input-register-confirm-password");
+    let confirm_password = $("input#input-register-confirm_password");
 
     let all_input_valid = false
 
@@ -68,7 +68,7 @@ function preValidatorImm(event) {
     let email_focus = $("input#input-register-email").is(':focus');
     let displayname_focus = $("input#input-register-displayname").is(':focus');
     let password_focus = $("input#input-register-password").is(':focus');
-    let confirm_password_focus = $("input#input-register-confirm-password").is(':focus');
+    let confirm_password_focus = $("input#input-register-confirm_password").is(':focus');
     
     if (username_focus) {
         last_focus = "username"
@@ -83,7 +83,7 @@ function preValidatorImm(event) {
         last_focus = "password"
     }
     else if (confirm_password_focus) {
-        last_focus = "confirm-password"
+        last_focus = "confirm_password"
     }
     
 }
@@ -108,11 +108,11 @@ function immValidator() {
         for_other();
     }
     else if (last_focus == "password") {
-        checked = passwordValidator(value, $("input#input-register-confirm-password"));
+        checked = passwordValidator(value, $("input#input-register-confirm_password"));
         for_other();
     }
-    else if (last_focus == "confirm-password") {
-        checked = confirm_passwordValidator($("input#input-register-confirm-password"), $("input#input-register-password"));
+    else if (last_focus == "confirm_password") {
+        checked = confirm_passwordValidator($("input#input-register-confirm_password"), $("input#input-register-password"));
     }
 
     function for_username_and_email(username_val, email_val){

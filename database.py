@@ -4,20 +4,22 @@
 
 import sys
 
-from caten_worship.models.base import db
-
 from caten_worship import create_app
 
-def dropAll():
+def dropAll(config_code):
 
-    app = create_app
+    app = create_app(config_code)
+
+    from caten_worship.models.base import db
 
     db.drop_all()
 
 
-def createAll():
+def createAll(config_code):
 
-    app = create_app
+    app = create_app(config_code)
+
+    from caten_worship.models.base import db
 
     db.create_all()
 
@@ -25,23 +27,38 @@ def createAll():
 def print_usage():
 
     print()
-    print("Usage: database.py [command]")
+    print("Usage: database.py [command] [config_code]")
     print()
     print("[command]")
     print()
     print("drop : Drop all tables in the database.")
     print("create : Create all tables into the database.")
+    print()
+    print("[config_code]")
+    print()
+    print("default : non-test")
+    print("test : test")
 
 
 if __name__ == "__main__":
 
-    command = sys.argv[1]
-
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
+        command = sys.argv[1]
+        config_code = sys.argv[2]
         if command == "drop":
-            dropAll()
+            if config_code == "test":
+                dropAll("test")
+            elif config_code == "":
+                dropAll()
+            else:
+                print_usage()
         elif command == "create":
-            createAll()
+            if config_code == "test":
+                createAll("test")
+            elif config_code == "":
+                createAll()
+            else:
+                print_usage()
         else:
             print_usage()
     else:

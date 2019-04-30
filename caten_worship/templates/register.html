@@ -68,13 +68,13 @@
                 <small id="passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
-            <!-- 確認密碼 confirm-password -->
+            <!-- 確認密碼 confirm_password -->
             <div class="form-group mt-4">
-                <label for="input-register-confirm-password" class="ml-2">再次輸入密碼</label>
-                <input name="confirm-password" type="password" class="form-control focus-id-5"
-                    id="input-register-confirm-password" placeholder="請再次輸入您的密碼">
-                <small id="confirm-passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">兩次輸入的密碼不相符</small>
-                <small id="confirm-passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
+                <label for="input-register-confirm_password" class="ml-2">再次輸入密碼</label>
+                <input name="confirm_password" type="password" class="form-control focus-id-5"
+                    id="input-register-confirm_password" placeholder="請再次輸入您的密碼">
+                <small id="confirm_passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">兩次輸入的密碼不相符</small>
+                <small id="confirm_passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
             <button id="btn-register" type="button" class="btn btn-outline-info">
@@ -90,3 +90,7 @@
 {{ super () }}
 <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/register.html -->
+{% endblock EOF_TAG %}

@@ -11,7 +11,6 @@
 
 ### Next Todo
 
-- UnitTest(正在進行)
 - db migration
 - 會員資料: 編輯、管理
 
@@ -23,6 +22,14 @@
 - 功能: 新增歌曲
 - 功能: 依複合條件搜尋歌曲
 - 功能: 歌單(建立, 保存, 分享, 編輯, 刪除)
+
+### Added
+
+- 新增 單元測試: routes.download_ppt
+- 新增 單元測試: routes.register
+- 新增 單元測試: routes.login
+- 新增 單元測試: routes.logout
+- 新增 單元測試: routes.surfer
 
 ## [0.1.4] - 2019-04-25
 
