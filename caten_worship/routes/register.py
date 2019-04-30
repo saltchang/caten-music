@@ -105,7 +105,6 @@ def register():
 
         # 產生註冊表單
         try:
-            flash("register", "primary")
             return render_template("register.html")
 
         except TemplateNotFound:
