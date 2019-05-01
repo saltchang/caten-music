@@ -7,11 +7,16 @@
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-- 當前生產版本 v0.1.5
+- 當前生產版本 v0.1.6
 
 ## Released
 
-### [0.1.5] - 2019-05-01
+### [0.1.6] - 2019-05-01
+
+- 建立 資料庫遷徙功能呢
+- 修正 帳號啟動信重寄功能
+
+### [0.1.5] - 2019-04-30
 
 - 建立 單元測試
 - 微調 使用者介面
