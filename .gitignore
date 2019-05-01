@@ -27,9 +27,3 @@ __pycache__/
 instance/
 
 songs_data
-
-migrations/
-versions/
-alembic.ini
-env.py
-script.py.mako
