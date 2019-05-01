@@ -49,6 +49,11 @@ def resend_activate_mail():
             # 取得帳號名稱
             username = user.username
 
+            # 確認 email 是否已經啟動過
+            if user.is_authenticated:
+                flash("此電子郵件已認證過，請再確認。", "danger")
+                return redirect("/activate/account/mail/resend")
+
             # 產生一個帳號啟動的 token
             token = user.create_activate_token()
 
@@ -63,7 +68,7 @@ def resend_activate_mail():
 
             return render_template("after_register.html", msg_text="啟動信已成功寄出")
         else:
-            flash("Email錯誤或尚未註冊", "danger")
+            flash("電子郵件地址錯誤或尚未註冊", "danger")
             return redirect("/activate/account/mail/resend")
 
     else:

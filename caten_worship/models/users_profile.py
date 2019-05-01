@@ -1,4 +1,4 @@
-# models/users_data.py
+# models/users_profile.py
 
 from flask import current_app
 
@@ -17,6 +17,7 @@ class UserProfile(db.Model):
         nullable=False)
     about_me = db.Column(db.Text)
     phone_number = db.Column(db.String(20))
+    sex = db.Column(db.String(8))
 
     # 預註冊到資料庫（特殊用途）
 

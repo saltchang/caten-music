@@ -9,6 +9,14 @@
 
 ## [Unrelease]
 
+### Added
+
+- 新增 資料庫遷徙功能 flask-migrate
+
+### Fixed
+
+- 修正 已啟動帳號現在不再能再申請寄送帳號啟動信
+
 ### Next Todo
 
 - db migration
