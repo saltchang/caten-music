@@ -55,7 +55,7 @@ def get_relative_list(db, lib):
 
     relative_list = []
     for song in db:
-        song_ = {"uid": song["uid"], "relative_ID": []}
+        song_ = {"sid": song["sid"], "relative_ID": []}
         for data in lib:
             if data["title"].find(song["title"]) != -1:
                 song_["relative_ID"].append(data["id_"])
@@ -74,7 +74,7 @@ def get_fullmatch_list(db, lib):
 
     fullmatch_list = []
     for song in db:
-        song_ = {"uid": song["uid"], "fullmatch_ID": []}
+        song_ = {"sid": song["sid"], "fullmatch_ID": []}
         for data in lib:
             if data["title"] == song["title"]:
                 song_["fullmatch_ID"].append(data["id_"])
@@ -94,7 +94,7 @@ def get_onlymatch_list(db, lib):
     onlymatch_list = []
 
     for song in db:
-        song_ = {"uid": song["uid"], "onlymatch_ID": ""}
+        song_ = {"sid": song["sid"], "onlymatch_ID": ""}
         fullmatch_list = []
         for data in lib:
             if data["title"] == song["title"]:

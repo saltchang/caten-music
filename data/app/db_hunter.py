@@ -86,7 +86,7 @@ def onlyHunter(db, lib, matchList):
 
     for song in db:
         for match_item in matchList:
-            if song["uid"] == match_item["uid"]:
+            if song["sid"] == match_item["sid"]:
                 for data in lib:
                     if data["id_"] == match_item["onlymatch_ID"]:
                         song = feedData(song, data)

@@ -88,15 +88,15 @@
                             class="song-info">
                             調</span></div>
                     <div class="col-2 p-1 show-more-song-content">
-                        <a class="" data-toggle="collapse" href="{{ '#t' + song['uid'] }}" role="button"
-                            aria-expanded="false" aria-controls="{{'t' + song['uid'] }}">
+                        <a class="" data-toggle="collapse" href="{{ '#t' + song['sid'] }}" role="button"
+                            aria-expanded="false" aria-controls="{{'t' + song['sid'] }}">
                             <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
                     <div class="col-md-1 col-lg-2"></div>
                 </div>
             </div>
-            <div class="collapse" id="{{'t' + song['uid'] }}">
+            <div class="collapse" id="{{'t' + song['sid'] }}">
                 <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
                     <div class="container">
                         <hr>
@@ -128,7 +128,7 @@
                         <hr>
                         <div class="row pt-3">
                             <div class="col px-3">
-                                <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song['uid']) }}">
+                                <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song['sid']) }}">
                                     <i class="fas fa-file-powerpoint"></i>
                                     <div>投影片</div>
                                 </a>
