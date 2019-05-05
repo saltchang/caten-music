@@ -3,4 +3,4 @@
 from caten_worship import helper
 
 
-songsDB = helper.importJSON("worshipDB.json")
+songsDB = helper.importJSON("newSongsData.json")
