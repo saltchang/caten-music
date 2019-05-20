@@ -2,16 +2,17 @@
 
 **[Caten Worship](https://caten-worship.herokuapp.com)**
 
-本專案為基於 Python Flask, Heroku 的網站,
+本專案為基於 Python Flask, Heroku, PostgreSQL 的網站,
 提供給 [茄典教會](https://caten-church.com) 使用
 
-- 當前生產版本 v0.1.6
+資料庫使用 [church-music-api](https://github.com/saltchang/church-music-api)
+
+- 當前生產版本 v0.1.7
 
 ## [Unrelease]
 
 ### Next Todo
 
-- 串接歌曲資料 API
 - 會員資料: 編輯、管理
 
 ### All Feature Todo
@@ -22,6 +23,12 @@
 - 功能: 新增歌曲
 - 功能: 依複合條件搜尋歌曲
 - 功能: 歌單(建立, 保存, 分享, 編輯, 刪除)
+
+## [0.1.7] - 2019-05-20
+
+### Added
+
+- 連結 歌曲資料庫API - [(church-music-api)](https://github.com/saltchang/church-music-api)
 
 ## [0.1.6] - 2019-05-01
 

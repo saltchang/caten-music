@@ -3,13 +3,19 @@
 本專案為基於 Python Flask, Heroku, PostgreSQL 的網站,
 網址為 [https://caten-worship.herokuapp.com](https://caten-worship.herokuapp.com)
 
+資料庫使用 [church-music-api](https://github.com/saltchang/church-music-api)
+
 提供給 [茄典教會](https://caten-church.com) 使用
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
 
-- 當前生產版本 v0.1.6
+- 當前生產版本 v0.1.7
 
 ## Released
+
+### [0.1.7] - 2019-05-20
+
+- 連接 歌曲資料庫 [API](https://github.com/saltchang/church-music-api)
 
 ### [0.1.6] - 2019-05-01
 
