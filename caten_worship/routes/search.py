@@ -4,6 +4,9 @@ from flask import Blueprint, render_template, abort, request, redirect
 from jinja2 import TemplateNotFound
 from caten_worship import services
 
+import requests
+import json
+
 search_bp = Blueprint("search_bp", __name__,
                       template_folder='templates')
 
@@ -28,21 +31,54 @@ def search():
 
         # 搜尋模式
         if mode == "search":
-            result = services.search_songs(scope, keyword)
+        
+            # 舊版搜尋方法
+            # result = services.search_songs(scope, keyword)
+            # if not result:
+            #     result = []
 
-            if not result:
+            # 新版 API 串接搜尋
+            requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + keyword
+            r = requests.get(requestURL)
+            print("透過API搜尋, URL:", requestURL)
+
+            if not r.status_code == 200:
                 result = []
+            else:
+                result = json.loads(r.text)
 
         # 瀏覽模式
         elif mode == "surf":
-            result = services.surf_songs(scope, keyword)
+            # 舊版搜尋方法
+            # result = services.surf_songs(scope, keyword)
 
-            if not result:
-                result = []
-                c = ""
+            # if not result:
+            #     result = []
+            #     c = ""
 
+            # else:
+            #     c = result[1]["num_c"]
+
+            # 新版 API 串接 搜尋
+            lang = keyword[0]
+            if lang == "c":
+                lang = "Chinese"
+            elif lang == "t":
+                lang = "Taiwanese"
             else:
-                c = result[1]["num_c"]
+                return redirect("/")
+
+            c = keyword[1:]
+
+            requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + lang + "&c=" + c + "&to=&title="
+
+            r = requests.get(requestURL)
+            print("透過API瀏覽, URL:", requestURL)
+
+            if not r.status_code == 200:
+                result = []
+            else:
+                result = json.loads(r.text)
 
         else:
             return redirect("/")
