@@ -22,6 +22,8 @@
 {% block content%}
 
 <div class="container text-center">
+
+    <!-- Header -->
     <div id="home-title">
         {% if mode == "search" %}
         <h4 class="mb-4 search-infomation">
@@ -68,7 +70,15 @@
         <div class="col-md-1 col-lg-2"></div>
         <div class="col card my-3 p-0">
             <h5 class="card-header">
-                {{ song['title'] }}
+                <span class="header-title-text">{{ song['title'] }}</span>
+                <button class="song-list-add-btn" type="button" id="{{ 'addmenu' + song['sid'] }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="{{ 'addmenu' + song['sid'] }}">
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Another action</button>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                </div>
             </h5>
             <div class="card-body">
                 <div class="row pt-2 pb-1">

@@ -48,17 +48,21 @@ if __name__ == "__main__":
         if command == "drop":
             if config_code == "test":
                 dropAll("test")
-            elif config_code == "":
-                dropAll()
             else:
                 print_usage()
         elif command == "create":
             if config_code == "test":
                 createAll("test")
-            elif config_code == "":
-                createAll()
             else:
                 print_usage()
+        else:
+            print_usage()
+    elif len(sys.argv) == 2:
+        command = sys.argv[1]
+        if command == "drop":
+            dropAll("")
+        elif command == "create":
+            createAll("")
         else:
             print_usage()
     else:

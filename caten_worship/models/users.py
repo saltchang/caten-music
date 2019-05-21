@@ -28,6 +28,7 @@ class User(db.Model):
     is_anonymous = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     user_profile = db.relationship('UserProfile', backref='user', lazy=True)
+    song_list = db.relationship('SongList', backref='user', lazy=True)
 
     # 定義 password 為不可讀
     @property
