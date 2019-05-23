@@ -6,7 +6,7 @@ from . import client
 
 
 def surf(client, title, c, lang, to):
-    """搜尋模組"""
+    """瀏覽模組"""
 
     return client.get("/surf", query_string=dict(
         title=title,

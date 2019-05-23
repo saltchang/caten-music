@@ -29,6 +29,24 @@
     outline: none;
 }
 
+.song-list-add-check {
+    padding: .5rem 1.5rem;
+}
+
+.add-song-list-space {
+    display: inline-block;
+    width: 4px;
+    height: 1px;
+}
+
+.list-added {
+    color: #11cc00;
+}
+
+.list-not-added {
+    color: #616161ad;
+}
+
 .card .card-header {
     background-color: #C0AFA1;
     border-radius: .5rem .5rem 0 0;
