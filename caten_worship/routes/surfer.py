@@ -29,15 +29,23 @@ def surf():
 
     # 關鍵字：標題
     title = request.args.get("title")
+    if title != "":
+        return redirect("/"), 400
 
     # 關鍵字：集數
-    c = request.args.get("c")
+    c = request.args.get("c").replace(" ", "")
+    if c == "":
+        return redirect("/"), 400
 
     # 關鍵字：語言
-    lang = request.args.get("lang")
+    lang = request.args.get("lang").replace(" ", "")
+    if lang == "":
+        return redirect("/"), 400
 
     # 關鍵字：調性
     to = request.args.get("to")
+    if to != "":
+        return redirect("/"), 400
 
     # API 串接 搜尋
 
@@ -52,6 +60,6 @@ def surf():
         result = json.loads(r.text)
 
     try:
-        return render_template("result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang)
+        return render_template("result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
     except TemplateNotFound:
         abort(404)

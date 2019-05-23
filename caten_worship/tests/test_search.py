@@ -5,60 +5,64 @@ import pytest
 from . import client
 
 
-def search(client, mode, scope, keyword):
+def search(client, title, c, lang, to):
     """搜尋模組"""
 
     return client.get("/search", query_string=dict(
-        m=mode,
-        s=scope,
-        q=keyword), follow_redirects=True)
+        title=title,
+        c=c,
+        lang=lang,
+        to=to
+    ), follow_redirects=True)
 
 
-search_and_surf_params = [("search", "title", "來 敬拜",
-                           "EOF templates/result.html", "敬拜",
-                           "前", "耶穌愛我"),
+search_params = [("來 敬拜", "", "", "",
+                  "前來敬拜",
+                  "EOF templates/result.html",
+                  "耶穌愛我我知道",
+                  200),
 
-                          ("search", "title", "",
-                           "EOF templates/result.html", "結果", "0", "耶穌"),
+                 ("", "", "", "",
+                  "",
+                  "EOF templates/result.html",
+                  "耶穌愛我我知道",
+                  400),
 
-                          ("xyz", "title", "來 敬拜",
-                           "EOF templates/index.html", "",
-                           "", "耶穌愛我"),
+                 ("-999", "", "", "",
+                  "",
+                  "EOF templates/result.html",
+                  "耶穌愛我我知道",
+                  404),
 
-                          ("search", "xyz", "來 敬拜",
-                           "EOF templates/result.html", "結果", "0", "耶穌愛我"),
+                 ("敬拜", "-999", "", "",
+                  "",
+                  "Redirecting",
+                  "敬拜",
+                  400),
 
-                          ("", "", "",
-                           "EOF templates/index.html", "", "", "耶穌"),
+                 ("敬拜", "", "-999", "",
+                  "",
+                  "Redirecting",
+                  "敬拜",
+                  400),
 
-                          ("surf", "language", "c11",
-                           "EOF templates/result.html", "這世代要呼求祢",
-                           "國語", "台語"),
+                 ("敬拜", "", "", "-999",
+                  "",
+                  "Redirecting",
+                  "敬拜",
+                  400),
 
-                          ("surf", "language", "xyz",
-                           "EOF templates/index.html", "", "", "耶穌"),
-
-                          ("surf", "language", "",
-                           "EOF templates/index.html", "", "", "耶穌"),
-
-                          ("", "language", "c11",
-                           "EOF templates/index.html", "", "", "耶穌"),
-
-                          ("surf", "", "c11",
-                           "EOF templates/index.html", "", "", "耶穌"),
-
-                          ("surf", "xyz", "c11",
-                           "EOF templates/index.html", "", "", "耶穌"),
-                          ]
+                 ]
 
 
-@pytest.mark.parametrize("m, s, q, ex1, ex2, ex3, nex", search_and_surf_params)
-def test_search_and_surf(client, m, s, q, ex1, ex2, ex3, nex):
+@pytest.mark.parametrize("title, c, lang, to, ex, ex2, nex, exCode", search_params)
+def test_search(client, title, c, lang, to, ex, ex2, nex, exCode):
     """測試搜尋功能"""
 
-    res = search(client, m, s, q)
+    res = search(client, title, c, lang, to)
+    rcode = res.status_code
     res = res.data.decode()
-    assert ex1 in res
+    assert ex in res
     assert ex2 in res
-    assert ex3 in res
+    assert rcode == exCode
     assert nex not in res

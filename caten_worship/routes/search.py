@@ -18,12 +18,18 @@ def search():
 
     # 關鍵字：集數
     c = request.args.get("c")
+    if c != "":
+        return redirect("/"), 400
 
     # 關鍵字：語言
     lang = request.args.get("lang")
+    if lang != "":
+        return redirect("/"), 400
 
     # 關鍵字：調性
     to = request.args.get("to")
+    if to != "":
+        return redirect("/"), 400
 
     # API 串接搜尋
     requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + title
@@ -36,6 +42,6 @@ def search():
         result = json.loads(r.text)
 
     try:
-        return render_template("result.html", songs=result, songs_num=len(result), mode="search", c=c, title=title)
+        return render_template("result.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
     except TemplateNotFound:
         abort(404)
