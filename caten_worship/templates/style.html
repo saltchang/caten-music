@@ -1,20 +1,9 @@
 <!-- templates/style.html -->
 
-
 <!-- Reset all css first -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
 
-
-
-<!-- All CDN -->
-
-<!-- Bootstrap 4.3.1 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<!-- FontAwesome 5.8.1 -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<!-- Font CDN -->
 
 <!-- Google Font - Gramond -->
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,500" rel="stylesheet">
@@ -23,9 +12,14 @@
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC:400,500&amp;subset=chinese-traditional"
     rel="stylesheet">
 
-
-
 <!--Local Files -->
+
+<!-- Bootstrap 4.3.1 Local-->
+<link href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+
+<!-- FontAwesome 5.8.2 Local-->
+<link href="{{ url_for('static', filename='css/fontAwesome/css/all.min.css') }}" rel="stylesheet">
+
 
 <!-- base.css -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
