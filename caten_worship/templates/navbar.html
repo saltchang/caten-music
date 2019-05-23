@@ -33,9 +33,10 @@
         <ul class="navbar-nav mr-auto">
 
             <form action="{{ url_for('search_bp.search') }}" method="GET">
-                <input class="d-none" type="text" name="m" value="search">
-                <input class="d-none" type="text" name="s" value="title">
-                <input name="q" type="text" class="input-search-songs-text form-control navbar-search"
+                <input class="d-none" type="text" name="c" value="">
+                <input class="d-none" type="text" name="lang" value="">
+                <input class="d-none" type="text" name="to" value="">
+                <input name="title" type="text" class="input-search-songs-text form-control navbar-search"
                     placeholder="搜尋...">
             </form>
 

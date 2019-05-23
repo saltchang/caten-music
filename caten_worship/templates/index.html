@@ -17,13 +17,14 @@
 
     <div class="container text-center">
         <form action="{{ url_for('search_bp.search') }}" method="GET">
-            <input class="d-none" type="text" name="m" value="search">
-            <input class="d-none" type="text" name="s" value="title">
+            <input class="d-none" type="text" name="c" value="">
+            <input class="d-none" type="text" name="lang" value="">
+            <input class="d-none" type="text" name="to" value="">
             <div class="form-group row m-0">
                 <div class="col-sm-1 col-lg-2"></div>
                 <div class="col p-0 p-md-3">
                     <div class="row m-0 justify-content-around">
-                        <input name="q" type="text" class="input-search-songs-text form-control col-12 col-md-10 mb-4" id="search-text" placeholder="" autofocus="true">
+                        <input name="title" type="text" class="input-search-songs-text form-control col-12 col-md-10 mb-4" id="search-text" placeholder="" autofocus="true">
                         <button type="submit" class="btn btn-outline-success mb-4 col-5 col-sm-4 col-md-3">搜尋詩歌</button>
                     </div>
                 </div>

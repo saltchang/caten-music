@@ -26,7 +26,7 @@ search_and_surf_params = [("search", "title", "來 敬拜",
                            "", "耶穌愛我"),
 
                           ("search", "xyz", "來 敬拜",
-                           "EOF templates/result.html", "結果", "0", "耶穌"),
+                           "EOF templates/result.html", "結果", "0", "耶穌愛我"),
 
                           ("", "", "",
                            "EOF templates/index.html", "", "", "耶穌"),
@@ -36,10 +36,10 @@ search_and_surf_params = [("search", "title", "來 敬拜",
                            "國語", "台語"),
 
                           ("surf", "language", "xyz",
-                           "EOF templates/result.html", "共有", "0", "耶穌"),
+                           "EOF templates/index.html", "", "", "耶穌"),
 
                           ("surf", "language", "",
-                           "EOF templates/result.html", "共有", "0", "耶穌"),
+                           "EOF templates/index.html", "", "", "耶穌"),
 
                           ("", "language", "c11",
                            "EOF templates/index.html", "", "", "耶穌"),
@@ -48,7 +48,7 @@ search_and_surf_params = [("search", "title", "來 敬拜",
                            "EOF templates/index.html", "", "", "耶穌"),
 
                           ("surf", "xyz", "c11",
-                           "EOF templates/result.html", "共有", "0", "耶穌"),
+                           "EOF templates/index.html", "", "", "耶穌"),
                           ]
 
 

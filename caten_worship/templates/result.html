@@ -27,7 +27,7 @@
     <div id="home-title">
         {% if mode == "search" %}
         <h4 class="mb-4 search-infomation">
-            搜尋結果 ： {{ keyword }}
+            搜尋結果 ： {{ title }}
         </h4>
         <p>找到 {{ songs_num }} 首歌</p>
         {% endif %}
@@ -35,18 +35,15 @@
         {% if mode == "surf" %}
         <h4 class="mb-4 search-infomation">
             <span>
-                {% if scope == "language" and not c == "" %}
-                    {% if keyword.find("c") != -1 %}
-                        國語
-                        &nbsp;
-                        第 {{ c }} 集
-                    {% endif %}
-                    {% if keyword.find("t") != -1 %}
-                        台語
-                        &nbsp;
-                        第 {{ c }} 集
-                    {% endif %}
-                        
+                {% if lang == "Chinese" %}
+                    國語
+                    &nbsp;
+                    第 {{ c }} 集
+                {% endif %}
+                {% if lang == "Taiwanese" %}
+                    台語
+                    &nbsp;
+                    第 {{ c }} 集
                 {% endif %}
             </span>
         </h4>
