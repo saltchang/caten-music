@@ -1,5 +1,14 @@
 /* static/css/songslist.css */
 
+button,
+button:active,
+button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    font-size: .8rem;
+}
+
 
 .search-infomation {
     margin-top: 100px;
@@ -25,8 +34,25 @@
     line-height: 1.5rem;
 }
 
-.song-list-add-btn:focus {
-    outline: none;
+.add-list-container {
+    padding: .5rem 0;
+}
+
+.drop-songlist {
+    width: 250px;
+    position: absolute;
+    z-index: 1000;
+    
+    margin: .125rem 0 0;
+    text-align: left;
+    background-color: #fff;
+    border-radius: .25rem;
+
+    right: 0;
+    left: auto;
+    top: auto;
+    font-size: .8rem;
+    transition: 500ms;
 }
 
 .song-list-add-check {
@@ -35,8 +61,8 @@
 
 .add-song-list-space {
     display: inline-block;
-    width: 4px;
-    height: 1px;
+    width: .1rem;
+    height: .1rem;
 }
 
 .list-added {
@@ -47,6 +73,70 @@
     color: #616161ad;
 }
 
+.songlist-add {
+    padding: .5rem 1.5rem;
+}
+
+.songlist-add-a {
+    color: rgba(6, 78, 119, 0.548);
+}
+
+.form-check-input {
+    position: inherit;
+}
+
+.input-addnewlist {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: .8rem;
+    border-radius: .25rem;
+    padding: .2rem .5rem;
+    outline: none;
+    border: 1px solid rgba(36, 41, 46, 0.301);
+    width: 90%;
+    transition: 700ms;
+}
+
+.input-addnewlist:focus {
+    outline: none;
+    border: 1px solid rgba(0, 120, 190, 0.527);
+}
+
+.add-list-group {
+    margin-top: .7rem;
+    margin-bottom: .5rem;
+}
+
+.songlist-add label{
+    margin: 0;
+}
+
+.songlist-add p{
+    margin: .5rem;
+}
+
+.songlist-add small{
+    padding-top: .5rem;
+    padding-bottom: .3rem;
+}
+
+.songlist-add button {
+    display: block;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1.4rem;
+    width: 60%;
+    font-size: .8rem;
+}
+
+hr.percent-80 {
+    margin: 1rem .3rem .7rem .3rem;
+}
+
+/* song card */
+
 .card .card-header {
     background-color: #C0AFA1;
     border-radius: .5rem .5rem 0 0;
@@ -55,6 +145,10 @@
 
 .header-title-text {
     margin-right: -24px;
+}
+
+.song-content-container {
+    transition: 700ms;
 }
 
 .card .card-body {
@@ -115,7 +209,6 @@
 
 /* bottom */
 .back-to-home {
-    display: block;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    display: inline-block;
+    margin: 5rem auto;
 }

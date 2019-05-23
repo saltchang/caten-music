@@ -68,23 +68,62 @@
         <div class="col card my-3 p-0">
             <h5 class="card-header">
                 <span class="header-title-text">{{ song['title'] }}</span>
-                <button class="song-list-add-btn" type="button" id="{{ 'addmenu' + song['sid'] }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song['sid'] }}" data-toggle="collapse" data-target="{{ '#listmenu-' + song['sid'] }}" aria-expanded="false" aria-controls="collapseExample">
                     <i class="fas fa-plus"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="{{ 'addmenu' + song['sid'] }}">
-                    <form action="#">
-                        <input type="text" name="newlist" id="input-newlist">
-                    </form>
-                    <button class="dropdown-item song-list-add-check text-success" type="button">
-                        <i class="far fa-check-square"></i>
-                        <div class="add-song-list-space"></div>
-                        加入的歌單1
-                    </button>
-                    <button class="dropdown-item song-list-add-check text-secondary" type="button">
-                        <i class="far fa-square"></i>
-                        <div class="add-song-list-space"></div>
-                        未加入的歌單2
-                    </button>
+                <div class="collapse drop-songlist" id="{{ 'listmenu-' + song['sid'] }}">
+                    <div class="add-list-container">
+                        <div class="songlist-add">
+                            <a class="songlist-add-a" data-toggle="collapse" href="{{ '#songlist-add-' + song['sid'] }}" role="button" aria-expanded="false" aria-controls="{{ 'songlist-add-' + song['sid'] }}">
+                                <i class="fas fa-plus"></i>
+                                <div class="add-song-list-space"></div>
+                                新增一份歌單
+                            </a>
+                            <div class="song-content-container collapse" id="{{'songlist-add-' + song['sid'] }}">
+                                <form action="">
+                                    <hr class="percent-80">
+                                    <input type="text" class="d-none" name="sid" value="{{ song['sid'] }}">
+                                    <div class="add-list-group">
+                                        <p class="text-center">歌單名稱</p>
+                                        <input type="text" name="new-list-name" class="input-addnewlist" id="{{ 'input-new-list-name-' + song['sid'] }}" placeholder="輸入新增歌單名稱">
+                                    </div>
+                                    <hr class="percent-80">
+                                    <p class="text-center">隱私設定</p>
+                                    <div class="add-list-group">
+                                        <input class="" type="radio" name="access-auth" id="{{ 'check-public-' + song['sid'] }}" value="public" checked>
+                                        <label class="" for="{{ 'check-public-' + song['sid'] }}">
+                                            <div class="add-song-list-space"></div>
+                                            公開
+                                        </label>
+                                        <small class="form-text text-muted">取得連結的人都可以查看<br>( 如要分享歌單，請選此項 )</small>
+                                    </div>
+                                    <div class="add-list-group">
+                                        <input class="" type="radio" name="access-auth" id="{{ 'check-private-' + song['sid'] }}" value="private">
+                                        <label class="" for="{{ 'check-private-' + song['sid'] }}">
+                                            <div class="add-song-list-space"></div>
+                                            私人
+                                        </label>
+                                        <small class="form-text text-muted">只有你自己能查看</small>
+                                    </div>
+                                    <hr class="percent-80">
+                                    <button id="{{ 'btn-add-list-' + song['sid'] }}" type="button" class="btn btn-sm btn-outline-info text-center">新增</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr class="my-2">
+                        <div class="songlist-list">
+                            <button class="dropdown-item song-list-add-check text-success" type="button">
+                                <i class="far fa-check-square"></i>
+                                <div class="add-song-list-space"></div>
+                                加入的歌單1
+                            </button>
+                            <button class="dropdown-item song-list-add-check text-secondary" type="button">
+                                <i class="far fa-square"></i>
+                                <div class="add-song-list-space"></div>
+                                未加入的歌單2
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </h5>
             <div class="card-body">
@@ -113,7 +152,7 @@
                     <div class="col-md-1 col-lg-2"></div>
                 </div>
             </div>
-            <div class="collapse" id="{{'t' + song['sid'] }}">
+            <div class="song-content-container collapse" id="{{'t' + song['sid'] }}">
                 <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
                     <div class="container">
                         <hr>
@@ -185,6 +224,11 @@
 
 </div>
 {% endblock %}
+
+{% block script %}
+{{  super ()  }}
+    <script src="{{ url_for('static', filename='js/addlist.js') }}"></script>
+{% endblock script %}
 
 {% block EOF_TAG %}
 <!-- EOF templates/result.html -->
