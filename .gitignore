@@ -12,6 +12,8 @@ sheetdata
 
 # 機密
 secret.txt
+secret/
+secret
 
 # vscode 設定
 .vscode

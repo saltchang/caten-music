@@ -2,7 +2,6 @@
 
 from flask import Blueprint, redirect
 
-from caten_worship import services
 from caten_worship import models
 
 download_ppt_bp = Blueprint("download_ppt_bp", __name__,

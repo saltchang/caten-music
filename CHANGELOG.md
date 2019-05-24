@@ -31,11 +31,17 @@
 ### Changed
 
 - 調整 歌曲資料介面
+- 將各框架及函式庫由 CDN 轉移至 本地檔案
 
 ### Fixed
 
 - 修正 database.py
 - 修正 flask-migrate
+- 整理專案檔案
+
+### Removed
+
+- 移除不必要的檔案
 
 ## [0.1.7] - 2019-05-20
 
