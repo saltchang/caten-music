@@ -14,7 +14,7 @@
 
     {% block css %}
 
-    {% include "style.html" %}
+    {% include "base/style.html" %}
 
     {% endblock css %}
 
@@ -24,11 +24,11 @@
 
 <body>
     {% block alert_container %}
-    {% include "alert.html" %}
+    {% include "base/alert.html" %}
     {% endblock alert_container %}
 
     {% block navbar %}
-    {% include "navbar.html" %}
+    {% include "base/navbar.html" %}
     {% endblock navbar %}
 
 
@@ -43,7 +43,7 @@
     {% endblock %}
 
     {% block script %}
-    {% include "script.html" %}
+    {% include "base/script.html" %}
     {% endblock script %}
 </body>
 

@@ -1,5 +1,7 @@
 # helper/json_importer.py
 
+# 暫不使用
+
 import json
 
 

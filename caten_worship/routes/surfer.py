@@ -20,7 +20,7 @@ surf_bp = Blueprint("surf_bp", __name__,
 def surfer():
 
     try:
-        return render_template("surfer.html")
+        return render_template("pages/surfer.html")
     except TemplateNotFound:
         abort(404)
 
@@ -60,6 +60,6 @@ def surf():
         result = json.loads(r.text)
 
     try:
-        return render_template("result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
+        return render_template("songs/result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
     except TemplateNotFound:
         abort(404)

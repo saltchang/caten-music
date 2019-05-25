@@ -30,10 +30,10 @@ def activate_account(token):
         user.is_active = True
         user.save()
 
-        return render_template("active_success.html")
+        return render_template("activation/active_success.html")
 
     else:
-        return render_template("active_fail.html")
+        return render_template("activation/active_fail.html")
 
 @resend_activate_mail_bp.route('/activate/account/mail/resend', methods=["GET", "POST"])
 def resend_activate_mail():
@@ -62,17 +62,17 @@ def resend_activate_mail():
             services.send_mail(sender='Sender@domain.com',
                                recipients=[email],
                                subject='Caten Worship 帳號註冊認證信',
-                               template='verifymail.html',
+                               template='activation/verifymail.html',
                                username=username,
                                token=token)
 
-            return render_template("after_register.html", msg_text="啟動信已成功寄出")
+            return render_template("activation/after_register.html", msg_text="啟動信已成功寄出")
         else:
             flash("電子郵件地址錯誤或尚未註冊", "danger")
             return redirect("/activate/account/mail/resend")
 
     else:
-        return render_template("resend_mail.html")
+        return render_template("activation/resend_mail.html")
 
 # 前端 ajax 驗證email
 @ajax_validate_email_bp.route("/ajax/validate/email/<email_>", methods=["POST"])

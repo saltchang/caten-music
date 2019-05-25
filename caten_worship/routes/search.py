@@ -42,6 +42,6 @@ def search():
         result = json.loads(r.text)
 
     try:
-        return render_template("result.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
+        return render_template("songs/result.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
     except TemplateNotFound:
         abort(404)

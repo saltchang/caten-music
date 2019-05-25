@@ -1,7 +1,6 @@
 # models/__init__.py
 
 from .base import db
-from .songs import songsDB
 from .dbx import get_dbx
 from .users import User
 from .users_profile import UserProfile

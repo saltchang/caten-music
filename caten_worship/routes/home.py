@@ -10,7 +10,7 @@ home_bp = Blueprint("home_bp", __name__,
 @home_bp.route('/')
 def seeHome():
     try:
-        return render_template('index.html')
+        return render_template("pages/index.html")
 
     except TemplateNotFound:
         abort(404)
