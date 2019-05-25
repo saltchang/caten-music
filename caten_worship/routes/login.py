@@ -34,21 +34,21 @@ def login():
         # 當有人故意送出奇怪的request
         except Exception as error:
             print(error)
-            return render_template("error/403.html", error_message="Don't Play With Me.")
+            return render_template("error/403.html", error_message="Don't Play With Me."), 400
 
 
         # 如果有欄位的資料錯誤，則回傳之前端
         if check_result["primary_check"] == "failed" or \
             not check_result["password_check"]:
-            return render_template("error/403.html", error_message="Wrong login imformation.")
+            return render_template("error/403.html", error_message="Wrong login imformation."), 400
 
         user_to_login = helper.checkLogin(check_result["primary_check"], primary, password)
 
         if not user_to_login:
-            return render_template("error/403.html", error_message="Wrong login imformation.")
+            return render_template("error/403.html", error_message="Wrong login imformation."), 400
         
         if not user_to_login.is_authenticated:
-            return render_template("activation/account_not_activated.html")
+            return render_template("activation/account_not_activated.html"), 401
 
         # 以上所有註冊資料確認完成，可以註冊帳號
         else:
@@ -56,22 +56,22 @@ def login():
 
             if next_url == "None":
                 flash(user_to_login.displayname + "，歡迎回來" , "success")
-                return redirect("/")
+                return redirect("/"), 302
 
             if not helper.is_safe_url(next_url):
                 return abort(400)
             else:
                 flash(user_to_login.displayname + "，歡迎回來" , "success")
-                return redirect(next_url)
+                return redirect(next_url), 302
 
     # method == "GET"
     else:
 
         if current_user.is_authenticated:
-            return redirect("/")
+            return redirect("/"), 302
 
         try:
-            return render_template('account/login.html', next_url=request.args.get("next"))
+            return render_template('account/login.html', next_url=request.args.get("next")), 200
 
         except TemplateNotFound:
             abort(404)

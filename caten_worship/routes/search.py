@@ -1,6 +1,6 @@
 # routes/search.py
 
-from flask import Blueprint, render_template, abort, request, redirect
+from flask import Blueprint, render_template, abort, request, redirect, current_app
 from jinja2 import TemplateNotFound
 
 import requests
@@ -19,22 +19,23 @@ def search():
     # 關鍵字：集數
     c = request.args.get("c")
     if c != "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # 關鍵字：語言
     lang = request.args.get("lang")
     if lang != "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # 關鍵字：調性
     to = request.args.get("to")
     if to != "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # API 串接搜尋
     requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + title
     r = requests.get(requestURL)
-    print("透過API搜尋, URL:", requestURL)
+
+    current_app.logger.info("透過API搜尋, URL: " + requestURL)
 
     if not r.status_code == 200:
         result = []

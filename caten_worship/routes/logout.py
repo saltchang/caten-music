@@ -13,6 +13,6 @@ logout_bp = Blueprint("logout_bp", __name__,
 def logout():
     try:
         logout_user()
-        return redirect("/")
+        return redirect("/"), 302
     except:
-        return redirect("/")
+        return redirect("/"), 302

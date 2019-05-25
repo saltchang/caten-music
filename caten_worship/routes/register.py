@@ -46,24 +46,24 @@ def register():
 
         # 當有人故意送出奇怪的request
         except:
-            return render_template("error/403.html", error_message="Don't Play With Me.")
+            return render_template("error/403.html", error_message="Don't Play With Me."), 400
 
         # 如果有欄位的資料錯誤，則回傳之前端
         for k, v in check_result.items():
             if not v:
-                return render_template("error/403.html", error_message="Wrong " + k.replace("_check", ""))
+                return render_template("error/403.html", error_message="Wrong " + k.replace("_check", "")), 400
 
         # 如果兩次輸入的密碼不一樣
         if not password == confirm_password:
-            return render_template("error/403.html", error_message="兩次輸入的密碼不一樣，請再試一次")
+            return render_template("error/403.html", error_message="兩次輸入的密碼不一樣，請再試一次"), 400
 
         # 檢查 username 是否已註冊
         if checkExist.username(username=username):
-            return render_template("error/403.html", error_message="使用者名稱已被註冊"), 403
+            return render_template("error/403.html", error_message="使用者名稱已被註冊"), 400
 
         # 檢查 email 是否已註冊
         if checkExist.email(email=email):
-            return render_template("error/403.html", error_message="電子信箱已被註冊"), 403
+            return render_template("error/403.html", error_message="電子信箱已被註冊"), 400
 
         # 以上所有註冊資料確認完成，可以註冊帳號
 
@@ -101,11 +101,11 @@ def register():
     else:
 
         if current_user.is_authenticated:
-            return redirect("/")
+            return redirect("/"), 302
 
         # 產生註冊表單
         try:
-            return render_template("account/register.html")
+            return render_template("account/register.html"), 200
 
         except TemplateNotFound:
             abort(404)
@@ -135,4 +135,4 @@ def ajax_validate_register(username_, email_):
 def show_user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
-    return render_template("account/show_user.html", user=user)
+    return render_template("account/show_user.html", user=user), 200

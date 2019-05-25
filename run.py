@@ -1,9 +1,9 @@
 # run.py
 
 
-from caten_worship import create_app
+from caten_worship import CreateApp
 
-app = create_app("")
+app = CreateApp.Main()
 
 if __name__ == "__main__":
     app.run()

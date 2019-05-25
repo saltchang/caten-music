@@ -30,10 +30,10 @@ def activate_account(token):
         user.is_active = True
         user.save()
 
-        return render_template("activation/active_success.html")
+        return render_template("activation/active_success.html"), 200
 
     else:
-        return render_template("activation/active_fail.html")
+        return render_template("activation/active_fail.html"), 400
 
 @resend_activate_mail_bp.route('/activate/account/mail/resend', methods=["GET", "POST"])
 def resend_activate_mail():
@@ -52,7 +52,7 @@ def resend_activate_mail():
             # 確認 email 是否已經啟動過
             if user.is_authenticated:
                 flash("此電子郵件已認證過，請再確認。", "danger")
-                return redirect("/activate/account/mail/resend")
+                return redirect("/activate/account/mail/resend"), 302
 
             # 產生一個帳號啟動的 token
             token = user.create_activate_token()
@@ -66,13 +66,13 @@ def resend_activate_mail():
                                username=username,
                                token=token)
 
-            return render_template("activation/after_register.html", msg_text="啟動信已成功寄出")
+            return render_template("activation/after_register.html", msg_text="啟動信已成功寄出"), 200
         else:
             flash("電子郵件地址錯誤或尚未註冊", "danger")
-            return redirect("/activate/account/mail/resend")
+            return redirect("/activate/account/mail/resend"), 302
 
     else:
-        return render_template("activation/resend_mail.html")
+        return render_template("activation/resend_mail.html"), 200
 
 # 前端 ajax 驗證email
 @ajax_validate_email_bp.route("/ajax/validate/email/<email_>", methods=["POST"])

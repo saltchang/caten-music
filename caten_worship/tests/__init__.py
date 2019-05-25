@@ -7,13 +7,13 @@ import tempfile
 import pytest
 
 
-from caten_worship import create_app
+from caten_worship import CreateApp
 
 
 @pytest.fixture
 def client():
 
-    app = create_app("test")
+    app = CreateApp.Test()
 
     # db_fd, app.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
     client = app.test_client()
@@ -26,7 +26,7 @@ def client():
 
 def dropAll():
 
-    app = create_app("test")
+    app = CreateApp.Test()
 
     from caten_worship.models.base import db
 
@@ -35,7 +35,7 @@ def dropAll():
 
 def createAll():
 
-    app = create_app("test")
+    app = CreateApp.Test()
 
     from caten_worship.models.base import db
 
@@ -44,7 +44,7 @@ def createAll():
 
 def create_test_user():
 
-    app = create_app("test")
+    app = CreateApp.Test()
 
     from caten_worship import models
 

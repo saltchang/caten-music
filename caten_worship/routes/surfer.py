@@ -1,6 +1,6 @@
 # routes/surfer.py
 
-from flask import Blueprint, render_template, abort, request, redirect
+from flask import Blueprint, render_template, abort, request, redirect, current_app
 from jinja2 import TemplateNotFound
 
 from flask_login import login_required
@@ -20,7 +20,7 @@ surf_bp = Blueprint("surf_bp", __name__,
 def surfer():
 
     try:
-        return render_template("pages/surfer.html")
+        return render_template("pages/surfer.html"), 200
     except TemplateNotFound:
         abort(404)
 
@@ -30,29 +30,29 @@ def surf():
     # 關鍵字：標題
     title = request.args.get("title")
     if title != "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # 關鍵字：集數
     c = request.args.get("c").replace(" ", "")
     if c == "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # 關鍵字：語言
     lang = request.args.get("lang").replace(" ", "")
     if lang == "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # 關鍵字：調性
     to = request.args.get("to")
     if to != "":
-        return redirect("/"), 400
+        return redirect("/"), 302
 
     # API 串接 搜尋
 
     requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + lang + "&c=" + c + "&to=&title="
 
     r = requests.get(requestURL)
-    print("透過API瀏覽, URL:", requestURL)
+    current_app.logger.info("透過API瀏覽, URL: " + requestURL)
 
     if not r.status_code == 200:
         result = []
