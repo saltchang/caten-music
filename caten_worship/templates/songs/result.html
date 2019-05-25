@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="static/css/songslist.css">
+<link rel="stylesheet" href="static/css/songs/resultlist.css">
 {%  endblock  %}
 
 {% block title %}
@@ -227,7 +227,8 @@
 
 {% block script %}
 {{  super ()  }}
-    <script src="{{ url_for('static', filename='js/addlist.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/songs/addlist.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

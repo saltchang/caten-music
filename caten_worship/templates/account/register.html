@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account/register.css') }}">
 {%  endblock  %}
 
 {% block title %} - 註冊{% endblock %}
@@ -88,7 +88,7 @@
 
 {% block script %}
 {{ super () }}
-<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+<script src="{{ url_for('static', filename='js/account/register.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

@@ -1,9 +1,9 @@
 /* static/css/home.css */
 
-.home-text-logo {
+.home-main-logo {
     background-color: #00000000;
-    width: 70%;
-    max-width: 300px;
-    min-width: 180px;
+    width: 60%;
+    max-width: 450px;
+    min-width: 250px;
     text-align: -webkit-center;
 }

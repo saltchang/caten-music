@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}">
 {%  endblock  %}
 
 {% block title %}{% endblock %}
@@ -12,7 +12,24 @@
 {% block content%}
 <div class="container text-center">
     <div class="title-under-navbar">
-        <h1><img class="home-text-logo" src="{{ url_for('static', filename='image/icon/CatenWorshipTextLogo.png') }}" alt=""></h1>
+        <h1>
+            <!-- <img class="home-text-logo" src="{{ url_for('static', filename='image/icon/CatenWorshipTextLogo.png') }}" alt=""> -->
+            <svg class="home-main-logo" viewBox="0 0 630 216" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+                <title>Caten Worship</title>
+                <desc>Created with Sketch.</desc>
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Optima-Regular, Optima" font-size="139" font-weight="normal">
+                    <g id="群組" transform="translate(-40.000000, -29.000000)" fill="#24292E">
+                        <text id="WORSHIP">
+                            <tspan x="40.1441562" y="241">WORSHIP</tspan>
+                        </text>
+                        <text id="CATEN">
+                            <tspan x="148.24394" y="128">CATEN</tspan>
+                        </text>
+                    </g>
+                </g>
+            </svg>
+        </h1>
     </div>
 
     <div class="container text-center">
