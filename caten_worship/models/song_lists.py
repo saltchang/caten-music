@@ -20,6 +20,7 @@ class SongList(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
     songs_sid_list = db.Column(db.ARRAY(db.String(8)))
+    songs_amount = db.Column(db.Integer, nullable=False, default=False)
     created_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
     edited_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
     is_private = db.Column(db.Boolean, default=False)
