@@ -1,15 +1,11 @@
 # Caten Worship
 
-本專案為基於 Python Flask, Heroku, PostgreSQL 的網站,
+本專案為歌曲資料庫網站,
 網址為 [https://caten-worship.herokuapp.com](https://caten-worship.herokuapp.com)
-
-資料庫使用 [church-music-api](https://github.com/saltchang/church-music-api)
 
 提供給 [茄典教會](https://caten-church.com) 使用
 
 詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
-
-- 當前生產版本 v0.1.7
 
 ## Released
 
@@ -17,106 +13,88 @@
 
 - 連接 歌曲資料庫 [API](https://github.com/saltchang/church-music-api)
 
-### [0.1.6] - 2019-05-01
+## Stack
 
-- 建立 資料庫遷徙功能呢
-- 修正 帳號啟動信重寄功能
+- [Flask](http://flask.pocoo.org/)
+- [Heroku](https://www.heroku.com/home)
+- [PostgreSQL](https://www.postgresql.org/)
+- [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
+- [Church Music API](https://github.com/saltchang/church-music-api)
 
-### [0.1.5] - 2019-04-30
+## Usage
 
-- 建立 單元測試
-- 微調 使用者介面
+### Clone and Set Environment
 
-### [0.1.4] - 2019-04-25
+Clone the file into your local repository:
 
-- 新增 登入功能
-- 新增 重新獲取啟動信功能
-- 建立 使用者個人檔案資料庫
-- 修改 資料庫
-- 修改 介面架構以及網站Logo
-- 建立 單元測試：搜尋及瀏覽功能
+```shell
 
-### [0.1.3] - 2019-04-19
+$ git clone https://github.com/saltchang/caten-worship.git
 
-- 調整 系統架構
-- 加入 網站 SSL from Heroku ACM
-- 調整 資料庫
-- 更改 註冊密碼可容許更多符號
+```
 
-### [0.1.2] - 2019-04-17
+Use [Pipenv](https://github.com/pypa/pipenv) for managing dependencies:
 
-- 更新 註冊功能
-- 新增 前端註冊表單驗證功能
-- 新增 後端註冊表單驗證功能
-- 新增 註冊時即時AJAX驗證功能
-- 新增 一些訊息templates
-- 修改 網站Logo
-- 調整 前端介面
+```shell
 
-### [0.1.1] - 2019-04-14
+$ pipenv install
 
-- 新增 註冊功能
+```
 
-### [0.1.0] - 2019-04-12
+Create the .env file:
 
-- 重建 App 架構
-- 重建 資料庫
+```shell
 
-### [0.0.10] - 2019-04-09
+$ touch .env
 
-- 更改 介面樣式
-- 新增 依語言、集數瀏覽詩歌
-- 更新 投影片資料庫
+```
 
-### [0.0.9] - 2019-04-05
+Add the following content into .env:
 
-- 更改 網站字型
-- 新增 瀏覽詩歌：依語言
-- 測試 資料庫連接
-- 移除 瀏覽所有詩歌
-- 優化 搜尋引擎
+```text
 
-### [0.0.8] - 2019-04-04
+DROPBOX_ACCESS_TOKEN=<Your Dropbox API token>
+DATABASE_URL=<Your PostgreSQL URL>
+DATABASE_URL_FOR_TESTING=<Your PostgreSQL URL for testing>
+APP_SETTING="config.Config.Development"
+TEST_SETTING="config.Config.Testing"
+MAIL_USERNAME=<Your mail account username>
+MAIL_PASSWORD=<Your mail account password>
+HASH_SALT=<Set your own salt for hashing>
+SECRET_KEY=<Your secret key>
+FLASK_APP=run.py
+FLASK_ENV=development
 
-- 更改 介面配色
-- 優化 搜尋引擎
-- 優化 系統架構
-- 新增 一些icon
-- 新增 YouTube 連結功能
+```
 
-### [0.0.7] - 2019-04-03
+and change the `<variable>`
 
-- 調整 頁面結構
-- 移動 瀏覽所有詩歌 至功能列
-- 新增 搜尋功能，可於首頁搜尋詩歌
+### PSQL Migration
 
-### [0.0.6] - 2019-04-03
+Create the needed database (in pipenv):
 
-- 更新資料庫：部分詩歌加入歌詞、作詞、作曲、詩集等資料
+```shell
 
-### [0.0.5] - 2019-03-31
+$ pipenv run flask db upgrade
 
-- 重構 歌曲歌曲列表架構
-- 調整 介面顏色
-- 新增 網站 favicon
+```
 
-### [0.0.4] - 2019-03-30
+## Run
 
-- 增加 響應式頁面結構
-- 測試 摺疊按鈕中
-- 新增 Navbar
-- 新增 網站LOGO
+Run in flask way:
 
-### [0.0.3] - 2019-03-29
+```shell
 
-- 整理系統檔案，重新部署
+$ pipenv run flask run
 
-### [0.0.2] - 2019-03-27
+```
 
-- 暫時移除 首頁搜尋功能
-- 新增 “查看所有詩歌” 功能
-- 修改資料庫
+Run in Heroku way:
 
-### [0.0.1] - 2019-03-25
+(If you have [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed)
 
-- 首次發佈
+```shell
+
+$ pipenv run heroku local web
+
+```

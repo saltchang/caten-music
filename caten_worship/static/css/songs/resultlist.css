@@ -52,7 +52,7 @@ button:focus {
     left: auto;
     top: auto;
     font-size: .8rem;
-    transition: 500ms;
+    transition: 400ms;
 }
 
 .song-list-add-check {
@@ -95,7 +95,7 @@ button:focus {
     outline: none;
     border: 1px solid rgba(36, 41, 46, 0.301);
     width: 90%;
-    transition: 700ms;
+    transition: 500ms;
 }
 
 .input-addnewlist:focus {
@@ -148,7 +148,7 @@ hr.percent-80 {
 }
 
 .song-content-container {
-    transition: 700ms;
+    transition: 500ms;
 }
 
 .card .card-body {
@@ -179,7 +179,7 @@ hr.percent-80 {
 .show-more-song-content a {
     color: #a5679b;
     font-size: 1.4rem;
-    transition: 700ms;
+    transition: 500ms;
 }
 
 .show-more-song-color a {

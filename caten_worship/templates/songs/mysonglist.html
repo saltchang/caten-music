@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="static/css/songs/resultlist.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/mysonglist.css') }}">
 {%  endblock  %}
 
 {% block title %}
@@ -16,12 +16,12 @@
 <div class="container text-center">
 
     <!-- Header -->
-    <div id="home-title">
+    <div class="top-header">
 
-        <h4 class="mb-4 search-infomation">
+        <h4 class="mb-4 main-title">
             我的歌單列表
         </h4>
-        <p>共有 {{ song_lists_amount }} 份歌單</p>
+        <p class="main-info">共有 {{ song_lists_amount }} 份歌單</p>
 
     </div>
 
@@ -29,59 +29,90 @@
 
     <!-- List -->
 
-    <table class="table">
+    <table class="table table-hover">
         <thead class="thead-dark">
-          <tr>
-            <th scope="col">標題</th>
-            <th scope="col">歌曲</th>
-            <th scope="col">建立日期</th>
-            <th scope="col">擁有者</th>
-            <th scope="col">隱私設定</th>
-            <th scope="col">狀態</th>
-          </tr>
+            <tr>
+                <th scope="col" class="table-td-icon"></th>
+                <th scope="col" class="">
+                    <span class="d-sm-none">日期</span>
+                    <span class="d-none d-sm-inline">更新日期</span>
+                </th>
+                <th scope="col" class="">
+                    歌單標題
+                </th>
+                <th scope="col" class="">
+                    <span class="d-md-none">曲數</span>
+                    <span class="d-none d-md-inline">歌曲數量</span>
+                </th>
+                <th scope="col" class="d-none d-md-table-cell">
+                    建立者
+                </th>
+                <th scope="col" class="d-none d-lg-table-cell">
+                    說明
+                </th>
+            </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>5/26 主日敬拜</td>
-            <td>5</td>
-            <td>2019/05/20</td>
-            <td>光鹽</td>
-            <td>
-                <div>公開</div>
-                <div>已封存</div>
-            </td>
-          </tr>
-          <tr>
-            <td>喜歡的歌曲</td>
-            <td>17</td>
-            <td>2019/04/18</td>
-            <td>光鹽</td>
-            <td>私人</td>
-            <td>可編輯</td>
-          </tr>
-          <tr>
-            <td>下次青崇練習</td>
-            <td>4</td>
-            <td>2019/05/23</td>
-            <td>玉奇</td>
-            <td>公開</td>
-            <td>可編輯</td>
-          </tr>
+            <tr id="1">
+                <a href="/songlist/1">
+                    <td class="table-td-icon">
+                        <span><i class="fas fa-globe-asia"></i></span>
+                    </td>
+                    <td class="">
+                        <span class="d-sm-none">05/20</span>
+                        <span class="d-none d-sm-inline">2019-05-20</span>
+                    </td>
+                    <td class="">5/26主日敬拜讚美歌單</td>
+                    <td class="">5</td>
+                    <td class="d-none d-md-table-cell">光鹽</td>
+                    <td class="d-none d-lg-table-cell">
+                        這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
+                    </td>
+                </a>
+            </tr>
+            <tr>
+                <td class="table-td-icon">
+                    <span><i class="fas fa-globe-asia"></i></span>
+                </td>
+                <td class="">
+                    <span class="d-sm-none">05/20</span>
+                    <span class="d-none d-sm-inline">2019-05-20</span>
+                </td>
+                <td class="">5/26主日敬拜讚美歌單</td>
+                <td class="">5</td>
+                <td class="d-none d-md-table-cell">光鹽</td>
+                <td class="d-none d-lg-table-cell">
+                    這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
+                </td>
+            </tr>
+            <tr>
+                <td class="table-td-icon">
+                    <span><i class="fas fa-globe-asia"></i></span>
+                </td>
+                <td class="">
+                    <span class="d-sm-none">05/20</span>
+                    <span class="d-none d-sm-inline">2019-05-20</span>
+                </td>
+                <td class="">5/26主日敬拜讚美歌單</td>
+                <td class="">5</td>
+                <td class="d-none d-md-table-cell">光鹽</td>
+                <td class="d-none d-lg-table-cell">
+                    這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
+                </td>
+            </tr>
         </tbody>
-      </table>
+    </table>
 
     {% for list in song_lists %}
-    
-    {% endfor %}
 
-    <a class="back-to-home" href="/">回首頁</a>
+    {% endfor %}
 
 </div>
 {% endblock %}
 
 {% block script %}
 {{  super ()  }}
-    <!-- <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script> -->
+<script src="{{ url_for('static', filename='js/songs/mysonglist.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

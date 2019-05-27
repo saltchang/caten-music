@@ -1,0 +1,50 @@
+/* static/css/mysonglist.css */
+
+table {
+    font-size: .85rem;
+}
+
+/* header */
+
+.top-header {
+margin: 2rem 0;
+}
+
+.main-title {
+    margin-top: 100px;
+}
+
+.main-info {
+    font-size: .85rem;
+}
+
+/* table */
+
+.table .thead-dark th {
+    border: none;
+}
+
+.table th, .table td {
+    padding: 1rem .4rem;
+    min-width: 2.75rem;
+    /* border: none; */
+    /* transition: 700ms; */
+}
+
+.table td {
+    padding: 1.4rem .4rem;
+    cursor: pointer;
+}
+
+tr td i {
+    color: rgba(32, 32, 32, 0.5);
+}
+
+/* .table tr {
+    border-radius: .5rem;
+    background: rgb(91, 133, 182);
+} */
+
+.table .table-td-icon {
+    min-width: 0;
+}

@@ -1,4 +1,4 @@
-<!-- templates/result.html -->
+<!-- templates/songlist_id.html -->
 
 {% extends "base/base.html" %}
 
@@ -8,15 +8,7 @@
 {%  endblock  %}
 
 {% block title %}
-{% if mode == "search" %}
-- 搜尋詩歌
-{% endif %}
-{% if mode == "allsongs" %}
-- 所有詩歌
-{% endif %}
-{% if mode == "surf" %}
-- 瀏覽詩歌
-{% endif %}
+- {{ song_list['title'] }}
 {% endblock %}
 
 {% block content%}
@@ -24,37 +16,12 @@
 <div class="container text-center">
 
     <!-- Header -->
-    <div id="home-title">
-        {% if mode == "search" %}
-        <h4 class="mb-4 search-infomation">
-            搜尋結果 ： {{ title }}
-        </h4>
-        <p>找到 {{ songs_num }} 首歌</p>
-        {% endif %}
+    <div class="top-header">
 
-        {% if mode == "surf" %}
-        <h4 class="mb-4 search-infomation">
-            <span>
-                {% if lang == "Chinese" %}
-                    國語
-                    &nbsp;
-                    第 {{ c }} 集
-                {% endif %}
-                {% if lang == "Taiwanese" %}
-                    台語
-                    &nbsp;
-                    第 {{ c }} 集
-                {% endif %}
-            </span>
+        <h4 class="mb-4 main-title">
+            歌單 - {{ song_list['title'] }}
         </h4>
-        <p>共有 {{ songs_num }} 首歌</p>
-        {% endif %}
-
-        {% if mode == "allsongs" %}
-        <h4 class="mb-4 search-infomation">
-            所有詩歌
-        </h4>
-        {% endif %}
+        <p class="main-info">共有 {{ song_amount }} 首歌</p>
 
     </div>
 
@@ -220,17 +187,14 @@
     </div>
     {% endfor %}
 
-    <a class="back-to-home" href="/">回首頁</a>
-
 </div>
 {% endblock %}
 
 {% block script %}
 {{  super ()  }}
     <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/songs/addlist.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}
-<!-- EOF templates/result.html -->
+<!-- EOF templates/songlist_id.html -->
 {% endblock EOF_TAG %}

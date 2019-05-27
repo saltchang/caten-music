@@ -27,17 +27,20 @@
 ### Added
 
 - 新增 個人歌單資料庫欄位
+- 新增 我的歌單 頁面
 
 ### Changed
 
 - 調整 歌曲資料介面
 - 將各框架及函式庫由 CDN 轉移至 本地檔案
+- 重寫 README.md
 
 ### Fixed
 
 - 修正 database.py
 - 修正 flask-migrate
 - 整理專案檔案
+- 修正 一些 URL 連結錯誤
 
 ### Removed
 
