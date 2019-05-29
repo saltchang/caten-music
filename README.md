@@ -1,35 +1,40 @@
 # Caten Worship
 
-本專案為歌曲資料庫網站,
-網址為 [https://caten-worship.herokuapp.com](https://caten-worship.herokuapp.com)
+A Flask music app for church.
 
-提供給 [茄典教會](https://caten-church.com) 使用
+本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-詳細開發日誌請查看 [CHANGELOG.md](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)
+- **[Caten Worship](https://caten-worship.herokuapp.com) - 0.1.7 已發佈**
 
-## Released
+- **[Changelog 查看日誌](https://github.com/saltchang/caten-worship/blob/master/CHANGELOG.md)**
 
-### [0.1.7] - 2019-05-20
+## Tech Stack
 
-- 連接 歌曲資料庫 [API](https://github.com/saltchang/church-music-api)
-
-## Stack
-
+- [Python](https://www.python.org/)
+- [Pipenv](https://github.com/pypa/pipenv)
 - [Flask](http://flask.pocoo.org/)
 - [Heroku](https://www.heroku.com/home)
 - [PostgreSQL](https://www.postgresql.org/)
 - [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
-- [Church Music API](https://github.com/saltchang/church-music-api)
+- [Church Music API (Go & MongoDB)](https://github.com/saltchang/church-music-api)
+
+## Released
+
+### [ v0.1.7 ] - 2019-05-20
+
+- 連接 歌曲資料庫 [API](https://github.com/saltchang/church-music-api)
 
 ## Usage
 
 ### Clone and Set Environment
 
-Clone the file into your local repository:
+Clone the repository and enter it:
 
 ```shell
 
 $ git clone https://github.com/saltchang/caten-worship.git
+
+$ cd caten-worship
 
 ```
 
@@ -53,25 +58,25 @@ Add the following content into .env:
 
 ```text
 
-DROPBOX_ACCESS_TOKEN=<Your Dropbox API token>
-DATABASE_URL=<Your PostgreSQL URL>
-DATABASE_URL_FOR_TESTING=<Your PostgreSQL URL for testing>
-APP_SETTING="config.Config.Development"
-TEST_SETTING="config.Config.Testing"
-MAIL_USERNAME=<Your mail account username>
-MAIL_PASSWORD=<Your mail account password>
-HASH_SALT=<Set your own salt for hashing>
-SECRET_KEY=<Your secret key>
-FLASK_APP=run.py
-FLASK_ENV=development
+DROPBOX_ACCESS_TOKEN = <Your Dropbox API token>
+DATABASE_URL = <Your PostgreSQL URL>
+DATABASE_URL_FOR_TESTING = <Your PostgreSQL URL for testing>
+APP_SETTING = "config.Config.Development"
+TEST_SETTING = "config.Config.Testing"
+MAIL_USERNAME = <Your mail account username>
+MAIL_PASSWORD = <Your mail account password>
+HASH_SALT = <Set your own salt for hashing>
+SECRET_KEY = <Your secret key>
+FLASK_APP = run.py
+FLASK_ENV = development
 
 ```
 
-and change the `<variable>`
+You must change the `<variable>` by your case.
 
-### PSQL Migration
+### Database Migration
 
-Create the needed database (in pipenv):
+Create (migrate) the needed database (in pipenv):
 
 ```shell
 
@@ -79,7 +84,17 @@ $ pipenv run flask db upgrade
 
 ```
 
-## Run
+### Test
+
+Before you run the app, please test it first:
+
+```shell
+
+$ pipenv run pytest
+
+```
+
+### Run
 
 Run in flask way:
 
