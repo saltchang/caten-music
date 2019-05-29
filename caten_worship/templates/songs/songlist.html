@@ -1,4 +1,4 @@
-<!-- templates/songlist_id.html -->
+<!-- templates/songlist.html -->
 
 {% extends "base/base.html" %}
 
@@ -8,7 +8,7 @@
 {%  endblock  %}
 
 {% block title %}
-- {{ song_list['title'] }}
+- {{ songlist['title'] }}
 {% endblock %}
 
 {% block content%}
@@ -19,17 +19,52 @@
     <div class="top-header">
 
         <h4 class="mb-4 main-title">
-            歌單 - {{ song_list['title'] }}
+            歌單 - {{ songlist['title'] }}
         </h4>
-        <p class="main-info">共有 {{ song_amount }} 首歌</p>
+        <p class="main-info">
+            <span class="private-icon">
+                {% if not songlist['is_private'] %}
+                <i class="fas fa-globe-asia"></i>
+                {% else %}
+                <i class="fas fa-lock"></i>
+                {% endif %}
+            </span>
+            
+
+            {{ songlist['owner'] }}
+            <span class="bull-dot">&bull;</span>
+            {{ song_amount }} 首歌
+            <span class="bull-dot">&bull;</span>
+            {{ songlist['updatetime'] }} 更新
+        </p>
+        <p class="main-info-description">
+            {{ songlist['description'] }}
+        </p>
 
     </div>
 
-    <hr>
+    <hr class="main-hr-bar">
 
     <!-- List -->
 
     {% for song in songs %}
+    {% set song_index = loop.index0 %}
+
+    <!-- SongList song info -->
+    <div class="songlist-song-info">
+
+        <p class="song-order-tag">
+            第 {{ song_index + 1 }} 首
+        </p>
+        {% for i in range(song_description_list[song_index] | length) %}
+        <p class="song-description">
+        {{ song_description_list[song_index][i] }}
+        </p>
+        {% endfor %}
+
+    </div>
+    
+    <!-- Song Card -->
     <div class="row m-0">
         <div class="col-md-1 col-lg-2"></div>
         <div class="col card my-3 p-0">

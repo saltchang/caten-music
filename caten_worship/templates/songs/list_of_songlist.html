@@ -1,10 +1,10 @@
-<!-- templates/mysonglist.html -->
+<!-- templates/list_of_songlist.html -->
 
 {% extends "base/base.html" %}
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/mysonglist.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/list_of_songlist.css') }}">
 {%  endblock  %}
 
 {% block title %}
@@ -48,7 +48,7 @@
                     建立者
                 </th>
                 <th scope="col" class="d-none d-lg-table-cell">
-                    說明
+                    描述
                 </th>
             </tr>
         </thead>
@@ -112,9 +112,9 @@
 
 {% block script %}
 {{  super ()  }}
-<script src="{{ url_for('static', filename='js/songs/mysonglist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/songs/list_of_songlist.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}
-<!-- EOF templates/mysonglist.html -->
+<!-- EOF templates/list_of_songlist.html -->
 {% endblock EOF_TAG %}

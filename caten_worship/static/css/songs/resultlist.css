@@ -10,9 +10,75 @@ button:focus {
 }
 
 
-.search-infomation {
+/* header */
+
+.top-header {
+    margin: 2rem 0;
+}
+
+.main-title {
     margin-top: 100px;
 }
+
+.main-info {
+    font-size: .8rem;
+}
+
+.main-info-description {
+    color: #707070cc;
+    font-size: .8rem;
+    min-width: 270px;
+    max-width: 600px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bull-dot {
+    margin: 0 .2rem;
+}
+
+.private-icon {
+    line-height: .85rem;
+    height: .85rem;
+    display: inline-block;
+    padding-right: .6rem;
+    margin-right: .4rem;
+    border-right: solid #a0a0a0 2px;
+}
+
+.private-icon .fas {
+    color: #505050;
+    font-size: .5rem;
+}
+
+/* hr bar */
+
+.main-hr-bar {
+    margin: 1rem auto;
+}
+
+/* songlist song info */
+
+.songlist-song-info {
+    padding: 1rem auto;
+}
+
+.song-order-tag {
+    font-size: .85rem;
+    margin: 1rem auto 1rem auto;
+}
+
+.song-description {
+    font-size: .8rem;
+    margin: 0 auto .4rem auto;
+    color: #707070cc;
+    min-width: 270px;
+    max-width: 500px;
+    width: 75%;
+}
+
+/* song card */
 
 .card {
     background-color: #ffffff00;
@@ -42,7 +108,7 @@ button:focus {
     width: 250px;
     position: absolute;
     z-index: 1000;
-    
+
     margin: .125rem 0 0;
     text-align: left;
     background-color: #fff;
@@ -108,15 +174,15 @@ button:focus {
     margin-bottom: .5rem;
 }
 
-.songlist-add label{
+.songlist-add label {
     margin: 0;
 }
 
-.songlist-add p{
+.songlist-add p {
     margin: .5rem;
 }
 
-.songlist-add small{
+.songlist-add small {
     padding-top: .5rem;
     padding-bottom: .3rem;
 }

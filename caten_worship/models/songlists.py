@@ -11,21 +11,47 @@ import datetime
 class SongList(db.Model):
 
     # SQL Table Name
-    __tablename__ = "song_lists"
+    __tablename__ = "songlists"
 
     # 資料欄位設定
+    # 資料庫內 ID
     id = db.Column(db.Integer, primary_key=True)
+    
+    # 歌單對外 ID
     list_id = db.Column(db.Integer, nullable=False, unique=True)
+
+    # 標題
     title = db.Column(db.String(32))
+
+    # 描述
+    description = db.Column(db.Text)
+
+    # 建立者 ID
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
+    
+    # 歌單所存放歌曲
     songs_sid_list = db.Column(db.ARRAY(db.String(8)))
-    songs_amount = db.Column(db.Integer, nullable=False, default=False)
+
+    # 每首歌曲之描述
+    songs_description_list = db.Column(db.ARRAY(db.Text))
+
+    # 歌曲數量
+    songs_amount = db.Column(db.Integer, nullable=False, default=0)
+
+    # 建立時間
     created_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
+
+    # 最後更新時間
     edited_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
+
+    # 隱私設定
     is_private = db.Column(db.Boolean, default=False)
+
+    # 是否封存
     is_archived = db.Column(db.Boolean, default=False)
 
+    # 預設設定
     def __init__(self):
         # 建立資料時自動從日期及ID產生一組長ID
         now = datetime.datetime.today()
@@ -39,7 +65,10 @@ class SongList(db.Model):
         todaystring = year + month + day + "0000"
         todayint = int(todaystring)
         self.list_id = str(todayint + self.id)
-        self.title = "未命名歌單-" + self.list_id
+
+        # 如果使用者沒有輸入標題，則設定為預設值
+        if self.title == "":
+            self.title = "未命名歌單-" + self.list_id
 
 
     

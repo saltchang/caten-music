@@ -1,4 +1,4 @@
-// static/js/mysonglist.js
+// static/js/list_of_songlist.js
 
 $("table tbody").on("click", "tr", visitSonglistByID)
 function visitSonglistByID() {

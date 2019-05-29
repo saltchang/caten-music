@@ -8,7 +8,7 @@ from .register import register_bp, ajax_validate_register_bp, show_user_bp
 from .activate_account import activate_account_bp, resend_activate_mail_bp, ajax_validate_email_bp
 from .login import login_bp, ajax_validate_login_bp
 from .logout import logout_bp
-from .user_song_list import user_song_list_bp, song_list_by_id_bp
+from .user_songlist import user_songlist_bp, song_list_by_id_bp
 
 
 def init_app(app):
@@ -27,7 +27,7 @@ def init_app(app):
     app.register_blueprint(ajax_validate_login_bp)
     app.register_blueprint(resend_activate_mail_bp)
     app.register_blueprint(ajax_validate_email_bp)
-    app.register_blueprint(user_song_list_bp)
+    app.register_blueprint(user_songlist_bp)
     app.register_blueprint(song_list_by_id_bp)
 
     return app
