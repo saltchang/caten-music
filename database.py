@@ -4,20 +4,36 @@
 
 import sys
 
-from caten_worship import create_app
+from caten_worship import CreateApp
 
-def dropAll(config_code):
+def dropAllMain():
 
-    app = create_app(config_code)
+    app = CreateApp.Main()
+
+    from caten_worship.models.base import db
+
+    db.drop_all()
+
+def dropAllTest():
+
+    app = CreateApp.Test()
 
     from caten_worship.models.base import db
 
     db.drop_all()
 
 
-def createAll(config_code):
+def createAllMain():
 
-    app = create_app(config_code)
+    app = CreateApp.Main()
+
+    from caten_worship.models.base import db
+
+    db.create_all()
+
+def createAllTest():
+
+    app = CreateApp.Test()
 
     from caten_worship.models.base import db
 
@@ -36,7 +52,7 @@ def print_usage():
     print()
     print("[config_code]")
     print()
-    print("default : non-test")
+    print("default(null) : non-test")
     print("test : test")
 
 
@@ -47,12 +63,12 @@ if __name__ == "__main__":
         config_code = sys.argv[2]
         if command == "drop":
             if config_code == "test":
-                dropAll("test")
+                dropAllTest()
             else:
                 print_usage()
         elif command == "create":
             if config_code == "test":
-                createAll("test")
+                createAllTest()
             else:
                 print_usage()
         else:
@@ -60,9 +76,9 @@ if __name__ == "__main__":
     elif len(sys.argv) == 2:
         command = sys.argv[1]
         if command == "drop":
-            dropAll("")
+            dropAllMain()
         elif command == "create":
-            createAll("")
+            createAllMain()
         else:
             print_usage()
     else:
