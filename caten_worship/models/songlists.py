@@ -18,13 +18,13 @@ class SongList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
     # 歌單對外 ID
-    list_id = db.Column(db.Integer, nullable=False, unique=True)
+    out_id = db.Column(db.String(32), unique=True)
 
     # 標題
     title = db.Column(db.String(32))
 
     # 描述
-    description = db.Column(db.Text)
+    description = db.Column(db.Text, default="")
 
     # 建立者 ID
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
@@ -52,23 +52,48 @@ class SongList(db.Model):
     is_archived = db.Column(db.Boolean, default=False)
 
     # 預設設定
-    def __init__(self):
+    def init(self):
+
         # 建立資料時自動從日期及ID產生一組長ID
-        now = datetime.datetime.today()
+        now = self.created_time
+
         year = str(now.year)
+        
         month = str(now.month)
-        day = str(now.day)
         if now.month < 10:
             month = "0" + month
+        
+        day = str(now.day)
         if now.day < 10:
             day = "0" + day
-        todaystring = year + month + day + "0000"
+        
+        hour = str(now.hour)
+        if now.hour < 10:
+            hour = "0" + day
+        
+        minute = str(now.minute)
+        if now.minute < 10:
+            minute = "0" + day
+        
+        second = str(now.second)
+        if now.second < 10:
+            second = "0" + day 
+        todaystring = year + month + day + "000"
+
+        print("todaystring:", todaystring)
+
         todayint = int(todaystring)
-        self.list_id = str(todayint + self.id)
+
+        print("self.id: ", self.id)
+
+        self.out_id = str(todayint + self.id)
+
+        print("self.out_id: ", self.out_id)
 
         # 如果使用者沒有輸入標題，則設定為預設值
         if self.title == "":
-            self.title = "未命名歌單-" + self.list_id
+            self.title = "未命名歌單-" + self.out_id
+        
 
 
     
@@ -84,12 +109,16 @@ class SongList(db.Model):
 
     def flush(self):
         db.session.add(self)
-        db.flush()
+        db.session.flush()
 
     # 註冊到資料庫
 
     def save(self):
         db.session.add(self)
+        db.session.commit()
+
+    # Commit
+    def commit(self):
         db.session.commit()
 
     # 自身物件表示

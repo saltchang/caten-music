@@ -83,19 +83,24 @@
                                 <div class="add-song-list-space"></div>
                                 新增一份歌單
                             </a>
+
+                            <!-- End Songlist -->
                             <div class="song-content-container collapse" id="{{'songlist-add-' + song['sid'] }}">
-                                <form action="">
+                                <form class="form-add-songlist" action="{{ url_for('add_songlist_bp.add_songlist') }}"
+                                    method="POST">
                                     <hr class="percent-80">
-                                    <input type="text" class="d-none" name="sid" value="{{ song['sid'] }}">
+                                    <input type="text" class="d-none" name="posttype" value="withsong">
+                                    <input type="text" class="d-none" name="song_sid" value="{{ song['sid'] }}">
+                                    <input type="text" class="d-none" name="user_id" value="{{ current_user.id }}">
                                     <div class="add-list-group">
-                                        <p class="text-center">歌單名稱</p>
-                                        <input type="text" name="new-list-name" class="input-addnewlist"
+                                        <p class="text-center">歌單標題</p>
+                                        <input type="text" name="title" class="input-addnewlist"
                                             id="{{ 'input-new-list-name-' + song['sid'] }}" placeholder="輸入新增歌單名稱">
                                     </div>
                                     <hr class="percent-80">
                                     <p class="text-center">隱私設定</p>
                                     <div class="add-list-group">
-                                        <input class="" type="radio" name="access-auth"
+                                        <input class="" type="radio" name="privacy"
                                             id="{{ 'check-public-' + song['sid'] }}" value="public" checked>
                                         <label class="" for="{{ 'check-public-' + song['sid'] }}">
                                             <div class="add-song-list-space"></div>
@@ -104,7 +109,7 @@
                                         <small class="form-text text-muted">取得連結的人都可以查看<br>( 如要分享歌單，請選此項 )</small>
                                     </div>
                                     <div class="add-list-group">
-                                        <input class="" type="radio" name="access-auth"
+                                        <input class="" type="radio" name="privacy"
                                             id="{{ 'check-private-' + song['sid'] }}" value="private">
                                         <label class="" for="{{ 'check-private-' + song['sid'] }}">
                                             <div class="add-song-list-space"></div>
@@ -114,22 +119,49 @@
                                     </div>
                                     <hr class="percent-80">
                                     <button id="{{ 'btn-add-list-' + song['sid'] }}" type="button"
-                                        class="btn btn-sm btn-outline-info text-center">新增</button>
+                                        class="btn-addsonglist btn btn-sm btn-outline-info text-center">新增</button>
                                 </form>
                             </div>
+
+                            <!-- End Songlist -->
+
                         </div>
                         <hr class="my-2">
                         <div class="songlist-list">
-                            <button class="dropdown-item song-list-add-check text-success" type="button">
-                                <i class="far fa-check-square"></i>
-                                <div class="add-song-list-space"></div>
-                                加入的歌單1
-                            </button>
-                            <button class="dropdown-item song-list-add-check text-secondary" type="button">
-                                <i class="far fa-square"></i>
-                                <div class="add-song-list-space"></div>
-                                未加入的歌單2
-                            </button>
+                            {% for songlist in current_user.song_list %}
+
+                            <form class="form-update-songlist" action="" method="PUT">
+
+                                <input class="songlist_outid d-none" type="text" name="songlist_outid" value="{{ songlist.out_id }}">
+                                <input class="song_sid d-none" type="text" name="song_sid" value="{{ song.sid }}">
+
+                                {% if songlist.songs_amount > 0 and song.sid in songlist.songs_sid_list%}
+
+                                <input class="d-none song_in_songlist" type="checkbox" name="song_in_songlist" value=true checked>
+
+                                <button class="dropdown-item song-list-add-check text-success" type="button">
+                                    <i class="far fa-check-square"></i>
+                                    <div class="add-song-list-space"></div>
+                                    {{ songlist.title }}
+                                </button>
+
+                                {% else %}
+
+                                <!-- <input class="d-none song_in_songlist" type="checkbox" name="song_in_songlist" value=false checked> -->
+
+                                <button class="dropdown-item song-list-add-check text-secondary" type="button">
+                                    <i class="far fa-square"></i>
+                                    <div class="add-song-list-space"></div>
+                                    {{ songlist.title }}
+                                </button>
+
+                                {% endif %}
+
+                                {% else %}
+
+                            </form>
+
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -236,7 +268,7 @@
 {% block script %}
 {{  super ()  }}
 <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
-<script src="{{ url_for('static', filename='js/songs/addlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/songs/add_songlist.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

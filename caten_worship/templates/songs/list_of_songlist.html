@@ -1,5 +1,7 @@
 <!-- templates/list_of_songlist.html -->
 
+{% set user = current_user %}
+
 {% extends "base/base.html" %}
 
 {%  block  head  %}
@@ -53,53 +55,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="1">
-                <a href="/songlist/1">
+            {% for songlist in user.song_list %}
+            <tr id="{{ songlist.out_id }}">
+                <a href="{{ '/songlist/' + songlist.out_id }}">
                     <td class="table-td-icon">
+                        {% if songlist.is_private %}
+                        <span><i class="fas fa-lock"></i></span>
+                        {% else %}
                         <span><i class="fas fa-globe-asia"></i></span>
+                        {% endif %}
                     </td>
                     <td class="">
-                        <span class="d-sm-none">05/20</span>
-                        <span class="d-none d-sm-inline">2019-05-20</span>
+                        <span class="d-sm-none">{{ songlist.edited_time.month }}/{{ songlist.edited_time.day }}</span>
+                        <span class="d-none d-sm-inline">{{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}</span>
                     </td>
-                    <td class="">5/26主日敬拜讚美歌單</td>
-                    <td class="">5</td>
-                    <td class="d-none d-md-table-cell">光鹽</td>
+                    <td class="">{{ songlist.title }}</td>
+                    <td class="">{{ songlist.songs_amount }}</td>
+                    <td class="d-none d-md-table-cell">{{ user.displayname }}</td>
                     <td class="d-none d-lg-table-cell">
-                        這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
+                            {{ songlist.description }}
                     </td>
                 </a>
             </tr>
-            <tr>
-                <td class="table-td-icon">
-                    <span><i class="fas fa-globe-asia"></i></span>
-                </td>
-                <td class="">
-                    <span class="d-sm-none">05/20</span>
-                    <span class="d-none d-sm-inline">2019-05-20</span>
-                </td>
-                <td class="">5/26主日敬拜讚美歌單</td>
-                <td class="">5</td>
-                <td class="d-none d-md-table-cell">光鹽</td>
-                <td class="d-none d-lg-table-cell">
-                    這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
-                </td>
-            </tr>
-            <tr>
-                <td class="table-td-icon">
-                    <span><i class="fas fa-globe-asia"></i></span>
-                </td>
-                <td class="">
-                    <span class="d-sm-none">05/20</span>
-                    <span class="d-none d-sm-inline">2019-05-20</span>
-                </td>
-                <td class="">5/26主日敬拜讚美歌單</td>
-                <td class="">5</td>
-                <td class="d-none d-md-table-cell">光鹽</td>
-                <td class="d-none d-lg-table-cell">
-                    這是預備給主日敬拜讚美的歌單，提供給所有的服事同工預先練習並預備。
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 
