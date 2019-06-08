@@ -4,12 +4,73 @@
 
 .top-header {
     margin: 2rem 0;
-    }
-    
-    .main-title {
-        margin-top: 100px;
-    }
-    
-    .main-info {
-        font-size: .85rem;
-    }
+}
+
+.main-title {
+    margin-top: 100px;
+}
+
+.main-info {
+    font-size: .85rem;
+}
+
+.main-hr-bar {
+    margin: 1.5rem .5rem;
+}
+
+/* form */
+
+.form-group {
+    display: block;
+    max-width: 500px;
+    width: 80%;
+    margin: 0 auto 2rem auto;
+}
+
+/* input */
+
+.input-text {
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+
+.input-description {
+    height: 5rem;
+    vertical-align: top;
+}
+
+/* label */
+
+.input-label {
+    display: flex;
+    margin-bottom: .2rem;
+    text-align: left;
+    font-size: .8rem;
+    color: #00000080;
+}
+
+.form-check-label {
+    font-size: .8rem;
+    color: #00000080;
+}
+
+/* song info */
+
+.song-info {
+    padding: 1rem auto;
+}
+
+.song-tag {
+    font-size: .85rem;
+    margin: 1rem auto 1rem auto;
+}
+
+.song-description {
+    font-size: .8rem;
+    margin: 0 auto .4rem auto;
+    color: #707070cc;
+    min-width: 270px;
+    max-width: 500px;
+    width: 75%;
+}

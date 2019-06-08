@@ -30,7 +30,7 @@ class SongList(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
         nullable=False)
     
-    # 歌單所存放歌曲
+    # 歌單所存放歌曲之SID
     songs_sid_list = db.Column(db.ARRAY(db.String(8)))
 
     # 每首歌曲之描述

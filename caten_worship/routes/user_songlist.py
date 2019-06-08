@@ -56,8 +56,6 @@ def song_list_by_id(out_id):
     r = requests.get(requestURL)
     songs = json.loads(r.text)
 
-    print(songs)
-
     try:
         return render_template("songs/songlist.html", songs=songs, songlist=songlist, listowner=listowner), 200
 
@@ -71,7 +69,19 @@ def edit(out_id):
     songlist = SongList.query.filter_by(out_id=out_id).first()
 
     if request.method == "GET":
-        return render_template("songs/songlist_edit.html", songlist=songlist)
+
+        sids = ""
+        for i in range(len(songlist.songs_sid_list)):
+            if i == 0:
+                sids += songlist.songs_sid_list[i]
+            else:
+                sids += "+" + songlist.songs_sid_list[i]
+        
+        requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sids
+        r = requests.get(requestURL)
+        songs = json.loads(r.text)
+
+        return render_template("songs/songlist_edit.html", songlist=songlist, songs=songs)
 
 
 @add_songlist_bp.route('/songlist/add', methods=["GET", "POST"])
