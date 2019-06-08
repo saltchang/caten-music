@@ -5,10 +5,11 @@
 {%  block  head  %}
 {{  super ()  }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/songs/resultlist.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/songlist.css') }}">
 {%  endblock  %}
 
 {% block title %}
-- {{ songlist['title'] }}
+- {{ songlist.title}}
 {% endblock %}
 
 {% block content%}
@@ -19,26 +20,34 @@
     <div class="top-header">
 
         <h4 class="mb-4 main-title">
-            歌單 - {{ songlist['title'] }}
+            <div class="container">
+                <span class="d-none d-sm-inline">歌單 - </span>
+                {{ songlist.title }}
+                <button class="btn-songlist-edit" type="button">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </div>
         </h4>
         <p class="main-info">
             <span class="private-icon">
-                {% if not songlist['is_private'] %}
-                <i class="fas fa-globe-asia"></i>
+                {% if not songlist.is_private %}
+                <i class="fas fa-globe-asia"></i>&nbsp;
+                <span class="d-none d-sm-inline">公開</span>
                 {% else %}
-                <i class="fas fa-lock"></i>
+                <i class="fas fa-lock"></i>&nbsp;
+                <span class="d-none d-sm-inline">私人</span>
                 {% endif %}
             </span>
             
 
-            {{ songlist['owner'] }}
+            {{ listowner.displayname }}
             <span class="bull-dot">&bull;</span>
-            {{ song_amount }} 首歌
+            {{ songlist.songs_amount }} 首<span class="d-none d-sm-inline">歌</span>
             <span class="bull-dot">&bull;</span>
-            {{ songlist['updatetime'] }} 更新
+            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }} <span class="d-none d-sm-inline">更新</span>
         </p>
         <p class="main-info-description">
-            {{ songlist['description'] }}
+            {{ songlist.description }}
         </p>
 
     </div>
@@ -56,9 +65,9 @@
         <p class="song-order-tag">
             第 {{ song_index + 1 }} 首
         </p>
-        {% for i in range(song_description_list[song_index] | length) %}
+        {% for i in range(songlist.songs_description_list | length) %}
         <p class="song-description">
-        {{ song_description_list[song_index][i] }}
+        {{ songlist.songs_description_list[i] }}
         </p>
         {% endfor %}
 
@@ -69,7 +78,7 @@
         <div class="col-md-1 col-lg-2"></div>
         <div class="col card my-3 p-0">
             <h5 class="card-header">
-                <span class="header-title-text">{{ song['title'] }}</span>
+                <span class="header-title-text">{{ song.title }}</span>
                 <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song['sid'] }}" data-toggle="collapse" data-target="{{ '#listmenu-' + song['sid'] }}" aria-expanded="false" aria-controls="collapseExample">
                     <i class="fas fa-plus"></i>
                 </button>

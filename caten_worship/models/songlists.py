@@ -34,7 +34,7 @@ class SongList(db.Model):
     songs_sid_list = db.Column(db.ARRAY(db.String(8)))
 
     # 每首歌曲之描述
-    songs_description_list = db.Column(db.ARRAY(db.Text))
+    songs_description_list = db.Column(db.ARRAY(db.Text), default=[])
 
     # 歌曲數量
     songs_amount = db.Column(db.Integer, nullable=False, default=0)
@@ -111,15 +111,27 @@ class SongList(db.Model):
         db.session.add(self)
         db.session.flush()
 
+        return self
+
     # 註冊到資料庫
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
-    # Commit
-    def commit(self):
+        return self
+
+    # 更新至資料庫
+    def update(self):
+        self.edited_time = datetime.datetime.today()
         db.session.commit()
+
+        return self
+
+    def refresh(self):
+        db.session.refresh(self)
+
+        return self
 
     # 自身物件表示
 

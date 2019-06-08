@@ -13,14 +13,20 @@
 .navbar {
     background-color: #9CAE92;
     min-width: 320px;
-    font-size: 14px;
     padding: 16px;
+    font-size: .85rem;
     align-items: center;
     display: flex;
 }
 
+.navbar-nav {
+    line-height: 2rem;
+    vertical-align: middle;
+}
+
 .nav-item {
     display: flex;
+    vertical-align: middle;
 }
 
 .navbar-light .navbar-toggler-icon {
@@ -40,18 +46,20 @@
     padding-right: 1rem; */
     padding-top: 0;
     padding-bottom: 0;
-    font-size: 1rem;
     margin: auto;
 }
 
+.navbar-search-form {
+    padding: 0;
+}
+
 .navbar-search {
-    padding: 0 5px 0 5px;
-    font-size: inherit;
+    padding: .5rem;
+    font-size: .8rem;
     height: 100%;
-    min-height: 27px;
-    line-height: 20px;
+    min-height: 2rem;
     width: 100%;
-    margin: 3px auto 3px auto;
+    margin: 0 auto;
     border: 1px solid rgba(36, 41, 46, 0.137);
     background: none;
     transition: 500ms;
@@ -65,6 +73,8 @@
 
 .navbar-item-style {
     padding: 0;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .brand-menu-container {
@@ -75,14 +85,15 @@
 
 
 .navbar-hr {
-    margin-top: .7rem;
-    margin-bottom: .7rem;
+    margin-top: 1rem;
+    margin-bottom: .9rem;
 }
 
 .fa-shoe-prints {
     transform: rotate(315deg);
+    margin-top: -0.3rem;
     margin-right: -0.3rem;
-    font-size: .7rem;
+    font-size: .4rem;
 }
 
 @media (min-width: 576px) {
@@ -92,8 +103,6 @@
 
     .navbar-search {
         width: 180px;
-        margin-top: -3px;
-        margin-bottom: -3px;
         margin-left: 5px;
         margin-right: 10px;
     }

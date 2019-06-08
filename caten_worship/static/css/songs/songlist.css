@@ -1,0 +1,15 @@
+/* static/css/songlist.css */
+
+/* edit button */
+
+.btn-songlist-edit {
+    color: #00000080;
+    width: 24px;
+    padding: 0;
+    border: none;
+    background: none;
+    float: right;
+    font-size: .9rem;
+    vertical-align: middle;
+    line-height: 1.5rem;
+}

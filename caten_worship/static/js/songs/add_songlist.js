@@ -19,20 +19,25 @@ function updateSongList(event) {
 
     // Check if the song in the songlist
     // Type Boolean
-    var song_in_songlist = Boolean($(this).parent().children("input.song_in_songlist").val())
+    var song_in_songlist = $(this).parent().children("input.song_in_songlist")
 
-    if (song_in_songlist) {
+    console.log(song_in_songlist)
+    console.log(song_in_songlist[0].checked)
+
+    if (song_in_songlist[0].checked) {
         ajax_update_songlist(song_sid, songlist_outid)
         $(this).removeClass("text-success")
         $(this).addClass("text-secondary")
         $(this).children("i").removeClass("fa-check-square")
         $(this).children("i").addClass("fa-square")
+        song_in_songlist.prop("checked", false)
     } else {
         ajax_update_songlist(song_sid, songlist_outid)
         $(this).removeClass("text-secondary")
         $(this).addClass("text-success")
         $(this).children("i").removeClass("fa-square")
         $(this).children("i").addClass("fa-check-square")
+        song_in_songlist.prop("checked", true)
     }
 }
 

@@ -28,11 +28,11 @@
 
     <div class="collapse navbar-collapse brand-menu-container" id="navbarSupportedContent">
 
-        <hr class="navbar-hr mt-2">
+        <hr class="navbar-hr">
 
         <ul class="navbar-nav mr-auto">
 
-            <form action="{{ url_for('search_bp.search') }}" method="GET">
+            <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
                 <input class="d-none" type="text" name="c" value="">
                 <input class="d-none" type="text" name="lang" value="">
                 <input class="d-none" type="text" name="to" value="">
@@ -40,13 +40,13 @@
                     placeholder="搜尋...">
             </form>
 
-            <hr class="navbar-hr mt-2">
+            <hr class="navbar-hr">
 
             <li class="nav-item active">
                 <a class="nav-link navbar-item-style" href="{{ url_for('surfer_bp.surfer') }}">
                     <i class="fas fa-shoe-prints"></i>
-                    &nbsp;瀏覽
-                    <span class="sr-only">(current)</span>
+                    <span class="nav-link-text-rotate">&nbsp;瀏覽</span>
+                    <!-- <span class="sr-only">(current)</span> -->
                 </a>
             </li>
 

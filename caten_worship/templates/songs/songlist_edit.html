@@ -1,0 +1,65 @@
+<!-- templates/songlist_edit.html -->
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/songlist_edit.css') }}">
+{%  endblock  %}
+
+{% block title %}
+- 編輯
+{% endblock %}
+
+{% block content%}
+
+<div class="container text-center">
+
+    <!-- Header -->
+    <div class="top-header">
+
+        <h4 class="mb-4 main-title">
+            編輯：{{ songlist.title }}
+        </h4>
+        <p class="main-info">
+            歌單編號：
+            {{ songlist.out_id }}
+        </p>
+        <p class="main-info">
+            <!-- <span class="private-icon">
+                {% if not songlist.is_private %}
+                <i class="fas fa-globe-asia"></i>&nbsp;
+                <span class="d-none d-sm-inline">公開</span>
+                {% else %}
+                <i class="fas fa-lock"></i>&nbsp;
+                <span class="d-none d-sm-inline">私人</span>
+                {% endif %}
+            </span> -->
+            上次更新：
+            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}
+        </p>
+    </div>
+
+    <hr class="main-hr-bar">
+
+    <form action="" method="PUT">
+        
+    </form>
+
+    <!-- List -->
+
+    {% for song in songs %}
+    
+    {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block script %}
+{{  super ()  }}
+    <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/songlist_id.html -->
+{% endblock EOF_TAG %}

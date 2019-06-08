@@ -1,0 +1,15 @@
+/* static/css/songlist_edit.css */
+
+/* header */
+
+.top-header {
+    margin: 2rem 0;
+    }
+    
+    .main-title {
+        margin-top: 100px;
+    }
+    
+    .main-info {
+        font-size: .85rem;
+    }

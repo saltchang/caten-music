@@ -23,7 +23,7 @@
         <h4 class="mb-4 main-title">
             我的歌單列表
         </h4>
-        <p class="main-info">共有 {{ song_lists_amount }} 份歌單</p>
+        <p class="main-info">共有 {{ current_user.song_list | length }} 份歌單</p>
 
     </div>
 
@@ -50,7 +50,7 @@
                     建立者
                 </th>
                 <th scope="col" class="d-none d-lg-table-cell">
-                    描述
+                    說明
                 </th>
             </tr>
         </thead>

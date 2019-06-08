@@ -19,6 +19,9 @@ song_list_by_id_bp = Blueprint("song_list_by_id_bp", __name__,
 add_songlist_bp = Blueprint("add_songlist_bp", __name__,
                     template_folder='templates')
 
+songlist_edit_bp = Blueprint("songlist_edit_bp", __name__,
+                    template_folder='templates')
+
 ajax_update_songlist_bp = Blueprint("ajax_update_songlist_bp", __name__,
                     template_folder='templates')
 
@@ -34,16 +37,13 @@ def user_songlist():
         abort(404)
 
 
-@song_list_by_id_bp.route('/songlist/<list_id>')
+@song_list_by_id_bp.route('/songlist/<out_id>')
 @login_required
-def song_list_by_id(list_id):
+def song_list_by_id(out_id):
 
-    # ForTest
-    # songlist = {'title': "測試歌單", 'owner': "光鹽", "updatetime": "2019-05-28", "is_private": True, "description": "這是一份敬拜讚美歌單，用作測試用途。這是一份敬拜讚美歌單，用作測試用途。這是一份敬拜讚美歌單，用作測試用途。這是一份敬拜讚美歌單，用作測試用途。這是一份敬拜讚美歌單，用作測試用途。"}
-    # song_description_list = [["這首歌是歡樂的，節奏快速。剩下的文字為測試用途。", "剩下的文字為測試用途。剩下的文字為測試用途。剩下的文字為測試用途。剩下的文字為測試用途。剩下的文字為測試用途。剩下的文字為測試用途。剩下的文字為測試用途。"], ["帶著感謝的心來唱。"], ["在神面前等候，帶著安靜的心，速度轉為慢。"], ["盼望而肯定的敬拜。反覆兩次後升Key結束。"]]
-    # dummy_list = ["1010066", "1007030", "2010013", "1011027"]
+    songlist = SongList.query.filter_by(out_id=out_id).first()
 
-    songlist = SongList.query.filter_by(out_id=list_id).first()
+    listowner = User.query.filter_by(id=songlist.user_id).first()
 
     sids = ""
     for i in range(len(songlist.songs_sid_list)):
@@ -59,13 +59,22 @@ def song_list_by_id(list_id):
     print(songs)
 
     try:
-        return render_template("songs/songlist.html", songs=songs, song_amount=len(songs), songlist=songlist, song_description_list=songlist.songs_description_list), 200
+        return render_template("songs/songlist.html", songs=songs, songlist=songlist, listowner=listowner), 200
 
     except TemplateNotFound:
         abort(404)
 
+@songlist_edit_bp.route('/songlist/edit/<out_id>', methods=["GET", "PUT"])
+@login_required
+def edit(out_id):
 
-@add_songlist_bp.route('/add/songlist', methods=["GET", "POST"])
+    songlist = SongList.query.filter_by(out_id=out_id).first()
+
+    if request.method == "GET":
+        return render_template("songs/songlist_edit.html", songlist=songlist)
+
+
+@add_songlist_bp.route('/songlist/add', methods=["GET", "POST"])
 @login_required
 def add_songlist():
 
@@ -108,22 +117,33 @@ def update_songlist(song_sid, songlist_outid):
         print("ajax put!")
 
         songlist = SongList.query.filter_by(out_id=songlist_outid).first()
+
+        tempList = songlist.songs_sid_list
+        songlist.songs_sid_list = None
+        songlist.update()
+        songlist.refresh()
+
         
-        if song_sid in songlist.songs_sid_list:
-            songlist.songs_sid_list.remove(song_sid)
+        if song_sid in tempList:
+            tempList.remove(song_sid)
             songlist.songs_amount -= 1
 
-            songlist.commit()
+            songlist.songs_sid_list = tempList
+
+            songlist.update()
 
             return jsonify({"success": True, "act": "remove"})
 
         else:
-            print(songlist.songs_sid_list)
-            songlist.songs_sid_list = songlist.songs_sid_list.append(song_sid)
-            print(songlist.songs_sid_list)
+            print("before append: ", songlist.songs_sid_list)
+            tempList.append(song_sid)
             songlist.songs_amount += 1
 
-            songlist.commit()
+            songlist.songs_sid_list = tempList
+
+            songlist.update()
+
+            print("after append: ", songlist.songs_sid_list)
 
             return jsonify({"success": True, "act": "append"})
     
