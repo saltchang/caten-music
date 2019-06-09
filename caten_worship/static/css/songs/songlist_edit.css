@@ -3,11 +3,11 @@
 /* header */
 
 .top-header {
-    margin: 2rem 0;
+    margin: 6rem 0 2rem 0;
 }
 
 .main-title {
-    margin-top: 100px;
+    margin-bottom: 0;
 }
 
 .main-info {
@@ -15,7 +15,18 @@
 }
 
 .main-hr-bar {
-    margin: 1.5rem .5rem;
+    margin: 1rem .5rem;
+}
+
+.info-out-id {
+    font-size: .5rem;
+    color: #00000060;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #282894;
 }
 
 /* form */
@@ -30,13 +41,14 @@
 /* input */
 
 .input-text {
+    font-size: .9rem;
     display: flex;
     text-align: center;
     width: 100%;
 }
 
 .input-description {
-    height: 5rem;
+    height: 7rem;
     vertical-align: top;
 }
 
@@ -73,4 +85,56 @@
     min-width: 270px;
     max-width: 500px;
     width: 75%;
+}
+
+/* songlist table */
+
+.edit-songlist {
+    margin-top: 3rem;
+}
+
+.songlist-table {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+/* tbody */
+
+.table td {
+    padding: 1rem .5rem;
+    font-size: .8rem;
+    vertical-align: middle;
+}
+
+.table .td-drag-dot {
+    color: #00000060;
+    font-size: .7rem;
+    width: .5rem;
+    padding: 1rem 0 1rem .5rem;
+    transition: 200ms;
+}
+
+tr:hover td.td-drag-dot {
+    color: #000000;
+}
+
+.td-song-order {
+    width: 2rem;
+    font-weight: bold;
+}
+
+.table .td-song-info {
+    font-size: .5rem;
+    width: 5rem;
+    text-align: left;
+    color: #000000A0;
+}
+
+.table .td-song-title a {
+    color: #282894;
+    font-size: .9rem;
+    font-weight: bold;
 }

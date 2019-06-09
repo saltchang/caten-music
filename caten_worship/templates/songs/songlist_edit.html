@@ -18,27 +18,24 @@
     <!-- Header -->
     <div class="top-header">
 
-        <h4 class="mb-4 main-title">
-            編輯：{{ songlist.title }}
+
+        <h4 class="main-title">
+            編輯歌單
         </h4>
-        <p class="main-info">
-            歌單編號：
-            {{ songlist.out_id }}
+        <p class="info-out-id">
+            #{{ songlist.out_id }}
+        </p>
+        <p class="main-info info-title">
+            {{ songlist.title }}
         </p>
         <p class="main-info">
-            <!-- <span class="private-icon">
-                {% if not songlist.is_private %}
-                <i class="fas fa-globe-asia"></i>&nbsp;
-                <span class="d-none d-sm-inline">公開</span>
-                {% else %}
-                <i class="fas fa-lock"></i>&nbsp;
-                <span class="d-none d-sm-inline">私人</span>
-                {% endif %}
-            </span> -->
-            上次更新：
-            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}
+            更新於
+            <br>
+            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}&nbsp;&nbsp;{{ songlist.edited_time.hour }}:{{ songlist.edited_time.minute }}
         </p>
     </div>
+
+    <h6>歌單資訊</h6>
 
     <hr class="main-hr-bar">
 
@@ -48,10 +45,11 @@
             <label class="input-label" for="edit-title">標題</label>
             <input class="input-text" type="text" name="title" id="edit-title" value="{{ songlist.title }}">
         </div>
-        
+
         <div class="form-group">
-            <label class="input-label" for="edit-description">描述</label>
-            <textarea class="input-text input-description" type="text" name="description" id="edit-description">{{ songlist.description }}</textarea>
+            <label class="input-label" for="edit-description">說明</label>
+            <textarea class="input-text input-description" type="text" name="description"
+                id="edit-description">{{ songlist.description }}</textarea>
         </div>
 
         <div class="form-group">
@@ -61,15 +59,15 @@
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-5 text-left">
-                    <input class="form-check-input" type="radio" name="privacy" id="public" value="public" {% if not songlist.is_private %} checked
-                    {% endif %}>
+                    <input class="form-check-input" type="radio" name="privacy" id="public" value="public"
+                        {% if not songlist.is_private %} checked {% endif %}>
                     <label class="form-check-label" for="public">
                         <i class="fas fa-globe-asia"></i>&nbsp;公開
                     </label>
                 </div>
                 <div class="col-5 text-left">
-                    <input class="form-check-input" type="radio" name="privacy" id="private" value="private" {% if songlist.is_private %} checked
-                    {% endif %}>
+                    <input class="form-check-input" type="radio" name="privacy" id="private" value="private"
+                        {% if songlist.is_private %} checked {% endif %}>
                     <label class="form-check-label" for="private">
                         <i class="fas fa-lock"></i>&nbsp;私人
                     </label>
@@ -79,21 +77,21 @@
 
 
         <div class="form-group">
-            
+
             <label class="input-label">封存</label>
 
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-5 text-left">
-                    <input class="form-check-input" type="radio" name="archive" id="archived" value="archived" {% if songlist.is_archived %} checked
-                    {% endif %}>
+                    <input class="form-check-input" type="radio" name="archive" id="archived" value="archived"
+                        {% if songlist.is_archived %} checked {% endif %}>
                     <label class="form-check-label" for="archived">
                         <i class="fas fa-archive"></i>&nbsp;封存
                     </label>
                 </div>
                 <div class="col-5 text-left">
-                    <input class="form-check-input" type="radio" name="archive" id="unarchived" value="unarchived" {% if not songlist.is_archived %} checked
-                    {% endif %}>
+                    <input class="form-check-input" type="radio" name="archive" id="unarchived" value="unarchived"
+                        {% if not songlist.is_archived %} checked {% endif %}>
                     <label class="form-check-label" for="unarchived">
                         <i class="fas fa-box-open"></i>&nbsp;未封存
                     </label>
@@ -101,34 +99,45 @@
             </div>
         </div>
 
+        <!-- songlist -->
+
+        <div class="edit-songlist">
+            <h6>歌曲列表</h6>
+
+            <table class="table songlist-table">
+                <tbody>
+                    {% for song in songs %}
+                    {% set song_index = loop.index0 %}
+                    <tr>
+                        <td class="td-drag-dot drag-this-iron-man"><i class="fas fa-ellipsis-v" draggable="true"></i>
+                        </td>
+                        <td class="td-song-order">{{ song_index + 1 }}</td>
+                        <td class="td-song-info">
+                            <div>國 10 - 66</div>
+                            <div>G 調</div>
+                        </td>
+                        <td class="td-song-title">
+                            <a href="{{ url_for('surf_one_bp.surf_one', sid=song.sid) }}">{{ song.title }}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn btn-sm btn-outline-success" type="button">更新</button>
+
     </form>
-    
-    <!-- List -->
 
-    {% for song in songs %}
-    {% set song_index = loop.index0 %}
-    <div class="song-info">
-
-        <p class="song-tag">
-            第 {{ song_index + 1 }} 首
-        </p>
-        <!-- {% for i in range(songlist.songs_description_list | length) %}
-        <p class="song-description">
-        {{ songlist.songs_description_list[i] }}
-        </p>
-        {% endfor %} -->
-
-    </div>
-    {% endfor %}
 
 </div>
 {% endblock %}
 
 {% block script %}
 {{  super ()  }}
-    <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/songs/songlist_edit.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}
-<!-- EOF templates/songlist_id.html -->
+<!-- EOF templates/songlist_edit.html -->
 {% endblock EOF_TAG %}

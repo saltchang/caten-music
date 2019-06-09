@@ -8,15 +8,23 @@
 {%  endblock  %}
 
 {% block title %}
+
 {% if mode == "search" %}
 - 搜尋詩歌
 {% endif %}
+
 {% if mode == "allsongs" %}
 - 所有詩歌
 {% endif %}
+
 {% if mode == "surf" %}
 - 瀏覽詩歌
 {% endif %}
+
+{% if mode == "one" %}
+- {{ songs[0].title }}
+{% endif %}
+
 {% endblock %}
 
 {% block content%}
@@ -25,6 +33,8 @@
 
     <!-- Header -->
     <div class="top-header">
+
+        {% if mode != "one" %}
 
         <h4 class="mb-4 main-title">
 
@@ -57,9 +67,13 @@
             {% endif %}
 
         </p>
+
+        {% endif %}
     </div>
 
+    {% if mode != "one" %}
     <hr>
+    {% endif %}
 
     <!-- List -->
 
@@ -68,41 +82,41 @@
         <div class="col-md-1 col-lg-2"></div>
         <div class="col card my-3 p-0" draggable="true">
             <h5 class="card-header">
-                <span class="header-title-text">{{ song['title'] }}</span>
-                <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song['sid'] }}"
-                    data-toggle="collapse" data-target="{{ '#listmenu-' + song['sid'] }}" aria-expanded="false"
+                <span class="header-title-text">{{ song.title }}</span>
+                <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song.sid }}"
+                    data-toggle="collapse" data-target="{{ '#listmenu-' + song.sid }}" aria-expanded="false"
                     aria-controls="collapseExample">
                     <i class="fas fa-plus"></i>
                 </button>
-                <div class="collapse drop-songlist" id="{{ 'listmenu-' + song['sid'] }}">
+                <div class="collapse drop-songlist" id="{{ 'listmenu-' + song.sid }}">
                     <div class="add-list-container">
                         <div class="songlist-add">
-                            <a class="songlist-add-a" data-toggle="collapse" href="{{ '#songlist-add-' + song['sid'] }}"
-                                role="button" aria-expanded="false" aria-controls="{{ 'songlist-add-' + song['sid'] }}">
+                            <a class="songlist-add-a" data-toggle="collapse" href="{{ '#songlist-add-' + song.sid }}"
+                                role="button" aria-expanded="false" aria-controls="{{ 'songlist-add-' + song.sid }}">
                                 <i class="fas fa-plus"></i>
                                 <div class="add-song-list-space"></div>
                                 新增一份歌單
                             </a>
 
                             <!-- End Songlist -->
-                            <div class="song-content-container collapse" id="{{'songlist-add-' + song['sid'] }}">
+                            <div class="song-content-container collapse" id="{{'songlist-add-' + song.sid }}">
                                 <form class="form-add-songlist" action="{{ url_for('add_songlist_bp.add_songlist') }}"
                                     method="POST">
                                     <hr class="percent-80">
                                     <input type="text" class="d-none" name="posttype" value="withsong">
-                                    <input type="text" class="d-none" name="song_sid" value="{{ song['sid'] }}">
+                                    <input type="text" class="d-none" name="song_sid" value="{{ song.sid }}">
                                     <input type="text" class="d-none" name="user_id" value="{{ current_user.id }}">
                                     <div class="add-list-group">
                                         <p class="text-center">歌單標題</p>
                                         <input type="text" name="title" class="input-addnewlist"
-                                            id="{{ 'input-new-list-name-' + song['sid'] }}" placeholder="輸入新增歌單名稱">
+                                            id="{{ 'input-new-list-name-' + song.sid }}" placeholder="輸入新增歌單名稱">
                                     </div>
                                     <hr class="percent-80">
                                     <p class="text-center">隱私設定</p>
                                     <div class="add-list-group">
                                         <input class="" type="radio" name="privacy"
-                                            id="{{ 'check-public-' + song['sid'] }}" value="public" checked>
-                                        <label class="" for="{{ 'check-public-' + song['sid'] }}">
+                                            id="{{ 'check-public-' + song.sid }}" value="public" checked>
+                                        <label class="" for="{{ 'check-public-' + song.sid }}">
                                             <div class="add-song-list-space"></div>
                                             公開
                                         </label>
@@ -110,15 +124,15 @@
                                     </div>
                                     <div class="add-list-group">
                                         <input class="" type="radio" name="privacy"
-                                            id="{{ 'check-private-' + song['sid'] }}" value="private">
-                                        <label class="" for="{{ 'check-private-' + song['sid'] }}">
+                                            id="{{ 'check-private-' + song.sid }}" value="private">
+                                        <label class="" for="{{ 'check-private-' + song.sid }}">
                                             <div class="add-song-list-space"></div>
                                             私人
                                         </label>
                                         <small class="form-text text-muted">只有你自己能查看</small>
                                     </div>
                                     <hr class="percent-80">
-                                    <button id="{{ 'btn-add-list-' + song['sid'] }}" type="button"
+                                    <button id="{{ 'btn-add-list-' + song.sid }}" type="button"
                                         class="btn-addsonglist btn btn-sm btn-outline-info text-center">新增</button>
                                 </form>
                             </div>
@@ -171,41 +185,41 @@
                     <div class="col-1 col-md-3"></div>
                     <div class="col p-1 align-middle">
                         <span class="song-info">
-                            {% if song["language"] == "Chinese" %}
+                            {% if song.language == "Chinese" %}
                             國
                             {% endif %}
-                            {% if song["language"] == "Taiwanese" %}
+                            {% if song.language == "Taiwanese" %}
                             台
                             {% endif %}
                         </span>
-                        <span class="song-info">{{ song["num_c"] }} - {{ song["num_i"] }}</span></div>
+                        <span class="song-info">{{ song.num_c }} - {{ song.num_i }}</span></div>
                     <div class="col-1"></div>
-                    <div class="col p-1 align-middle"><span class="song-info">{{ song["tonality"] }}</span><span
+                    <div class="col p-1 align-middle"><span class="song-info">{{ song.tonality }}</span><span
                             class="song-info">
                             調</span></div>
                     <div class="col-2 p-1 show-more-song-content">
-                        <a class="" data-toggle="collapse" href="{{ '#t' + song['sid'] }}" role="button"
-                            aria-expanded="false" aria-controls="{{'t' + song['sid'] }}">
+                        <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button"
+                            aria-expanded="false" aria-controls="{{'t' + song.sid }}">
                             <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
                     <div class="col-md-1 col-lg-2"></div>
                 </div>
             </div>
-            <div class="song-content-container collapse" id="{{'t' + song['sid'] }}">
+            <div class="song-content-container collapse" id="{{'t' + song.sid }}">
                 <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
                     <div class="container">
                         <hr>
                     </div>
                     <div class="row py-3 lyrics-text">
-                        <div class="col p-1 text-right"><span>詞：</span><span>{{ song['lyricist'] }}</span></div>
+                        <div class="col p-1 text-right"><span>詞：</span><span>{{ song.lyricist }}</span></div>
                         <div class="col-1 p-1"></div>
-                        <div class="col p-1 text-left"><span>曲：</span><span>{{ song['composer'] }}</span></div>
+                        <div class="col p-1 text-left"><span>曲：</span><span>{{ song.composer }}</span></div>
                     </div>
                     <div class="container px-sm-5">
 
                         <!-- 歌詞 -->
-                        {% for part in song['lyrics'] %}
+                        {% for part in song.lyrics %}
                         <p class="card-text text-left lyrics-text">
                             {% for line in part[1:] %}
                             {{ line }} <br>
@@ -218,14 +232,14 @@
                                 詩集：
                             </span>
                             <span>
-                                {{ song['album'] }}
+                                {{ song.album }}
                             </span>
                         </div>
                         <hr>
                         <div class="row pt-3">
                             <div class="col px-3">
                                 <a class="ppt-icon"
-                                    href="{{ url_for('download_ppt_bp.download_ppt', id_=song['sid']) }}">
+                                    href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
                                     <i class="fas fa-file-powerpoint"></i>
                                     <div>投影片</div>
                                 </a>
@@ -238,7 +252,7 @@
                             </div>
                             <div class="col px-3">
                                 <a class="youtube-icon"
-                                    href="{{ 'https://www.youtube.com/results?search_query=' + song['title'] }}">
+                                    href="{{ 'https://www.youtube.com/results?search_query=' + song.title }}">
                                     <i class="fab fa-youtube"></i>
                                     <div>Youtube</div>
                                 </a>

@@ -14,6 +14,9 @@ surfer_bp = Blueprint("surfer_bp", __name__,
 surf_bp = Blueprint("surf_bp", __name__,
                       template_folder='templates')
 
+surf_one_bp = Blueprint("surf_one_bp", __name__,
+                      template_folder='templates')
+
 
 @surfer_bp.route('/surfer')
 @login_required
@@ -61,5 +64,24 @@ def surf():
 
     try:
         return render_template("songs/result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
+    except TemplateNotFound:
+        abort(404)
+
+@surf_one_bp.route('/song/<sid>')
+def surf_one(sid):
+
+    # API
+
+    requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
+
+    r = requests.get(requestURL)
+
+    if not r.status_code == 200:
+        return redirect("/")
+    else:
+        result = json.loads(r.text)
+
+    try:
+        return render_template("songs/result.html", songs=result, mode="one"), r.status_code
     except TemplateNotFound:
         abort(404)
