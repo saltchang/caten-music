@@ -98,7 +98,7 @@
                                 新增一份歌單
                             </a>
 
-                            <!-- End Songlist -->
+                            <!-- Add Songlist -->
                             <div class="song-content-container collapse" id="{{'songlist-add-' + song.sid }}">
                                 <form class="form-add-songlist" action="{{ url_for('add_songlist_bp.add_songlist') }}"
                                     method="POST">
@@ -143,7 +143,7 @@
                         <hr class="my-2">
                         <div class="songlist-list">
                             {% for songlist in current_user.song_list %}
-
+                            {% if not songlist.is_archived %}
                             <form class="form-update-songlist" action="" method="PUT">
 
                                 <input class="songlist_outid d-none" type="text" name="songlist_outid" value="{{ songlist.out_id }}">
@@ -175,6 +175,7 @@
 
                             </form>
 
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>

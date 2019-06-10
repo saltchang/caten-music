@@ -23,19 +23,32 @@
             <div class="container">
                 <span class="d-none d-sm-inline">歌單 - </span>
                 {{ songlist.title }}
-                <button class="btn-songlist-edit" type="button">
+                {% if current_user.id == songlist.user_id %}
+                <a class="a-songlist-edit" href="{{ url_for('songlist_edit_bp.edit', out_id=songlist.out_id)}}">
                     <i class="fas fa-pen"></i>
-                </button>
+                </a>
+                {% endif %}
+
             </div>
         </h4>
         <p class="main-info">
-            <span class="private-icon">
+            <span class="info-icon">
                 {% if not songlist.is_private %}
                 <i class="fas fa-globe-asia"></i>&nbsp;
                 <span class="d-none d-sm-inline">公開</span>
                 {% else %}
                 <i class="fas fa-lock"></i>&nbsp;
                 <span class="d-none d-sm-inline">私人</span>
+                {% endif %}
+            </span>
+
+            <span class="info-icon">
+                {% if songlist.is_archived %}
+                <i class="fas fa-archive"></i>&nbsp;
+                <span class="d-none d-sm-inline">已封存</span>
+                {% else %}
+                <i class="fas fa-box-open"></i>&nbsp;
+                <span class="d-none d-sm-inline">未封存</span>
                 {% endif %}
             </span>
             
@@ -46,8 +59,7 @@
             <span class="bull-dot">&bull;</span>
             {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }} <span class="d-none d-sm-inline">更新</span>
         </p>
-        <p class="main-info-description">
-            {{ songlist.description }}
+        <p class="main-info-description" data-text-content="{{ new_description }}">
         </p>
 
     </div>
@@ -56,21 +68,18 @@
 
     <!-- List -->
 
+    {% if songs | length == 0 %}
+    <h3>歌單目前沒有歌曲哦！</h3>
+    {% endif %}
+
     {% for song in songs %}
     {% set song_index = loop.index0 %}
 
     <!-- SongList song info -->
     <div class="songlist-song-info">
-
         <p class="song-order-tag">
             第 {{ song_index + 1 }} 首
         </p>
-        {% for i in range(songlist.songs_description_list | length) %}
-        <p class="song-description">
-        {{ songlist.songs_description_list[i] }}
-        </p>
-        {% endfor %}
-
     </div>
     
     <!-- Song Card -->

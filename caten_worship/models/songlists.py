@@ -33,9 +33,6 @@ class SongList(db.Model):
     # 歌單所存放歌曲之SID
     songs_sid_list = db.Column(db.ARRAY(db.String(8)))
 
-    # 每首歌曲之描述
-    songs_description_list = db.Column(db.ARRAY(db.Text), default=[])
-
     # 歌曲數量
     songs_amount = db.Column(db.Integer, nullable=False, default=0)
 

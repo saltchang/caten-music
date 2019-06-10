@@ -1,6 +1,6 @@
 # routes/user_songlist.py
 
-from flask import Blueprint, render_template, abort, flash, current_app, request, redirect, jsonify
+from flask import Blueprint, render_template, abort, flash, current_app, request, redirect, jsonify, url_for
 from jinja2 import TemplateNotFound
 
 from caten_worship.models import SongList, User, login_manager
@@ -41,6 +41,8 @@ def user_songlist():
 @login_required
 def song_list_by_id(out_id):
 
+    songs = []
+
     songlist = SongList.query.filter_by(out_id=out_id).first()
 
     listowner = User.query.filter_by(id=songlist.user_id).first()
@@ -54,21 +56,31 @@ def song_list_by_id(out_id):
     
     requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sids
     r = requests.get(requestURL)
-    songs = json.loads(r.text)
+    if r.status_code == 200:
+        songs = json.loads(r.text)
+    elif r.status_code == 404:
+        songs = []
+
+    old_description = songlist.description
+    
+    new_description = old_description.replace("\r\n", "<br>")
+    print("new_description: ", new_description)
 
     try:
-        return render_template("songs/songlist.html", songs=songs, songlist=songlist, listowner=listowner), 200
+        return render_template("songs/songlist.html", songs=songs, songlist=songlist, listowner=listowner, new_description=new_description), 200
 
     except TemplateNotFound:
         abort(404)
 
-@songlist_edit_bp.route('/songlist/edit/<out_id>', methods=["GET", "PUT"])
+@songlist_edit_bp.route('/songlist/edit/<out_id>', methods=["GET", "POST"])
 @login_required
 def edit(out_id):
 
-    songlist = SongList.query.filter_by(out_id=out_id).first()
-
     if request.method == "GET":
+
+        songs = []
+
+        songlist = SongList.query.filter_by(out_id=out_id).first()
 
         sids = ""
         for i in range(len(songlist.songs_sid_list)):
@@ -79,9 +91,53 @@ def edit(out_id):
         
         requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sids
         r = requests.get(requestURL)
-        songs = json.loads(r.text)
+        if r.status_code == 200:
+            songs = json.loads(r.text)
+        elif r.status_code == 404:
+            songs = []
 
         return render_template("songs/songlist_edit.html", songlist=songlist, songs=songs)
+    
+    elif request.method == "POST":
+
+        songlist = SongList.query.filter_by(out_id=out_id).first()
+
+        title = request.values.get("title")
+
+        description = request.values.get("description")
+
+        is_private = False
+
+        if request.values.get("privacy") == "private":
+            is_private = True
+        
+        is_archived = False
+
+        if request.values.get("archive") == "archived":
+            is_archived = True
+
+        songs_amount = int(request.values.get("songs_amount"))
+
+        songs_sid_list_new = []
+
+        for index in range(songs_amount):
+            songs_sid_list_new.append(request.values.get(str(index)))
+
+        songlist.title = title
+        songlist.description = description
+        songlist.is_private = is_private
+        songlist.is_archived = is_archived
+        songlist.songs_amount = songs_amount
+
+        songlist.songs_sid_list = None
+        songlist.update()
+        songlist.refresh()
+
+        songlist.songs_sid_list = songs_sid_list_new
+
+        songlist.update()
+
+        return redirect(url_for("song_list_by_id_bp.song_list_by_id", out_id=out_id))
 
 
 @add_songlist_bp.route('/songlist/add', methods=["GET", "POST"])
@@ -124,8 +180,6 @@ def update_songlist(song_sid, songlist_outid):
     
     if request.method == "PUT":
 
-        print("ajax put!")
-
         songlist = SongList.query.filter_by(out_id=songlist_outid).first()
 
         tempList = songlist.songs_sid_list
@@ -145,7 +199,6 @@ def update_songlist(song_sid, songlist_outid):
             return jsonify({"success": True, "act": "remove"})
 
         else:
-            print("before append: ", songlist.songs_sid_list)
             tempList.append(song_sid)
             songlist.songs_amount += 1
 
@@ -153,11 +206,8 @@ def update_songlist(song_sid, songlist_outid):
 
             songlist.update()
 
-            print("after append: ", songlist.songs_sid_list)
-
             return jsonify({"success": True, "act": "append"})
     
     else:
 
-        print("ajax failed.")
         return redirect("/")

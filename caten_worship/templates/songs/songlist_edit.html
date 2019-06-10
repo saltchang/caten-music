@@ -13,6 +13,28 @@
 
 {% block content%}
 
+<!-- model -->
+
+<div id="remove-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">從歌單移除</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>你確定要從歌單移除「<span id="span-remove-title">這首歌</span>」嗎？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button id="btn-remove-song" type="button" class="btn btn-danger">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container text-center">
 
     <!-- Header -->
@@ -39,7 +61,7 @@
 
     <hr class="main-hr-bar">
 
-    <form id="form-edit-songlist" action="" method="PUT">
+    <form id="form-edit-songlist" action="{{ url_for('songlist_edit_bp.edit', out_id=songlist.out_id)}}" method="POST">
 
         <div class="form-group">
             <label class="input-label" for="edit-title">標題</label>
@@ -51,6 +73,8 @@
             <textarea class="input-text input-description" type="text" name="description"
                 id="edit-description">{{ songlist.description }}</textarea>
         </div>
+
+        <input class="d-none song-amount-data" type="text" name="songs_amount" value={{ songlist.songs_amount }}>
 
         <div class="form-group">
 
@@ -105,27 +129,48 @@
             <h6>歌曲列表</h6>
 
             <table class="table songlist-table">
-                <tbody>
+                <tbody class="songlist-tbody">
                     {% for song in songs %}
                     {% set song_index = loop.index0 %}
-                    <tr>
+                    {% if song.language == "Chinese" %}
+                    {% set song_lang = "國" %}
+                    {% else %}
+                    {% set song_lang = "台" %}
+                    {% endif %}
+                    <tr data-sid="{{ song.sid }}">
+
+                        <td class="d-none">
+                            <input class="d-none song-data" type="text" name="{{ song_index }}" value="{{ song.sid }}">
+                        </td>
+
                         <td class="td-drag-dot drag-this-iron-man"><i class="fas fa-ellipsis-v" draggable="true"></i>
                         </td>
                         <td class="td-song-order">{{ song_index + 1 }}</td>
                         <td class="td-song-info">
-                            <div>國 10 - 66</div>
-                            <div>G 調</div>
+                            {{ song.tonality }}
+                            <br>
+                            {{ song_lang }} {{ song.num_c }} - {{ song.num_i }}
                         </td>
+
                         <td class="td-song-title">
                             <a href="{{ url_for('surf_one_bp.surf_one', sid=song.sid) }}">{{ song.title }}</a>
                         </td>
+
+                        <td class="td-remove" data-sid="{{ song.sid }}" data-title="{{ song.title }}">
+                            <button class="remove-this-song" id="{{ 'remove-' + song.sid }}" type="button">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
 
-        <button class="btn btn-sm btn-outline-success" type="button">更新</button>
+        <button id="edit-submit" class="form-button btn btn-sm btn-outline-success" type="button">更新</button>
+
+        <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-sm btn-secondary" >取消</a>
 
     </form>
 

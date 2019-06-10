@@ -17,3 +17,7 @@ function collapseArrowToUp(event) {
     $(this).parent().addClass("show-more-song-color");
     $(this).parent().parent().parent().removeClass("card-body-border-bottom");
 }
+
+// Convert text with <br> into html
+var description = $(".main-info-description");
+description.html(description.data("text-content"));

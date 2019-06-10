@@ -32,7 +32,7 @@ margin: 2rem 0;
 }
 
 .table td {
-    padding: 1.4rem .4rem;
+    padding: 1.4rem .2rem;
     cursor: pointer;
 }
 
@@ -47,4 +47,6 @@ tr td i {
 
 .table .table-td-icon {
     min-width: 0;
+    padding-left: .1rem;
+    padding-right: .1rem;
 }
