@@ -77,6 +77,23 @@
     vertical-align: middle;
 }
 
+.dropdown-collapse {
+    width: 14rem;
+    position: absolute;
+    z-index: 1000;
+
+    margin: 2.4rem 0 0;
+    text-align: left;
+    background-color: #fff;
+    border-radius: .25rem;
+
+    right: auto;
+    left: 0;
+    top: auto;
+    font-size: .8rem;
+    transition: 400ms;
+}
+
 .brand-menu-container {
     padding-left: .5rem;
     padding-right: .5rem;
@@ -114,5 +131,11 @@
     .brand-menu-container {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .dropdown-collapse {
+        margin: 2rem 0 0;
+        right: 0;
+        left: auto;
     }
 }

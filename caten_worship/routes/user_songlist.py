@@ -47,6 +47,13 @@ def song_list_by_id(out_id):
 
     listowner = User.query.filter_by(id=songlist.user_id).first()
 
+    if current_user.id != listowner.id:
+        flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有存取此歌單的權限，謝謝。", "danger")
+        flash("純粹測試訊息", "warning")
+        flash("恭喜您，已經成功更新歌單。", "success")
+        flash("您的身份為訪客，請登入以獲得更多功能。<br>詳細情形請參閱會員功能。<br>或者造訪我們的管理員申請頁面，謝謝。", "primary")
+        return redirect("/")
+
     sids = ""
     for i in range(len(songlist.songs_sid_list)):
         if i == 0:

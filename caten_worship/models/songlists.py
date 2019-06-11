@@ -77,15 +77,15 @@ class SongList(db.Model):
             second = "0" + day 
         todaystring = year + month + day + "000"
 
-        print("todaystring:", todaystring)
-
         todayint = int(todaystring)
 
-        print("self.id: ", self.id)
+        id_to_add = self.id % 1000
 
-        self.out_id = str(todayint + self.id)
+        print("id_to_add: ", id_to_add)
 
-        print("self.out_id: ", self.out_id)
+        print("150 % 100 = ", 150 % 1000)
+
+        self.out_id = str(todayint + id_to_add)
 
         # 如果使用者沒有輸入標題，則設定為預設值
         if self.title == "":

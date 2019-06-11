@@ -83,11 +83,14 @@
         <div class="col card my-3 p-0" draggable="true">
             <h5 class="card-header">
                 <span class="header-title-text">{{ song.title }}</span>
-                <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song.sid }}"
-                    data-toggle="collapse" data-target="{{ '#listmenu-' + song.sid }}" aria-expanded="false"
-                    aria-controls="collapseExample">
-                    <i class="fas fa-plus"></i>
+
+                <!-- 添加歌曲至歌單 - 按鈕 -->
+                <button class="song-list-add-btn click-this-to-call-menu" type="button" id="{{ 'callmenu-' + song.sid }}" data-toggle="collapse"
+                    data-target="{{ '#listmenu-' + song.sid }}" data-sid="{{ song.sid }}" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-plus click-this-to-call-menu" data-sid="{{ song.sid }}"></i>
                 </button>
+
+                <!-- 添加歌曲至歌單 - 選單 -->
                 <div class="collapse drop-songlist" id="{{ 'listmenu-' + song.sid }}">
                     <div class="add-list-container">
                         <div class="songlist-add">
@@ -146,7 +149,8 @@
                             {% if not songlist.is_archived %}
                             <form class="form-update-songlist" action="" method="PUT">
 
-                                <input class="songlist_outid d-none" type="text" name="songlist_outid" value="{{ songlist.out_id }}">
+                                <input class="songlist_outid d-none" type="text" name="songlist_outid"
+                                    value="{{ songlist.out_id }}">
                                 <input class="song_sid d-none" type="text" name="song_sid" value="{{ song.sid }}">
 
                                 {% if songlist.songs_amount > 0 and song.sid in songlist.songs_sid_list%}
@@ -239,8 +243,7 @@
                         <hr>
                         <div class="row pt-3">
                             <div class="col px-3">
-                                <a class="ppt-icon"
-                                    href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
+                                <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
                                     <i class="fas fa-file-powerpoint"></i>
                                     <div>投影片</div>
                                 </a>

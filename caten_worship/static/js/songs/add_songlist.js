@@ -15,14 +15,10 @@ function updateSongList(event) {
     var song_sid = $(this).parent().children("input.song_sid").val()
     var songlist_outid = $(this).parent().children("input.songlist_outid").val()
 
-    console.log(song_sid + ", " + songlist_outid)
-
     // Check if the song in the songlist
     // Type Boolean
     var song_in_songlist = $(this).parent().children("input.song_in_songlist")
 
-    console.log(song_in_songlist)
-    console.log(song_in_songlist[0].checked)
 
     if (song_in_songlist[0].checked) {
         ajax_update_songlist(song_sid, songlist_outid)
@@ -52,4 +48,3 @@ function ajax_update_songlist(song_sid, songlist_outid) {
     }
     })
 }
-

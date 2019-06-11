@@ -21,3 +21,31 @@ function collapseArrowToUp(event) {
 // Convert text with <br> into html
 var description = $(".main-info-description");
 description.html(description.data("text-content"));
+
+
+// hide the songlist drop menu when touching on current menu
+var current_touched_sid = "";
+// $("button.song-list-add-btn").on("click", function (event) {
+//     current_touched_sid = $(this).data("sid");
+//     console.log(current_touched_sid);
+// });
+
+$("body").click(function (event) {
+    let target = $(event.target), article;
+
+    if (!(target.attr("id") == "callmenu-" + current_touched_sid)) {
+        if ($("div#listmenu-" + current_touched_sid).hasClass("show")) {
+            let div_id = "div#listmenu-" + current_touched_sid
+            if (target.parents(div_id).length) {
+            }
+            else {
+                $("button#callmenu-" + current_touched_sid).click();
+            }
+        }
+    }
+
+    if (target.hasClass("click-this-to-call-menu")) {
+        current_touched_sid = target.data("sid");
+    }
+
+});

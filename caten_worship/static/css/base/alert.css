@@ -13,13 +13,32 @@
 }
 
 .alert-setting {
+    display: flex;
+    align-items: center;
+    font-size: .8rem;
+    padding: .7rem 1rem;
     margin: 1rem auto 1rem auto;
-    max-width: 320px;
+    width: 95%;
+    max-width: 450px;
     min-width: 290px;
     text-align: center;
-    vertical-align: middle;
-    height: 54px;
     border-radius: .75rem;
     opacity: .95;
     transition: 700ms;
+}
+
+.alert-message {
+    margin: auto;
+}
+
+.close-this-alert {
+    vertical-align: middle;
+    font-size: .8rem;
+    margin-right: .2rem;
+}
+
+@media(min-width: 576px) {
+    .alert-setting, .close-this-alert {
+        font-size: 1rem;
+    }
 }
