@@ -11,7 +11,7 @@ def loadJsonFile():
             print(str(e))
             exit(1)
     else:
-        print("Usage: db_rebuilder.py [inputfile.json] [outputfile.json]")
+        print("Usage: mongoData_builder.py [inputfile.json] [outputfile.json]")
         exit(1)
 
 
@@ -22,7 +22,13 @@ def rebuildData(originSongs):
 
     for song in originSongs:
 
-        data = {"sid": song["sid"],  # 唯一識別編號
+        data = {
+
+                # 如果原始檔案並非由 MongoDB 匯出的，請將此欄位註消
+                "_id": song["_id"], # MongoDB ID
+                # 如果原始檔案並非由 MongoDB 匯出的，請將此欄位註消
+
+                "sid": song["sid"],  # 唯一識別編號
                 "num_c": song["num_c"],  # 檔號：集
                 "num_i": song["num_i"],  # 檔號：首
                 "title": song["title"],  # 標題、曲名

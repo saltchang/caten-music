@@ -29,6 +29,7 @@ __pycache__/
 instance/
 
 songs_data
+songs_data/
 
 .pytest_cache/
 .pytest_cache
