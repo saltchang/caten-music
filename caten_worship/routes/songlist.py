@@ -78,7 +78,7 @@ def song_list_by_id(out_id):
 
     listowner = User.query.filter_by(id=songlist.user_id).first()
 
-    if current_user.id != listowner.id:
+    if current_user.id != listowner.id and songlist.is_private:
         flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有存取此歌單的權限，謝謝。", "danger")
         return redirect("/")
 
