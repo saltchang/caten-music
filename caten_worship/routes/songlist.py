@@ -22,6 +22,9 @@ add_songlist_bp = Blueprint("add_songlist_bp", __name__,
 songlist_edit_bp = Blueprint("songlist_edit_bp", __name__,
                     template_folder='templates')
 
+songlist_delete_bp = Blueprint("songlist_delete_bp", __name__,
+                    template_folder='templates')
+
 ajax_update_songlist_bp = Blueprint("ajax_update_songlist_bp", __name__,
                     template_folder='templates')
 
@@ -36,6 +39,30 @@ def user_songlist():
     except TemplateNotFound:
         abort(404)
 
+@songlist_delete_bp.route("/songlist/delete/<out_id>", methods=["POST"])
+@login_required
+def delete(out_id):
+
+    if request.method == "POST":
+
+        songlist = SongList.query.filter_by(out_id=out_id).first()
+
+        if not songlist:
+            flash("錯誤的歌單資訊", "danger")
+            return redirect("/")
+
+        if songlist.user_id == current_user.id:
+            songlist.kill_self()
+            flash("已成功刪除歌單 #" + out_id, "success")
+            return redirect(url_for("user_songlist_bp.user_songlist"))
+    
+        else:
+            flash("想幹嘛？您沒有權限刪除此歌單。<br>請登入後再試一次，謝謝。", "danger")
+
+    else:
+
+        return redirect("/")
+
 
 @song_list_by_id_bp.route('/songlist/<out_id>')
 @login_required
@@ -45,13 +72,14 @@ def song_list_by_id(out_id):
 
     songlist = SongList.query.filter_by(out_id=out_id).first()
 
+    if not songlist:
+        flash("錯誤的歌單資訊", "danger")
+        return redirect("/")
+
     listowner = User.query.filter_by(id=songlist.user_id).first()
 
     if current_user.id != listowner.id:
         flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有存取此歌單的權限，謝謝。", "danger")
-        flash("純粹測試訊息", "warning")
-        flash("恭喜您，已經成功更新歌單。", "success")
-        flash("您的身份為訪客，請登入以獲得更多功能。<br>詳細情形請參閱會員功能。<br>或者造訪我們的管理員申請頁面，謝謝。", "primary")
         return redirect("/")
 
     sids = ""
@@ -83,11 +111,19 @@ def song_list_by_id(out_id):
 @login_required
 def edit(out_id):
 
+    songlist = SongList.query.filter_by(out_id=out_id).first()
+
+    if not songlist:
+        flash("錯誤的歌單資訊", "danger")
+        return redirect("/")
+
+    if current_user.id != songlist.user_id:
+        flash("想幹嘛？你沒有權限編輯此歌單。<br>請登入後再試一次，謝謝。", "danger")
+        return redirect("/")
+
     if request.method == "GET":
 
         songs = []
-
-        songlist = SongList.query.filter_by(out_id=out_id).first()
 
         sids = ""
         for i in range(len(songlist.songs_sid_list)):
@@ -106,8 +142,6 @@ def edit(out_id):
         return render_template("songs/songlist_edit.html", songlist=songlist, songs=songs)
     
     elif request.method == "POST":
-
-        songlist = SongList.query.filter_by(out_id=out_id).first()
 
         title = request.values.get("title")
 
@@ -189,6 +223,9 @@ def update_songlist(song_sid, songlist_outid):
 
         songlist = SongList.query.filter_by(out_id=songlist_outid).first()
 
+        if not songlist:
+            return jsonify({"success": False, "message": "wrong out_id"})
+
         tempList = songlist.songs_sid_list
         songlist.songs_sid_list = None
         songlist.update()
@@ -217,4 +254,4 @@ def update_songlist(song_sid, songlist_outid):
     
     else:
 
-        return redirect("/")
+        return jsonify({"success": False, "message": "wrong method"})

@@ -125,12 +125,17 @@ class SongList(db.Model):
 
         return self
 
+    # 於程式運行時刷新自身物件
     def refresh(self):
         db.session.refresh(self)
 
         return self
 
-    # 自身物件表示
+    # 刪除自己
+    def kill_self(self):
+        db.session.delete(self)
+        db.session.commit()
 
+    # 自身物件表示
     def __repr__(self):
         return '<ID: %s>' % (self.id)

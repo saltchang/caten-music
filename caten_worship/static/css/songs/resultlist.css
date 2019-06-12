@@ -13,7 +13,7 @@ button:focus {
 /* header */
 
 .top-header {
-    margin: 7rem 0 3rem 0;
+    margin: 7rem 0 1rem 0;
 }
 
 .main-info {
@@ -27,7 +27,7 @@ button:focus {
     min-width: 270px;
     max-width: 600px;
     width: 80%;
-    margin: 2rem auto;
+    margin: .5rem auto;
 }
 
 .bull-dot {

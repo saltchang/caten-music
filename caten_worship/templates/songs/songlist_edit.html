@@ -15,6 +15,7 @@
 
 <!-- model -->
 
+<!-- remove a song from songlist -->
 <div id="remove-modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -35,6 +36,32 @@
     </div>
 </div>
 
+<!-- delete whole songlist -->
+<div id="delete-songlist-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">從歌單移除</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    你確定要刪除這份歌單嗎？
+                    <br>
+                    <span class="text-danger">警告：此動作將無法復原。</span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button id="btn-delete-whole-songlist-confirm" type="button" class="btn btn-danger">確定刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- editting form -->
 <div class="container text-center">
 
     <!-- Header -->
@@ -172,6 +199,10 @@
 
         <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-sm btn-secondary" >取消</a>
 
+    </form>
+
+    <form id="form-delete-whole-songlist" class="mt-3" action="{{ url_for('songlist_delete_bp.delete', out_id=songlist.out_id) }}" method="POST">
+        <button id="delete-submit" class="button-to-delete btn btn-sm btn-danger" type="button">刪除歌單</button>
     </form>
 
 

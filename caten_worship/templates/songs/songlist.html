@@ -14,6 +14,32 @@
 
 {% block content%}
 
+<div id="share-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">分享歌單</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" value="{{ request.url }}" class="url-text" readonly>
+            </div>
+            <div class="modal-body">
+                
+                <button class="d-none btn-copy-current-url">複製連結</button>
+
+                <span>
+                    <div class="line-it-button" data-lang="zh_Hant" data-type="share-c" data-ver="3" data-url="{{ request.url }}" data-color="default" data-size="small" data-count="false" style="display: none;"></div>
+                    <span class="share-tag">Line</span>
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container text-center">
 
     <!-- Header -->
@@ -62,6 +88,10 @@
         <p class="main-info-description" data-text-content="{{ new_description }}">
         </p>
 
+    </div>
+
+    <div class="happy-share">
+        <button type="button">分享&nbsp;<i class="fas fa-share-square"></i></button>
     </div>
 
     <hr class="main-hr-bar">
@@ -246,6 +276,7 @@
 {% block script %}
 {{  super ()  }}
     <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
+    <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

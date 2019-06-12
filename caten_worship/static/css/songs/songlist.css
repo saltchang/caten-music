@@ -1,5 +1,38 @@
 /* static/css/songlist.css */
 
+/* share */
+
+.happy-share {
+    margin-right: .5rem;
+    text-align: right;
+}
+
+.happy-share button {
+    font-size: .7rem;
+    outline: none;
+    border: none;
+    background: none;
+    color: #00000080;
+}
+
+.modal-body {
+    text-align: center;
+    padding: .5rem 1rem;
+}
+
+.url-text {
+    width: 100%;
+    padding: .2rem;
+    text-align: center;
+}
+
+.share-tag {
+    display: block;
+    font-size: .7rem;
+    width: 2rem;
+    margin: auto;
+}
+
 /* edit button */
 
 .a-songlist-edit {
