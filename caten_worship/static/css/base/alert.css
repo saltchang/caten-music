@@ -15,7 +15,7 @@
 .alert-setting {
     display: flex;
     align-items: center;
-    font-size: .8rem;
+    font-size: 1rem;
     padding: .7rem 1rem;
     margin: 1rem auto 1rem auto;
     width: 95%;
@@ -33,7 +33,7 @@
 
 .close-this-alert {
     vertical-align: middle;
-    font-size: .8rem;
+    font-size: 1rem;
     margin-right: .2rem;
 }
 

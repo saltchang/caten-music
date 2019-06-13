@@ -4,6 +4,14 @@
     background-color: #00000000;
     width: 60%;
     max-width: 450px;
-    min-width: 250px;
+    min-width: 300px;
     text-align: -webkit-center;
+}
+
+.input-search-songs-text {
+    font-size: 1.6rem;
+}
+
+.button-search-songs {
+    font-size: 1.4rem;
 }

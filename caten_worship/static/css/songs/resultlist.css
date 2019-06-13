@@ -6,7 +6,7 @@ button:focus {
     outline: none;
     border: none;
     box-shadow: none;
-    font-size: .85rem;
+    font-size: 1rem;
 }
 
 
@@ -17,13 +17,13 @@ button:focus {
 }
 
 .main-info {
-    font-size: .8rem;
+    font-size: 1rem;
     color: #00000070;
 }
 
 .main-info-description {
     color: #000000;
-    font-size: .8rem;
+    font-size: 1rem;
     min-width: 270px;
     max-width: 600px;
     width: 80%;
@@ -45,7 +45,7 @@ button:focus {
 
 .info-icon .fas {
     color: #505050;
-    font-size: .5rem;
+    font-size: 1rem;
 }
 
 /* hr bar */
@@ -61,12 +61,12 @@ button:focus {
 }
 
 .song-order-tag {
-    font-size: .85rem;
+    font-size: 1rem;
     margin: 1rem auto 1rem auto;
 }
 
 .song-description {
-    font-size: .8rem;
+    font-size: 1rem;
     margin: 0 auto .4rem auto;
     color: #707070cc;
     min-width: 270px;
@@ -113,7 +113,7 @@ button:focus {
     right: 0;
     left: auto;
     top: auto;
-    font-size: .8rem;
+    font-size: 1rem;
     transition: 400ms;
 }
 
@@ -151,7 +151,7 @@ button:focus {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    font-size: .8rem;
+    font-size: 1rem;
     border-radius: .25rem;
     padding: .2rem .5rem;
     outline: none;
@@ -190,7 +190,7 @@ button:focus {
     margin-right: auto;
     height: 1.4rem;
     width: 60%;
-    font-size: .8rem;
+    font-size: 1rem;
 }
 
 hr.percent-80 {
@@ -233,7 +233,7 @@ hr.percent-80 {
 }
 
 .lyrics-text {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-family: 'Noto Serif TC', serif;
     font-weight: 400;
 }
@@ -249,7 +249,7 @@ hr.percent-80 {
 }
 
 .album-info {
-    font-size: 0.7rem;
+    font-size: 1rem;
 }
 
 .ppt-icon {
@@ -266,7 +266,7 @@ hr.percent-80 {
 
 .report-icon {
     color: #ac3030;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 /* bottom */

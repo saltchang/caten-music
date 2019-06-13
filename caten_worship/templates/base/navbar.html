@@ -2,7 +2,7 @@
 
 <nav id="navbar" class="navbarstyle navbar navbar-expand-sm navbar-light fixed-top">
     <a class="navbar-brand brand-logo-border" href="/">
-        <svg width="32px" height="32px" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        <svg width="4rem" height="4rem" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>CatenWorshipLogo</title>
             <desc>Created by Salt.</desc>
@@ -26,7 +26,7 @@
     </a>
 
 
-    <div class="collapse navbar-collapse brand-menu-container" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse brand-menu-container navbar-content-list" id="navbarSupportedContent">
 
         <hr class="navbar-hr">
 
@@ -36,7 +36,7 @@
                 <input class="d-none" type="text" name="c" value="">
                 <input class="d-none" type="text" name="lang" value="">
                 <input class="d-none" type="text" name="to" value="">
-                <input name="title" type="text" class="input-search-songs-text form-control navbar-search"
+                <input name="title" type="text" class="navbar-input-search-songs-text form-control navbar-search"
                     placeholder="搜尋...">
             </form>
 
@@ -44,9 +44,9 @@
 
             <li class="nav-item active">
                 <a class="nav-link navbar-item-style" href="{{ url_for('surfer_bp.surfer') }}">
-                    <i class="fas fa-shoe-prints"></i>
-                    <span class="nav-link-text-rotate">&nbsp;瀏覽</span>
-                    <!-- <span class="sr-only">(current)</span> -->
+                    <i class="fas fa-compass"></i>
+                    &nbsp;瀏覽
+                    <span class="sr-only">(current)</span>
                 </a>
             </li>
 
@@ -60,7 +60,7 @@
             <li class="nav-item active">
                 <a class="nav-link navbar-item-style" href="{{ url_for('login_bp.login') }}">
                     <i class="fas fa-sign-in-alt"></i>
-                    登入
+                    &nbsp;登入
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
@@ -70,7 +70,7 @@
             <li class="nav-item active">
                 <a class="nav-link navbar-item-style" href="{{ url_for('register_bp.register') }}">
                     <i class="fas fa-feather-alt"></i>
-                    註冊
+                    &nbsp;註冊
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
@@ -78,8 +78,9 @@
 
             {% if current_user.is_authenticated %}
             <li class="nav-item dropdown">
-                <button class="dropdown-toggle" type="button" id="btn-navbar-user-dropdown" data-toggle="collapse" data-target="#user-dropdown-collapse" aria-expanded="false">
-                    {{ current_user.displayname }}
+                <button class="dropdown-toggle btn-navbar-user-dropdown" type="button" data-toggle="collapse" data-target="#user-dropdown-collapse" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                    &nbsp;{{ current_user.displayname }}
                 </button>
                 <!-- <button class="dropdown-toggle" type="button" id="btn-navbar-user-dropdown" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

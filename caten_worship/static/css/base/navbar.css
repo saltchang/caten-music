@@ -1,20 +1,17 @@
 /* static/css/navbar.css */
 
+
 /* Navbar */
 
-#navbarSupportedContent a {
+#navbar .navbar-content-list .nav-item a,
+#navbar .navbar-content-list .nav-item button {
     color: #344042;
-}
-
-#btn-navbar-user-dropdown {
-    background-color: #00000000;
 }
 
 .navbar {
     background-color: #9CAE92;
     min-width: 320px;
     padding: 16px;
-    font-size: .85rem;
     align-items: center;
     display: flex;
 }
@@ -25,6 +22,7 @@
 }
 
 .nav-item {
+    font-size: 1.4rem;
     display: flex;
     vertical-align: middle;
 }
@@ -32,10 +30,12 @@
 .navbar-light .navbar-toggler-icon {
     background-image: url("/static/image/icon/menuicon.png");
     opacity: 0.6;
-    margin-right: 5px;
-    margin-bottom: 3px;
-    width: 20px;
-    height: 20px;
+    width: 2.8rem;
+    height: 2.8rem;
+    position: fixed;
+    z-index: 100;
+    top: 1.8rem;
+    right: 1.8rem;
 }
 
 .navbar-brand {
@@ -53,11 +53,13 @@
     padding: 0;
 }
 
+.navbar-input-search-songs-text {
+    font-size: 1.5rem;
+}
+
 .navbar-search {
     padding: .5rem;
-    font-size: .8rem;
     height: 100%;
-    min-height: 2rem;
     width: 100%;
     margin: 0 auto;
     border: 1px solid rgba(36, 41, 46, 0.137);
@@ -77,21 +79,31 @@
     vertical-align: middle;
 }
 
+.btn-navbar-user-dropdown {
+    background-color: #00000000;
+    padding: 0;
+}
+
 .dropdown-collapse {
-    width: 14rem;
+    width: 100%;
     position: absolute;
     z-index: 1000;
 
-    margin: 2.4rem 0 0;
+    margin: 3rem 0 0;
     text-align: left;
-    background-color: #fff;
+    background-color: rgb(228, 214, 187);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
     border-radius: .25rem;
 
     right: auto;
     left: 0;
     top: auto;
-    font-size: .8rem;
+    font-size: 1.4rem;
     transition: 400ms;
+}
+
+.dropdown-item {
+    padding: 1.5rem;
 }
 
 .brand-menu-container {
@@ -102,16 +114,10 @@
 
 
 .navbar-hr {
-    margin-top: 1rem;
-    margin-bottom: .9rem;
+    margin-top: 1.8rem;
+    margin-bottom: 1.7rem;
 }
 
-.fa-shoe-prints {
-    transform: rotate(315deg);
-    margin-top: -0.3rem;
-    margin-right: -0.3rem;
-    font-size: .4rem;
-}
 
 @media (min-width: 576px) {
     .navbar-brand {
@@ -134,6 +140,7 @@
     }
 
     .dropdown-collapse {
+        width: 20rem;
         margin: 2rem 0 0;
         right: 0;
         left: auto;
