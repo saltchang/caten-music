@@ -6,72 +6,6 @@ button:focus {
     outline: none;
     border: none;
     box-shadow: none;
-    font-size: 1rem;
-}
-
-
-/* header */
-
-.top-header {
-    margin: 7rem 0 1rem 0;
-}
-
-.main-info {
-    font-size: 1rem;
-    color: #00000070;
-}
-
-.main-info-description {
-    color: #000000;
-    font-size: 1rem;
-    min-width: 270px;
-    max-width: 600px;
-    width: 80%;
-    margin: .5rem auto;
-}
-
-.bull-dot {
-    margin: 0 .2rem;
-}
-
-.info-icon {
-    line-height: .85rem;
-    height: .85rem;
-    display: inline-block;
-    padding-right: .6rem;
-    margin-right: .4rem;
-    border-right: solid #a0a0a0 2px;
-}
-
-.info-icon .fas {
-    color: #505050;
-    font-size: 1rem;
-}
-
-/* hr bar */
-
-.main-hr-bar {
-    margin: 1rem auto;
-}
-
-/* songlist song info */
-
-.songlist-song-info {
-    padding: 1rem auto;
-}
-
-.song-order-tag {
-    font-size: 1rem;
-    margin: 1rem auto 1rem auto;
-}
-
-.song-description {
-    font-size: 1rem;
-    margin: 0 auto .4rem auto;
-    color: #707070cc;
-    min-width: 270px;
-    max-width: 500px;
-    width: 75%;
 }
 
 /* song card */
@@ -91,7 +25,7 @@ button:focus {
     border: none;
     background: none;
     float: right;
-    font-size: 75%;
+    font-size: 90%;
     vertical-align: middle;
     line-height: 1.5rem;
 }
@@ -101,7 +35,7 @@ button:focus {
 }
 
 .drop-songlist {
-    width: 250px;
+    width: 270px;
     position: absolute;
     z-index: 1000;
 
@@ -113,12 +47,12 @@ button:focus {
     right: 0;
     left: auto;
     top: auto;
-    font-size: 1rem;
+    font-size: 1.4rem;
     transition: 400ms;
 }
 
 .song-list-add-check {
-    padding: .5rem 1.5rem;
+    padding: 1rem 1.5rem;
 }
 
 .add-song-list-space {
@@ -151,9 +85,9 @@ button:focus {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1rem;
+    font-size: 1.4rem;
     border-radius: .25rem;
-    padding: .2rem .5rem;
+    padding: .5rem;
     outline: none;
     border: 1px solid rgba(36, 41, 46, 0.301);
     width: 90%;
@@ -175,7 +109,7 @@ button:focus {
 }
 
 .songlist-add p {
-    margin: .5rem;
+    margin: 1rem;
 }
 
 .songlist-add small {
@@ -188,13 +122,12 @@ button:focus {
     padding: 0;
     margin-left: auto;
     margin-right: auto;
-    height: 1.4rem;
     width: 60%;
-    font-size: 1rem;
+    font-size: 1.4rem;
 }
 
 hr.percent-80 {
-    margin: 1rem .3rem .7rem .3rem;
+    margin: 1.5rem .3rem 1.2rem .3rem;
 }
 
 /* song card */
@@ -214,6 +147,7 @@ hr.percent-80 {
 }
 
 .card .card-body {
+    font-size: 1.3rem;
     background-color: #f0ebc3;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -233,14 +167,14 @@ hr.percent-80 {
 }
 
 .lyrics-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: 'Noto Serif TC', serif;
     font-weight: 400;
 }
 
 .show-more-song-content a {
     color: #a5679b;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     transition: 500ms;
 }
 

@@ -57,7 +57,7 @@ def delete(out_id):
             return redirect(url_for("user_songlist_bp.user_songlist"))
     
         else:
-            flash("想幹嘛？您沒有權限刪除此歌單。<br>請登入後再試一次，謝謝。", "danger")
+            flash("想幹嘛？您沒有權限刪除此歌單。<br>請登入後再試一次。", "danger")
 
     else:
 
@@ -79,7 +79,7 @@ def song_list_by_id(out_id):
     listowner = User.query.filter_by(id=songlist.user_id).first()
 
     if current_user.id != listowner.id and songlist.is_private:
-        flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有存取此歌單的權限，謝謝。", "danger")
+        flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有此歌單的權限。", "danger")
         return redirect("/")
 
     sids = ""
@@ -118,7 +118,7 @@ def edit(out_id):
         return redirect("/")
 
     if current_user.id != songlist.user_id:
-        flash("想幹嘛？你沒有權限編輯此歌單。<br>請登入後再試一次，謝謝。", "danger")
+        flash("想幹嘛？你沒有權限編輯此歌單。<br>請登入後再試一次。", "danger")
         return redirect("/")
 
     if request.method == "GET":
@@ -240,7 +240,7 @@ def update_songlist(song_sid, songlist_outid):
 
             songlist.update()
 
-            return jsonify({"success": True, "act": "remove"})
+            return jsonify({"success": True, "act": "remove", "song": song_sid, "songlist": songlist_outid})
 
         else:
             tempList.append(song_sid)
@@ -250,7 +250,7 @@ def update_songlist(song_sid, songlist_outid):
 
             songlist.update()
 
-            return jsonify({"success": True, "act": "append"})
+            return jsonify({"success": True, "act": "append", "song": song_sid, "songlist": songlist_outid})
     
     else:
 

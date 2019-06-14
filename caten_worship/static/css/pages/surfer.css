@@ -1,18 +1,36 @@
 /* static/css/surfer.css */
 
+/* 語言標籤 */
+.lang-tag {
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    font-size: 1.4rem;
+}
+
+/* 按鈕 */
+.btn {
+    width: 90%;
+    font-size: 1.4rem;
+    padding: .5rem 1rem;
+    margin: 1rem auto;
+}
+
+/* 台語按鈕 */
 .taiwanese-surf-btn {
     background-color: #c2ab82;
-    width: 80%;
-    height: 2.5rem;
 }
 
+/* 國語按鈕 */
 .chinese-surf-btn {
     background-color: #b18dd3;
-    width: 80%;
-    height: 2.5rem;
 }
 
-.surferClass a {
+.surfer-tag a {
     color: #a5679b;
     transition: 700ms;
+}
+
+.surfer-tag {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
 }

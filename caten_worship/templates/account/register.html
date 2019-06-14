@@ -9,25 +9,22 @@
 
 {% block title %} - 註冊{% endblock %}
 
-{% block content%}
+{% block header_title %}
+註冊
+{% endblock%}
 
-<div class="container text-center">
-    <div class="title-under-navbar">
-        <h3>註冊</h3>
-        <small>請填寫下列註冊表單以完成註冊</small>
+{% block header_info %}
+<p>請填寫下列註冊表單以完成註冊</p>
+{% endblock%}
 
-        <div id="register-alert" class="alert alert-danger fade alert-fixed" role="alert">
-            <button class="close close-danger-alert">&times;</button>
-        </div>
 
-    </div>
-</div>
+{% block content %}
 
     <div class="container container-static">
-        <form id="form-register" action="{{ url_for('register_bp.register') }}" method="POST">
+        <form id="form-register" class="form-register" action="{{ url_for('register_bp.register') }}" method="POST">
 
             <!-- 使用者帳號 username -->
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="input-register-username" class="ml-2">使用者帳號</label>
                 <input name="username" type="text" class="form-control focus-id-1" id="input-register-username"
                     aria-describedby="usernameHelp" placeholder="請輸入您的使用者帳號" autofocus="true">
@@ -38,7 +35,7 @@
             </div>
 
             <!-- E-mail email-->
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="input-register-email" class="ml-2">電子郵件地址</label>
                 <input name="email" type="email" class="form-control focus-id-2" id="input-register-email"
                     aria-describedby="emailHelp" placeholder="請輸入您的 E-mail">
@@ -48,7 +45,7 @@
             </div>
 
             <!-- 顯示名稱（名字） displayname -->
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="input-register-displayname" class="ml-2">名字</label>
                 <input name="displayname" type="text" class="form-control focus-id-3" id="input-register-displayname"
                     aria-describedby="displaynameHelp" placeholder="請輸入您的名字">
@@ -59,7 +56,7 @@
             </div>
 
             <!-- 密碼 password -->
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="input-register-password" class="ml-2">密碼</label>
                 <input name="password" type="password" class="form-control focus-id-4" id="input-register-password"
                     placeholder="請輸入您的密碼">
@@ -69,7 +66,7 @@
             </div>
 
             <!-- 確認密碼 confirm_password -->
-            <div class="form-group mt-4">
+            <div class="form-group">
                 <label for="input-register-confirm_password" class="ml-2">再次輸入密碼</label>
                 <input name="confirm_password" type="password" class="form-control focus-id-5"
                     id="input-register-confirm_password" placeholder="請再次輸入您的密碼">
@@ -77,7 +74,7 @@
                 <small id="confirm_passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
             </div>
 
-            <button id="btn-register" type="button" class="btn btn-outline-info">
+            <button id="btn-register" type="button" class="btn btn-outline-info button-register">
                 註冊
             </button>
 

@@ -47,15 +47,21 @@ class User(db.Model):
 
     # 產生帳號啟動碼
 
-    def create_activate_token(self, expires_in=3600 * 24):
+    def create_activate_token(self, hours=2):
+        time = hours * 3600
         token_generator = sign(
-            current_app.config['SECRET_KEY'], expires_in=expires_in)
+            current_app.config['SECRET_KEY'], expires_in=time)
         return token_generator.dumps({"user_id": self.id})
 
     # 取得用戶唯一識別碼
 
     def get_id(self):
         return self.username
+    
+    # 重設密碼
+    def reset_pw(self, password):
+        self.password_hash = helper.createPasswordHash(password)
+        return self
 
     # 預註冊到資料庫（特殊用途）
 
@@ -68,6 +74,12 @@ class User(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    # 更新至資料庫
+    def update(self):
+        db.session.commit()
+
+        return self
 
     # 自身物件表示
 

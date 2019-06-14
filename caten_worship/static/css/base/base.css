@@ -1,5 +1,11 @@
 /* static/css/base.css */
 
+/* anamition */
+@keyframes fadeOut {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+
 /* basic standard */
 /* min-view-port: 320px */
 
@@ -64,7 +70,7 @@ input:focus,
 /* content */
 #content {
     min-height: 85vh;
-    margin-top: 50px;
+    margin-top: 2rem;
     padding-bottom: 100px;
 }
 
@@ -74,4 +80,21 @@ input:focus,
     padding-top: 120px;
     padding-bottom: 50px;
     font-family: 'EB Garamond', sans-serif, serif;
+}
+
+/* Main hr bar */
+
+.main-hr-bar {
+    margin: 1rem auto;
+}
+
+
+/* Modal */
+
+.modal-header button {
+    font-size: 2rem;
+}
+
+.modal-body {
+    font-size: 1.2rem;
 }

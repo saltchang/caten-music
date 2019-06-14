@@ -7,16 +7,15 @@
 <link rel="stylesheet" href="static/css/pages/surfer.css">
 {%  endblock  %}
 
-{% block title %} - 瀏覽{% endblock %}
+{% block title %} - 探索{% endblock %}
+
+{% block header_title %}探索歌曲{% endblock header_title %}
 
 {% block content%}
 <div class="container text-center">
-    <div class="title-under-navbar">
-        <h4>請選擇要瀏覽的詩歌類別</h4>
-    </div>
 
-    <h5 class="surferClass mb-4">
-        依語言瀏覽&nbsp;
+    <h5 class="surfer-tag">
+        語言分類&nbsp;
         <a class="" data-toggle="collapse" href="#byLanguage" role="button" aria-expanded="false"
             aria-controls="byLanguage">
             <i class="fas fa-chevron-down"></i>
@@ -25,15 +24,15 @@
     <div class="collapse" id="byLanguage">
         <div class="container text-center p-md-0">
             <div id="language-surfer">
-                <div class="row pb-3">
-                    <div class="col">國語</div>
-                    <div class="col">台語</div>
+                <div class="row">
+                    <div class="col lang-tag">國語</div>
+                    <div class="col lang-tag">台語</div>
                 </div>
                 <div class="row">
                     <div class="col px-0 pr-md-3">
                         <div class="row mx-0 p-0">
                             {% for i in range(1, 12) %}
-                            <div class="col-12 col-md-6 col-xl-4 p-0 my-2">
+                            <div class="col-12 col-md-6 col-xl-4">
                                 <form action="{{ url_for('surf_bp.surf') }}" method="GET">
                                     <input class="d-none" type="text" name="title" value="">
                                     <input class="d-none" type="text" name="lang" value="Chinese">
@@ -49,7 +48,7 @@
                     <div class="col px-0 pl-md-3">
                         <div class="row mx-0 p-0">
                             {% for i in range(1, 11) %}
-                            <div class="col-12 col-md-6 col-xl-4 p-0 my-2">
+                            <div class="col-12 col-md-6 col-xl-4">
                                 <form action="{{ url_for('surf_bp.surf') }}" method="GET">
                                     <input class="d-none" type="text" name="title" value="">
                                     <input class="d-none" type="text" name="lang" value="Taiwanese">

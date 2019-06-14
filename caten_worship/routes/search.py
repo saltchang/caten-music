@@ -35,14 +35,12 @@ def search():
     requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + title
     r = requests.get(requestURL)
 
-    current_app.logger.info("透過API搜尋, URL: " + requestURL)
-
     if not r.status_code == 200:
         result = []
     else:
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/result.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
+        return render_template("songs/songs.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
     except TemplateNotFound:
         abort(404)

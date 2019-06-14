@@ -1,5 +1,3 @@
-<!-- templates/base.html -->
-
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 
@@ -12,6 +10,7 @@
     <title>Caten Worship{% block title %}{% endblock title%}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Style -->
     {% block css %}
 
     {% include "base/style.html" %}
@@ -23,25 +22,54 @@
 </head>
 
 <body>
-    {% block alert_container %}
-    {% include "base/alert.html" %}
-    {% endblock alert_container %}
 
+    
+    {% block modal %}{% endblock modal %}
+    
+    {% block alert %}
+    {% include "base/alert.html" %}
+    {% endblock alert %}
+    
     {% block navbar %}
     {% include "base/navbar.html" %}
     {% endblock navbar %}
 
+    <div class="container">
 
-    <div id="content">
-        {% block content %}{% endblock content%}
+        {% block header %}
+        <!-- Header -->
+        <header id="top-header">
+            <div class="container">
+                <h2 class="header-title">
+                    {% block header_title %}{% endblock header_title %}
+                </h2>
+            </div>
+            <div class="header-info-content">
+                {% block header_info %}{% endblock header_info %}
+            </div>
+        </header>
+        {% endblock header %}
+    
+
+        {% block main_hr %}
+        <hr class="main-hr-bar">
+        {% endblock main_hr %}
+
+        <!-- Content -->
+        <div id="content">
+            {% block content %}{% endblock content%}
+        </div>
+
+        <!-- Footer -->
+        {% block footer %}
+        <footer id="footer">
+            <p>&copy; 2019 &nbsp;Salt.</p>
+        </footer>
+        {% endblock %}
+
     </div>
 
-    {% block footer %}
-    <footer id="footer">
-        <p>&copy; 2019 &nbsp;Salt.</p>
-    </footer>
-    {% endblock %}
-
+    <!-- Script -->
     {% block script %}
     {% include "base/script.html" %}
     {% endblock script %}

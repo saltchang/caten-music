@@ -1,13 +1,22 @@
 /* static/css/list_of_songlist.css */
 
 table {
-    font-size: 1rem;
+    font-size: 1.4rem;
+}
+
+thead {
+    background: #344042;
+}
+
+tbody tr {
+    /* border: 1px solid #3440423f;s */
+    background: rgb(255, 244, 232);
 }
 
 /* header */
 
 .top-header {
-margin: 2rem 0;
+    margin: 2rem 0;
 }
 
 .main-title {
@@ -22,6 +31,7 @@ margin: 2rem 0;
 
 .table .thead-dark th {
     border: none;
+    background: none;
 }
 
 .table th, .table td {
@@ -32,8 +42,9 @@ margin: 2rem 0;
 }
 
 .table td {
-    padding: 1.4rem .2rem;
+    padding: 2rem .2rem;
     cursor: pointer;
+    border: none;
 }
 
 tr td i {

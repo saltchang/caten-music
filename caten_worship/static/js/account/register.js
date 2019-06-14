@@ -29,35 +29,24 @@ function registerPreValidator(event) {
     let confirm_password_validated = confirm_passwordValidator(confirm_password, password)
 
     if (!username_validated) {
-        $("div#register-alert").html("帳號格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
-        $("div#register-alert").addClass("show");
+        callAlert("帳號格式錯誤或未輸入", "danger");
     }
     else if (!email_validated) {
-        $("div#register-alert").html("Email格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
-        $("div#register-alert").addClass("show");
+        callAlert("Email格式錯誤或未輸入", "danger");
     }
     else if (!displayname_validated) {
-        $("div#register-alert").html("名稱格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
-        $("div#register-alert").addClass("show");
+        callAlert("名稱格式錯誤或未輸入", "danger");
     }
     else if (!password_validated) {
-        $("div#register-alert").html("密碼格式錯誤或未輸入<button class='close close-danger-alert'>&times;</button>");
-        $("div#register-alert").addClass("show");
+        callAlert("密碼格式錯誤或未輸入", "danger");
     }
     else if (!confirm_password_validated) {
-        $("div#register-alert").html("兩次輸入的密碼不相符<button class='close close-danger-alert'>&times;</button>");
-        $("div#register-alert").addClass("show");
+        callAlert("兩次輸入的密碼不相符", "danger");
     }
     else {
         get_ajax_validate(username.val(), email.val())
     }
     
-}
-
-// 關閉alert警告
-$("#home-title").on("click", "button.close-danger-alert", closeAlert);
-function closeAlert(event) {
-    $(this).parent("div").removeClass("show")
 }
 
 // 在input打字
@@ -261,12 +250,10 @@ function get_ajax_validate(username, email) {
         username_ajax_exist = msg.username
         email_ajax_exist = msg.email
         if (username_ajax_exist) {
-            $("div#register-alert").html("很抱歉，該使用者帳號已經被註冊<button class='close close-danger-alert'>&times;</button>");
-            $("div#register-alert").addClass("show");
+            callAlert("很抱歉，該使用者帳號已經被註冊", "danger")
         }
         else if (email_ajax_exist) {
-            $("div#register-alert").html("很抱歉，該E-mail已經被註冊<button class='close close-danger-alert'>&times;</button>");
-            $("div#register-alert").addClass("show");
+            callAlert("很抱歉，該E-mail已經被註冊", "danger")
         }
         else if (!username_ajax_exist && !email_ajax_exist) {
             $("#form-register").submit();

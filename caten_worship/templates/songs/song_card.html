@@ -1,0 +1,205 @@
+<div class="row m-0">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col card my-3 p-0">
+        <h4 class="card-header">
+            <span class="header-title-text">{{ song.title }}</span>
+
+            <!-- 添加歌曲至歌單 - 按鈕 -->
+            <button class="song-list-add-btn click-this-to-call-menu" type="button" id="{{ 'callmenu-' + song.sid }}"
+                data-toggle="collapse" data-target="{{ '#listmenu-' + song.sid }}" data-sid="{{ song.sid }}"
+                aria-expanded="false" aria-controls="collapseExample">
+                <i class="fas fa-stream click-this-to-call-menu" data-sid="{{ song.sid }}"></i>
+            </button>
+
+            <!-- 添加歌曲至歌單 - 選單 -->
+            <div class="collapse drop-songlist" id="{{ 'listmenu-' + song.sid }}">
+                <div class="add-list-container">
+                    <div class="songlist-add">
+                        <a class="songlist-add-a" data-toggle="collapse" href="{{ '#songlist-add-' + song.sid }}"
+                            role="button" aria-expanded="false" aria-controls="{{ 'songlist-add-' + song.sid }}">
+                            <i class="fas fa-plus"></i>
+                            <div class="add-song-list-space"></div>
+                            新增一份歌單
+                        </a>
+
+                        <!-- Add Songlist -->
+                        <div class="song-content-container collapse" id="{{'songlist-add-' + song.sid }}">
+                            <form class="form-add-songlist" action="{{ url_for('add_songlist_bp.add_songlist') }}"
+                                method="POST">
+                                <hr class="percent-80">
+                                <input type="text" class="d-none" name="posttype" value="withsong">
+                                <input type="text" class="d-none" name="song_sid" value="{{ song.sid }}">
+                                <input type="text" class="d-none" name="user_id" value="{{ current_user.id }}">
+                                <div class="add-list-group">
+                                    <p class="text-center">歌單標題</p>
+                                    <input type="text" name="title" class="input-addnewlist"
+                                        id="{{ 'input-new-list-name-' + song.sid }}" placeholder="輸入新增歌單名稱">
+                                </div>
+                                <hr class="percent-80">
+                                <p class="text-center">隱私設定</p>
+                                <div class="add-list-group">
+                                    <input class="" type="radio" name="privacy" id="{{ 'check-public-' + song.sid }}"
+                                        value="public" checked>
+                                    <label class="" for="{{ 'check-public-' + song.sid }}">
+                                        <div class="add-song-list-space"></div>
+                                        公開
+                                    </label>
+                                    <small class="form-text text-muted">取得連結的人都可以查看<br>( 如要分享歌單，請選此項 )</small>
+                                </div>
+                                <div class="add-list-group">
+                                    <input class="" type="radio" name="privacy" id="{{ 'check-private-' + song.sid }}"
+                                        value="private">
+                                    <label class="" for="{{ 'check-private-' + song.sid }}">
+                                        <div class="add-song-list-space"></div>
+                                        私人
+                                    </label>
+                                    <small class="form-text text-muted">只有你自己能查看</small>
+                                </div>
+                                <hr class="percent-80">
+                                <button id="{{ 'btn-add-list-' + song.sid }}" type="button"
+                                    class="btn-addsonglist btn btn-sm btn-outline-info text-center">新增</button>
+                            </form>
+                        </div>
+
+                        <!-- End Songlist -->
+
+                    </div>
+
+                    <hr class="my-2">
+
+                    <div class="songlist-list">
+
+                        {% for songlist in current_user.song_list %}
+
+                        {% if not songlist.is_archived %}
+
+                        <form class="form-update-songlist" action="" method="PUT">
+
+                            <input class="songlist_outid d-none" type="text" name="songlist_outid"
+                                value="{{ songlist.out_id }}">
+                            <input class="song_sid d-none" type="text" name="song_sid" value="{{ song.sid }}">
+
+                            {% if songlist.songs_amount > 0 and song.sid in songlist.songs_sid_list%}
+
+                            <input class="d-none song_in_songlist" type="checkbox" name="song_in_songlist" checked>
+
+                            <button class="dropdown-item song-list-add-check text-success" type="button">
+                                <i class="far fa-check-square"></i>
+                                <div class="add-song-list-space"></div>
+                                {{ songlist.title }}
+                            </button>
+
+                            {% else %}
+
+                            <input class="d-none song_in_songlist" type="checkbox" name="song_in_songlist">
+
+                            <button class="dropdown-item song-list-add-check text-secondary" type="button">
+                                <i class="far fa-square"></i>
+                                <div class="add-song-list-space"></div>
+                                {{ songlist.title }}
+                            </button>
+
+                            {% endif %}
+
+                        </form>
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            </div>
+        </h4>
+        <div class="card-body">
+            <div class="row pt-2 pb-1">
+                <div class="col-1 col-md-3"></div>
+                <div class="col p-1 align-middle">
+                    <span class="song-info">
+                        {% if song.language == "Chinese" %}
+                        國
+                        {% endif %}
+                        {% if song.language == "Taiwanese" %}
+                        台
+                        {% endif %}
+                    </span>
+                    <span class="song-info">{{ song.num_c }} - {{ song.num_i }}</span></div>
+                <div class="col-1"></div>
+                <div class="col p-1 align-middle"><span class="song-info">{{ song.tonality }}</span><span
+                        class="song-info">
+                        調</span></div>
+                <div class="col-2 p-1 show-more-song-content">
+                    <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button" aria-expanded="false"
+                        aria-controls="{{'t' + song.sid }}">
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                </div>
+                <div class="col-md-1 col-lg-2"></div>
+            </div>
+        </div>
+        <div class="song-content-container collapse" id="{{'t' + song.sid }}">
+            <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
+                <div class="container">
+                    <hr>
+                </div>
+                <div class="row py-3 lyrics-text">
+                    <div class="col p-1 text-right"><span>詞：</span><span>{{ song.lyricist }}</span></div>
+                    <div class="col-1 p-1"></div>
+                    <div class="col p-1 text-left"><span>曲：</span><span>{{ song.composer }}</span></div>
+                </div>
+                <div class="container px-sm-5">
+
+                    <!-- 歌詞 -->
+                    {% for part in song.lyrics %}
+                    <p class="card-text text-left lyrics-text">
+                        {% for line in part[1:] %}
+                        {{ line }} <br>
+                        {% endfor %}
+                    </p>
+                    {% endfor %}
+                    <!--  -->
+                    <div class="pb-2 text-left album-info">
+                        <span>
+                            詩集：
+                        </span>
+                        <span>
+                            {{ song.album }}
+                        </span>
+                    </div>
+                    <hr>
+                    <div class="row pt-3">
+                        <div class="col px-3">
+                            <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
+                                <i class="fas fa-file-powerpoint"></i>
+                                <div>投影片</div>
+                            </a>
+                        </div>
+                        <div class="col px-3">
+                            <a class="sheet-music-icon" href="#">
+                                <i class="fas fa-file-alt"></i>
+                                <div>歌譜</div>
+                            </a>
+                        </div>
+                        <div class="col px-3">
+                            <a class="youtube-icon"
+                                href="{{ 'https://www.youtube.com/results?search_query=' + song.title }}">
+                                <i class="fab fa-youtube"></i>
+                                <div>Youtube</div>
+                            </a>
+                        </div>
+                    </div>
+                    <hr class="mt-3 mb-3">
+                    <div class="row pt-1">
+                        <div class="col px-4">
+                            <a class="report-icon" href="#">
+                                <i class="fas fa-flag"></i>&nbsp;回報
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-2"></div>
+</div>

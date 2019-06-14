@@ -19,7 +19,7 @@ function collapseArrowToUp(event) {
 }
 
 // Convert text with <br> into html
-var description = $(".main-info-description");
+var description = $(".header-info-description");
 description.html(description.data("text-content"));
 
 

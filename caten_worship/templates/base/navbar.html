@@ -1,8 +1,7 @@
-<!-- templates/navbar.html -->
-
+<!-- Navbar -->
 <nav id="navbar" class="navbarstyle navbar navbar-expand-sm navbar-light fixed-top">
     <a class="navbar-brand brand-logo-border" href="/">
-        <svg width="4rem" height="4rem" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        <svg width="3.6rem" height="3.6rem" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>CatenWorshipLogo</title>
             <desc>Created by Salt.</desc>
@@ -31,21 +30,22 @@
         <hr class="navbar-hr">
 
         <ul class="navbar-nav mr-auto">
-
-            <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
-                <input class="d-none" type="text" name="c" value="">
-                <input class="d-none" type="text" name="lang" value="">
-                <input class="d-none" type="text" name="to" value="">
-                <input name="title" type="text" class="navbar-input-search-songs-text form-control navbar-search"
-                    placeholder="搜尋...">
-            </form>
+            <li class="nav-item">
+                <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
+                    <input class="d-none" type="text" name="c" value="">
+                    <input class="d-none" type="text" name="lang" value="">
+                    <input class="d-none" type="text" name="to" value="">
+                    <input name="title" type="text" class="navbar-input-search-songs-text form-control navbar-search"
+                        placeholder="搜尋...">
+                </form>
+            </li>
 
             <hr class="navbar-hr">
 
             <li class="nav-item active">
-                <a class="nav-link navbar-item-style" href="{{ url_for('surfer_bp.surfer') }}">
+                <a class="nav-link" href="{{ url_for('surfer_bp.surfer') }}">
                     <i class="fas fa-compass"></i>
-                    &nbsp;瀏覽
+                    &nbsp;探索
                     <span class="sr-only">(current)</span>
                 </a>
             </li>

@@ -5,6 +5,8 @@ $("#form-login").on("click", "button#btn-login", loginPreValidator);
 
 function loginPreValidator(event) {
 
+    console.log("login")
+
 
     let primary = $("input#input-login-primary");
     let password = $("input#input-login-password");
@@ -18,8 +20,7 @@ function loginPreValidator(event) {
     let password_validated = passwordValidator(password.val());
 
     if (!primary_validated || !password_validated) {
-        $("div#login-alert").html("所輸入的資訊不符合格式<button class='close close-danger-alert'>&times;</button>");
-        $("div#login-alert").addClass("show");
+        callAlert("所輸入的資訊不符合格式", "danger");
     } else {
         get_ajax_validate_login(primary.val(), password.val(), primary_type)
     }
@@ -68,20 +69,12 @@ function get_ajax_validate_login(primary, password, primary_type) {
         success: function (msg) {
             login_pass = msg.login_pass
             if (!login_pass) {
-                $("div#login-alert").html("帳號、電子郵件或密碼錯誤<button class='close close-danger-alert'>&times;</button>");
-                $("div#login-alert").addClass("show");
+                callAlert("帳號、電子郵件或密碼錯誤", "danger");
             } else if (login_pass) {
                 $("#form-login").submit();
             }
         }
     })
-}
-
-// 關閉alert警告
-$(".home-title").on("click", "button.close-danger-alert", closeAlert);
-
-function closeAlert(event) {
-    $(this).parent("div").removeClass("show")
 }
 
 

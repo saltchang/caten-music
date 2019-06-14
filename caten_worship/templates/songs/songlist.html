@@ -4,7 +4,7 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/resultlist.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/song_card.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/songs/songlist.css') }}">
 {%  endblock  %}
 
@@ -12,15 +12,16 @@
 - {{ songlist.title}}
 {% endblock %}
 
-{% block content%}
-
+{% block modal %}
+<!-- Modal -->
+<div class="modal-container">
 <div id="share-modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">分享歌單</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
             <div class="modal-body">
@@ -39,64 +40,65 @@
         </div>
     </div>
 </div>
+</div>
+{% endblock modal %}
 
 <div class="container text-center">
 
-    <!-- Header -->
-    <div class="top-header">
+{% block header_title %}
 
-        <h4 class="mb-4 main-title">
-            <div class="container">
-                <span class="d-none d-sm-inline">歌單 - </span>
-                {{ songlist.title }}
-                {% if current_user.id == songlist.user_id %}
-                <a class="a-songlist-edit" href="{{ url_for('songlist_edit_bp.edit', out_id=songlist.out_id)}}">
-                    <i class="fas fa-pen"></i>
-                </a>
-                {% endif %}
+<span class="d-none d-sm-inline">歌單 - </span>
+{{ songlist.title }}
+{% if current_user.id == songlist.user_id %}
+<a class="a-songlist-edit" href="{{ url_for('songlist_edit_bp.edit', out_id=songlist.out_id)}}">
+    <i class="fas fa-pen"></i>
+</a>
+{% endif %}
 
-            </div>
-        </h4>
-        <p class="main-info">
-            <span class="info-icon">
-                {% if not songlist.is_private %}
-                <i class="fas fa-globe-asia"></i>&nbsp;
-                <span class="d-none d-sm-inline">公開</span>
-                {% else %}
-                <i class="fas fa-lock"></i>&nbsp;
-                <span class="d-none d-sm-inline">私人</span>
-                {% endif %}
-            </span>
+{% endblock header_title %}
 
-            <span class="info-icon">
-                {% if songlist.is_archived %}
-                <i class="fas fa-archive"></i>&nbsp;
-                <span class="d-none d-sm-inline">已封存</span>
-                {% else %}
-                <i class="fas fa-box-open"></i>&nbsp;
-                <span class="d-none d-sm-inline">未封存</span>
-                {% endif %}
-            </span>
-            
+{% block header_info %}
 
-            {{ listowner.displayname }}
-            <span class="bull-dot">&bull;</span>
-            {{ songlist.songs_amount }} 首<span class="d-none d-sm-inline">歌</span>
-            <span class="bull-dot">&bull;</span>
-            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }} <span class="d-none d-sm-inline">更新</span>
-        </p>
-        <p class="main-info-description" data-text-content="{{ new_description }}">
-        </p>
+<p class="main-info">
+    <span class="info-icon">
+        {% if not songlist.is_private %}
+        <i class="fas fa-globe-asia"></i>&nbsp;
+        <span class="d-none d-sm-inline">公開</span>
+        {% else %}
+        <i class="fas fa-lock"></i>&nbsp;
+        <span class="d-none d-sm-inline">私人</span>
+        {% endif %}
+    </span>
 
-    </div>
+    <span class="info-icon">
+        {% if songlist.is_archived %}
+        <i class="fas fa-archive"></i>&nbsp;
+        <span class="d-none d-sm-inline">已封存</span>
+        {% else %}
+        <i class="fas fa-box-open"></i>&nbsp;
+        <span class="d-none d-sm-inline">未封存</span>
+        {% endif %}
+    </span>
+    
 
-    <div class="happy-share">
-        <button type="button">分享&nbsp;<i class="fas fa-share-square"></i></button>
-    </div>
+    {{ listowner.displayname }}
+    <span class="bull-dot">&bull;</span>
+    {{ songlist.songs_amount }} 首<span class="d-none d-sm-inline">歌</span>
+    <span class="bull-dot">&bull;</span>
+    {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }} <span class="d-none d-sm-inline">更新</span>
+</p>
+<p class="header-info-description" data-text-content="{{ new_description }}">
+</p>
 
-    <hr class="main-hr-bar">
+<div class="happy-share">
+    <button type="button">分享&nbsp;<i class="fas fa-share-square"></i></button>
+</div>
 
-    <!-- List -->
+{% endblock header_info %}
+
+{% block content%}
+
+<div class="container text-center">
 
     {% if songs | length == 0 %}
     <h3>歌單目前沒有歌曲哦！</h3>
@@ -113,169 +115,21 @@
     </div>
     
     <!-- Song Card -->
-    <div class="row m-0">
-        <div class="col-md-1 col-lg-2"></div>
-        <div class="col card my-3 p-0">
-            <h5 class="card-header">
-                <span class="header-title-text">{{ song.title }}</span>
-                <button class="song-list-add-btn" type="button" id="{{ 'callmenu-' + song['sid'] }}" data-toggle="collapse" data-target="{{ '#listmenu-' + song['sid'] }}" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <div class="collapse drop-songlist" id="{{ 'listmenu-' + song['sid'] }}">
-                    <div class="add-list-container">
-                        <div class="songlist-add">
-                            <a class="songlist-add-a" data-toggle="collapse" href="{{ '#songlist-add-' + song['sid'] }}" role="button" aria-expanded="false" aria-controls="{{ 'songlist-add-' + song['sid'] }}">
-                                <i class="fas fa-plus"></i>
-                                <div class="add-song-list-space"></div>
-                                新增一份歌單
-                            </a>
-                            <div class="song-content-container collapse" id="{{'songlist-add-' + song['sid'] }}">
-                                <form action="">
-                                    <hr class="percent-80">
-                                    <input type="text" class="d-none" name="sid" value="{{ song['sid'] }}">
-                                    <div class="add-list-group">
-                                        <p class="text-center">歌單名稱</p>
-                                        <input type="text" name="new-list-name" class="input-addnewlist" id="{{ 'input-new-list-name-' + song['sid'] }}" placeholder="輸入新增歌單名稱">
-                                    </div>
-                                    <hr class="percent-80">
-                                    <p class="text-center">隱私設定</p>
-                                    <div class="add-list-group">
-                                        <input class="" type="radio" name="access-auth" id="{{ 'check-public-' + song['sid'] }}" value="public" checked>
-                                        <label class="" for="{{ 'check-public-' + song['sid'] }}">
-                                            <div class="add-song-list-space"></div>
-                                            公開
-                                        </label>
-                                        <small class="form-text text-muted">取得連結的人都可以查看<br>( 如要分享歌單，請選此項 )</small>
-                                    </div>
-                                    <div class="add-list-group">
-                                        <input class="" type="radio" name="access-auth" id="{{ 'check-private-' + song['sid'] }}" value="private">
-                                        <label class="" for="{{ 'check-private-' + song['sid'] }}">
-                                            <div class="add-song-list-space"></div>
-                                            私人
-                                        </label>
-                                        <small class="form-text text-muted">只有你自己能查看</small>
-                                    </div>
-                                    <hr class="percent-80">
-                                    <button id="{{ 'btn-add-list-' + song['sid'] }}" type="button" class="btn btn-sm btn-outline-info text-center">新增</button>
-                                </form>
-                            </div>
-                        </div>
-                        <hr class="my-2">
-                        <div class="songlist-list">
-                            <button class="dropdown-item song-list-add-check text-success" type="button">
-                                <i class="far fa-check-square"></i>
-                                <div class="add-song-list-space"></div>
-                                加入的歌單1
-                            </button>
-                            <button class="dropdown-item song-list-add-check text-secondary" type="button">
-                                <i class="far fa-square"></i>
-                                <div class="add-song-list-space"></div>
-                                未加入的歌單2
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </h5>
-            <div class="card-body">
-                <div class="row pt-2 pb-1">
-                    <div class="col-1 col-md-3"></div>
-                    <div class="col p-1 align-middle">
-                        <span class="song-info">
-                            {% if song["language"] == "Chinese" %}
-                            國
-                            {% endif %}
-                            {% if song["language"] == "Taiwanese" %}
-                            台
-                            {% endif %}
-                        </span>
-                        <span class="song-info">{{ song["num_c"] }} - {{ song["num_i"] }}</span></div>
-                    <div class="col-1"></div>
-                    <div class="col p-1 align-middle"><span class="song-info">{{ song["tonality"] }}</span><span
-                            class="song-info">
-                            調</span></div>
-                    <div class="col-2 p-1 show-more-song-content">
-                        <a class="" data-toggle="collapse" href="{{ '#t' + song['sid'] }}" role="button"
-                            aria-expanded="false" aria-controls="{{'t' + song['sid'] }}">
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-1 col-lg-2"></div>
-                </div>
-            </div>
-            <div class="song-content-container collapse" id="{{'t' + song['sid'] }}">
-                <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
-                    <div class="container">
-                        <hr>
-                    </div>
-                    <div class="row py-3 lyrics-text">
-                        <div class="col p-1 text-right"><span>詞：</span><span>{{ song['lyricist'] }}</span></div>
-                        <div class="col-1 p-1"></div>
-                        <div class="col p-1 text-left"><span>曲：</span><span>{{ song['composer'] }}</span></div>
-                    </div>
-                    <div class="container px-sm-5">
+    
+    {% include "songs/song_card.html" %}
 
-                        <!-- 歌詞 -->
-                        {% for part in song['lyrics'] %}
-                        <p class="card-text text-left lyrics-text">
-                            {% for line in part[1:] %}
-                            {{ line }} <br>
-                            {% endfor %}
-                        </p>
-                        {% endfor %}
-                        <!--  -->
-                        <div class="pb-2 text-left album-info">
-                            <span>
-                                詩集：
-                            </span>
-                            <span>
-                                {{ song['album'] }}
-                            </span>
-                        </div>
-                        <hr>
-                        <div class="row pt-3">
-                            <div class="col px-3">
-                                <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song['sid']) }}">
-                                    <i class="fas fa-file-powerpoint"></i>
-                                    <div>投影片</div>
-                                </a>
-                            </div>
-                            <div class="col px-3">
-                                <a class="sheet-music-icon"
-                                    href="#">
-                                    <i class="fas fa-file-alt"></i>
-                                    <div>歌譜</div>
-                                </a>
-                            </div>
-                            <div class="col px-3">
-                                <a class="youtube-icon"
-                                    href="{{ 'https://www.youtube.com/results?search_query=' + song['title'] }}">
-                                    <i class="fab fa-youtube"></i>
-                                    <div>Youtube</div>
-                                </a>
-                            </div>
-                        </div>
-                        <hr class="mt-3 mb-3">
-                        <div class="row pt-1">
-                            <div class="col px-4">
-                                <a class="report-icon" href="#">
-                                    <i class="fas fa-flag"></i>&nbsp;回報
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-1 col-lg-2"></div>
-    </div>
     {% endfor %}
 
 </div>
+
 {% endblock %}
+
+</div>
 
 {% block script %}
 {{  super ()  }}
-    <script src="{{ url_for('static', filename='js/songs/resultlist.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/songs/song_card.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/songs/add_songlist.js') }}"></script>
     <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
 {% endblock script %}
 

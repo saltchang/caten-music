@@ -1,46 +1,50 @@
 /* statci/css/login.css */
 
 label {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
+    display: block;
 }
 
 a {
     color: #0000ad;
 }
 
-
+/* 寬度限制 */
 .container-static {
     max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 .card {
     border-radius: .75rem;
     background-color: #fefefd;
 }
 
+/* 新加入嗎？ */
 .new-to-here {
     text-align: center;
     font-size: 1rem;
     margin-bottom: 30px;
 }
 
+/* 遇到問題？ */
 .have-problem {
     color: #757575;
 }
 
-.home-title {
-    text-align: center;
-}
-
+/* 忘記密碼？ */
 .forgot-password {
     float: right;
     font-size: 1rem;
     font-weight: 400;
 }
 
-.label-password {
-    width: 100%;
+/* input字體大小 */
+.form-control{
+    font-size: 1.4rem;
 }
 
 .alert-danger {
@@ -48,13 +52,20 @@ a {
 }
 
 .main-btn {
-    font-size: 1rem;
+    font-size: 1.4rem;
     width: 150px;
     padding: 0;
-    height: 1.8rem;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2rem;
     margin-bottom: 2rem;
     display: block;
+}
+
+.main-btn:active,
+.main-btn:focus,
+.main-btn:hover {
+    outline: none;
+    border: none;
+    box-shadow: none;
 }

@@ -4,12 +4,12 @@
     background-color: #00000000;
     width: 60%;
     max-width: 450px;
-    min-width: 300px;
+    min-width: 290px;
     text-align: -webkit-center;
 }
 
 .input-search-songs-text {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 
 .button-search-songs {

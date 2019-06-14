@@ -8,7 +8,7 @@
 }
 
 .happy-share button {
-    font-size: 1rem;
+    font-size: 1.2rem;
     outline: none;
     border: none;
     background: none;
@@ -24,6 +24,7 @@
     width: 100%;
     padding: .2rem;
     text-align: center;
+    font-size: 1.2rem;
 }
 
 .share-tag {
@@ -42,7 +43,19 @@
     border: none;
     background: none;
     float: right;
-    font-size: 1rem;
+    font-size: 1.6rem;
     vertical-align: middle;
     line-height: 1.5rem;
+}
+
+/* songlist song info */
+
+.songlist-song-info {
+    padding: 1rem auto;
+}
+
+.song-order-tag {
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 1rem auto .2rem auto;
 }

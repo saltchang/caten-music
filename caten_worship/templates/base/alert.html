@@ -1,12 +1,11 @@
-<!-- templates/alert.html -->
-
+<!-- Alert -->
 <div id="alert" class="alert-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-setting fade show" role="alert" data-message="{{ message }}">
+    <div class="alert alert-{{ category }} alert-setting fade show alert-height" role="alert" data-message="{{ message }}">
         <span class="alert-message"></span>
-        <button class="close close-this-alert"><i class="fas fa-times"></i></button>
+        <button class="d-none close close-this-alert"><i class="fas fa-times"></i></button>
     </div>
     {% endfor %}
     {% endif %}

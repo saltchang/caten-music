@@ -1,54 +1,44 @@
 /* static/css/songlist_edit.css */
 
-/* header */
-
-.top-header {
-    margin: 6rem 0 2rem 0;
+input, textarea {
+    border: none;
 }
 
-.main-title {
-    margin-bottom: 0;
-}
-
-.main-info {
-    font-size: 1rem;
-}
-
-.main-hr-bar {
-    margin: 1rem .5rem;
-}
 
 .info-out-id {
+    margin-top: -2rem;
+    margin-bottom: 2rem;
     font-size: 1rem;
     color: #00000060;
 }
 
 .info-title {
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #282894;
+    margin-bottom: 2rem;
 }
 
 /* form */
 
 .form-group {
     display: block;
-    max-width: 500px;
-    width: 80%;
+    max-width: 600px;
+    width: 90%;
     margin: 0 auto 2rem auto;
 }
 
 /* input */
 
 .input-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
     display: flex;
     text-align: center;
     width: 100%;
 }
 
 .input-description {
-    height: 7rem;
+    height: 12rem;
     vertical-align: top;
 }
 
@@ -56,14 +46,14 @@
 
 .input-label {
     display: flex;
-    margin-bottom: .2rem;
+    margin-bottom: .5rem;
     text-align: left;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #00000080;
 }
 
 .form-check-label {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #00000080;
 }
 
@@ -74,12 +64,12 @@
 }
 
 .song-tag {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 1rem auto 1rem auto;
 }
 
 .song-description {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0 auto .4rem auto;
     color: #707070cc;
     min-width: 270px;
@@ -94,8 +84,8 @@
 }
 
 .songlist-table {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+    max-width: 600px;
+    margin: 1rem auto 2rem auto;
     border-bottom: 1px solid #dee2e6;
     border-left: 1px solid #dee2e6;
     border-right: 1px solid #dee2e6;
@@ -131,22 +121,23 @@ tr:hover td.td-drag-dot {
 }
 
 .table .td-song-info {
-    font-size: 1rem;
-    width: 5rem;
+    font-size: 1.1rem;
+    width: 6.5rem;
     text-align: left;
     color: #000000A0;
 }
 
 .table .td-song-title a {
     color: #282894;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
 /* remove */
 
 td.td-remove {
-    width: 1rem;
+    width: 1.2rem;
+    font-size: 1.4rem
 }
 
 td.td-remove:hover .remove-this-song {
@@ -162,9 +153,13 @@ td.td-remove:hover .remove-this-song {
     transition: 400ms;
 }
 
-/* from button bottom */
+/* from button */
 
 .form-button {
     width: 5rem;
     margin: 1rem;
+}
+
+.btn {
+    font-size: 1.4rem;
 }

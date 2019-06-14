@@ -13,29 +13,24 @@
 - 我的歌單
 {% endblock %}
 
+{% block header_title %}
+我的歌單列表
+{% endblock%}
+
+{% block header_info %}
+共有 {{ current_user.song_list | length }} 份歌單
+{% endblock%}
+
 {% block content%}
 
 <div class="container text-center">
-
-    <!-- Header -->
-    <div class="top-header">
-
-        <h4 class="mb-4 main-title">
-            我的歌單列表
-        </h4>
-        <p class="main-info">共有 {{ current_user.song_list | length }} 份歌單</p>
-
-    </div>
-
-    <hr>
-
     <!-- List -->
 
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
                 <th scope="col" class="table-td-icon"></th>
-                <th scope="col" class="table-td-icon"></th>
+                <th scope="col" class="table-td-icon d-none d-sm-table-cell"></th>
                 <th scope="col" class="">
                     <span class="d-sm-none">日期</span>
                     <span class="d-none d-sm-inline">更新日期</span>
@@ -68,7 +63,7 @@
                         {% endif %}
                     </td>
 
-                    <td class="table-td-icon">
+                    <td class="table-td-icon d-none d-sm-table-cell">
                         {% if songlist.is_archived %}
                         <span><i class="fas fa-archive"></i></span>
                         {% else %}

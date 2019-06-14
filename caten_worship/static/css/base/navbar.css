@@ -11,9 +11,13 @@
 .navbar {
     background-color: #9CAE92;
     min-width: 320px;
-    padding: 16px;
+    padding: 1rem 2rem;
     align-items: center;
     display: flex;
+}
+
+.navbar-collapse {
+    padding-bottom: 1.4rem;
 }
 
 .navbar-nav {
@@ -27,15 +31,20 @@
     vertical-align: middle;
 }
 
+.nav-link {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .navbar-light .navbar-toggler-icon {
     background-image: url("/static/image/icon/menuicon.png");
     opacity: 0.6;
-    width: 2.8rem;
-    height: 2.8rem;
+    width: 2rem;
+    height: 2rem;
     position: fixed;
     z-index: 100;
-    top: 1.8rem;
-    right: 1.8rem;
+    top: 1.7rem;
+    right: 1.7rem;
 }
 
 .navbar-brand {
@@ -50,7 +59,10 @@
 }
 
 .navbar-search-form {
+    width: 100%;
     padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .navbar-input-search-songs-text {
@@ -71,12 +83,6 @@
     border: 1px solid rgba(36, 41, 46, 0.651);
     width: 100%;
     background: #f7f4e3;
-}
-
-.navbar-item-style {
-    padding: 0;
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .btn-navbar-user-dropdown {
@@ -120,11 +126,17 @@
 
 
 @media (min-width: 576px) {
+
     .navbar-brand {
         margin-right: 1rem;
     }
 
+    .navbar-collapse {
+        padding-bottom: 0;
+    }
+
     .navbar-search {
+        height: 2.4rem;
         width: 180px;
         margin-left: 5px;
         margin-right: 10px;
@@ -144,5 +156,9 @@
         margin: 2rem 0 0;
         right: 0;
         left: auto;
+    }
+
+    .navbar-input-search-songs-text {
+        font-size: 1.2rem;
     }
 }

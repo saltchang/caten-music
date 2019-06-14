@@ -55,7 +55,6 @@ def surf():
     requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + lang + "&c=" + c + "&to=&title="
 
     r = requests.get(requestURL)
-    current_app.logger.info("透過API瀏覽, URL: " + requestURL)
 
     if not r.status_code == 200:
         result = []
@@ -63,7 +62,7 @@ def surf():
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/result.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
+        return render_template("songs/songs.html", songs=result, songs_num=len(result), mode="surf", c=c, lang=lang), r.status_code
     except TemplateNotFound:
         abort(404)
 
@@ -82,6 +81,6 @@ def surf_one(sid):
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/result.html", songs=result, mode="one"), r.status_code
+        return render_template("songs/songs.html", songs=result, mode="one"), r.status_code
     except TemplateNotFound:
         abort(404)

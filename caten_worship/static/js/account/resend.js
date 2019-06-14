@@ -1,8 +1,8 @@
 // static/js/resend.js
 
 // 按下登入按鈕
-$("#form-resend").on("click", "button#btn-resend", resendPreValidator);
-function resendPreValidator(event) {
+$("#form-send").on("click", "button#btn-send", sendPreValidator);
+function sendPreValidator(event) {
 
     let email = $("input#input-email");
 
@@ -11,8 +11,7 @@ function resendPreValidator(event) {
 
 
     if (!email_validated) {
-        $("div#login-alert").html("Email 格式有誤<button class='close close-danger-alert'>&times;</button>");
-        $("div#login-alert").addClass("show");
+        callAlert("Email 格式有誤", "danger");
     }
     else {
         get_ajax_validate_email(email.val())
@@ -44,11 +43,10 @@ function get_ajax_validate_email(email) {
     success: function(msg) {
         email_pass = msg
         if (!email_pass) {
-            $("div#login-alert").html("很抱歉，你輸入的電子郵件尚未註冊<button class='close close-danger-alert'>&times;</button>");
-            $("div#login-alert").addClass("show");
+            callAlert("很抱歉，你輸入的電子郵件尚未註冊", "danger");
         }
         else if (email_pass) {
-            $("#form-resend").submit();
+            $("#form-send").submit();
         }
     }
     })
@@ -61,8 +59,8 @@ function closeAlert(event) {
 }
 
 // Enter 切換輸入
-$("#form-resend").on("keypress", "input", function(e){
+$("#form-send").on("keypress", "input", function(e){
     if (e.keyCode == 13) {
-        $("#btn-resend").trigger("click");
+        $("#btn-send").trigger("click");
     }
 });

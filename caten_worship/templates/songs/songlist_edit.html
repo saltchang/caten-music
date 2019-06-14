@@ -11,13 +11,11 @@
 - 編輯
 {% endblock %}
 
-{% block content%}
-
-<!-- model -->
-
+{% block modal %}
+<!-- Model -->
 <!-- remove a song from songlist -->
 <div id="remove-modal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">從歌單移除</h5>
@@ -38,7 +36,7 @@
 
 <!-- delete whole songlist -->
 <div id="delete-songlist-modal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">從歌單移除</h5>
@@ -61,32 +59,34 @@
     </div>
 </div>
 
+{% endblock modal %}
+
+{% block header_title %}
+編輯歌單
+{% endblock header_title %}
+
+{% block header_info %}
+
+<p class="info-out-id">
+#{{ songlist.out_id }}
+</p>
+<p class="main-info info-title">
+{{ songlist.title }}
+</p>
+<p class="main-info">
+更新於
+&nbsp;
+{{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}&nbsp;&nbsp;{{ songlist.edited_time.hour }}:{{ songlist.edited_time.minute }}
+</p>
+
+{% endblock header_info %}
+
+{% block content%}
+
 <!-- editting form -->
 <div class="container text-center">
 
-    <!-- Header -->
-    <div class="top-header">
-
-
-        <h4 class="main-title">
-            編輯歌單
-        </h4>
-        <p class="info-out-id">
-            #{{ songlist.out_id }}
-        </p>
-        <p class="main-info info-title">
-            {{ songlist.title }}
-        </p>
-        <p class="main-info">
-            更新於
-            <br>
-            {{ songlist.edited_time.year }}-{{ songlist.edited_time.month }}-{{ songlist.edited_time.day }}&nbsp;&nbsp;{{ songlist.edited_time.hour }}:{{ songlist.edited_time.minute }}
-        </p>
-    </div>
-
-    <h6>歌單資訊</h6>
-
-    <hr class="main-hr-bar">
+    <h4>歌單資訊</h4>
 
     <form id="form-edit-songlist" action="{{ url_for('songlist_edit_bp.edit', out_id=songlist.out_id)}}" method="POST">
 
@@ -113,6 +113,7 @@
                     <input class="form-check-input" type="radio" name="privacy" id="public" value="public"
                         {% if not songlist.is_private %} checked {% endif %}>
                     <label class="form-check-label" for="public">
+                        &nbsp;
                         <i class="fas fa-globe-asia"></i>&nbsp;公開
                     </label>
                 </div>
@@ -120,6 +121,7 @@
                     <input class="form-check-input" type="radio" name="privacy" id="private" value="private"
                         {% if songlist.is_private %} checked {% endif %}>
                     <label class="form-check-label" for="private">
+                        &nbsp;
                         <i class="fas fa-lock"></i>&nbsp;私人
                     </label>
                 </div>
@@ -137,6 +139,7 @@
                     <input class="form-check-input" type="radio" name="archive" id="archived" value="archived"
                         {% if songlist.is_archived %} checked {% endif %}>
                     <label class="form-check-label" for="archived">
+                        &nbsp;
                         <i class="fas fa-archive"></i>&nbsp;封存
                     </label>
                 </div>
@@ -144,6 +147,7 @@
                     <input class="form-check-input" type="radio" name="archive" id="unarchived" value="unarchived"
                         {% if not songlist.is_archived %} checked {% endif %}>
                     <label class="form-check-label" for="unarchived">
+                        &nbsp;
                         <i class="fas fa-box-open"></i>&nbsp;未封存
                     </label>
                 </div>
@@ -153,7 +157,7 @@
         <!-- songlist -->
 
         <div class="edit-songlist">
-            <h6>歌曲列表</h6>
+            <h4>歌曲列表</h4>
 
             <table class="table songlist-table">
                 <tbody class="songlist-tbody">
@@ -195,14 +199,14 @@
             </table>
         </div>
 
-        <button id="edit-submit" class="form-button btn btn-sm btn-outline-success" type="button">更新</button>
+        <button id="edit-submit" class="form-button btn btn-outline-success" type="button">更新</button>
 
-        <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-sm btn-secondary" >取消</a>
+        <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-secondary" >取消</a>
 
     </form>
 
     <form id="form-delete-whole-songlist" class="mt-3" action="{{ url_for('songlist_delete_bp.delete', out_id=songlist.out_id) }}" method="POST">
-        <button id="delete-submit" class="button-to-delete btn btn-sm btn-danger" type="button">刪除歌單</button>
+        <button id="delete-submit" class="button-to-delete btn btn-danger" type="button">刪除歌單</button>
     </form>
 
 
