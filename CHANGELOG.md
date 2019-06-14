@@ -4,7 +4,7 @@ A Flask music app for church.
 
 本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-- **[Caten Worship](https://caten-worship.herokuapp.com) - 0.1.7 已發佈**
+- **[Caten Worship](https://caten-worship.herokuapp.com) - 0.1.9 已發佈**
 
 ## Tech Stack
 
@@ -44,7 +44,7 @@ A Flask music app for church.
 
 ## Version
 
-### [0.1.9] - 2019-06-14
+### [0.1.9] - 2019-06-15
 
 #### Added
 

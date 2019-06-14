@@ -16,7 +16,7 @@ function closeThisAlert(event) {
 $(".alert-container").children(".alert").each(function(index) {
     let message = $(this).data("message");
     $(this).children(".alert-message").html(message);
-    removeAlertBySecond($(this), 3000);
+    removeAlertBySecond($(this), 4000);
 });
 
 var message_tag = 0;
@@ -24,7 +24,7 @@ var message_tag = 0;
 // 前端叫出alert訊息
 function callAlert(message, style) {
     $("div.alert-container").append("<div id='front-msg-" + message_tag + "' class='alert alert-" + style + " alert-setting fade show' role='alert'><span class='alert-message'>" + message + "</span><button class='d-none close close-this-alert'><i class='fas fa-times'></i></button></div>");
-    removeAlertBySecond($("div#front-msg-" + message_tag), 3000);
+    removeAlertBySecond($("div#front-msg-" + message_tag), 4000);
     message_tag++;
 }
 
