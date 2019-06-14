@@ -29,8 +29,7 @@ A Flask music app for church.
 
 ### Doing
 
-- 測試歌單功能中
-- 忘記密碼
+- 回報問題
 
 ### Todo
 
@@ -45,7 +44,7 @@ A Flask music app for church.
 
 ## Version
 
-### [0.1.9] -
+### [0.1.9] - 2019-06-14
 
 #### Added
 
@@ -54,7 +53,8 @@ A Flask music app for church.
 - 完成 加入歌曲至歌單
 - 完成 編輯歌單
 - 完成 刪除歌單
-- 完成 分享歌單
+- 完成 Line 分享歌單
+- 完成 重設密碼
 
 #### Fixed
 
