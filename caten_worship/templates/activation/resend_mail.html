@@ -4,22 +4,16 @@
 
 {%  block  head  %}
 {{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account/login.css') }}">
 {%  endblock  %}
 
 {% block title %} - 重新取得帳號啟動信{% endblock %}
 
-{% block navbar %}{% endblock navbar %}
+{% block header_title %}重新傳送帳號啟動信{% endblock %}
 
 {% block content%}
 
 <div class="container container-static">
-    <div class="home-title" class="">
-        <h4>重新傳送帳號啟動信</h4>
-        <div id="login-alert" class="alert alert-danger fade alert-fixed" role="alert">
-            <button class="close close-danger-alert">&times;</button>
-        </div>
-    </div>
 
     <div class="card px-4">
         <form id="form-send" action="{{ url_for('resend_activate_mail_bp.resend_activate_mail') }}" method="POST">
@@ -37,8 +31,6 @@
                 重新傳送啟動信
             </button>
         </form>
-
-        <span class="new-to-here">新加入嗎？ <a href="{{ url_for('register_bp.register') }}">點我註冊</a></span>
         <span class="new-to-here"><a class="have-problem" href="#">遇到問題？</a></span>
     </div>
 </div>

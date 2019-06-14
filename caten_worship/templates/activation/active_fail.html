@@ -8,13 +8,18 @@
 
 {% block title %} - 帳號啟動失敗{% endblock %}
 
+{% block header_title %}
+帳號啟動失敗
+{% endblock %}
+
+{% block header_info %}
+<p>啟動驗證碼錯誤或已經失效</p>
+<p>原因可能是超過24小時沒有啟動帳號</p>
+<p>你可以 <a href="{{ url_for('resend_activate_mail_bp.resend_activate_mail') }}">點這裡重新傳送</a> 驗證碼</p>
+{% endblock %}
+
+{% block main_hr %}
+{% endblock %}
+
 {% block content%}
-<div class="container text-center">
-    <div class="text-center pt-5">
-        <h5 class="mt-5">帳號啟動失敗</h5>
-        <h3>啟動驗證碼錯誤或已經失效</h3>
-        <h3>原因可能是超過24小時沒有啟動帳號</h3>
-        <p class="mt-5">你要回到 <a href="{{ url_for('home_bp.seeHome') }}">首頁</a> 嗎?</p>
-    </div>
-</div>
 {% endblock %}

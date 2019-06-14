@@ -1,6 +1,6 @@
 # routes/register.py
 
-from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app, flash
+from flask import Blueprint, render_template, abort, request, redirect, jsonify, current_app, flash, url_for
 from jinja2 import TemplateNotFound
 from flask_login import current_user
 
@@ -84,11 +84,15 @@ def register():
         # 啟動 mail 服務
         # 寄出帳號啟動 email
         services.send_mail(sender='Sender@domain.com',
-                           recipients=[email],
-                           subject='Caten Worship 帳號註冊認證信',
-                           template='activation/verifymail.html',
-                           username=username,
-                           token=token)
+                               recipients=[email],
+                               subject='Caten Worship 帳號註冊認證信',
+                               template='activation/verifymail.html',
+                               username=username,
+                               mail_title="帳號註冊認證信",
+                               message="歡迎你, 請點擊下面連結來啟用您的帳號",
+                               link_msg="點此啟用您的帳號",
+                               link_url=url_for('activate_account_bp.activate_account', gate="account_activate", token=token, _external=True),
+                               token=token)
 
         # 註冊完成，通知使用者收取認證信
         try:

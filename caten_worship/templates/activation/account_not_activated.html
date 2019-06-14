@@ -8,17 +8,20 @@
 
 {% block title %} - 帳號尚未啟動{% endblock %}
 
+{% block header_title %}
+您的帳號尚未啟動
+{% endblock %}
+
+{% block header_info %}
+<p>很抱歉</p>
+<p>請前往你所註冊的電子信箱收取<b>「帳號啟動通知信」</b>，<br>並點選啟動連結來啟動用你的帳號，謝謝！</p>
+<p>沒有收到啟動通知信？ <a href="{{ url_for('resend_activate_mail_bp.resend_activate_mail') }}">點這裡重新傳送</a></p>
+{% endblock %}
+
+{% block main_hr %}
+{% endblock %}
+
 {% block content%}
-<div class="container text-center">
-    <div class="text-center pt-5">
-        <h5 class="mt-5">很抱歉</h5>
-        <br>
-        <h2>你的帳號尚未啟動</h2>
-        <br>
-        <p>請前往你所註冊的電子信箱收取<b>「帳號啟動通知信」</b>，<br>並點選啟動連結來啟動用你的帳號，謝謝！</p>
-        <p class="mt-5">沒有收到啟動通知信？ <a href="{{ url_for('resend_activate_mail_bp.resend_activate_mail') }}">點這裡重新傳送</a></p>
-    </div>
-</div>
 {% endblock %}
 
 {% block EOF_TAG %}
