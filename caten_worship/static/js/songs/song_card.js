@@ -1,19 +1,19 @@
 // static/js/resultlist.js
 
 // Collapse 按鈕 icon 變換
-$("div.show-more-song-content").on("click", "a[aria-expanded='true']", collapseArrowToDown);
+$("div.card-body").on("click", "a[aria-expanded='true']", collapseArrowToDown);
 function collapseArrowToDown(event) {
-    $(this).children(".fas").removeClass("fa-chevron-up");
-    $(this).children(".fas").addClass("fa-chevron-down");
-    $(this).parent().removeClass("show-more-song-color");
-    $(this).parent().parent().parent().addClass("card-body-border-bottom");
+    $(this).children().children().children(".fas").removeClass("fa-chevron-up");
+    $(this).children().children().children(".fas").addClass("fa-chevron-down");
+    $(this).removeClass("show-more-song-color");
+    $(this).parent().addClass("card-body-border-bottom");
 }
-$("div.show-more-song-content").on("click", "a[aria-expanded='false']", collapseArrowToUp);
+$("div.card-body").on("click", "a[aria-expanded='false']", collapseArrowToUp);
 function collapseArrowToUp(event) {
-    $(this).children(".fas").removeClass("fa-chevron-down");
-    $(this).children(".fas").addClass("fa-chevron-up");
-    $(this).parent().addClass("show-more-song-color");
-    $(this).parent().parent().parent().removeClass("card-body-border-bottom");
+    $(this).children().children().children(".fas").removeClass("fa-chevron-down");
+    $(this).children().children().children(".fas").addClass("fa-chevron-up");
+    $(this).addClass("show-more-song-color");
+    $(this).parent().removeClass("card-body-border-bottom");
 }
 
 // hide the songlist drop menu when touching on current menu

@@ -8,6 +8,10 @@
     color: #344042;
 }
 
+.dropdown-collapse form button:hover {
+    background: none;
+}
+
 .navbar {
     background-color: #9CAE92;
     min-width: 320px;

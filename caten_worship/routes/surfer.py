@@ -19,7 +19,6 @@ surf_one_bp = Blueprint("surf_one_bp", __name__,
 
 
 @surfer_bp.route('/surfer')
-@login_required
 def surfer():
 
     if current_user.is_authenticated:

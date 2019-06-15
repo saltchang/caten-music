@@ -67,6 +67,7 @@ def login():
             if not helper.is_safe_url(next_url):
                 return abort(400)
             else:
+                print(next_url)
                 flash(user_to_login.displayname + "，歡迎回來" , "success")
                 return redirect(next_url), 302
 

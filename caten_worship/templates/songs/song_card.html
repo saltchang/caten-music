@@ -65,7 +65,9 @@
 
                     </div>
 
+                    {% if current_user.song_list | length > 0 %}
                     <hr class="my-2">
+                    {% endif %}
 
                     <div class="songlist-list">
 
@@ -113,7 +115,9 @@
             </div>
         </h4>
         <div class="card-body">
-            <div class="row pt-2 pb-1">
+                <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button" aria-expanded="false"
+                aria-controls="{{'t' + song.sid }}">
+            <div class="card-main-info row pt-2 pb-1">
                 <div class="col-1 col-md-3"></div>
                 <div class="col p-1 align-middle">
                     <span class="song-info">
@@ -130,13 +134,13 @@
                         class="song-info">
                         調</span></div>
                 <div class="col-2 p-1 show-more-song-content">
-                    <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button" aria-expanded="false"
-                        aria-controls="{{'t' + song.sid }}">
+                    
                         <i class="fas fa-chevron-down"></i>
-                    </a>
+                    
                 </div>
                 <div class="col-md-1 col-lg-2"></div>
             </div>
+        </a>
         </div>
         <div class="song-content-container collapse" id="{{'t' + song.sid }}">
             <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">

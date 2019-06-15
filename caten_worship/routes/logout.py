@@ -1,6 +1,6 @@
 # routes/logout.py
 
-from flask import Blueprint, render_template, abort, redirect
+from flask import Blueprint, render_template, abort, redirect, flash, request
 from jinja2 import TemplateNotFound
 from flask_login import logout_user, current_user
 
@@ -14,8 +14,12 @@ def logout():
     try:
         if current_user.is_authenticated:
             current_user.login_update()
+        
+        return_url = request.values.get('return_url')
 
         logout_user()
-        return redirect("/"), 302
+        flash("您已成功登出", "warning")
+        return redirect(return_url), 302
     except:
+        flash("發生錯誤，請回報管理員", "warning")
         return redirect("/"), 302

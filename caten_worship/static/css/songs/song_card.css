@@ -162,6 +162,10 @@ hr.percent-80 {
     padding-right: 0.3rem;
 }
 
+.card-main-info:not(.show-more-song-content) {
+    color: #344042;
+}
+
 .song-info {
     line-height: 2rem;
 }
@@ -172,13 +176,13 @@ hr.percent-80 {
     font-weight: 400;
 }
 
-.show-more-song-content a {
+.show-more-song-content i {
     color: #a5679b;
     font-size: 1.6rem;
     transition: 500ms;
 }
 
-.show-more-song-color a {
+.show-more-song-color i {
     color: #7e0c0c;
 }
 

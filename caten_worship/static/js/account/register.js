@@ -107,7 +107,7 @@ function immValidator() {
     function for_username_and_email(username_val, email_val){
         if (!checked) {
             if (email_val == "xxx") {
-                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')");
+                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')，<br>請注意不能含有空白");
             }
             if (username_val == "xxx") {
                 element.parent().children("small.invalid-feedback").html("請填入正確的Email，用以啟動帳號");
@@ -301,7 +301,7 @@ function ajax_validate_when_switch_focus(username, email, element) {
                 element.removeClass("is-invalid");
                 element.addClass("is-valid");
                 element.parent().children("small.invalid-feedback").hide();
-                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')");
+                element.parent().children("small.invalid-feedback").html("4-24個英文或數字，接受底線('_')<br>請注意不能含有空白");
                 element.parent().children("small.valid-feedback").show();
             }
         }
