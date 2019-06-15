@@ -27,6 +27,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=False)
     is_anonymous = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
+    is_manager = db.Column(db.Boolean, default=False)
     user_profile = db.relationship('UserProfile', backref='user', lazy=True)
     song_list = db.relationship('SongList', backref='user', lazy=True)
 
