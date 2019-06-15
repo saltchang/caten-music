@@ -159,7 +159,13 @@
         <div class="edit-songlist">
             <h4>歌曲列表</h4>
 
-            <p>您可以按住歌曲左邊的點點來移動歌曲的順序</p>
+            <div class="header-info-content">
+                <small>
+                    您可以按住右邊的控制桿來移動歌曲的順序
+                    <br>
+                    點擊歌曲標題以查看歌曲資訊
+                </small>
+            </div>
 
             <table class="table songlist-table">
                 <tbody class="songlist-tbody">
@@ -176,9 +182,8 @@
                             <input class="d-none song-data" type="text" name="{{ song_index }}" value="{{ song.sid }}">
                         </td>
 
-                        <td class="td-drag-dot drag-this-iron-man"><i class="fas fa-ellipsis-v" draggable="true"></i>
-                        </td>
                         <td class="td-song-order">{{ song_index + 1 }}</td>
+
                         <td class="td-song-info">
                             {{ song.tonality }}
                             <br>
@@ -195,20 +200,23 @@
                             </button>
                         </td>
 
+                        <td class="td-drag-dot drag-this-iron-man"><i class="fas fa-bars" draggable="true"></i>
+                        </td>
+
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
 
-        <button id="edit-submit" class="form-button btn btn-outline-success" type="button">更新</button>
+        <button id="edit-submit" class="form-button btn btn-success" type="button">更新</button>
 
-        <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-secondary" >取消</a>
+        <a href="{{ url_for('song_list_by_id_bp.song_list_by_id', out_id=songlist.out_id)}}" class="form-button btn btn-outline-secondary" >取消</a>
 
     </form>
 
     <form id="form-delete-whole-songlist" class="mt-3" action="{{ url_for('songlist_delete_bp.delete', out_id=songlist.out_id) }}" method="POST">
-        <button id="delete-submit" class="button-to-delete btn btn-danger" type="button">刪除歌單</button>
+        <button id="delete-submit" class="btn btn-sm btn-danger button-to-delete" type="button">刪除歌單</button>
     </form>
 
 

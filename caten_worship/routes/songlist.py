@@ -99,7 +99,6 @@ def song_list_by_id(out_id):
     old_description = songlist.description
     
     new_description = old_description.replace("\r\n", "<br>")
-    print("new_description: ", new_description)
 
     try:
         return render_template("songs/songlist.html", songs=songs, songlist=songlist, listowner=listowner, new_description=new_description), 200

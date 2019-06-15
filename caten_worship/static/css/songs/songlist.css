@@ -1,5 +1,41 @@
 /* static/css/songlist.css */
 
+/* info */
+
+p.main-info {
+    font-size: 1.4rem;
+    color: #000000C0;
+}
+
+p.header-info-description {
+    color: #000000;
+    font-size: 1.1rem;
+    min-width: 270px;
+    max-width: 600px;
+    width: 80%;
+    margin: .5rem auto;
+}
+
+/* info-icon */
+
+.bull-dot {
+    margin: 0 .2rem;
+}
+
+.info-icon {
+    line-height: .85rem;
+    height: .85rem;
+    display: inline-block;
+    padding-right: .6rem;
+    margin-right: .4rem;
+    border-right: solid #a0a0a0 2px;
+}
+
+.info-icon .fas {
+    color: #505050;
+    font-size: 1rem;
+}
+
 /* share */
 
 .happy-share {

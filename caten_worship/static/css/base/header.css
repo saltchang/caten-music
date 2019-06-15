@@ -14,34 +14,12 @@
     margin-bottom: 2rem;
 }
 
-.header-info-content {
+.header-info-content p{
     font-size: 1.2rem;
-    color: #00000070;
+    color: #000000A0;
 }
 
-.header-info-description {
-    color: #000000;
-    font-size: 1.1rem;
-    min-width: 270px;
-    max-width: 600px;
-    width: 80%;
-    margin: .5rem auto;
-}
-
-.bull-dot {
-    margin: 0 .2rem;
-}
-
-.info-icon {
-    line-height: .85rem;
-    height: .85rem;
-    display: inline-block;
-    padding-right: .6rem;
-    margin-right: .4rem;
-    border-right: solid #a0a0a0 2px;
-}
-
-.info-icon .fas {
-    color: #505050;
+.header-info-content small{
     font-size: 1rem;
+    color: #00000070;
 }

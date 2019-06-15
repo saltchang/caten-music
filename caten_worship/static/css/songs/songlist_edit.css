@@ -101,9 +101,9 @@ input, textarea {
 
 .table .td-drag-dot {
     color: #00000060;
-    font-size: 1rem;
-    width: .5rem;
-    padding: 1rem 0 1rem .5rem;
+    font-size: 1.7rem;
+    width: 2rem;
+    padding: 1rem;
     transition: 200ms;
 }
 
@@ -115,9 +115,12 @@ tr:hover td.td-drag-dot {
     color: #000000;
 }
 
-.td-song-order {
-    width: 2rem;
+.table .td-song-order {
+    width: 1rem;
+    padding-left: .5rem;
+    padding-right: 1rem;
     font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .table .td-song-info {
@@ -145,21 +148,30 @@ td.td-remove:hover .remove-this-song {
 }
 
 .remove-this-song {
+    padding: 0;
     outline: none;
     border: none;
     background: none;
     color: rgb(185, 0, 0);
-    font-size: 1rem;
+    font-size: 1.2rem;
     transition: 400ms;
 }
 
 /* from button */
 
 .form-button {
-    width: 5rem;
+    width: 25%;
+    max-width: 150px;
+    min-width: 120px;
     margin: 1rem;
 }
 
 .btn {
     font-size: 1.4rem;
+}
+
+.button-to-delete {
+    font-size: 1.2rem;
+    margin-top: 3rem;
+    padding: .5rem;
 }

@@ -25,9 +25,13 @@
     background-color: #b18dd3;
 }
 
-.surfer-tag a {
+.surfer-tag a i {
     color: #a5679b;
     transition: 700ms;
+}
+
+.surfer-tag a {
+    color: #344042;
 }
 
 .surfer-tag {
