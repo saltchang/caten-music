@@ -49,10 +49,16 @@ def login():
         
         if not user_to_login.is_authenticated:
             return render_template("activation/account_not_activated.html"), 401
+        
+        if not user_to_login.is_active:
+            flash("此帳號已被凍結，<br>請聯絡管理人員以協助處理，謝謝", "danger")
+            return redirect("/")
 
         # 以上所有註冊資料確認完成，可以註冊帳號
         else:
-            login_user(user_to_login, remember=True, duration=datetime.timedelta(weeks=4))
+            login_user(user_to_login, remember=True, duration=datetime.timedelta(weeks=2))
+
+            user_to_login.login_update()
 
             if next_url == "None":
                 flash(user_to_login.displayname + "，歡迎回來" , "success")

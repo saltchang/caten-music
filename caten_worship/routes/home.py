@@ -13,4 +13,6 @@ home_bp = Blueprint("home_bp", __name__,
 def seeHome():
     if not current_user.is_authenticated:
         flash("歡迎您！<br>建議先註冊您的帳號來使用完整功能哦！", "info")
+    else:
+        current_user.login_update()
     return render_template("pages/index.html"), 200

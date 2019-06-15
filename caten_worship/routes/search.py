@@ -2,6 +2,7 @@
 
 from flask import Blueprint, render_template, abort, request, redirect, current_app
 from jinja2 import TemplateNotFound
+from flask_login import current_user
 
 import requests
 import json
@@ -12,6 +13,9 @@ search_bp = Blueprint("search_bp", __name__,
 
 @search_bp.route('/search')
 def search():
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     # 關鍵字：標題
     title = request.args.get("title")

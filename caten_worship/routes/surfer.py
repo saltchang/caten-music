@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, abort, request, redirect, current_app
 from jinja2 import TemplateNotFound
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 import requests
 import json
@@ -22,6 +22,9 @@ surf_one_bp = Blueprint("surf_one_bp", __name__,
 @login_required
 def surfer():
 
+    if current_user.is_authenticated:
+        current_user.login_update()
+
     try:
         return render_template("pages/surfer.html"), 200
     except TemplateNotFound:
@@ -29,6 +32,9 @@ def surfer():
 
 @surf_bp.route('/surf')
 def surf():
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     # 關鍵字：標題
     title = request.args.get("title")
@@ -68,6 +74,9 @@ def surf():
 
 @surf_one_bp.route('/song/<sid>')
 def surf_one(sid):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     # API
 

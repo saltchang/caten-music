@@ -33,6 +33,9 @@ ajax_update_songlist_bp = Blueprint("ajax_update_songlist_bp", __name__,
 @login_required
 def user_songlist():
 
+    if current_user.is_authenticated:
+        current_user.login_update()
+
     try:
         return render_template("songs/list_of_songlist.html"), 200
 
@@ -42,6 +45,9 @@ def user_songlist():
 @songlist_delete_bp.route("/songlist/delete/<out_id>", methods=["POST"])
 @login_required
 def delete(out_id):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     if request.method == "POST":
 
@@ -67,6 +73,9 @@ def delete(out_id):
 @song_list_by_id_bp.route('/songlist/<out_id>')
 @login_required
 def song_list_by_id(out_id):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     songs = []
 
@@ -109,6 +118,9 @@ def song_list_by_id(out_id):
 @songlist_edit_bp.route('/songlist/edit/<out_id>', methods=["GET", "POST"])
 @login_required
 def edit(out_id):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     songlist = SongList.query.filter_by(out_id=out_id).first()
 
@@ -184,6 +196,9 @@ def edit(out_id):
 @login_required
 def add_songlist():
 
+    if current_user.is_authenticated:
+        current_user.login_update()
+
     if request.method == "POST":
         posttype = request.values.get("posttype")
         title = request.values.get("title")
@@ -217,6 +232,9 @@ def add_songlist():
 @ajax_update_songlist_bp.route('/ajax/update/songlist/<song_sid>/<songlist_outid>', methods=["PUT"])
 @login_required
 def update_songlist(song_sid, songlist_outid):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
     
     if request.method == "PUT":
 

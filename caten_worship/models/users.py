@@ -23,8 +23,9 @@ class User(db.Model):
     password_hash = db.Column(db.String(64), nullable=False)
     displayname = db.Column(db.String(16), nullable=False)
     register_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
+    last_login_time = db.Column(db.DateTime)
     is_authenticated = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=True)
     is_anonymous = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_manager = db.Column(db.Boolean, default=False)
@@ -63,23 +64,30 @@ class User(db.Model):
     def reset_pw(self, password):
         self.password_hash = helper.createPasswordHash(password)
         return self
+    
+    # 登入時更新用戶狀態資料
+    def login_update(self):
+        self.last_login_time = datetime.datetime.today()
+        db.session.commit()
+        return self
 
     # 預註冊到資料庫（特殊用途）
 
     def flush(self):
         db.session.add(self)
         db.flush()
+        return self
 
     # 註冊到資料庫
 
     def save(self):
         db.session.add(self)
         db.session.commit()
+        return self
 
     # 更新至資料庫
     def update(self):
         db.session.commit()
-
         return self
 
     # 自身物件表示

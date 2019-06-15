@@ -2,6 +2,8 @@
 
 from flask import Blueprint, redirect
 
+from flask_login import current_user
+
 from caten_worship import models
 
 download_ppt_bp = Blueprint("download_ppt_bp", __name__,
@@ -12,6 +14,9 @@ dbx = models.get_dbx()
 
 @download_ppt_bp.route("/downloadppt/<id_>")
 def download_ppt(id_):
+
+    if current_user.is_authenticated:
+        current_user.login_update()
 
     try:
         result = dbx.files_get_temporary_link(
