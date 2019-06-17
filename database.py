@@ -4,13 +4,13 @@
 
 import sys
 
-from caten_worship import CreateApp
+from caten_music import CreateApp
 
 def dropAllMain():
 
     app = CreateApp.Main()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.drop_all()
 
@@ -18,7 +18,7 @@ def dropAllTest():
 
     app = CreateApp.Test()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.drop_all()
 
@@ -27,7 +27,7 @@ def createAllMain():
 
     app = CreateApp.Main()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.create_all()
 
@@ -35,7 +35,7 @@ def createAllTest():
 
     app = CreateApp.Test()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.create_all()
 

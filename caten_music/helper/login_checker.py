@@ -2,7 +2,7 @@
 
 import re
 
-from caten_worship import models
+from caten_music import models
 
 def checkLogin(primary_type, primary, password):
 

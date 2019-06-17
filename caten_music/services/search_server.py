@@ -3,7 +3,7 @@
 # 目前已不使用
 
 import re
-from caten_worship.models import songsDB
+from caten_music.models import songsDB
 
 
 # 關鍵字過濾器

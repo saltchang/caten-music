@@ -5,7 +5,7 @@
 from threading import Thread
 from flask import current_app, render_template
 from flask_mail import Message
-from caten_worship import models
+from caten_music import models
 
 mail = models.mail
 

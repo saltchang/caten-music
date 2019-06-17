@@ -8,7 +8,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as sign
 from itsdangerous import SignatureExpired, BadSignature
 
 from .base import db
-from caten_worship import helper
+from caten_music import helper
 
 
 class User(db.Model):

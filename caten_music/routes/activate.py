@@ -3,9 +3,9 @@
 from flask import Blueprint, render_template, abort, request, jsonify, flash, redirect, url_for
 from jinja2 import TemplateNotFound
 
-from caten_worship import helper
-from caten_worship import models
-from caten_worship import services
+from caten_music import helper
+from caten_music import models
+from caten_music import services
 
 User = models.User
 
@@ -72,7 +72,7 @@ def resend_activate_mail():
             # 寄出帳號啟動 email
             services.send_mail(sender='Sender@domain.com',
                                recipients=[email],
-                               subject='Caten Worship 帳號註冊認證信',
+                               subject='Caten music 帳號註冊認證信',
                                template='activation/verifymail.html',
                                username=username,
                                mail_title="帳號註冊認證信",
@@ -113,7 +113,7 @@ def reset_password(step, token):
                 # 寄出帳號啟動 email
                 services.send_mail(sender='Sender@domain.com',
                                 recipients=[email],
-                                subject='Caten Worship 密碼重設認證',
+                                subject='Caten music 密碼重設認證',
                                 template='activation/verifymail.html',
                                 username=username,
                                 mail_title="密碼重設認證",

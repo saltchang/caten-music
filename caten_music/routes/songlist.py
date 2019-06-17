@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, abort, flash, current_app, request, redirect, jsonify, url_for
 from jinja2 import TemplateNotFound
 
-from caten_worship.models import SongList, User, login_manager
+from caten_music.models import SongList, User, login_manager
 
 from flask_login import login_required, current_user
 

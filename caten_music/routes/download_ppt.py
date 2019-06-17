@@ -4,7 +4,7 @@ from flask import Blueprint, redirect
 
 from flask_login import current_user
 
-from caten_worship import models
+from caten_music import models
 
 download_ppt_bp = Blueprint("download_ppt_bp", __name__,
                             template_folder='templates')
@@ -20,7 +20,7 @@ def download_ppt(id_):
 
     try:
         result = dbx.files_get_temporary_link(
-            "/caten-worship/ppt/ppt_" + id_ + ".ppt")
+            "/caten-music/ppt/ppt_" + id_ + ".ppt")
         return redirect(result.link), 302
 
     except Exception as no_ppt_error:
@@ -28,7 +28,7 @@ def download_ppt(id_):
 
     try:
         result = dbx.files_get_temporary_link(
-            "/caten-worship/ppt/ppt_" + id_ + ".pptx")
+            "/caten-music/ppt/ppt_" + id_ + ".pptx")
         return redirect(result.link), 302
 
     except Exception as no_pptx_error:

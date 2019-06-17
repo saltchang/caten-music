@@ -3,7 +3,7 @@
 from flask import current_app
 
 from .base import db
-from caten_worship import helper
+from caten_music import helper
 
 import datetime
 

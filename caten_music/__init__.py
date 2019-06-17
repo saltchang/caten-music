@@ -1,4 +1,4 @@
-# caten_worship/__init__.py
+# caten_music/__init__.py
 
 
 import os

@@ -7,7 +7,7 @@ import tempfile
 import pytest
 
 
-from caten_worship import CreateApp
+from caten_music import CreateApp
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def dropAll():
 
     app = CreateApp.Test()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.drop_all()
 
@@ -37,7 +37,7 @@ def createAll():
 
     app = CreateApp.Test()
 
-    from caten_worship.models.base import db
+    from caten_music.models.base import db
 
     db.create_all()
 
@@ -46,7 +46,7 @@ def create_test_user():
 
     app = CreateApp.Test()
 
-    from caten_worship import models
+    from caten_music import models
 
     models.db.create_all()
 
@@ -63,6 +63,6 @@ def create_test_user():
 
 # def create_init_db():
 
-#     from caten_worship.db import db
+#     from caten_music.db import db
 
 #     yield db

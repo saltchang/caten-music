@@ -4,7 +4,7 @@ import os
 
 from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
-from caten_worship import config
+from caten_music import config
 
 
 app = Flask(__name__)

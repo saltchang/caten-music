@@ -1,7 +1,7 @@
 # run.py
 
 
-from caten_worship import CreateApp
+from caten_music import CreateApp
 
 app = CreateApp.Main()
 

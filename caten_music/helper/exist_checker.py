@@ -1,6 +1,6 @@
 # helper/exist_checker.py
 
-from caten_worship import models
+from caten_music import models
 
 
 class checkExist:
