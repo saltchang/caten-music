@@ -133,7 +133,7 @@ hr.percent-80 {
 /* song card */
 
 .card .card-header {
-    background-color: #C0AFA1;
+    background-color: #d5ecff;
     border-radius: .5rem .5rem 0 0;
     border-bottom: none;
 }
@@ -146,9 +146,14 @@ hr.percent-80 {
     transition: 500ms;
 }
 
+.song-card-content-hr{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 .card .card-body {
     font-size: 1.3rem;
-    background-color: #f0ebc3;
+    background-color: #fafff5;
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -170,10 +175,20 @@ hr.percent-80 {
     line-height: 2rem;
 }
 
+.lyrics-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
 .lyrics-text {
     font-size: 1.2rem;
     font-family: 'Noto Serif TC', serif;
     font-weight: 400;
+    text-align: left;
+}
+
+.youtube-player iframe {
+    font-size: 1rem;
 }
 
 .show-more-song-content i {

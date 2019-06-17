@@ -1,0 +1,50 @@
+/* static/css/home_song_card.css */
+
+/* home-song-card */
+
+.home-song-card {
+    margin: auto;
+    padding: 1.8rem;
+    border-radius: 1rem;
+    border: none;
+    background: #f0b660ec;
+    height: 100%;
+    box-shadow: 1px 1px 4px #00000040;
+}
+
+.home-song-card h1 {
+    font-size: 2rem;
+    margin: 1rem auto;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 3px #00000030;
+}
+
+.home-song-card a {
+    font-size: 1.4rem;
+    height: 3.2rem;
+    margin: 1rem auto 1rem auto;
+    width: 60%;
+    max-width: 150px;
+    background: white;
+    box-shadow: 1px 1px 4px #00000040;
+    color: #66b45e;
+}
+
+.home-song-card p {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.home-song-card p b {
+    font-size: 1.6rem;
+}
+
+.song-info {
+    margin: .5rem auto 2rem auto;
+    font-size: 1.4rem;
+}
+
+.space-block {
+    display: inline-block;
+    width: 15%;
+}

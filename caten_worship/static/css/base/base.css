@@ -30,8 +30,13 @@ a:hover {
 
 body {
     min-width: 320px;
-    background: #f7f4e3;
+    /* background: #f7f4e3; */
+    /* background: #ffeee0; */
     color: #344042;
+    background: #ffeba9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #e4f2ff, #fff8ee, #ffeba9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #e4f2ff, #fff8ee, #ffeba9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 footer {
@@ -65,6 +70,13 @@ input:focus,
 .form-control:focus {
     outline: none;
     box-shadow: none;
+    transition: 500ms;
+    border: 1px solid #ff770020;
+}
+
+input:focus,
+.form-control:focus {
+    border: 1px solid #ff7500;
 }
 
 /* content */
@@ -72,14 +84,6 @@ input:focus,
     min-height: 85vh;
     margin-top: 2rem;
     padding-bottom: 100px;
-}
-
-
-/* header-title */
-.title-under-navbar {
-    padding-top: 120px;
-    padding-bottom: 50px;
-    font-family: 'EB Garamond', sans-serif, serif;
 }
 
 /* Main hr bar */

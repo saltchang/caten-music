@@ -18,8 +18,8 @@ def logout():
         return_url = request.values.get('return_url')
 
         logout_user()
-        flash("您已成功登出", "warning")
+        flash("您已成功登出", "primary")
         return redirect(return_url), 302
     except:
-        flash("發生錯誤，請回報管理員", "warning")
+        flash("發生錯誤，請回報管理員", "danger")
         return redirect("/"), 302

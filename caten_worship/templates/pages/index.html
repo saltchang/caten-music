@@ -5,6 +5,7 @@
 {%  block  head  %}
 {{  super ()  }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/songs/home_song_card.css') }}">
 {%  endblock  %}
 
 {% block title %}{% endblock %}
@@ -13,28 +14,99 @@
 
 {% block main_hr %}{% endblock main_hr %}
 
-{% block content%}
-<div class="container text-center">
-    <div class="title-under-navbar">
-        <h1>
-            <!-- <img class="home-text-logo" src="{{ url_for('static', filename='image/icon/CatenWorshipTextLogo.png') }}" alt=""> -->
-            <svg class="home-main-logo" viewBox="0 0 630 216" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
-                <title>Caten Worship</title>
-                <desc>Created with Sketch.</desc>
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Optima-Regular, Optima" font-size="139" font-weight="normal">
-                    <g id="群組" transform="translate(-40.000000, -29.000000)" fill="#24292E">
-                        <text id="WORSHIP">
-                            <tspan x="40.1441562" y="241">WORSHIP</tspan>
-                        </text>
-                        <text id="CATEN">
-                            <tspan x="148.24394" y="128">CATEN</tspan>
-                        </text>
-                    </g>
-                </g>
-            </svg>
-        </h1>
+{% block jumbotron %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <!-- <h1 class="display-4">Fluid jumbotron</h1> -->
+        <p class="bible-text">
+            “ 在列邦中述說他的榮耀！在萬民中述說他的奇事！”
+        </p>
+        <p class="bible-tag">
+            - 詩篇 96:3
+        </p>
     </div>
+</div>
+{% endblock jumbotron %}
+
+{% block content%}
+{% if not current_user.is_authenticated %}
+<div class="row row-card">
+
+    <div class="col-12 col-lg-8 col-card">
+        <div class="card card-home-register">
+            <h1>
+                <!-- 尋見 <i class="fas fa-times"></i> 分享 -->
+                尋見 ✕ 分享
+                <!-- <br class="d-sm-none"> -->
+            </h1>
+            <div class="container text-center">
+                <p>
+                    Caten Music 是一個音樂資料平台。
+                    這裡收集了每首歌曲的詳盡資料，並提供快速方便的檢索方式以及歌單功能。
+                    從此不用再為了回想歌曲的名字而煩惱！
+                    <br>
+                    <b>快速查找歌曲 + 整理歌單！</b>
+                    然後分享給你的<b>朋友、組員、同工！</b>
+                    現在就開始使用音樂資料庫吧！
+                </p>
+            </div>
+            <a class="btn" href="{{ url_for('register_bp.register') }}">註冊 Caten Music</a>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-card">
+        <div class="card card-home-login">
+            <h1>
+                已經有帳號？
+            </h1>
+            <a class="btn" href="{{ url_for('login_bp.login') + '?next=' }}">登入 Caten Music</a>
+        </div>
+    </div>
+
+</div>
+
+{% endif %}
+
+{% if current_user.is_authenticated %}
+
+<div class="random-songs-card">
+    <div id="carouselExampleControls" class="carousel slide carousel-container" data-ride="carousel">
+        <h1 class="random-recommend">推薦</h1>
+        <div class="carousel-inner">
+
+            {% for index in range(songs | length) %}
+            {% set song = songs[index] %}
+            {% if index == 0 %}
+            <div class="carousel-item active">
+                <div class="d-block w-100">
+                    {% include "songs/home_song_card.html" %}
+                </div>
+            </div>
+            {% else %}
+            <div class="carousel-item">
+                <div class="d-block w-100">
+                    {% include "songs/home_song_card.html" %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+{% endif %}
+
+
+<div class="container search-container">
 
     <div class="container text-center">
         <form action="{{ url_for('search_bp.search') }}" method="GET">
@@ -44,9 +116,12 @@
             <div class="form-group row m-0">
                 <div class="col-sm-1 col-lg-2"></div>
                 <div class="col p-0 p-md-3">
+                    <!-- <h3 class="quick-search">快速搜尋</h3> -->
                     <div class="row m-0 justify-content-around">
-                        <input name="title" type="text" class="input-search-songs-text form-control col-12 col-md-10 mb-5" id="search-text" placeholder="" autofocus="true">
-                        <button type="submit" class="btn btn-outline-success button-search-songs mb-4 col-5 col-sm-4 col-md-3">搜尋詩歌</button>
+                        <input name="title" type="text" class="col-9 input-search-songs-text form-control"
+                            id="search-text" placeholder="快速搜尋">
+                        <button type="submit" class="col-2 btn button-search-songs"><i
+                                class="fas fa-search"></i></button>
                     </div>
                 </div>
                 <div class="col-sm-1 col-lg-2"></div>
@@ -55,6 +130,11 @@
     </div>
 </div>
 {% endblock %}
+
+{% block script %}
+{{  super ()  }}
+<script src="{{ url_for('static', filename='js/songs/home_song_card.js') }}"></script>
+{% endblock script %}
 
 {% block EOF_TAG %}
 <!-- EOF templates/index.html -->

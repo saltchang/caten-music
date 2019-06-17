@@ -1,0 +1,20 @@
+<div id="{{ 'song-card-id-' + index | string }}" class="card home-song-card">
+    <h1>
+        {{ song.title }}
+    </h1>
+    <div class="container text-center">
+        <div class="song-info">
+                {% if song.language == "Chinese" %}
+                國
+                {% endif %}
+                {% if song.language == "Taiwanese" %}
+                台
+                {% endif %}
+                &nbsp;
+                {{ song.num_c }}&nbsp;-&nbsp;{{ song.num_i }}
+            <span class="space-block"></span>
+                {{ song.tonality }}&nbsp;調
+        </div>
+    </div>
+    <a class="btn" href="{{ url_for('surf_one_bp.surf_one', sid=song.sid) }}">查看這首歌</a>
+</div>

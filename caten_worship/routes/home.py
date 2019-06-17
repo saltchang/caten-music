@@ -5,14 +5,28 @@ from jinja2 import TemplateNotFound
 
 from flask_login import current_user
 
+import random
+import requests
+import json
+
 home_bp = Blueprint("home_bp", __name__,
                     template_folder='templates')
 
 
 @home_bp.route('/')
 def seeHome():
-    if not current_user.is_authenticated:
-        flash("歡迎您！<br>建議先註冊您的帳號來使用完整功能哦！", "info")
-    else:
+
+    result = []
+
+    random_amount = str(6)
+
+    if current_user.is_authenticated:
         current_user.login_update()
-    return render_template("pages/index.html"), 200
+
+        requestURL = "https://church-music-api.herokuapp.com/api/songs/random/" + random_amount
+        r = requests.get(requestURL)
+
+        if r.status_code == 200:
+            result = json.loads(r.text)
+            
+    return render_template("pages/index.html", songs=result), 200

@@ -115,32 +115,36 @@
             </div>
         </h4>
         <div class="card-body">
-                <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button" aria-expanded="false"
+            <a class="" data-toggle="collapse" href="{{ '#t' + song.sid }}" role="button" aria-expanded="false"
                 aria-controls="{{'t' + song.sid }}">
-            <div class="card-main-info row pt-2 pb-1">
-                <div class="col-1 col-md-3"></div>
-                <div class="col p-1 align-middle">
-                    <span class="song-info">
-                        {% if song.language == "Chinese" %}
-                        國
-                        {% endif %}
-                        {% if song.language == "Taiwanese" %}
-                        台
-                        {% endif %}
-                    </span>
-                    <span class="song-info">{{ song.num_c }} - {{ song.num_i }}</span></div>
-                <div class="col-1"></div>
-                <div class="col p-1 align-middle"><span class="song-info">{{ song.tonality }}</span><span
-                        class="song-info">
-                        調</span></div>
-                <div class="col-2 p-1 show-more-song-content">
-                    
+                <div class="card-main-info row pt-2 pb-1">
+                    <div class="col-1 col-md-3"></div>
+                    <div class="col p-1 align-middle">
+                        <span class="song-info">
+                            {% if song.language == "Chinese" %}
+                            國
+                            {% endif %}
+                            {% if song.language == "Taiwanese" %}
+                            台
+                            {% endif %}
+                        </span>
+                        <span class="song-info">{{ song.num_c }} - {{ song.num_i }}</span>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col p-1 align-middle">
+                        <span class="song-info">{{ song.tonality }}</span>
+                        <span class="song-info">
+                            調
+                        </span>
+                    </div>
+                    <div class="col-2 p-1 show-more-song-content">
+
                         <i class="fas fa-chevron-down"></i>
-                    
+
+                    </div>
+                    <div class="col-md-1 col-lg-2"></div>
                 </div>
-                <div class="col-md-1 col-lg-2"></div>
-            </div>
-        </a>
+            </a>
         </div>
         <div class="song-content-container collapse" id="{{'t' + song.sid }}">
             <div class="card-body pt-0 pb-4 card-body-hide-content card-body-border-bottom">
@@ -152,11 +156,11 @@
                     <div class="col-1 p-1"></div>
                     <div class="col p-1 text-left"><span>曲：</span><span>{{ song.composer }}</span></div>
                 </div>
-                <div class="container px-sm-5">
+                <div class="container lyrics-container">
 
                     <!-- 歌詞 -->
                     {% for part in song.lyrics %}
-                    <p class="card-text text-left lyrics-text">
+                    <p class="card-text lyrics-text">
                         {% for line in part[1:] %}
                         {{ line }} <br>
                         {% endfor %}
@@ -171,7 +175,15 @@
                             {{ song.album }}
                         </span>
                     </div>
-                    <hr>
+
+                    <!-- <hr class="song-card-content-hr"> -->
+
+                    <!-- <div class="youtube-player">
+                        <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/LESo18TfBPQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div> -->
+
+                    <hr class="song-card-content-hr">
+
                     <div class="row pt-3">
                         <div class="col px-3">
                             <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
