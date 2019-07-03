@@ -12,12 +12,10 @@
 html {
     font-size: 12px;
     min-width: 320px;
-    /* transform: scale(0.8333); */
-}
-
-_:-ms-fullscreen,
-:root .ie11up {
-    font-family: 'Noto Sans TC',
+    font-family:
+        'PingFangTC-Regular',
+        '蘋方-繁',
+        'Noto Sans TC',
         'EB Garamond',
         'Airal',
         sans-serif;
