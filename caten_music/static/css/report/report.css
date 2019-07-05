@@ -1,0 +1,48 @@
+/* static/css/report.css */
+
+label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: block;
+}
+
+/* 寬度限制 */
+.container-static {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.card {
+    border-radius: .75rem;
+    background-color: #fefefd;
+}
+
+/* input字體大小 */
+.form-control{
+    font-size: 1.4rem;
+}
+
+.alert-danger {
+    height: 3rem;
+}
+
+.main-btn {
+    font-size: 1.4rem;
+    width: 150px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.main-btn:active,
+.main-btn:focus,
+.main-btn:hover {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}

@@ -1,0 +1,51 @@
+<!-- templates/report_songs.html -->
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/report/report.css') }}">
+{%  endblock  %}
+
+{% block title %} - 歌曲回報{% endblock %}
+
+{% block header_title %}歌曲回報{% endblock header_title %}
+
+{% block header_info %}
+<p>編號：{{ song.sid }}</p>
+<p>曲名：{{ song.title }}</p>
+{% endblock header_info %}
+
+{% block content%}
+
+<div class="container-static">
+    <div class="card px-4">
+        <form id="form-report" action="{{ url_for('report_bp.report_song', sid=song.sid) }}" method="POST">
+            
+            <input class="d-none" name="next_url" value="{{ next_url }}">
+
+            <!-- Report Content-->
+            <div class="form-group mt-4">
+                <label for="input-report-content" class="">請詳述您要回報的具體問題(至少5個字)：</label>
+                <textarea class="form-control" name="report_content" id="input-report-content" cols="30" rows="10" autofocus="true" required></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button id="btn-report" type="submit" class="btn btn-danger main-btn">
+                提交回報
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+{{ super () }}
+<!-- <script src="{{ url_for('static', filename='js/report/report.js') }}"></script> -->
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/login.html -->
+{% endblock EOF_TAG %}

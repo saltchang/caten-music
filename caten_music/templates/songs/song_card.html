@@ -1,3 +1,5 @@
+{% set return_url = request.full_path | replace('/', '%2F') | replace('?', '%3F') | replace('=', '%3D') | replace('&', '%26') %}
+
 <div class="row m-0">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col card my-3 p-0">
@@ -208,8 +210,8 @@
                     <hr class="mt-3 mb-3">
                     <div class="row pt-1">
                         <div class="col px-4">
-                            <a class="report-icon" href="#">
-                                <i class="fas fa-flag"></i>&nbsp;回報
+                            <a class="report-icon" href="{{ url_for('report_bp.report_song', sid=song.sid) + '?next=' + return_url }}">
+                                <i class="fas fa-flag"></i>&nbsp;回報歌曲
                             </a>
                         </div>
                     </div>
