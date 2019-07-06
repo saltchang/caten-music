@@ -31,6 +31,7 @@ class User(db.Model):
     is_manager = db.Column(db.Boolean, default=False)
     user_profile = db.relationship('UserProfile', backref='user', lazy=True)
     song_list = db.relationship('SongList', backref='user', lazy=True)
+    song_report = db.relationship('SongReport', backref='user', lazy=True)
 
     # 定義 password 為不可讀
     @property

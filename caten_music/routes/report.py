@@ -4,10 +4,10 @@ from flask import Blueprint, render_template, abort, jsonify, request, redirect,
 from jinja2 import TemplateNotFound
 from flask_login import login_user, current_user, login_required
 
-import datetime
 import requests
 import json
 
+from caten_music.models import SongReport
 from caten_music import helper
 
 report_bp = Blueprint("report_bp", __name__,
@@ -33,10 +33,10 @@ def report_song(sid):
 
         # 取得登入表單資料
         try:
-            report_content = request.values.get("report_content")
+            report_description = request.values.get("report_description")
             next_url = request.values.get("next_url")
 
-            if len(report_content) < 5:
+            if len(report_description) < 5:
                 next_url = next_url.replace('/', '%2F').replace('?', '%3F').replace('=', '%3D').replace('&', '%26')
                 flash("回報的內容至少需要5個字。", "danger")
                 return redirect(url_for("report_bp.report_song", sid=sid) + '?next=' + next_url)
@@ -45,9 +45,10 @@ def report_song(sid):
         except Exception as error:
             print(error)
             return render_template("error/403.html", error_message="Don't Play With Me."), 403
-        
-        print("report_content: ", report_content)
-        print("report_user: ", current_user.id)
+
+        song_report = SongReport(description=report_description, user_id=current_user.id, song_sid=song["sid"])
+        song_report.save()
+        print(song_report)
 
         if next_url == "None":
             flash("已順利回報歌曲問題 #" + sid, "success")
