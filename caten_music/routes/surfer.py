@@ -57,7 +57,7 @@ def surf():
 
     # API 串接 搜尋
 
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + lang + "&c=" + c + "&to=&title="
+    requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + lang + "&c=" + c + "&to=&title=&lyrics=&test=0"
 
     r = requests.get(requestURL)
 

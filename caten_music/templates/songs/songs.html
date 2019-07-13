@@ -33,7 +33,11 @@
 {% if mode == "one" %}歌曲資訊{% endif %}
 
 {% if mode == "search" %}
-搜尋結果 ： {{ title }}
+{% if searchMode == "title" %}
+搜尋歌名 ： {{ primary }}
+{% else %}
+搜尋歌詞 ： {{ primary }}
+{% endif %}
 {% endif %}
 
 {% if mode == "surf" %}
@@ -68,7 +72,8 @@
 
 {% block content%}
 
-<div class="container text-center">
+<div class="container">
+
     <!-- List -->
 
     {% for song in songs %}

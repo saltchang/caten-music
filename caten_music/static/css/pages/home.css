@@ -153,6 +153,16 @@
     box-shadow: 1px 1px 3px #00000015;
 }
 
+.check-search-mode {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+}
+
+.check-search-mode span {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
 /* search button */
 .button-search-songs {
     font-size: 1.4rem;

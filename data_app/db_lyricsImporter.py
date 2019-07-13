@@ -1,5 +1,6 @@
 import json, sys
 
+
 def loadJsonFile():
     if len(sys.argv) == 4:
         try:
@@ -10,7 +11,7 @@ def loadJsonFile():
             print(str(e))
             exit(2)
     else:
-        print("Usage: db_rebuilder.py [newdata.json] [origin.json] [output.json]")
+        print("Usage: db_lyricsImporter.py [newdata.json] [origin.json] [output.json]")
         exit(1)
 
 def updateData(originalData, newData):
@@ -31,27 +32,6 @@ def updateData(originalData, newData):
                     originalSong["lyrics"] = newSong["lyrics"]
 
     return originalData
-
-            # Old Stuff...
-            # newSongs.append(
-            #     {
-            #     "sid": song["sid"], # 唯一識別編號
-            #     "num_c": song["num_c"], # 檔號：集
-            #     "num_i": song["num_i"], # 檔號：首
-            #     "title": song["title"], # 標題、曲名
-            #     "year": song["year"], # 年份
-            #     "lyricist": song["lyricist"], # 作詞者
-            #     "composer": song["composer"], # 作曲者
-            #     "translator": song["translator"], # 翻譯者
-            #     "lyrics": song["lyrics"], # 歌詞
-            #     "tonality": song["tonality"], # 調性
-            #     "tempo": song["tempo"], # 速度
-            #     "time_signature": song["time_signature"], # 拍號
-            #     "album": song["album"], # 專輯、詩集
-            #     "publisher": song["publisher"], # 出版者、發行者
-            #     "language": song["language"] # 語言
-            #     }
-            # )
 
 
 def exportData(outputData, outputFile):

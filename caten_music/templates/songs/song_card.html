@@ -1,6 +1,6 @@
 {% set return_url = request.full_path | replace('/', '%2F') | replace('?', '%3F') | replace('=', '%3D') | replace('&', '%26') %}
 
-<div class="row m-0">
+<div class="song-card row m-0">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col card my-3 p-0">
         <h4 class="card-header">
@@ -161,13 +161,17 @@
                 <div class="container lyrics-container">
 
                     <!-- 歌詞 -->
-                    {% for part in song.lyrics %}
                     <p class="card-text lyrics-text">
-                        {% for line in part[1:] %}
-                        {{ line }} <br>
-                        {% endfor %}
-                    </p>
+                    {% for i in range(song.lyrics | length) %}
+                        {% set s = song.lyrics[i] %}
+                        {% if i == 0 %}
+                        {% elif (s != "p") and (s != "v") and (s != "c") and (s != "b") %}
+                        {{ s }} <br>
+                        {% else %}
+                        <br>
+                        {% endif %}
                     {% endfor %}
+                    </p>
                     <!--  -->
                     <div class="pb-2 text-left album-info">
                         <span>

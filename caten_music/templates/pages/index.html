@@ -118,14 +118,32 @@
                 <div class="col p-0 p-md-3">
                     <!-- <h3 class="quick-search">快速搜尋</h3> -->
                     <div class="row m-0 justify-content-around">
-                        <input name="title" type="text" class="col-9 input-search-songs-text form-control"
-                            id="search-text" placeholder="快速搜尋">
+                        <input name="primary" type="text" class="col-9 input-search-songs-text form-control"
+                            id="search-text" placeholder="搜尋">
                         <button type="submit" class="col-2 btn button-search-songs"><i
                                 class="fas fa-search"></i></button>
+                    </div>
+                    <div class="check-search-mode">
+                        <span>
+                            <input class="" type="radio" name="searchMode" id="radio-check-search-mode-title"
+                                value="title" checked>
+                            <label class="" for="radio-check-search-mode-title">
+                                找歌名
+                            </label>
+                        </span>
+                        <span>
+                            <input class="" type="radio" name="searchMode" id="radio-check-search-mode-lyric"
+                                value="lyric">
+                            <label class="" for="radio-check-search-mode-lyric">
+                                找歌詞
+                            </label>
+                        </span>
+
                     </div>
                 </div>
                 <div class="col-sm-1 col-lg-2"></div>
             </div>
+
         </form>
     </div>
 </div>

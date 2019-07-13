@@ -10,6 +10,10 @@ button:focus {
 
 /* song card */
 
+.song-card {
+    text-align: center;
+}
+
 .card {
     background-color: #ffffff00;
     border: none;
@@ -226,4 +230,10 @@ hr.percent-80 {
 .back-to-home {
     display: inline-block;
     margin: 5rem auto;
+}
+
+
+/* search mode */
+.search-mode {
+    
 }

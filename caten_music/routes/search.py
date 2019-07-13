@@ -18,7 +18,13 @@ def search():
         current_user.login_update()
 
     # 關鍵字：標題
-    title = request.args.get("title")
+    primary = request.args.get("primary")
+
+    # 搜尋模式
+    searchMode = request.args.get("searchMode")
+
+    # 關鍵字：歌詞
+    # lyrics = request.args.get("lyrics")
 
     # 關鍵字：集數
     c = request.args.get("c")
@@ -36,7 +42,10 @@ def search():
         return redirect("/"), 302
 
     # API 串接搜尋
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + title
+    if searchMode == "title":
+        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + primary + "&lyrics=&test=0"
+    if searchMode == "lyric":
+        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&lyrics=" + primary + "&title=&test=0"
     r = requests.get(requestURL)
 
     if not r.status_code == 200:
@@ -45,6 +54,6 @@ def search():
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/songs.html", songs=result, songs_num=len(result), mode="search", c=c, title=title), r.status_code
+        return render_template("songs/songs.html", songs=result, songs_num=len(result), mode="search", c=c, primary=primary, searchMode=searchMode), r.status_code
     except TemplateNotFound:
         abort(404)
