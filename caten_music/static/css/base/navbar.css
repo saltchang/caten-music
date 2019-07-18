@@ -74,6 +74,7 @@
     color: #000000;
     padding: .7rem .8rem;
     height: 100%;
+    line-height: 1.7rem;
     width: 100%;
     margin: 0 auto;
     border: 1px solid rgba(0, 0, 0, 0.5);
@@ -93,7 +94,7 @@
 }
 
 .navbar-search:focus::placeholder {
-    padding-left: 92%;
+    padding-left: 93%;
 }
 
 .btn-navbar-user-dropdown {
