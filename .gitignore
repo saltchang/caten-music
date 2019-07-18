@@ -9,6 +9,8 @@ venv.bak/
 
 # 資料
 sheetdata
+sheet/
+sheet
 
 # 機密
 secret.txt

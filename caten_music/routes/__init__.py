@@ -3,7 +3,7 @@
 from .home import home_bp
 from .search import search_bp
 from .surfer import surfer_bp, surf_bp, surf_one_bp
-from .download_ppt import download_ppt_bp
+from .files import download_ppt_bp, download_sheet_bp
 from .register import register_bp, ajax_validate_register_bp, show_user_bp
 from .activate import activate_account_bp, resend_activate_mail_bp, ajax_validate_email_bp, reset_password_bp
 from .login import login_bp, ajax_validate_login_bp
@@ -20,6 +20,7 @@ def init_app(app):
     app.register_blueprint(surf_bp)
     app.register_blueprint(surf_one_bp)
     app.register_blueprint(download_ppt_bp)
+    app.register_blueprint(download_sheet_bp)
     app.register_blueprint(register_bp)
     app.register_blueprint(activate_account_bp)
     app.register_blueprint(ajax_validate_register_bp)

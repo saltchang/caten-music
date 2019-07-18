@@ -47,6 +47,7 @@ button:focus {
     text-align: left;
     background-color: #fff;
     border-radius: .25rem;
+    box-shadow: 1px 1px 4px #858585;
 
     right: 0;
     left: auto;
@@ -228,12 +229,7 @@ hr.percent-80 {
 
 /* bottom */
 .back-to-home {
-    display: inline-block;
+    display: block;
+    text-align: center;
     margin: 5rem auto;
-}
-
-
-/* search mode */
-.search-mode {
-    
 }

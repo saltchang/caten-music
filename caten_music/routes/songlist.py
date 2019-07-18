@@ -71,7 +71,6 @@ def delete(out_id):
 
 
 @song_list_by_id_bp.route('/songlist/<out_id>')
-@login_required
 def song_list_by_id(out_id):
 
     if current_user.is_authenticated:
@@ -87,9 +86,14 @@ def song_list_by_id(out_id):
 
     listowner = User.query.filter_by(id=songlist.user_id).first()
 
-    if current_user.id != listowner.id and songlist.is_private:
-        flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有此歌單的權限。", "danger")
-        return redirect("/")
+    if songlist.is_private:
+        if not current_user.is_authenticated:
+            flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有此歌單的權限。", "danger")
+            return redirect("/")
+            
+        if current_user.id != listowner.id:
+            flash("您目前造訪的是一份私人歌單，<br>請先確認您擁有此歌單的權限。", "danger")
+            return redirect("/")
 
     sids = ""
     for i in range(len(songlist.songs_sid_list)):

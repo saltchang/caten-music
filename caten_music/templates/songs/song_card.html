@@ -192,13 +192,13 @@
 
                     <div class="row pt-3">
                         <div class="col px-3">
-                            <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', id_=song.sid) }}">
+                            <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', sid=song.sid) + '?next=' + return_url }}">
                                 <i class="fas fa-file-powerpoint"></i>
                                 <div>投影片</div>
                             </a>
                         </div>
                         <div class="col px-3">
-                            <a class="sheet-music-icon" href="#">
+                            <a class="sheet-music-icon" href="{{ url_for('download_sheet_bp.download_sheet', sid=song.sid) + '?next=' + return_url }}">
                                 <i class="fas fa-file-alt"></i>
                                 <div>歌譜</div>
                             </a>
@@ -215,7 +215,7 @@
                     <div class="row pt-1">
                         <div class="col px-4">
                             <a class="report-icon" href="{{ url_for('report_bp.report_song', sid=song.sid) + '?next=' + return_url }}">
-                                <i class="fas fa-flag"></i>&nbsp;回報歌曲
+                                <i class="fas fa-flag"></i>&nbsp;問題回報
                             </a>
                         </div>
                     </div>
