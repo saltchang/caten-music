@@ -1,5 +1,11 @@
 /* static/css/surfer.css */
 
+/* 瀏覽區塊 */
+.surfer-block {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
 /* 語言標籤 */
 .lang-tag {
     margin-top: 1rem;
@@ -22,7 +28,12 @@
 
 /* 國語按鈕 */
 .chinese-surf-btn {
-    background-color: #d8e4ff;
+    background-color: #dad0ff;
+}
+
+/* 調性按鈕 */
+.tonality-surf-btn {
+    background-color: #e9998e;
 }
 
 .surfer-tag a i {

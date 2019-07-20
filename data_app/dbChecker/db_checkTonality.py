@@ -51,7 +51,6 @@ def tonalityCounter(songs):
     print("F#m:" + str(toCounter["F#m"]))
     print("G:" + str(toCounter["G"]))
     print("Gm:" + str(toCounter["Gm"]))
-    print("Gm:" + str(toCounter["Gm"]))
     print("Gb:" + str(toCounter["Gb"]))
     print("None:" + str(toCounter[""]))
 

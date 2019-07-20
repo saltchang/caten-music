@@ -14,63 +14,95 @@
 {% block content%}
 <div class="container text-center">
 
-    <h5 class="surfer-tag">
-        <a class="" data-toggle="collapse" href="#byLanguage" role="button" aria-expanded="false"
-            aria-controls="byLanguage">
-            語言分類&nbsp;
-            <i class="fas fa-chevron-down"></i>
-        </a>
-    </h5>
-    <div class="collapse" id="byLanguage">
-        <div class="container text-center p-md-0">
-            <div id="language-surfer">
-                <div class="row">
-                    <div class="col lang-tag">國語</div>
-                    <div class="col lang-tag">台語</div>
-                </div>
-                <div class="row">
-                    <div class="col px-0 pr-md-3">
-                        <div class="row mx-0 p-0">
-                            {% for i in range(1, 12) %}
-                            <div class="col-12 col-md-6 col-xl-4">
-                                <form action="{{ url_for('surf_bp.surf') }}" method="GET">
-                                    <input class="d-none" type="text" name="title" value="">
-                                    <input class="d-none" type="text" name="lang" value="Chinese">
-                                    <input class="d-none" type="text" name="to" value="">
-                                    <button type="submit" class="btn chinese-surf-btn" name="c" value="{{ i }}">
-                                        第 {{ i }} 集
-                                    </button>
-                                </form>
-                            </div>
-                            {% endfor %}
-                        </div>
+    <div class="surfer-block">
+        <h5 class="surfer-tag">
+            <a class="" data-toggle="collapse" href="#byLanguage" role="button" aria-expanded="false"
+                aria-controls="byLanguage">
+                語言分類&nbsp;
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </h5>
+        <div class="collapse" id="byLanguage">
+            <div class="container text-center p-md-0">
+                <div id="language-surfer">
+                    <div class="row">
+                        <div class="col lang-tag">國語</div>
+                        <div class="col lang-tag">台語</div>
                     </div>
-                    <div class="col px-0 pl-md-3">
-                        <div class="row mx-0 p-0">
-                            {% for i in range(1, 11) %}
-                            <div class="col-12 col-md-6 col-xl-4">
-                                <form action="{{ url_for('surf_bp.surf') }}" method="GET">
-                                    <input class="d-none" type="text" name="title" value="">
-                                    <input class="d-none" type="text" name="lang" value="Taiwanese">
-                                    <input class="d-none" type="text" name="to" value="">
-                                    <button type="submit" class="btn taiwanese-surf-btn" name="c" value="{{ i }}">
-                                        第 {{ i }} 集
-                                    </button>
-                                </form>
+                    <div class="row">
+                        <div class="col px-0 pr-md-3">
+                            <div class="row mx-0 p-0">
+                                {% for i in range(1, 12) %}
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <form action="{{ url_for('surf_bp.surf') }}" method="GET">
+                                        <input class="d-none" type="text" name="surfMode" value="byLang">
+                                        <input class="d-none" type="text" name="lang" value="Chinese">
+                                        <button type="submit" class="btn chinese-surf-btn" name="c" value="{{ i }}">
+                                            第 {{ i }} 集
+                                        </button>
+                                    </form>
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
+                        </div>
+                        <div class="col px-0 pl-md-3">
+                            <div class="row mx-0 p-0">
+                                {% for i in range(1, 11) %}
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <form action="{{ url_for('surf_bp.surf') }}" method="GET">
+                                        <input class="d-none" type="text" name="surfMode" value="byLang">
+                                        <input class="d-none" type="text" name="lang" value="Taiwanese">
+                                        <button type="submit" class="btn taiwanese-surf-btn" name="c" value="{{ i }}">
+                                            第 {{ i }} 集
+                                        </button>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div class="surfer-block">
+        <h5 class="surfer-tag">
+            <a class="" data-toggle="collapse" href="#byTonality" role="button" aria-expanded="false"
+                aria-controls="byTonality">
+                調性分類&nbsp;
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </h5>
+        <div class="collapse" id="byTonality">
+            <div class="container text-center p-md-0">
+                <div id="tonality-surfer">
+                    <div class="row">
+
+                        {% for toC in toColl %}
+                        <div class="col-4">
+                            <form action="{{ url_for('surf_bp.surf') }}" method="GET">
+                                <input class="d-none" type="text" name="surfMode" value="byTo">
+                                <input class="d-none" type="text" name="to" value="{{ toC }}">
+                                <button type="submit" class="btn tonality-surf-btn">
+                                    {{ toC }}
+                                </button>
+                            </form>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
 
 {% block script %}
 {{  super ()  }}
-    <script src="{{ url_for('static', filename='js/pages/surfer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/surfer.js') }}"></script>
 {% endblock script %}
 
 {% block EOF_TAG %}

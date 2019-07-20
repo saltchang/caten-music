@@ -29,4 +29,4 @@ def seeHome():
         if r.status_code == 200:
             result = json.loads(r.text)
             
-    return render_template("pages/index.html", songs=result), 200
+    return render_template("pages/home.html", songs=result), 200

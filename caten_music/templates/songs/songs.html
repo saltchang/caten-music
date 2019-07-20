@@ -40,7 +40,7 @@
 {% endif %}
 {% endif %}
 
-{% if mode == "surf" %}
+{% if surfMode == "byLang" %}
 
 {% if lang == "Chinese" %}
 國語
@@ -54,6 +54,12 @@
 第 {{ c }} 集
 {% endif %}
 
+{% endif %}
+
+{% if surfMode == "byTo" %}
+調性
+&nbsp;
+{{ to }}
 {% endif %}
 
 {% endblock header_title %}

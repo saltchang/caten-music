@@ -32,8 +32,8 @@ body {
     /* background: #ffeee0; */
     color: #344042;
     background: #ffeba9;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #e4f2ff, #fff8ee, #ffeba9);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #e4f2ff, #fff8ee, #ffeba9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(to top, #ffffff, #e4f2ff, #fff8ee, #ffeba9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #d8ecff, #e9f4ff, #ffffff, #fff5e9, #ffeaa6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
