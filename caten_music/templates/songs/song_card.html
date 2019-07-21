@@ -6,11 +6,14 @@
     <div class="col-md-1 col-lg-2"></div>
     <div class="col card my-3 p-0">
         <h4 class="card-header">
-            {% if current_user.is_admin %}
+
+            <!-- 管理員權限 -->
+            {% if current_user.is_manager %}
             <a class="edit-icon" href="{{ url_for('song_edit_bp.edit', sid=song.sid) + '?next=' + return_url }}">
                 <i class="fas fa-feather-alt"></i>
             </a>
             {% endif %}
+            <!-- 管理員權限 -->
 
             <span class="header-title-text">{{ song.title }}</span>
 

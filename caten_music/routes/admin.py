@@ -25,7 +25,7 @@ def edit(sid):
         current_user.login_update()
     
     # 確認使用者擁有管理員權限
-    if not current_user.is_admin:
+    if not current_user.is_manager:
         flash("很抱歉，您並沒有編輯歌曲的權限。", "danger")
         return redirect("/")
 
