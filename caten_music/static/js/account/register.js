@@ -154,7 +154,7 @@ function usernameValidator(username) {
 function emailValidator(email) {
     let email_validated = false;
 
-    let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]{3,66}$/;
+    let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]{3,128}$/;
     // ^\w+：@ 之前必須以一個以上的文字&數字開頭，例如 abc
     // ((-\w+)：@ 之前可以出現 1 個以上的文字、數字或「-」的組合，例如 -abc-
     // (\.\w+))：@ 之前可以出現 1 個以上的文字、數字或「.」的組合，例如 .abc.
@@ -165,8 +165,10 @@ function emailValidator(email) {
     // ((\.|-)[A-Za-z0-9]+)*：@ 之後出現 0 個以上的「.」或是「-」配上大小寫英文及數字的組合
     // \.[A-Za-z]+$/：@ 之後出現 1 個以上的「.」配上大小寫英文及數字的組合，結尾需為大小寫英文
 
-    if(email.search(emailRule) != -1){
-        email_validated = true;
+    if (email.search(emailRule) != -1) {
+        if (email.length < 128 && email.length > 3) {
+            email_validated = true;
+        }
     }
 
     return email_validated

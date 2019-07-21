@@ -186,7 +186,7 @@ hr.percent-80 {
 }
 
 .lyrics-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-family: 'Noto Serif TC', serif;
     font-weight: 400;
     text-align: left;
@@ -208,6 +208,18 @@ hr.percent-80 {
 
 .album-info {
     font-size: 1rem;
+}
+
+.edit-icon {
+    font-size: 1.3rem;
+    color: #00000050;
+    float: left;
+    transform: rotate(270deg);
+    transition: 400ms;
+}
+
+.edit-icon:hover {
+    color: #1e7a16;
 }
 
 .ppt-icon {

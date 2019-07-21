@@ -1,0 +1,186 @@
+<!-- templates/admin/song_edit.html -->
+
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/song_edit.css') }}">
+{%  endblock  %}
+
+{% block title %}
+- 編輯歌曲
+{% endblock %}
+
+{% block modal %}
+
+{% endblock modal %}
+
+{% block header_title %}
+編輯歌曲
+{% endblock header_title %}
+
+{% block header_info %}
+
+<p class="info-sid">
+    #{{ song.sid }}
+</p>
+<p class="main-info info-title">
+    {{ song.title }}
+</p>
+
+{% endblock header_info %}
+
+{% block content%}
+
+<!-- editting form -->
+<div class="container text-center">
+
+    <h4>歌曲資訊</h4>
+
+    <form id="form-edit-song" action="" method="POST">
+
+        <!-- 曲名 title-->
+        <div class="form-group">
+            <label class="input-label" for="edit-title">曲名 (標題)</label>
+            <input class="input-text" type="text" name="title" id="edit-title" value="{{ song.title }}">
+        </div>
+
+        <!-- 編號(集、首)  num_c, num_i-->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label class="input-label" for="edit-num_c">編號(集)
+                        <small> *不可更改</small>
+                    </label>
+                    <input class="input-text" type="text" name="num_c" id="edit-num_c" value="{{ song.num_c }}" disabled>
+                </div>
+                <div class="col-6">
+                    <label class="input-label" for="edit-num_i">編號(首)
+                        <small> *不可更改</small>
+                    </label>
+                    <input class="input-text" type="text" name="num_i" id="edit-num_i" value="{{ song.num_i }}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <!-- 語言, 調性 language, tonality -->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label class="input-label" for="edit-language">語言
+                        <small> *不可更改</small>
+                    </label>
+                    <select class="input-select" name="language" id="edit-language" disabled>
+                        {% for lang in ["Chinese", "Taiwanese"] %}
+
+                        {% if lang == "Chinese" %}
+                        {% set song_lang = "國語" %}
+                        {% else %}
+                        {% set song_lang = "台語" %}
+                        {% endif %}
+
+                        {% if lang == song.lang %}
+                        <option value="{{ lang }}" selected>{{ song_lang }}</option>
+                        {% else %}
+                        <option value="{{ lang }}">{{ song_lang }}</option>
+                        {% endif %}
+
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label class="input-label" for="edit-tonality">調性</label>
+                    <select class="input-select" name="tonality" id="edit-tonality">
+                        {% for to in toColl %}
+
+                        {% if to == song.tonality %}
+                        <option value="{{ to }}" selected>{{ to }}</option>
+                        {% else %}
+                        <option value="{{ to }}">{{ to }}</option>
+                        {% endif %}
+
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 年份 year -->
+        <div class="form-group">
+            <label class="input-label" for="edit-year">年份</label>
+            <input class="input-text" type="text" name="year" id="edit-year" value="{{ song.year }}">
+        </div>
+
+        <!-- 作詞 lyricist -->
+        <div class="form-group">
+            <label class="input-label" for="edit-lyricist">作詞</label>
+            <input class="input-text" type="text" name="lyricist" id="edit-lyricist" value="{{ song.lyricist }}">
+        </div>
+
+        <!-- 作曲 composer -->
+        <div class="form-group">
+            <label class="input-label" for="edit-composer">作曲</label>
+            <input class="input-text" type="text" name="composer" id="edit-composer" value="{{ song.composer }}">
+        </div>
+
+        <!-- 譯者 translator -->
+        <div class="form-group">
+            <label class="input-label" for="edit-translator">譯者</label>
+            <input class="input-text" type="text" name="translator" id="edit-translator" value="{{ song.translator }}">
+        </div>
+
+        <!-- 專輯 album -->
+        <div class="form-group">
+            <label class="input-label" for="edit-album">專輯</label>
+            <input class="input-text" type="text" name="album" id="edit-album" value="{{ song.album }}">
+        </div>
+
+        <!-- 出版者 publisher -->
+        <div class="form-group">
+            <label class="input-label" for="edit-publisher">出版者</label>
+            <input class="input-text" type="text" name="publisher" id="edit-publisher" value="{{ song.publisher }}">
+        </div>
+
+        <!-- 速度 tempo -->
+        <div class="form-group">
+            <label class="input-label" for="edit-tempo">速度</label>
+            <input class="input-text" type="text" name="tempo" id="edit-tempo" value="{{ song.tempo }}">
+        </div>
+
+        <!-- 拍號 time_signature -->
+        <div class="form-group">
+            <label class="input-label" for="edit-time_signature">拍號</label>
+            <input class="input-text" type="text" name="time_signature" id="edit-time_signature"
+                value="{{ song.time_signature }}">
+        </div>
+
+        <!-- Lyrics 歌詞 -->
+        <div class="form-group">
+            <label class="input-label" for="edit-lyrics">歌詞</label>
+            <textarea class="input-text input-lyrics" type="text" name="lyrics"
+                id="edit-lyrics">{{ song_lyrics }}</textarea>
+        </div>
+
+        <button id="edit-submit" class="form-button btn btn-success" type="button">更新</button>
+
+        <a href="" class="form-button btn btn-outline-secondary">取消</a>
+
+    </form>
+
+    <form id="form-delete-whole-song" class="d-none mt-3" action="" method="POST">
+        <button id="delete-submit" class="btn btn-sm btn-danger button-to-delete" type="button">刪除歌曲</button>
+    </form>
+
+
+</div>
+{% endblock %}
+
+{% block script %}
+{{  super ()  }}
+<script src="{{ url_for('static', filename='js/admin/song_edit.js') }}"></script>
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/songlist_edit.html -->
+{% endblock EOF_TAG %}

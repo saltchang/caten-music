@@ -73,6 +73,8 @@ input:focus,
 }
 
 input:focus,
+textarea:focus,
+select:focus,
 .form-control:focus {
     border: 1px solid #ff7500;
 }

@@ -1,9 +1,17 @@
+<!-- templates/songs/song_card.html -->
+
 {% set return_url = request.full_path | replace('/', '%2F') | replace('?', '%3F') | replace('=', '%3D') | replace('&', '%26') %}
 
 <div class="song-card row m-0">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col card my-3 p-0">
         <h4 class="card-header">
+            {% if current_user.is_admin %}
+            <a class="edit-icon" href="{{ url_for('song_edit_bp.edit', sid=song.sid) + '?next=' + return_url }}">
+                <i class="fas fa-feather-alt"></i>
+            </a>
+            {% endif %}
+
             <span class="header-title-text">{{ song.title }}</span>
 
             <!-- 添加歌曲至歌單 - 按鈕 -->
@@ -165,7 +173,7 @@
                     {% for i in range(song.lyrics | length) %}
                         {% set s = song.lyrics[i] %}
                         {% if i == 0 %}
-                        {% elif (s != "p") and (s != "v") and (s != "c") and (s != "b") %}
+                        {% elif (s != "p") and (s != "v") and (s != "c") and (s != "b") and (s != "p\n") and (s != "v\n") and (s != "c\n") and (s != "b\n") %}
                         {{ s }} <br>
                         {% else %}
                         <br>
@@ -211,6 +219,7 @@
                             </a>
                         </div>
                     </div>
+
                     <hr class="mt-3 mb-3">
                     <div class="row pt-1">
                         <div class="col px-4">
@@ -219,6 +228,7 @@
                             </a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
