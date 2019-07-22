@@ -1,0 +1,122 @@
+<!-- templates/admin/user_edit.html -->
+
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/user_edit.css') }}">
+{%  endblock  %}
+
+{% block title %}
+- 編輯使用者
+{% endblock %}
+
+{% block modal %}
+
+{% endblock modal %}
+
+{% block header_title %}
+編輯使用者
+{% endblock header_title %}
+
+{% block header_info %}
+
+<p class="info-id">
+    #{{ user.id }}
+</p>
+<p class="main-info info-title">
+    {{ user.username }}
+</p>
+
+{% endblock header_info %}
+
+{% block content%}
+
+<!-- editting form -->
+<div class="container text-center">
+
+    <h4>使用者資訊</h4>
+
+    <form id="form-edit-user" action="{{ url_for('user_edit_bp.edit', id_=user.id) }}" method="POST">
+
+        <!-- 使用者名稱 Username-->
+        <div class="form-group">
+            <label class="input-label" for="edit-username">
+                使用者名稱
+                <small> *不可更改</small>
+            </label>
+            <input class="input-text" type="text" name="username" id="edit-username" value="{{ user.username }}" disabled>
+        </div>
+
+        <!-- 電子郵件地址 Email -->
+        <div class="form-group">
+            <label class="input-label" for="edit-email">
+                Email
+                <small> *不可更改</small>
+            </label>
+            <input class="input-text" type="text" name="email" id="edit-email" value="{{ user.email }}" disabled>
+        </div>
+
+        <!-- 顯示名稱 Display name -->
+        <div class="form-group">
+            <label class="input-label" for="edit-displayname">顯示名稱</label>
+            <input class="input-text" type="text" name="displayname" id="edit-displayname" value="{{ user.displayname }}">
+        </div>
+
+        <!-- 權限 Authority-->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label class="input-label" for="edit-is_authenticated">
+                        已啟動
+                        <small> *不可更改</small>
+                    </label>
+                    <select class="input-select" name="is_authenticated" id="edit-is_authenticated" disabled>
+                        {% if user.is_authenticated %}
+                        <option value="true" selected>是</option>
+                        <option value="false">否</option>
+                        {% else %}
+                        <option value="true">是</option>
+                        <option value="false" selected>否</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <label class="input-label" for="edit-authority">權限</label>
+                    <select class="input-select" name="authority" id="edit-authority">
+                        {% if user.is_admin %}
+                        <option value="admin" selected>總管</option>
+                        <option value="manager">管理員</option>
+                        <option value="normal">普通</option>
+                        {% elif user.is_manager %}
+                        <option value="admin">總管</option>
+                        <option value="manager" selected>管理員</option>
+                        <option value="normal">普通</option>
+                        {% else %}
+                        <option value="admin">總管</option>
+                        <option value="manager">管理員</option>
+                        <option value="normal" selected>普通</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button id="edit-submit" class="form-button btn btn-success" type="button">更新</button>
+
+        <a href="{{ url_for('users_bp.users') }}" class="form-button btn btn-outline-secondary">取消</a>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block script %}
+{{  super ()  }}
+<script src="{{ url_for('static', filename='js/admin/user_edit.js') }}"></script>
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/userlist_edit.html -->
+{% endblock EOF_TAG %}

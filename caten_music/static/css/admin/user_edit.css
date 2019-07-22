@@ -1,0 +1,91 @@
+/* static/css/admin/user_edit.css */
+
+input, textarea, select {
+    border: 1px solid #e6c9ae;
+    border-radius: .25rem;
+    transition: 500ms;
+}
+
+small {
+    display: contents;
+    color: #7a000079;
+}
+
+
+.info-id {
+    margin-top: -2rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: #00000060;
+}
+
+.info-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #282894;
+    margin-bottom: 2rem;
+}
+
+/* form */
+
+.form-group {
+    display: block;
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto 2rem auto;
+}
+
+/* input */
+
+.input-text {
+    font-size: 1.2rem;
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+
+.input-select {
+    font-size: 1.2rem;
+    background-color: white;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.input-select option {
+    text-align: center;
+}
+
+.input-lyrics {
+    height: 25rem;
+    font-size: 1rem;
+    vertical-align: top;
+}
+
+/* label */
+
+.input-label {
+    display: flex;
+    margin-bottom: .5rem;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #00000080;
+}
+
+/* from button */
+
+.form-button {
+    width: 25%;
+    max-width: 150px;
+    min-width: 120px;
+    margin: 1rem;
+}
+
+.btn {
+    font-size: 1.4rem;
+}
+
+.button-to-delete {
+    font-size: 1.2rem;
+    margin-top: 3rem;
+    padding: .5rem;
+}

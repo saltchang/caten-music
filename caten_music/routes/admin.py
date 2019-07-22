@@ -11,16 +11,23 @@ from flask_login import login_required, current_user
 import requests
 import json
 import os
+import re
 
 song_edit_bp = Blueprint("song_edit_bp", __name__,
                     template_folder='templates')
 
+users_bp = Blueprint("users_bp", __name__,
+                    template_folder='templates')
 
-@song_edit_bp.route('/song/edit/<sid>', methods=["GET", "POST"])
+user_edit_bp = Blueprint("user_edit_bp", __name__,
+                    template_folder='templates')
+
+
+@song_edit_bp.route('/admin/edit/song/<sid>', methods=["GET", "POST"])
 @login_required
 def edit(sid):
 
-    # 確認使用者登入
+    # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
     
@@ -154,3 +161,78 @@ def edit(sid):
             print(error)
             flash("發生錯誤，請洽網站管理員。", "danger")
             return redirect("/")
+
+@users_bp.route('/admin/users', methods=['GET'])
+@login_required
+def users():
+    if not current_user.is_manager:
+        flash("您並沒有管理員權限。", "danger")
+        return redirect("/")
+
+    if request.method == "GET":
+        users = User.query.order_by(User.id).all()
+        return render_template("admin/users.html", users=users)
+
+@user_edit_bp.route('/admin/users/edit/<id_>', methods=['GET', 'POST'])
+@login_required
+def edit(id_):
+
+    # 更新使用者登入時間
+    if current_user.is_authenticated:
+        current_user.login_update()
+
+    if not current_user.is_admin:
+        flash("您並沒有總管理員權限。", "danger")
+        return redirect("/")
+    
+    if request.method == "GET":
+        user = User.query.filter_by(id=id_).first()
+        return render_template("admin/user_edit.html", user=user)
+
+    elif request.method == "POST":
+        
+        try:
+            user = User.query.filter_by(id=id_).first()
+        except:
+            flash("錯誤的使用者資訊", "danger")
+        
+        displayname = request.values.get("displayname")
+        authority = request.values.get("authority")
+
+        # 確認顯示名稱格式
+        if re.fullmatch(r"^[\u4e00-\u9fa5_a-zA-Z0-9]{1,17}$", displayname):
+            stringLen = 0
+
+            for c in displayname:
+                if re.fullmatch(r"^[\u4e00-\u9fa5]+$", c):
+                    stringLen += 2
+                else:
+                    stringLen += 1
+
+            if stringLen <= 16:
+                user.displayname = displayname
+            
+            else:
+                flash("編輯使用者顯示名稱時發生錯誤", "danger")
+                return redirect("/")
+        else:
+            flash("編輯使用者顯示名稱時發生錯誤", "danger")
+            return redirect("/")
+        
+        # 確認權限
+        if authority == "admin":
+            user.is_admin = True
+            user.is_manager = True
+        elif authority == "manager":
+            user.is_admin = False
+            user.is_manager = True
+        elif authority == "normal":
+            user.is_admin = False
+            user.is_manager = False
+        else:
+            flash("編輯使用者權限時發生錯誤", "danger")
+            return redirect("/")
+        
+        user.update()
+
+        return redirect(url_for("users_bp.users"))

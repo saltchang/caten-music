@@ -1,0 +1,72 @@
+/* static/css/admin/users.css */
+
+table {
+    font-size: 1rem;
+}
+
+thead {
+    background: #344042;
+}
+
+tbody tr {
+    /* border: 1px solid #3440423f;s */
+    background: rgb(255, 254, 244);
+}
+
+.table thead th {
+    vertical-align: middle;
+}
+
+/* header */
+
+.top-header {
+    margin: 2rem 0;
+}
+
+.main-title {
+    margin-top: 100px;
+}
+
+.main-info {
+    font-size: 1rem;
+}
+
+/* table */
+
+.table .thead-dark th {
+    border: none;
+    background: none;
+}
+
+.table th, .table td {
+    padding: 1rem .4rem;
+    min-width: 2.5rem;
+    /* border: none; */
+    /* transition: 700ms; */
+}
+
+.table td {
+    padding: 2rem .2rem;
+    cursor: pointer;
+    border: none;
+    vertical-align: middle;
+}
+
+tr td i {
+    color: rgba(32, 32, 32, 0.5);
+}
+
+/* .table tr {
+    border-radius: .5rem;
+    background: rgb(91, 133, 182);
+} */
+
+.table .table-td-icon {
+    min-width: 0;
+    padding-left: .3rem;
+    padding-right: .1rem;
+}
+
+.content-span {
+    line-height: 1.8rem;
+}

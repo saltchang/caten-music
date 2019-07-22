@@ -18,6 +18,10 @@ report_bp = Blueprint("report_bp", __name__,
 @login_required
 def report_song(sid):
 
+    # 更新使用者登入時間
+    if current_user.is_authenticated:
+        current_user.login_update()
+
     requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
 
     r = requests.get(requestURL)

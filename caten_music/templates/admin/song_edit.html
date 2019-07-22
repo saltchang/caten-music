@@ -38,7 +38,7 @@
 
     <h4>歌曲資訊</h4>
 
-    <form id="form-edit-song" action="" method="POST">
+    <form id="form-edit-song" action="{{ url_for('song_edit_bp.edit', sid=song.sid) }}" method="POST">
 
         <!-- 曲名 title-->
         <div class="form-group">

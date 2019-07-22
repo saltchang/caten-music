@@ -2,7 +2,7 @@
 
 {% set return_url = request.full_path | replace('/', '%2F') | replace('?', '%3F') | replace('=', '%3D') | replace('&', '%26') %}
 
-<nav id="navbar" class="navbarstyle navbar navbar-expand-sm navbar-light fixed-top">
+<nav id="navbar" class="navbarstyle navbar navbar-expand-md navbar-light fixed-top">
     <a class="navbar-brand brand-logo-border" href="/">
         <svg width="3rem" height="3rem" viewBox="0 0 360 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
@@ -13,7 +13,7 @@
             </g>
         </svg>
     </a>
-    <a class="d-sm-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
+    <a class="d-md-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
         aria-controls="navbarSupportedContent" id="navbar-menu-btn">
         <span class="">
             <svg width="2rem" height="2rem" viewBox="0 0 330 330" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -67,6 +67,18 @@
         <hr class="navbar-hr">
 
         <ul class="navbar-nav ml-auto">
+
+            {% if current_user.is_manager %}
+            <li class="nav-item active">
+                <a class="nav-link navbar-item-style" href="{{ url_for('users_bp.users') }}">
+                    <i class="fas fa-users"></i>
+                    &nbsp;管理使用者
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+            <hr class="navbar-hr">
+            {% endif %}
 
             {% if not current_user.is_authenticated %}
             <li class="nav-item active">

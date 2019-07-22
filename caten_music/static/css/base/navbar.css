@@ -139,7 +139,7 @@
 }
 
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
 
     .navbar-brand {
         margin-right: 1rem;
@@ -167,7 +167,7 @@
 
     .dropdown-collapse {
         width: 20rem;
-        margin: 2rem 0 0;
+        margin: 3rem 0 0;
         right: 0;
         left: auto;
     }
@@ -175,4 +175,9 @@
     .navbar-input-search-songs-text {
         font-size: 1.2rem;
     }
+
+    .btn-navbar-user-dropdown {
+        margin-left: 1rem;
+    }
+    
 }
