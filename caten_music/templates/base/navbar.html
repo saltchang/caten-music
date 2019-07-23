@@ -68,7 +68,7 @@
 
         <ul class="navbar-nav ml-auto">
 
-            {% if current_user.is_manager %}
+            {% if current_user.is_admin %}
             <li class="nav-item active">
                 <a class="nav-link navbar-item-style" href="{{ url_for('users_bp.users') }}">
                     <i class="fas fa-users"></i>

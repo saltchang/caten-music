@@ -49,6 +49,9 @@ def edit(sid):
         song = result[0]
 
     if request.method == "GET":
+
+        return_url = request.values.get("next")
+        
         # Tonality Collection
         toColl = ["C", "Cm", "C#", "D", "Dm", "Db", "E", "Em", "Eb", "F",
                   "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", 
@@ -59,13 +62,13 @@ def edit(sid):
         for p in song["lyrics"]:
             song_lyrics += p + "\n"
 
-        return render_template("admin/song_edit.html", song=song, toColl=toColl, song_lyrics=song_lyrics)
+        return render_template("admin/song_edit.html", song=song, toColl=toColl, song_lyrics=song_lyrics, return_url=return_url)
     
     elif request.method == "POST":
+
         try:
 
-            # 前一頁的url
-            return_url = request.values.get("next")
+            return_url = request.values.get("return_url")
 
             # 編輯歌曲時，不可更改語言、編號、sid
             # num_c = request.values.get("num_c")
@@ -154,7 +157,9 @@ def edit(sid):
                 flash("不安全的連結", "danger")
                 return abort(400)
             else:
-                flash("成功編輯歌單 #" + sid, "success")
+                if not return_url:
+                    return redirect("/")
+                flash("成功編輯歌曲 #" + sid, "success")
                 return redirect(return_url)
         
         except Exception as error:
@@ -165,7 +170,12 @@ def edit(sid):
 @users_bp.route('/admin/users', methods=['GET'])
 @login_required
 def users():
-    if not current_user.is_manager:
+
+    # 更新使用者登入時間
+    if current_user.is_authenticated:
+        current_user.login_update()
+
+    if not current_user.is_admin:
         flash("您並沒有管理員權限。", "danger")
         return redirect("/")
 

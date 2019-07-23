@@ -1,6 +1,5 @@
 <!-- templates/admin/song_edit.html -->
 
-
 {% extends "base/base.html" %}
 
 {%  block  head  %}
@@ -39,6 +38,8 @@
     <h4>歌曲資訊</h4>
 
     <form id="form-edit-song" action="{{ url_for('song_edit_bp.edit', sid=song.sid) }}" method="POST">
+
+        <input class="d-none" type="text" name="return_url" value="{{ return_url }}">
 
         <!-- 曲名 title-->
         <div class="form-group">
@@ -164,7 +165,7 @@
 
         <button id="edit-submit" class="form-button btn btn-success" type="button">更新</button>
 
-        <a href="" class="form-button btn btn-outline-secondary">取消</a>
+        <a href="{{ return_url }}" class="form-button btn btn-outline-secondary">取消</a>
 
     </form>
 

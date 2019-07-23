@@ -11,6 +11,7 @@ from .logout import logout_bp
 from .songlist import user_songlist_bp, song_list_by_id_bp, add_songlist_bp, songlist_edit_bp, songlist_delete_bp, ajax_update_songlist_bp
 from .report import report_bp
 from .admin import song_edit_bp, users_bp, user_edit_bp
+from .pages import pages_bp
 
 
 def init_app(app):
@@ -42,5 +43,6 @@ def init_app(app):
     app.register_blueprint(song_edit_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(user_edit_bp)
+    app.register_blueprint(pages_bp)
 
     return app
