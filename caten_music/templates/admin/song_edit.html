@@ -43,8 +43,14 @@
 
         <!-- 曲名 title-->
         <div class="form-group">
-            <label class="input-label" for="edit-title">曲名 (標題)</label>
+            <label class="input-label" for="edit-title">中文曲名</label>
             <input class="input-text" type="text" name="title" id="edit-title" value="{{ song.title }}">
+        </div>
+
+        <!-- 原文曲名 title_original-->
+        <div class="form-group">
+            <label class="input-label" for="edit-title-original">原文曲名</label>
+            <input class="input-text" type="text" name="title_original" id="edit-title-original" value="{{ song_title_original }}">
         </div>
 
         <!-- 編號(集、首)  num_c, num_i-->
@@ -106,6 +112,12 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 經文出處 scripture -->
+        <div class="form-group">
+            <label class="input-label" for="edit-scripture">經文出處</label>
+            <input class="input-text" type="text" name="scripture" id="edit-scripture" value="{{ song.scripture }}">
+        </div>
 
         <!-- 年份 year -->
         <div class="form-group">
@@ -137,10 +149,16 @@
             <input class="input-text" type="text" name="album" id="edit-album" value="{{ song.album }}">
         </div>
 
-        <!-- 出版者 publisher -->
+        <!-- 中文出版者 publisher -->
         <div class="form-group">
-            <label class="input-label" for="edit-publisher">出版者</label>
+            <label class="input-label" for="edit-publisher">中文出版者</label>
             <input class="input-text" type="text" name="publisher" id="edit-publisher" value="{{ song.publisher }}">
+        </div>
+
+        <!-- 原文出版者 publisher_original -->
+        <div class="form-group">
+            <label class="input-label" for="edit-publisher-original">原文出版者</label>
+            <input class="input-text" type="text" name="publisher_original" id="edit-publisher-original" value="{{ song.publisher_original }}">
         </div>
 
         <!-- 速度 tempo -->
@@ -156,7 +174,7 @@
                 value="{{ song.time_signature }}">
         </div>
 
-        <!-- Lyrics 歌詞 -->
+        <!-- 歌詞 lyrics -->
         <div class="form-group">
             <label class="input-label" for="edit-lyrics">歌詞</label>
             <textarea class="input-text input-lyrics" type="text" name="lyrics"

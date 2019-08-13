@@ -28,10 +28,8 @@ button:focus {
     padding: 0;
     border: none;
     background: none;
-    float: right;
     font-size: 90%;
     vertical-align: middle;
-    line-height: 1.5rem;
 }
 
 .add-list-container {
@@ -141,10 +139,34 @@ hr.percent-80 {
     background-color: #d5ecff;
     border-radius: .5rem .5rem 0 0;
     border-bottom: none;
+    height: 4.5rem;
+}
+
+.card-header__row {
+    margin: 0;
+}
+
+.card-header__icon {
+    line-height: 3rem;
+}
+
+.card-header__text {
+    vertical-align: middle;
 }
 
 .header-title-text {
-    margin-right: -24px;
+    vertical-align: middle;
+    margin: auto;
+    line-height: 3rem;
+}
+
+.header-title-text--with-original {
+    margin: auto;
+}
+
+.header-title-text--original {
+    font-size: 1rem;
+    margin: auto;
 }
 
 .song-content-container {
@@ -213,9 +235,9 @@ hr.percent-80 {
 .edit-icon {
     font-size: 1.3rem;
     color: #00000050;
-    float: left;
     transform: rotate(270deg);
     transition: 400ms;
+    vertical-align: middle;
 }
 
 .edit-icon:hover {

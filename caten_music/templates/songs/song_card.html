@@ -7,22 +7,51 @@
     <div class="col card my-3 p-0">
         <h4 class="card-header">
 
-            <!-- 管理員權限 -->
-            {% if current_user.is_manager %}
-            <a class="edit-icon" href="{{ url_for('song_edit_bp.edit', sid=song.sid) + '?next=' + return_url }}">
-                <i class="fas fa-feather-alt"></i>
-            </a>
-            {% endif %}
-            <!-- 管理員權限 -->
+            <div class="row card-header__row">
+                <div class="p-0 col-1 card-header__icon">
+                    <!-- 管理員權限 -->
+                    {% if current_user.is_manager %}
+                    <a class="edit-icon"
+                        href="{{ url_for('song_edit_bp.edit', sid=song.sid) + '?next=' + return_url }}">
+                        <i class="fas fa-feather-alt"></i>
+                    </a>
+                    {% endif %}
+                    <!-- 管理員權限 -->
+                </div>
 
-            <span class="header-title-text">{{ song.title }}</span>
+                {% set len_song_title_original = song.title_original | length %}
 
-            <!-- 添加歌曲至歌單 - 按鈕 -->
-            <button class="song-list-add-btn click-this-to-call-menu" type="button" id="{{ 'callmenu-' + song.sid }}"
-                data-toggle="collapse" data-target="{{ '#listmenu-' + song.sid }}" data-sid="{{ song.sid }}"
-                aria-expanded="false" aria-controls="collapseExample">
-                <i class="fas fa-stream click-this-to-call-menu" data-sid="{{ song.sid }}"></i>
-            </button>
+                <div class="p-0 col-10 card-header__text">
+                    {% if len_song_title_original > 0 %}
+                    <h4 class="header-title-text--with-original">
+                        {{ song.title }}
+                    </h4>
+                    <p class="header-title-text--original">
+                        {% for i in range(len_song_title_original) %}
+                        {{ song.title_original[i] }}
+                        {% if not i == len_song_title_original - 1 %}
+                        {{ " / " }}
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                    {% else %}
+                    <h4 class="header-title-text">
+                        {{ song.title }}
+                    </h4>
+                    {% endif %}
+                </div>
+
+                <!-- 添加歌曲至歌單 - 按鈕 -->
+                <div class="p-0 col-1 card-header__icon">
+                    <button class="song-list-add-btn click-this-to-call-menu" type="button"
+                        id="{{ 'callmenu-' + song.sid }}" data-toggle="collapse"
+                        data-target="{{ '#listmenu-' + song.sid }}" data-sid="{{ song.sid }}" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <i class="fas fa-stream click-this-to-call-menu" data-sid="{{ song.sid }}"></i>
+                    </button>
+                </div>
+            </div>
+
 
             <!-- 添加歌曲至歌單 - 選單 -->
             <div class="collapse drop-songlist" id="{{ 'listmenu-' + song.sid }}">
@@ -173,7 +202,7 @@
 
                     <!-- 歌詞 -->
                     <p class="card-text lyrics-text">
-                    {% for i in range(song.lyrics | length) %}
+                        {% for i in range(song.lyrics | length) %}
                         {% set s = song.lyrics[i] %}
                         {% if i == 0 %}
                         {% elif (s != "p") and (s != "v") and (s != "c") and (s != "b") and (s != "p\n") and (s != "v\n") and (s != "c\n") and (s != "b\n") %}
@@ -181,7 +210,7 @@
                         {% else %}
                         <br>
                         {% endif %}
-                    {% endfor %}
+                        {% endfor %}
                     </p>
                     <!--  -->
                     <div class="pb-2 text-left album-info">
@@ -203,13 +232,15 @@
 
                     <div class="row pt-3">
                         <div class="col px-3">
-                            <a class="ppt-icon" href="{{ url_for('download_ppt_bp.download_ppt', sid=song.sid) + '?next=' + return_url }}">
+                            <a class="ppt-icon"
+                                href="{{ url_for('download_ppt_bp.download_ppt', sid=song.sid) + '?next=' + return_url }}">
                                 <i class="fas fa-file-powerpoint"></i>
                                 <div>投影片</div>
                             </a>
                         </div>
                         <div class="col px-3">
-                            <a class="sheet-music-icon" href="{{ url_for('download_sheet_bp.download_sheet', sid=song.sid) + '?next=' + return_url }}">
+                            <a class="sheet-music-icon"
+                                href="{{ url_for('download_sheet_bp.download_sheet', sid=song.sid) + '?next=' + return_url }}">
                                 <i class="fas fa-file-alt"></i>
                                 <div>歌譜</div>
                             </a>
@@ -226,7 +257,8 @@
                     <hr class="mt-3 mb-3">
                     <div class="row pt-1">
                         <div class="col px-4">
-                            <a class="report-icon" href="{{ url_for('report_bp.report_song', sid=song.sid) + '?next=' + return_url }}">
+                            <a class="report-icon"
+                                href="{{ url_for('report_bp.report_song', sid=song.sid) + '?next=' + return_url }}">
                                 <i class="fas fa-flag"></i>&nbsp;問題回報
                             </a>
                         </div>

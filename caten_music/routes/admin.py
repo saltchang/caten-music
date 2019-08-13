@@ -57,12 +57,22 @@ def edit(sid):
                   "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", 
                   "Bb"]
         
+        # Get original titles
+        song_title_original = ""
+        len_title_o = len(song["title_original"])
+        if len_title_o > 0:
+            for i in range(len_title_o):
+                if i == (len_title_o - 1):
+                    song_title_original += song["title_original"][i]
+                else:
+                    song_title_original += song["title_original"][i] + " / "
+        
         # Get lyrics
         song_lyrics = ""
         for p in song["lyrics"]:
             song_lyrics += p + "\n"
 
-        return render_template("admin/song_edit.html", song=song, toColl=toColl, song_lyrics=song_lyrics, return_url=return_url)
+        return render_template("admin/song_edit.html", song=song, toColl=toColl, song_lyrics=song_lyrics, song_title_original=song_title_original, return_url=return_url)
     
     elif request.method == "POST":
 
@@ -81,6 +91,8 @@ def edit(sid):
 
             # 取得表單資料
             title = request.values.get("title")
+            originalTitleOriginal = request.values.get("title_original")
+            scripture = request.values.get("scripture")
             tonality = request.values.get("tonality")
             year = request.values.get("year")
             lyricist = request.values.get("lyricist")
@@ -88,6 +100,7 @@ def edit(sid):
             translator = request.values.get("translator")
             album = request.values.get("album")
             publisher = request.values.get("publisher")
+            publisher_original = request.values.get("publisher_original")
             tempo = request.values.get("tempo")
             time_signature = request.values.get("time_signature")
 
@@ -109,6 +122,13 @@ def edit(sid):
             #     sid += "00" + num_i
             # else:
             #     sid += "0" + num_i
+
+            title_original_old = originalTitleOriginal.split("/")
+            title_original = []
+            for title_o in title_original_old:
+                title_o = title_o.strip()
+                if len(title_o) > 0:
+                    title_original.append(title_o)
             
             lyrics_old = originLyrics.split("\n")
             lyrics = []
@@ -116,11 +136,13 @@ def edit(sid):
             lyrics_len = len(lyrics_old)
             for i in range(lyrics_len):
                 p = lyrics_old[i]
-                p = p.replace(" ", "")
-                p = p.replace("\n", "")
-                p = p.replace("\r", "")
+                if len(p) > 0:
+                    p = p.strip()
+                    p = p.replace("\n", "")
+                    p = p.replace("\r", "")
                 if len(p) > 0:
                     lyrics.append(p)
+
             mostAdminToken = os.environ.get("SONGS_DB_MOST_ADMIN_TOKEN")
 
             newSong = {
@@ -128,6 +150,8 @@ def edit(sid):
                 "num_c": num_c,
                 "num_i": num_i,
                 "title": title,
+                "title_original": title_original,
+                "scripture": scripture,
                 "year": year,
                 "lyricist": lyricist,
                 "composer": composer,
@@ -138,6 +162,7 @@ def edit(sid):
                 "time_signature": time_signature,
                 "album": album,
                 "publisher": publisher,
+                "publisher_original": publisher_original,
                 "language": language,
                 "token" : mostAdminToken,
             }

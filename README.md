@@ -4,7 +4,7 @@ A Flask music app for church.
 
 本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-- **[Caten Music](https://caten-music.herokuapp.com) - 0.2.7 已發佈**
+- **[Caten Music](https://caten-music.herokuapp.com) - 0.2.8 發佈於 2019-08-14**
 
 - **[Changelog 查看日誌](https://github.com/saltchang/caten-music/blob/master/CHANGELOG.md)**
 
@@ -20,9 +20,13 @@ A Flask music app for church.
 
 ## Released
 
-### [ v0.2.7 ] - 2019-07-24
+### [ v0.2.8 ] - 2019-08-14
 
-- 新增 總管權限 - 編輯使用者資料
+- 新增欄位 原文歌名、原文出版、經文
+
+- 修正 無法保留歌詞空白的問題，現在只會自動消去頭尾的多餘空白
+
+- 調整介面
 
 ## Usage
 
