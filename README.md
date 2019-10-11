@@ -4,15 +4,15 @@ A Flask music app for church.
 
 本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-- **[Caten Music](https://caten-music.herokuapp.com) - 0.2.8 發佈於 2019-08-14**
+- **[Caten Music](https://caten-music.herokuapp.com) - 0.3.0 發佈於 2019-10-12**
 
 - **[Changelog 查看日誌](https://github.com/saltchang/caten-music/blob/master/CHANGELOG.md)**
 
 ## Tech Stack
 
 - [Python](https://www.python.org/)
-- [Pipenv](https://github.com/pypa/pipenv)
 - [Flask](http://flask.pocoo.org/)
+- [Docker](https://www.docker.com/)
 - [Heroku](https://www.heroku.com/home)
 - [PostgreSQL](https://www.postgresql.org/)
 - [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
@@ -20,13 +20,9 @@ A Flask music app for church.
 
 ## Released
 
-### [ v0.2.8 ] - 2019-08-14
+### [ v0.3.0 ] - 2019-10-12
 
-- 新增欄位 原文歌名、原文出版、經文
-
-- 修正 無法保留歌詞空白的問題，現在只會自動消去頭尾的多餘空白
-
-- 調整介面
+- Dockerized
 
 ## Usage
 
@@ -42,14 +38,6 @@ $ cd caten-music
 
 ```
 
-Use [Pipenv](https://github.com/pypa/pipenv) for managing dependencies:
-
-```shell
-
-$ pipenv install
-
-```
-
 Create the .env file:
 
 ```shell
@@ -62,58 +50,61 @@ Add the following content into .env:
 
 ```text
 
-DROPBOX_ACCESS_TOKEN = <Your Dropbox API token>
-DATABASE_URL = <Your PostgreSQL URL>
-DATABASE_URL_FOR_TESTING = <Your PostgreSQL URL for testing>
-APP_SETTING = "config.Config.Development"
-TEST_SETTING = "config.Config.Testing"
-MAIL_USERNAME = <Your mail account username>
-MAIL_PASSWORD = <Your mail account password>
-HASH_SALT = <Set your own salt for hashing>
-SECRET_KEY = <Your secret key>
-FLASK_APP = run.py
-FLASK_ENV = development
+DROPBOX_ACCESS_TOKEN=<Dropbox_API_token>
+DATABASE_URL=<DATABASE_URL>
+DATABASE_URL_FOR_TESTING = <DATABASE_URL_FOR_TESTING>
+APP_SETTING=<Mode:[Production, Development, Testing]>
+TEST_SETTING=Testing
+MAIL_USERNAME=<Mail_Account_Username>
+MAIL_PASSWORD=<Mail_Account_Password>
+HASH_SALT=<Hash_Salt>
+SECRET_KEY=<Secret_Key>
+FLASK_APP=run.py
 
 ```
 
 You must change the `<variable>` by your case.
 
-### Database Migration
+### Build & Run
 
-Create (migrate) the needed database (in pipenv):
-
-```shell
-
-$ pipenv run flask db upgrade
-
-```
-
-### Test
-
-Before you run the app, please test it first:
+Build the Docker image
 
 ```shell
 
-$ pipenv run pytest
+$ docker build -t caten_music . --no-cache
 
 ```
 
-### Run
-
-Run in flask way:
+Run from the Docker image
 
 ```shell
 
-$ pipenv run flask run
+$ docker run --env-file .env caten_music
 
 ```
 
-Run in Heroku way:
-
-(If you have [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed)
+### Connect from the local machaine
 
 ```shell
 
-$ pipenv run heroku local web
+# Run this command, and find your <CONTAINER ID>
+
+$ docker ps
+
+# The PORTS column should be "5000/tcp"
 
 ```
+
+```shell
+
+# Then, run the following command
+
+$ docker inspect <CONTAINER ID>
+
+# You will find the docker machine id in "IPAddress"
+
+```
+
+open your browser and connect to `<IPAddress>:5000`
+
+you will see the website.
