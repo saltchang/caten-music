@@ -72,6 +72,11 @@
             <p>
                 如有任何問題或建議，歡迎<a href="mailto:kk3684635@gmail.com">聯繫我</a>。
             </p>
+            {% if env_state == "Development" %}
+            <p>
+                Development Mode
+            </p>
+            {% endif %}
         </footer>
         {% endblock %}
 
