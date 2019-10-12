@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 if config == "Development":
     print("Development")
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_DEVELOPMENT")
     # psycopg2.connect(dbname=os.environ.get("DB_DEV_DBNAME"), user=os.environ.get("DB_DEV_USER"), password=os.environ.get("DB_DEV_PASSWORD"), host=os.environ.get("DB_DEV_HOST"), port=os.environ.get("DB_DEV_PORT"))
 elif config == "Testing":
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
