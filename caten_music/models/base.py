@@ -4,10 +4,11 @@ import os
 
 from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
-from caten_music import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+config = os.environ.get("APP_SETTING")
 
 if config == "Development":
     print("Development")
