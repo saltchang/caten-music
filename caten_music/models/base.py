@@ -17,7 +17,5 @@ elif config == "Testing":
 elif config == "Production":
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_TESTING")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 db = SQLAlchemy(app)
