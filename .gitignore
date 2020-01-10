@@ -1,5 +1,6 @@
 # 虛擬環境
 .env
+*.env.*
 .venv
 env/
 venv/
