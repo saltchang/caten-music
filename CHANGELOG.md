@@ -4,7 +4,7 @@ A Flask music app for church.
 
 本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-- **[Caten Music](https://caten-music.herokuapp.com) - 0.3.0 發佈於 2019-10-12**
+- **[Caten Music](https://caten-music.herokuapp.com) - 0.4.0 發佈於 2020-01-10**
 
 ## Tech Stack
 
@@ -36,16 +36,33 @@ A Flask music app for church.
 
 ### Todo
 
-- 建立歌曲資訊 Model
 - 新增歌曲、刪除歌曲
+- 建立歌曲資訊 Model
 - 以彈出視窗預覽歌譜
 - 修復 Test
 
 ## Version
 
+### [0.4.0] - 2020-01-10
+
+#### Added
+
+- 新增 測試用 env 檔案, 並更新 README.md
+- 新增 postgres 至 docker-compose
+- 新增 'development' 環境標籤於首頁
+
+#### Changed
+
+- 修改 .gitignore
+- 更新 套件安全性
+
+### [0.3.0] - 2019-10-12
+
+- Dockerized
+
 ### [0.2.8] - 2019-08-14
 
-### Added
+#### Added
 
 - 新增欄位 原文歌名、原文出版、經文
 
@@ -53,7 +70,7 @@ A Flask music app for church.
 
 - 修正 無法保留歌詞空白的問題，現在只會自動消去頭尾的多餘空白
 
-### Changed
+#### Changed
 
 - 調整介面
 

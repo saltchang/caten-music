@@ -4,7 +4,7 @@ A Flask music app for church.
 
 本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
 
-- **[Caten Music](https://caten-music.herokuapp.com) - 0.3.0 發佈於 2019-10-12**
+- **[Caten Music](https://caten-music.herokuapp.com) - 0.4.0 發佈於 2020-01-10**
 
 - **[Changelog 查看日誌](https://github.com/saltchang/caten-music/blob/master/CHANGELOG.md)**
 
@@ -20,9 +20,10 @@ A Flask music app for church.
 
 ## Released
 
-### [ v0.3.0 ] - 2019-10-12
+### [0.4.0] - 2020-01-10
 
-- Dockerized
+- 修改 Docker 設定, 現在可以更快速的在新環境建構專案
+- 更新 套件安全性
 
 ## Usage
 
