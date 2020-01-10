@@ -11,10 +11,10 @@ urllib3
 xlrd
 Flask
 Flask-SQLAlchemy
-Jinja2
+Jinja2 >= 2.10.1
 MarkupSafe
 SQLAlchemy
-Werkzeug
+Werkzeug >= 0.15.3
 psycopg2
 flask-login
 python-dotenv

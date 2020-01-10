@@ -35,7 +35,7 @@ class CreateApp:
         elif config == "Testing":
             app.config.from_pyfile("./testing.py")
         elif config == "Production":
-            app.config.form_pyfile("./production.py")
+            app.config.from_pyfile("./production.py")
 
         from . import models
         models.init_app(app)
@@ -58,7 +58,7 @@ class CreateApp:
         elif config == "Testing":
             app.config.from_pyfile("./testing.py")
         elif config == "Production":
-            app.config.form_pyfile("./production.py")
+            app.config.from_pyfile("./production.py")
 
         from . import models
         models.init_app(app)
