@@ -36,17 +36,17 @@ Clone the repository and enter it:
 git clone https://github.com/saltchang/caten-music.git
 
 cd caten-music
-
 ```
 
-Create the .env file:
+To quick use the sample env file,  
+run the command to rename it for using:
 
 ```bash
 
-touch .env
+cp env.test .env
 ```
 
-Add the following content into `.env`:
+The format of env file must be like following content:
 
 ```env
 
@@ -63,15 +63,7 @@ FLASK_APP=run.py
 
 ```
 
-To quick user the sample env file,  
-run the command, to rename it:
-
-```bash
-
-mv env.test .env
-```
-
-You must change the `<variable>` by your case.
+You can change the `<variable>` as your wish.
 
 ### Build & Run
 
