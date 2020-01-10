@@ -30,25 +30,24 @@ A Flask music app for church.
 
 Clone the repository and enter it:
 
-```shell
+```bash
 
-$ git clone https://github.com/saltchang/caten-music.git
+git clone https://github.com/saltchang/caten-music.git
 
-$ cd caten-music
+cd caten-music
 
 ```
 
 Create the .env file:
 
-```shell
+```bash
 
-$ touch .env
-
+touch .env
 ```
 
-Add the following content into .env:
+Add the following content into `.env`:
 
-```text
+```env
 
 DROPBOX_ACCESS_TOKEN=<Dropbox_API_token>
 DATABASE_URL=<DATABASE_URL>
@@ -63,48 +62,37 @@ FLASK_APP=run.py
 
 ```
 
+To quick user the sample env file,  
+run the command, to rename it:
+
+```bash
+
+mv env.test .env
+```
+
 You must change the `<variable>` by your case.
 
 ### Build & Run
 
-Build the Docker image
+Build Docker-Compose
 
-```shell
+```bash
 
-$ docker build -t caten_music . --no-cache
-
+docker-compose build
 ```
 
-Run from the Docker image
+Run Docker-Compose
 
-```shell
+```bash
 
-$ docker run --env-file .env caten_music
-
+docker-compose up -d
 ```
 
-### Connect from the local machaine
+Visit [http://localhost:5000](http://localhost:5000) then you will see it.
 
-```shell
+### See log of the service
 
-# Run this command, and find your <CONTAINER ID>
+```bash
 
-$ docker ps
-
-# The PORTS column should be "5000/tcp"
-
+docker-compose logs -f
 ```
-
-```shell
-
-# Then, run the following command
-
-$ docker inspect <CONTAINER ID>
-
-# You will find the docker machine id in "IPAddress"
-
-```
-
-open your browser and connect to `<IPAddress>:5000`
-
-you will see the website.
