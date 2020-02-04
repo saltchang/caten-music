@@ -17,6 +17,7 @@ sheet
 secret.txt
 secret/
 secret
+ssl-info
 
 # vscode 設定
 .vscode

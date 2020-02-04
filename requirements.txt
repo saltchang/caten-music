@@ -21,3 +21,6 @@ python-dotenv
 flask-mail
 pytest
 flask-migrate
+flask_apscheduler
+pandas
+openpyxl
