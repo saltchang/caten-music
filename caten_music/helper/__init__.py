@@ -6,3 +6,4 @@ from .register_format_checker import checkFormat
 from .exist_checker import checkExist
 from .login_checker import checkLogin, checkLoginFormat
 from .url_defender import is_safe_url
+from .scheduler import handleAPISchedule

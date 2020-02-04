@@ -43,6 +43,9 @@ class CreateApp:
         from . import routes
         routes.init_app(app)
 
+        from . import helper
+        helper.handleAPISchedule()
+
         return app
 
     def Test():
