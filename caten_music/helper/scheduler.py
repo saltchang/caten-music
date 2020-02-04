@@ -20,6 +20,6 @@ def callChurchMusicAPI():
 
 def handleAPISchedule():
     scheduler = APScheduler()
-    scheduler.add_job(func=callChurchMusicAPI, args=[], trigger='interval', id='callApiJob', minutes=3)
+    scheduler.add_job(func=callChurchMusicAPI, args=[], trigger='interval', id='callApiJob', minutes=30)
     scheduler.start()
     print("Music API Scheduler start!")
