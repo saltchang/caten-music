@@ -138,6 +138,16 @@
     margin-bottom: 1.7rem;
 }
 
+div.icon-frame {
+    display: inline-block;
+    text-align: center;
+    font-size: 1.2rem
+}
+
+div.icon-frame i {
+    width: 1.4rem;
+}
+
 
 @media (min-width: 768px) {
 

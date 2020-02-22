@@ -1,0 +1,59 @@
+<!-- templates/admin/workspace.html -->
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/workspace.css') }}">
+{%  endblock  %}
+
+{% block title %}
+- 管理員工作台
+{% endblock %}
+
+{% block header_title %}
+管理員工作台
+{% endblock%}
+
+{% block header_info %}
+<p></p>
+{% endblock%}
+
+{% block content%}
+
+<div class="workspace container text-center">
+
+  <a class="workspace-link" href="{{ url_for('create_new_song_bp.add') }}">
+    <button class="btn btn-lg btn-outline-success">
+      <div class="icon-frame">
+        <i class="fas fa-plus-circle"></i>
+      </div>
+      &nbsp;新增一首歌曲
+    </button>
+  </a>
+
+  {% if current_user.is_admin %}
+
+  <a class="workspace-link" href="{{ url_for('users_bp.users') }}">
+    <button class="btn btn-lg btn-outline-info">
+      <div class="icon-frame">
+        <i class="fas fa-users"></i>
+      </div>
+      &nbsp;管理使用者
+    </button>
+  </a>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+{{  super ()  }}
+<script src="{{ url_for('static', filename='js/admin/workspace.js') }}"></script>
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/admin/workspace.html -->
+{% endblock EOF_TAG %}

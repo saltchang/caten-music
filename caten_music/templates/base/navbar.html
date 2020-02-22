@@ -3,128 +3,143 @@
 {% set return_url = request.full_path | replace('/', '%2F') | replace('?', '%3F') | replace('=', '%3D') | replace('&', '%26') %}
 
 <nav id="navbar" class="navbarstyle navbar navbar-expand-md navbar-light fixed-top">
-    <a class="navbar-brand brand-logo-border" href="/">
-        <svg width="3rem" height="3rem" viewBox="0 0 360 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
-            <title>CatenMusicLogo</title>
-            <desc>Created with Sketch.</desc>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <path d="M157.656406,358.626825 C68.7886879,347.624114 0,271.845286 0,180 C0,80.588745 80.588745,0 180,0 C279.411255,0 360,80.588745 360,180 C360,276.774201 283.630057,355.711245 187.870276,359.83103 C189.203863,359.662652 190.543049,359.465225 191.886749,359.238184 C229.904661,352.833945 257.758258,325.062356 256.45042,296.00688 C256.800641,294.415538 256.864776,292.719207 256.527716,291.016168 L222.389697,122.157125 C231.743202,123.995218 247.686028,129.420351 269.107316,145.162107 C304.722533,171.37039 316.87858,203.657302 316.87858,203.657302 C333.182501,171.960612 302.548776,127.937603 278.849809,111.458562 C262.301046,99.9498273 228.971332,75.9791077 210.342114,62.5395175 L203.842495,30.3627436 C202.576681,24.1149493 196.673695,20.1634582 190.636784,21.5688251 C184.600959,22.958734 180.741513,29.1606267 182.008438,35.4100178 L226.359584,254.797967 C212.282431,248.096823 194.582905,245.498101 175.970946,248.643034 C136.112925,255.352603 107.351185,285.569218 111.747298,316.107031 C114.820011,337.438754 133.24621,353.294756 157.656425,358.626829 Z" id="合併形狀" fill="#FFFFFF"></path>
-            </g>
-        </svg>
-    </a>
-    <a class="d-md-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
-        aria-controls="navbarSupportedContent" id="navbar-menu-btn">
-        <span class="">
-            <svg width="2rem" height="2rem" viewBox="0 0 330 330" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
-            <title>menu_white</title>
-            <desc>Created with Sketch.</desc>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="120" y="0" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="240" y="0" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="0" y="120" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="120" y="120" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="240" y="120" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="0" y="240" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="120" y="240" width="90" height="90"></rect>
-                <rect id="矩形" fill="#FFFFFF" x="240" y="240" width="90" height="90"></rect>
-            </g>
-        </svg>
+  <a class="navbar-brand brand-logo-border" href="/">
+    <svg width="3rem" height="3rem" viewBox="0 0 360 360" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+      <title>CatenMusicLogo</title>
+      <desc>Created with Sketch.</desc>
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path
+          d="M157.656406,358.626825 C68.7886879,347.624114 0,271.845286 0,180 C0,80.588745 80.588745,0 180,0 C279.411255,0 360,80.588745 360,180 C360,276.774201 283.630057,355.711245 187.870276,359.83103 C189.203863,359.662652 190.543049,359.465225 191.886749,359.238184 C229.904661,352.833945 257.758258,325.062356 256.45042,296.00688 C256.800641,294.415538 256.864776,292.719207 256.527716,291.016168 L222.389697,122.157125 C231.743202,123.995218 247.686028,129.420351 269.107316,145.162107 C304.722533,171.37039 316.87858,203.657302 316.87858,203.657302 C333.182501,171.960612 302.548776,127.937603 278.849809,111.458562 C262.301046,99.9498273 228.971332,75.9791077 210.342114,62.5395175 L203.842495,30.3627436 C202.576681,24.1149493 196.673695,20.1634582 190.636784,21.5688251 C184.600959,22.958734 180.741513,29.1606267 182.008438,35.4100178 L226.359584,254.797967 C212.282431,248.096823 194.582905,245.498101 175.970946,248.643034 C136.112925,255.352603 107.351185,285.569218 111.747298,316.107031 C114.820011,337.438754 133.24621,353.294756 157.656425,358.626829 Z"
+          id="合併形狀" fill="#FFFFFF"></path>
+      </g>
+    </svg>
+  </a>
+  <a class="d-md-none" data-toggle="collapse" href="#navbarSupportedContent" role="button" aria-expanded="false"
+    aria-controls="navbarSupportedContent" id="navbar-menu-btn">
+    <span class="">
+      <svg width="2rem" height="2rem" viewBox="0 0 330 330" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+        <title>menu_white</title>
+        <desc>Created with Sketch.</desc>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="120" y="0" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="240" y="0" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="0" y="120" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="120" y="120" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="240" y="120" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="0" y="240" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="120" y="240" width="90" height="90"></rect>
+          <rect id="矩形" fill="#FFFFFF" x="240" y="240" width="90" height="90"></rect>
+        </g>
+      </svg>
     </span>
-    </a>
+  </a>
 
 
-    <div class="collapse navbar-collapse brand-menu-container navbar-content-list" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse brand-menu-container navbar-content-list" id="navbarSupportedContent">
 
-        <hr class="navbar-hr">
+    <hr class="navbar-hr">
 
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
-                    <input class="d-none" type="text" name="c" value="">
-                    <input class="d-none" type="text" name="lang" value="">
-                    <input class="d-none" type="text" name="to" value="">
-                    <input class="d-none" type="text" name="searchMode" value="title">
-                    <input name="primary" type="text" class="navbar-input-search-songs-text form-control navbar-search fas"
-                        placeholder="&#xf002; 快搜歌名">
-                </form>
-            </li>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
+          <input class="d-none" type="text" name="c" value="">
+          <input class="d-none" type="text" name="lang" value="">
+          <input class="d-none" type="text" name="to" value="">
+          <input class="d-none" type="text" name="searchMode" value="title">
+          <input name="primary" type="text" class="navbar-input-search-songs-text form-control navbar-search fas"
+            placeholder="&#xf002; 快搜歌名">
+        </form>
+      </li>
 
-            <hr class="navbar-hr">
+      <hr class="navbar-hr">
 
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('surfer_bp.surfer') }}">
-                    <i class="fas fa-compass"></i>
-                    &nbsp;探索
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('surfer_bp.surfer') }}">
+          <div class="icon-frame">
+            <i class="fas fa-compass"></i>
+          </div>
+          &nbsp;探索
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
 
-        </ul>
+    </ul>
 
-        <hr class="navbar-hr">
+    <hr class="navbar-hr">
 
-        <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto">
 
-            {% if current_user.is_admin %}
-            <li class="nav-item active">
-                <a class="nav-link navbar-item-style" href="{{ url_for('users_bp.users') }}">
-                    <i class="fas fa-users"></i>
-                    &nbsp;管理使用者
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
+      {% if not current_user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-link navbar-item-style" href="{{ url_for('login_bp.login') + '?next=' + return_url }}">
+          <div class="icon-frame">
+            <i class="fas fa-sign-in-alt"></i>
+          </div>
+          &nbsp;登入
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
 
-            <hr class="navbar-hr">
-            {% endif %}
+      <hr class="navbar-hr">
 
-            {% if not current_user.is_authenticated %}
-            <li class="nav-item active">
-                <a class="nav-link navbar-item-style" href="{{ url_for('login_bp.login') + '?next=' + return_url }}">
-                    <i class="fas fa-sign-in-alt"></i>
-                    &nbsp;登入
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
+      <li class="nav-item active">
+        <a class="nav-link navbar-item-style" href="{{ url_for('register_bp.register') }}">
+          <div class="icon-frame">
+            <i class="fas fa-feather-alt"></i>
+          </div>
+          &nbsp;註冊
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      {% endif %}
 
-            <hr class="navbar-hr">
+      {% if current_user.is_authenticated %}
+      <li class="nav-item dropdown">
+        <button class="dropdown-toggle btn-navbar-user-dropdown" type="button" data-toggle="collapse"
+          data-target="#user-dropdown-collapse" aria-expanded="false">
+          <div class="icon-frame">
+            <i class="fas fa-user"></i>
+          </div>
+          &nbsp;{{ current_user.displayname }}
+        </button>
+        <div class="collapse dropdown-collapse" id="user-dropdown-collapse">
+          <form action="{{ url_for('user_songlist_bp.user_songlist') }}" method="get">
+            <button type="submit" class="dropdown-item">
+              <div class="icon-frame">
+                <i class="fab fa-itunes-note"></i>
+              </div>
+              &nbsp;我的歌單
+            </button>
+          </form>
 
-            <li class="nav-item active">
-                <a class="nav-link navbar-item-style" href="{{ url_for('register_bp.register') }}">
-                    <i class="fas fa-feather-alt"></i>
-                    &nbsp;註冊
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            {% endif %}
+          {% if current_user.is_manager %}
 
-            {% if current_user.is_authenticated %}
-            <li class="nav-item dropdown">
-                <button class="dropdown-toggle btn-navbar-user-dropdown" type="button" data-toggle="collapse" data-target="#user-dropdown-collapse" aria-expanded="false">
-                    <i class="fas fa-user"></i>
-                    &nbsp;{{ current_user.displayname }}
-                </button>
-                <!-- <button class="dropdown-toggle" type="button" id="btn-navbar-user-dropdown" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    {{ current_user.displayname }}
-                </button> -->
-                <div class="collapse dropdown-collapse" id="user-dropdown-collapse">
-                <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"> -->
-                    <!-- <a class="dropdown-item" href="/user/songlist">我的歌單</a> -->
-                    <form action="{{ url_for('user_songlist_bp.user_songlist') }}" method="get">
-                        <button type="submit" class="dropdown-item">我的歌單</button>
-                    </form>
-                    <form action="{{ url_for('logout_bp.logout') }}" method="post">
-                        <input class="d-none" type="text" name="return_url" value="{{ request.full_path }}">
-                        <button type="submit" class="dropdown-item">登出</button>
-                    </form>
-                </div>
-            </li>
-            {% endif %}
+          <form action="{{ url_for('workspace_bp.workspace') }}" method="get">
+            <button type="submit" class="dropdown-item">
+              <div class="icon-frame">
+                <i class="fab fa-fort-awesome"></i>
+              </div>
+              &nbsp;管理員工作台
+            </button>
+          </form>
+          {% endif %}
 
-        </ul>
-
-    </div>
+          <form action="{{ url_for('logout_bp.logout') }}" method="post">
+            <input class="d-none" type="text" name="return_url" value="{{ request.full_path }}">
+            <button type="submit" class="dropdown-item">
+              <div class="icon-frame">
+                <i class="fas fa-sign-out-alt"></i>
+              </div>
+              &nbsp;登出
+            </button>
+          </form>
+        </div>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
 </nav>

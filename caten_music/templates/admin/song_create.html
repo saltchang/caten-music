@@ -1,0 +1,165 @@
+<!-- templates/admin/song_create.html -->
+
+{% extends "base/base.html" %}
+
+{%  block  head  %}
+{{  super ()  }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/song_edit.css') }}">
+{%  endblock  %}
+
+{% block title %}
+- 新增歌曲
+{% endblock %}
+
+{% block modal %}
+{% endblock modal %}
+
+{% block header_title %}
+新增歌曲
+{% endblock header_title %}
+
+{% block header_info %}
+{% endblock header_info %}
+
+{% block content%}
+
+<!-- editting form -->
+<div class="container text-center">
+
+    <h4>歌曲資訊</h4>
+
+    <form id="form-edit-song" action="{{ url_for('create_new_song_bp.add') }}" method="POST">
+
+        <input class="d-none" type="text" name="return_url" value="{{ return_url }}">
+
+        <!-- 曲名 title-->
+        <div class="form-group">
+            <label class="input-label" for="edit-title">中文曲名</label>
+            <input class="input-text" type="text" name="title" id="edit-title" value="" placeholder="ex. 前來敬拜">
+        </div>
+
+        <!-- 原文曲名 title_original-->
+        <div class="form-group">
+            <label class="input-label" for="edit-title-original">原文曲名</label>
+            <input class="input-text" type="text" name="title_original" id="edit-title-original" value="{{ song_title_original }}" placeholder="ex. Come to Worship">
+        </div>
+
+        <!-- 編號(集), 語言, 調性 - num_c, language, tonality -->
+        <div class="form-group">
+            <div class="row">
+                <div class="col-4">
+                    <label class="input-label" for="edit-num_c">
+                        編號(集)
+                    </label>
+                    <input class="input-text" type="text" name="num_c" id="edit-num_c" value="" placeholder="ex. 12">
+                </div>
+                <div class="col-4">
+                    <label class="input-label" for="edit-language">
+                        語言
+                    </label>
+                    <select class="input-select" name="language" id="edit-language">
+                        <option value="Chinese">國語</option>
+                        <option value="Taiwanese">台語</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label class="input-label" for="edit-tonality">調性</label>
+                    <select class="input-select" name="tonality" id="edit-tonality">
+                        {% for to in toColl %}
+                        <option value="{{ to }}">{{ to }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 經文出處 scripture -->
+        <div class="form-group">
+            <label class="input-label" for="edit-scripture">經文出處</label>
+            <input class="input-text" type="text" name="scripture" id="edit-scripture" value="" placeholder="ex. 詩篇 23 篇">
+        </div>
+
+        <!-- 年份 year -->
+        <div class="form-group">
+            <label class="input-label" for="edit-year">年份</label>
+            <input class="input-text" type="text" name="year" id="edit-year" value="" placeholder="ex. 2015">
+        </div>
+
+        <!-- 作詞 lyricist -->
+        <div class="form-group">
+            <label class="input-label" for="edit-lyricist">作詞</label>
+            <input class="input-text" type="text" name="lyricist" id="edit-lyricist" value="" placeholder="ex. 鄭懋柔">
+        </div>
+
+        <!-- 作曲 composer -->
+        <div class="form-group">
+            <label class="input-label" for="edit-composer">作曲</label>
+            <input class="input-text" type="text" name="composer" id="edit-composer" value="" placeholder="ex. 游智婷">
+        </div>
+
+        <!-- 譯者 translator -->
+        <div class="form-group">
+            <label class="input-label" for="edit-translator">譯者</label>
+            <input class="input-text" type="text" name="translator" id="edit-translator" value="">
+        </div>
+
+        <!-- 專輯 album -->
+        <div class="form-group">
+            <label class="input-label" for="edit-album">專輯</label>
+            <input class="input-text" type="text" name="album" id="edit-album" value="" placeholder="ex. 讚美之泉20-新的事將要成就，6">
+        </div>
+
+        <!-- 中文出版者 publisher -->
+        <div class="form-group">
+            <label class="input-label" for="edit-publisher">中文出版者</label>
+            <input class="input-text" type="text" name="publisher" id="edit-publisher" value="" placeholder="ex. 讚美之泉">
+        </div>
+
+        <!-- 原文出版者 publisher_original -->
+        <div class="form-group">
+            <label class="input-label" for="edit-publisher-original">原文出版者</label>
+            <input class="input-text" type="text" name="publisher_original" id="edit-publisher-original" value="">
+        </div>
+
+        <!-- 速度 tempo -->
+        <div class="form-group">
+            <label class="input-label" for="edit-tempo">速度</label>
+            <input class="input-text" type="text" name="tempo" id="edit-tempo" value="" placeholder="ex. 172">
+        </div>
+
+        <!-- 拍號 time_signature -->
+        <div class="form-group">
+            <label class="input-label" for="edit-time_signature">拍號</label>
+            <input class="input-text" type="text" name="time_signature" id="edit-time_signature" value="" placeholder="ex. 4/4">
+        </div>
+
+        <!-- 歌詞 lyrics -->
+        <div class="form-group">
+            <label class="input-label" for="edit-lyrics">歌詞</label>
+            <textarea class="input-text input-lyrics" type="text" name="lyrics" id="edit-lyrics" placeholder=""></textarea>
+        </div>
+
+        <button id="edit-submit" class="form-button btn btn-success" type="button">
+            新增
+        </button>
+
+        <a href="{{ return_url }}" class="form-button btn btn-outline-secondary">取消</a>
+
+    </form>
+
+    <form id="form-delete-whole-song" class="d-none mt-3" action="" method="POST">
+        <button id="delete-submit" class="btn btn-sm btn-danger button-to-delete" type="button">刪除歌曲</button>
+    </form>
+
+
+</div>
+{% endblock %}
+
+{% block script %}
+{{  super ()  }}
+<script src="{{ url_for('static', filename='js/admin/song_edit.js') }}"></script>
+{% endblock script %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/songlist_create.html -->
+{% endblock EOF_TAG %}

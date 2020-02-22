@@ -22,6 +22,165 @@ users_bp = Blueprint("users_bp", __name__,
 user_edit_bp = Blueprint("user_edit_bp", __name__,
                     template_folder='templates')
 
+workspace_bp = Blueprint("workspace_bp", __name__,
+                    template_folder="templates")
+
+create_new_song_bp = Blueprint("create_new_song_bp", __name__,
+                    template_folder="templates")
+
+@workspace_bp.route('/admin/workspace', methods=['GET'])
+@login_required
+def workspace():
+
+    # 更新使用者登入時間
+    if current_user.is_authenticated:
+        current_user.login_update()
+
+    if not current_user.is_manager:
+        flash("您並沒有權限。", "danger")
+        return redirect("/")
+
+    if request.method == "GET":
+        return render_template("admin/workspace.html")
+
+# 新增歌曲資料
+@create_new_song_bp.route('/admin/create/song', methods=["GET", "POST"])
+@login_required
+def add():
+
+    # 更新使用者登入時間
+    if current_user.is_authenticated:
+        current_user.login_update()
+    
+    # 確認使用者擁有管理員權限
+    if not current_user.is_manager:
+        flash("很抱歉，您並沒有新增歌曲的權限。", "danger")
+        return redirect("/")
+
+    if request.method == "GET":
+
+        # Tonality Collection
+        toColl = ["C", "Cm", "C#", "D", "Dm", "Db", "E", "Em", "Eb", "F",
+                  "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", 
+                  "Bb"]
+
+        return render_template("admin/song_create.html", toColl=toColl)
+    
+    elif request.method == "POST":
+        try:
+
+            # 取得表單資料
+            # 新增歌曲時，可以自訂語言、集數, 首數及 SID 為自動產生
+            title = request.values.get("title")
+            num_c = request.values.get("num_c")
+            language = request.values.get("language")
+            originalTitleOriginal = request.values.get("title_original")
+            scripture = request.values.get("scripture")
+            tonality = request.values.get("tonality")
+            year = request.values.get("year")
+            lyricist = request.values.get("lyricist")
+            composer = request.values.get("composer")
+            translator = request.values.get("translator")
+            album = request.values.get("album")
+            publisher = request.values.get("publisher")
+            publisher_original = request.values.get("publisher_original")
+            tempo = request.values.get("tempo")
+            time_signature = request.values.get("time_signature")
+
+            originLyrics = request.values.get("lyrics")
+
+            title_original_old = originalTitleOriginal.split("/")
+            title_original = []
+            for title_o in title_original_old:
+                title_o = title_o.strip()
+                if len(title_o) > 0:
+                    title_original.append(title_o)
+            
+            lyrics_old = originLyrics.split("\n")
+            lyrics = []
+            
+            lyrics_len = len(lyrics_old)
+            for i in range(lyrics_len):
+                p = lyrics_old[i]
+                if len(p) > 0:
+                    p = p.strip()
+                    p = p.replace("\n", "")
+                    p = p.replace("\r", "")
+                if len(p) > 0:
+                    lyrics.append(p)
+
+            mostAdminToken = os.environ.get("SONGS_DB_MOST_ADMIN_TOKEN")
+
+            reqBase = "https://church-music-api.herokuapp.com/"
+            # reqBase = "http://localhost:7700/"
+
+            reqURL = reqBase + "api/songs/search?lang=" + language + "&c=" + num_c + "&to=&title=&lyrics=&test=0"
+            searchRes = json.loads(requests.get(reqURL).text)
+
+            newNumI = 0
+            if type(searchRes) == type([]):
+                currentCollecAmount = len(searchRes)
+                newNumI = currentCollecAmount + 1
+            elif searchRes["Code"] == 1600:
+                newNumI = 1
+
+            newNumI = str(newNumI)
+
+            newSong = {
+                # "sid": sid, # SID 由後端產生
+                "num_c": num_c,
+                "num_i": newNumI,
+                "title": title,
+                "title_original": title_original,
+                "scripture": scripture,
+                "year": year,
+                "lyricist": lyricist,
+                "composer": composer,
+                "translator": translator,
+                "lyrics": lyrics,
+                "tonality": tonality,
+                "tempo": tempo,
+                "time_signature": time_signature,
+                "album": album,
+                "publisher": publisher,
+                "publisher_original": publisher_original,
+                "language": language,
+                "token" : mostAdminToken,
+            }
+
+            for key, value in newSong.items():
+                if type(value) == type("string"):
+                    newSong[key] = newSong[key].strip()
+
+            newSong_json = json.dumps(newSong)
+
+            print(newSong_json)
+
+            postURL = "https://church-music-api.herokuapp.com/api/songs"
+            # postURL = "http://0.0.0.0:7700/api/songs"
+
+            r_post = requests.post(postURL, newSong_json)
+
+            response = json.loads(r_post.text)
+            # return r_post.text
+
+            newSID = response["NewSID"]
+
+            return_url = request.values.get("next")
+            if not helper.is_safe_url(return_url):
+                flash("不安全的連結", "danger")
+                return abort(400)
+            else:
+                flash("成功新增歌曲 #" + newSID, "success")
+                if not return_url:
+                    return redirect("/")
+                else:
+                    return redirect(return_url)
+        
+        except Exception as error:
+            print(error)
+            flash("發生錯誤，請洽網站管理員。", "danger")
+            return redirect("/")
 
 @song_edit_bp.route('/admin/edit/song/<sid>', methods=["GET", "POST"])
 @login_required
