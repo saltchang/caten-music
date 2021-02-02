@@ -1,53 +1,19 @@
-# 開發日誌
+# Changelog
 
-A Flask music app for church.
+## Released
 
-本專案為歌曲資料庫網站，提供給 **[Caten-Church](https://caten-church.com)** 使用。
+### [0.5.1] - 2020-02-02
 
-- **[Caten Music](https://caten-music.herokuapp.com) - 0.5.0 發佈於 2020-02-22**
+- Fix default environment file for building the app in development  
+  (miss env variable: DATABASE_URL_FOR_DEVELOPMENT)
 
-## Tech Stack
-
-- [Python](https://www.python.org/)
-- [Pipenv](https://github.com/pypa/pipenv)
-- [Flask](http://flask.pocoo.org/)
-- [Heroku](https://www.heroku.com/home)
-- [PostgreSQL](https://www.postgresql.org/)
-- [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
-- [Church Music API (Go & MongoDB)](https://github.com/saltchang/church-music-api)
-
-## Feature
-
-- 檢視詳細歌曲資訊
-- 搜尋歌曲(歌名、歌詞)
-- 會員註冊、登入、登出
-- 依語言類別瀏覽歌曲
-- 下載歌曲 PPT、歌譜
-- 歌單瀏覽、建立、編輯、刪除、分享
-- 歌曲問題回報
-- 新增、編輯歌曲
-- 三種權限：普通、管理員、總管
-
-## Task
-
-### Doing
-
-- 帳號資料：查看、修改
-
-### Todo
-
-- 刪除歌曲
-- 建立歌曲資訊 Model
-- 以彈出視窗預覽歌譜
-- 修復 Test
-
-## Version
+## History
 
 ### [0.5.0] - 2020-02-22
 
 #### Added
 
-- 新增 新增歌曲功能
+- New feature: create new songs
 
 ### [0.4.0] - 2020-01-10
 
