@@ -2,12 +2,16 @@
 
 ## Released
 
+### [0.5.2] - 2020-11-27
+
+- Update to support new version packages
+
+## History
+
 ### [0.5.1] - 2020-02-02
 
 - Fix default environment file for building the app in development  
   (miss env variable: DATABASE_URL_FOR_DEVELOPMENT)
-
-## History
 
 ### [0.5.0] - 2020-02-22
 

@@ -25,28 +25,30 @@ class CreateApp:
     def Main():
 
         config = os.environ.get("APP_SETTING")
-        
+
         app = Flask(__name__)
 
-        app.config.from_object(DefaultConfig)
-        
-        if config == "Development":
-            app.config.from_pyfile("./development.py")
-        elif config == "Testing":
-            app.config.from_pyfile("./testing.py")
-        elif config == "Production":
-            app.config.from_pyfile("./production.py")
+        with app.app_context():
 
-        from . import models
-        models.init_app(app)
+            app.config.from_object(DefaultConfig)
+            
+            if config == "Development":
+                app.config.from_pyfile("./development.py")
+            elif config == "Testing":
+                app.config.from_pyfile("./testing.py")
+            elif config == "Production":
+                app.config.from_pyfile("./production.py")
 
-        from . import routes
-        routes.init_app(app)
+            from . import models
+            models.init_app(app)
 
-        from . import helper
-        helper.handleAPISchedule()
+            from . import routes
+            routes.init_app(app)
 
-        return app
+            from . import helper
+            helper.handleAPISchedule()
+
+            return app
 
     def Test():
 
@@ -54,19 +56,21 @@ class CreateApp:
 
         app = Flask(__name__)
 
-        app.config.from_object(DefaultConfig)
-        
-        if config == "Development":
-            app.config.from_pyfile("./development.py")
-        elif config == "Testing":
-            app.config.from_pyfile("./testing.py")
-        elif config == "Production":
-            app.config.from_pyfile("./production.py")
+        with app.app_context():
 
-        from . import models
-        models.init_app(app)
+            app.config.from_object(DefaultConfig)
+            
+            if config == "Development":
+                app.config.from_pyfile("./development.py")
+            elif config == "Testing":
+                app.config.from_pyfile("./testing.py")
+            elif config == "Production":
+                app.config.from_pyfile("./production.py")
 
-        from . import routes
-        routes.init_app(app)
+            from . import models
+            models.init_app(app)
 
-        return app
+            from . import routes
+            routes.init_app(app)
+
+            return app

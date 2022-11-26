@@ -2,23 +2,24 @@
 
 import os
 
-from flask import Flask, current_app
+from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app = current_app
 
-config = os.environ.get("APP_SETTING")
+with app.app_context():
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-if config == "Development":
-    print("Development")
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_DEVELOPMENT")
+    config = os.environ.get("APP_SETTING")
 
-elif config == "Testing":
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_TESTING")
+    if config == "Development":
+        print("Development")
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_DEVELOPMENT")
 
-elif config == "Production":
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
-    
+    elif config == "Testing":
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL_FOR_TESTING")
+
+    elif config == "Production":
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 db = SQLAlchemy(app)

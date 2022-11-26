@@ -9,7 +9,7 @@ requests
 six
 urllib3
 xlrd
-Flask
+Flask == 2.0.3
 Flask-SQLAlchemy
 Jinja2 >= 2.10.1
 MarkupSafe

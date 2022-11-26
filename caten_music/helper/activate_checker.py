@@ -1,7 +1,7 @@
 # helper/activate_checker.py
 
 from flask import current_app
-from itsdangerous import TimedJSONWebSignatureSerializer as sign
+from itsdangerous import URLSafeTimedSerializer as sign
 from itsdangerous import SignatureExpired, BadSignature
 
 

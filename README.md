@@ -20,10 +20,9 @@ A music web application for **[Caten Church](https://caten-church.org)**.
 
 ## Released
 
-### [0.5.1] - 2021-02-02
+### [0.5.2] - 2020-11-27
 
-- Fix default environment file for building the app in development  
-  (miss env variable: DATABASE_URL_FOR_DEVELOPMENT)
+- Update to support new version packages
 
 ## Quick Start
 
