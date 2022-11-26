@@ -20,9 +20,9 @@ A music web application for **[Caten Church](https://caten-church.org)**.
 
 ## Released
 
-### [0.5.2] - 2020-11-27
+### [0.5.3] - 2020-11-27
 
-- Update to support new version packages
+- Freeze SQLAlchemy version to prevent PostgreSQL connection errors
 
 ## Quick Start
 

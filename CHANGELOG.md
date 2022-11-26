@@ -2,11 +2,15 @@
 
 ## Released
 
+### [0.5.3] - 2020-11-27
+
+- Freeze SQLAlchemy version to prevent PostgreSQL connection errors
+
+## History
+
 ### [0.5.2] - 2020-11-27
 
 - Update to support new version packages
-
-## History
 
 ### [0.5.1] - 2020-02-02
 

@@ -13,7 +13,7 @@ Flask == 2.0.3
 Flask-SQLAlchemy
 Jinja2 >= 2.10.1
 MarkupSafe
-SQLAlchemy
+SQLAlchemy == 1.3
 Werkzeug >= 0.15.3
 psycopg2
 flask-login
