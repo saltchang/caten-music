@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, abort, flash, current_app, request
 from jinja2 import TemplateNotFound
 
 from caten_music.models import SongList, User, login_manager
+from caten_music import helper
 
 from flask_login import login_required, current_user
 
@@ -102,7 +103,7 @@ def song_list_by_id(out_id):
         else:
             sids += "+" + songlist.songs_sid_list[i]
     
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sids
+    requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sids
     r = requests.get(requestURL)
     if r.status_code == 200:
         songs = json.loads(r.text)
@@ -147,7 +148,7 @@ def edit(out_id):
             else:
                 sids += "+" + songlist.songs_sid_list[i]
         
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sids
+        requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sids
         r = requests.get(requestURL)
         if r.status_code == 200:
             songs = json.loads(r.text)

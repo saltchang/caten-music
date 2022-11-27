@@ -5,6 +5,8 @@ from jinja2 import TemplateNotFound
 
 from flask_login import current_user
 
+from caten_music import helper
+
 import random
 import requests
 import json
@@ -24,7 +26,7 @@ def seeHome():
     if current_user.is_authenticated:
         current_user.login_update()
 
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/random/" + random_amount
+        requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/random/" + random_amount
         r = requests.get(requestURL)
 
         if r.status_code == 200:

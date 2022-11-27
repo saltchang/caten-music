@@ -111,10 +111,9 @@ def add():
 
             mostAdminToken = os.environ.get("SONGS_DB_MOST_ADMIN_TOKEN")
 
-            reqBase = "https://church-music-api.herokuapp.com/"
-            # reqBase = "http://localhost:7700/"
+            reqBase = helper.CHURCH_MUSIC_API_URL
 
-            reqURL = reqBase + "api/songs/search?lang=" + language + "&c=" + num_c + "&to=&title=&lyrics=&test=0"
+            reqURL = reqBase + "/api/songs/search?lang=" + language + "&c=" + num_c + "&to=&title=&lyrics=&test=0"
             searchRes = json.loads(requests.get(reqURL).text)
 
             newNumI = 0
@@ -156,10 +155,9 @@ def add():
 
             print(newSong_json)
 
-            postURL = "https://church-music-api.herokuapp.com/api/songs"
-            # postURL = "http://0.0.0.0:7700/api/songs"
+            postURL = helper.CHURCH_MUSIC_API_URL
 
-            r_post = requests.post(postURL, newSong_json)
+            r_post = requests.post(postURL + "/api/songs", newSong_json)
 
             response = json.loads(r_post.text)
             # return r_post.text
@@ -196,7 +194,7 @@ def edit(sid):
         return redirect("/")
 
     # Get 歌曲資訊
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
+    requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sid
 
     r = requests.get(requestURL)
 
@@ -328,8 +326,7 @@ def edit(sid):
 
             newSong_json = json.dumps(newSong)
 
-            putURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
-            # putURL = "http://0.0.0.0:7700/api/songs/sid/" + sid
+            putURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sid
 
             r_put = requests.put(putURL, newSong_json)
 

@@ -7,6 +7,8 @@ from flask_login import current_user
 import requests
 import json
 
+from caten_music import helper
+
 search_bp = Blueprint("search_bp", __name__,
                       template_folder='templates')
 
@@ -40,12 +42,14 @@ def search():
     to = request.args.get("to")
     if to != "":
         return redirect("/"), 302
+    
+    apiBaseUrl = helper.CHURCH_MUSIC_API_URL
 
     # API 串接搜尋
     if searchMode == "title":
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&title=" + primary + "&lyrics=&test=0"
+        requestURL = apiBaseUrl + "/api/songs/search?lang=&c=&to=&title=" + primary + "&lyrics=&test=0"
     if searchMode == "lyric":
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=&lyrics=" + primary + "&title=&test=0"
+        requestURL = apiBaseUrl + "/api/songs/search?lang=&c=&to=&lyrics=" + primary + "&title=&test=0"
     r = requests.get(requestURL)
 
     if not r.status_code == 200:

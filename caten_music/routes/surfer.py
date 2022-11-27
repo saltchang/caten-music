@@ -8,6 +8,8 @@ from flask_login import login_required, current_user
 import requests
 import json
 
+from caten_music import helper
+
 surfer_bp = Blueprint("surfer_bp", __name__,
                       template_folder='templates')
 
@@ -46,6 +48,8 @@ def surf():
     lang = ""
     to = ""
 
+    apiBaseUrl = helper.CHURCH_MUSIC_API_URL
+
     if surfMode == "byLang":
 
         # 關鍵字：集數
@@ -59,7 +63,7 @@ def surf():
             return redirect("/"), 302
 
         # API 串接 搜尋
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=" + \
+        requestURL = apiBaseUrl + "/api/songs/search?lang=" + \
         lang + "&c=" + c + "&to=&title=&lyrics=&test=0"
     
 
@@ -71,7 +75,7 @@ def surf():
             return redirect("/"), 302
 
         # API 串接 搜尋
-        requestURL = "https://church-music-api.herokuapp.com/api/songs/search?lang=&c=&to=" + to + "&title=&lyrics=&test=0"
+        requestURL = apiBaseUrl + "/api/songs/search?lang=&c=&to=" + to + "&title=&lyrics=&test=0"
     
 
     
@@ -98,7 +102,7 @@ def surf_one(sid):
 
     # API
 
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
+    requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sid
 
     r = requests.get(requestURL)
 

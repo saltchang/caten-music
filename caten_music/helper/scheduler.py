@@ -1,15 +1,16 @@
 # helper/scheduler.py
 
 from flask_apscheduler import APScheduler
+
 import datetime
 import requests
+
+from .env import CHURCH_MUSIC_API_URL
 
 def callChurchMusicAPI():
     print("Calling church-music-api...", str(datetime.datetime.now()))
     try:
-        reqURL = "https://church-music-api.herokuapp.com"
-
-        res = requests.get(reqURL)
+        res = requests.get(CHURCH_MUSIC_API_URL)
         if res.status_code == 200:
             print("Called API successed.")
         else:
@@ -20,6 +21,6 @@ def callChurchMusicAPI():
 
 def handleAPISchedule():
     scheduler = APScheduler()
-    scheduler.add_job(func=callChurchMusicAPI, args=[], trigger='interval', id='callApiJob', minutes=30)
+    scheduler.add_job(func=callChurchMusicAPI, args=[], trigger='interval', id='callApiJob', minutes=15)
     scheduler.start()
     print("Music API Scheduler start!")

@@ -22,7 +22,7 @@ def report_song(sid):
     if current_user.is_authenticated:
         current_user.login_update()
 
-    requestURL = "https://church-music-api.herokuapp.com/api/songs/sid/" + sid
+    requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sid
 
     r = requests.get(requestURL)
 
