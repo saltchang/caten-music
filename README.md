@@ -3,7 +3,7 @@
 A music web application for **[Caten Church](https://caten-church.org)**.
 
 - View and search the songs you need.
-- Signing up to create a songlist and share it to your partner.
+- Signing up to create a song list and share it to your partner.
 - Become an admin and create a new song, or edit an old one.
 
 - See **[Changelog](https://github.com/saltchang/caten-music/blob/master/CHANGELOG.md)**
@@ -84,3 +84,13 @@ SECRET_KEY=<Secret_Key>
 FLASK_APP=run.py
 
 ```
+
+## Backup Database
+
+To backup the database, use the `backup_db` script, please try:
+
+```bash
+./backup_db.sh --help
+```
+
+The default backup directory is `./backups`.
