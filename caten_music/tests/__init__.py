@@ -13,7 +13,7 @@ from caten_music import CreateApp
 @pytest.fixture
 def client():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     # db_fd, app.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
     client = app.test_client()
@@ -26,7 +26,7 @@ def client():
 
 def dropAll():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     from caten_music.models.base import db
 
@@ -35,7 +35,7 @@ def dropAll():
 
 def createAll():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     from caten_music.models.base import db
 
@@ -44,7 +44,7 @@ def createAll():
 
 def create_test_user():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     from caten_music import models
 

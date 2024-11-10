@@ -2,7 +2,7 @@
 
 from caten_music import CreateApp
 
-app = CreateApp.Main()
+app = CreateApp().main()
 
 if __name__ == "__main__":
 

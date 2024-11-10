@@ -5,7 +5,6 @@ import datetime
 from flask import current_app
 
 from itsdangerous import URLSafeTimedSerializer as sign
-from itsdangerous import SignatureExpired, BadSignature
 
 from .base import db
 from caten_music import helper
@@ -22,16 +21,18 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(db.String(64), nullable=False)
     displayname = db.Column(db.String(16), nullable=False)
-    register_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
+    register_time = db.Column(
+        db.DateTime, nullable=False, default=datetime.datetime.today()
+    )
     last_login_time = db.Column(db.DateTime)
     is_authenticated = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
     is_anonymous = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_manager = db.Column(db.Boolean, default=False)
-    user_profile = db.relationship('UserProfile', backref='user', lazy=True)
-    song_list = db.relationship('SongList', backref='user', lazy=True)
-    song_report = db.relationship('SongReport', backref='user', lazy=True)
+    user_profile = db.relationship("UserProfile", backref="user", lazy=True)
+    song_list = db.relationship("SongList", backref="user", lazy=True)
+    song_report = db.relationship("SongReport", backref="user", lazy=True)
 
     # 定義 password 為不可讀
     @property
@@ -50,22 +51,21 @@ class User(db.Model):
 
     # 產生帳號啟動碼
 
-    def create_activate_token(self, hours=2):
-        time = hours * 3600
-        token_generator = sign(
-            current_app.config['SECRET_KEY'], expires_in=time)
+    def create_activate_token(self):
+        print("====>SECRET_KEY", current_app.config["SECRET_KEY"])
+        token_generator = sign(current_app.config["SECRET_KEY"])
         return token_generator.dumps({"user_id": self.id})
 
     # 取得用戶唯一識別碼
 
     def get_id(self):
         return self.username
-    
+
     # 重設密碼
     def reset_pw(self, password):
         self.password_hash = helper.createPasswordHash(password)
         return self
-    
+
     # 登入時更新用戶狀態資料
     def login_update(self):
         self.last_login_time = datetime.datetime.today()
@@ -94,4 +94,8 @@ class User(db.Model):
     # 自身物件表示
 
     def __repr__(self):
-        return '<ID: %s, Username: %s, Email: %s>' % (self.id, self.username, self.email)
+        return "<ID: %s, Username: %s, Email: %s>" % (
+            self.id,
+            self.username,
+            self.email,
+        )

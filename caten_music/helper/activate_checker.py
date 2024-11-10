@@ -5,12 +5,13 @@ from itsdangerous import URLSafeTimedSerializer as sign
 from itsdangerous import SignatureExpired, BadSignature
 
 
-def checkActivateToken(token):
+def checkActivateToken(token: str, hours=2) -> bool:
+    time = hours * 3600
 
     tokenGenerator = sign(current_app.config['SECRET_KEY'])
 
     try:
-        check_result = tokenGenerator.loads(token)  # 驗證
+        check_result = tokenGenerator.loads(token, max_age=time)  # 驗證
 
     except SignatureExpired:
         #  當時間超過的時候就會引發SignatureExpired錯誤

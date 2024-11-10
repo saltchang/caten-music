@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.11
 # set work directory
 WORKDIR /usr/src/app
 
@@ -6,10 +6,12 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/app/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install poetry
+
+COPY pyproject.toml poetry.lock /usr/src/app/
+
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-dev --no-interaction --no-ansi
 
 # copy project
 COPY . /usr/src/app/

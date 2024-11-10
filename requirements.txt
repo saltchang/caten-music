@@ -9,12 +9,12 @@ requests
 six
 urllib3
 xlrd
-Flask == 2.0.3
+Flask
 Flask-SQLAlchemy
-Jinja2 >= 2.10.1
+Jinja2
 MarkupSafe
-SQLAlchemy == 1.3
-Werkzeug >= 0.15.3
+SQLAlchemy
+Werkzeug
 psycopg2
 flask-login
 python-dotenv

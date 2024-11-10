@@ -8,7 +8,7 @@ from caten_music import CreateApp
 
 def dropAllMain():
 
-    app = CreateApp.Main()
+    app = CreateApp().main()
 
     from caten_music.models.base import db
 
@@ -16,7 +16,7 @@ def dropAllMain():
 
 def dropAllTest():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     from caten_music.models.base import db
 
@@ -25,7 +25,7 @@ def dropAllTest():
 
 def createAllMain():
 
-    app = CreateApp.Main()
+    app = CreateApp().main()
 
     from caten_music.models.base import db
 
@@ -33,7 +33,7 @@ def createAllMain():
 
 def createAllTest():
 
-    app = CreateApp.Test()
+    app = CreateApp().test()
 
     from caten_music.models.base import db
 
