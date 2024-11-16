@@ -1,5 +1,7 @@
 # routes/__init__.py
 
+from flask import jsonify
+
 from .home import home_bp
 from .search import search_bp
 from .surfer import surfer_bp, surf_bp, surf_one_bp
@@ -16,6 +18,11 @@ from .pages import pages_bp
 
 
 def init_app(app):
+    
+    @app.route('/api/health', methods=['GET'])
+    def health_check():
+        print("Health check request received")
+        return jsonify({"status": "OK"}), 200
 
     app.register_blueprint(home_bp)
     app.register_blueprint(search_bp)
