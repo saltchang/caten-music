@@ -15,7 +15,7 @@ class UserProfile(db.Model):
 
     # 資料欄位設定
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('public.users.id'),
         nullable=False)
     about_me = db.Column(db.Text)
     phone_number = db.Column(db.String(20))

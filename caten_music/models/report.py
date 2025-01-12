@@ -26,7 +26,7 @@ class SongReport(db.Model):
     song_sid = db.Column(db.Integer)
 
     # 建立者 ID
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('public.users.id'), nullable=False)
 
     # 回報時間
     reported_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())

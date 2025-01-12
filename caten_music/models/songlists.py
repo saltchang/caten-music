@@ -29,7 +29,7 @@ class SongList(db.Model):
     description = db.Column(db.Text, default="")
 
     # 建立者 ID
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('public.users.id'),
         nullable=False)
     
     # 歌單所存放歌曲之SID
