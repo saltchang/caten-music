@@ -10,6 +10,8 @@ import datetime
 
 class SongReport(db.Model):
 
+    __table_args__ = {"schema": "public"}
+
     # SQL Table Name
     __tablename__ = "song_reports"
 

@@ -8,6 +8,8 @@ from caten_music import helper
 
 class UserProfile(db.Model):
 
+    __table_args__ = {"schema": "public"}
+
     # SQL Table Name
     __tablename__ = "users_profile"
 
