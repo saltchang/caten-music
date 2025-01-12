@@ -2,7 +2,7 @@
 name = "caten-music"
 version = "0.7.0"
 description = "A music web application for Caten Church."
-authors = ["Salt Chang <saltchang.tw@gmail.com>"]
+authors = ["Salt Chang <saltchang@outlook.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

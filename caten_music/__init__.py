@@ -37,6 +37,7 @@ class CreateApp:
             app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
             app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
             app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+            app.config["CONTACT_EMAIL"] = os.environ.get("CONTACT_EMAIL")
 
             if config == "Development":
                 app.config.from_pyfile("./development.py")
@@ -56,6 +57,10 @@ class CreateApp:
             from . import helper
 
             helper.handleAPISchedule()
+
+            @app.context_processor
+            def inject_contact_email():
+                return dict(contact_email=app.config["CONTACT_EMAIL"])
 
             return app
 
