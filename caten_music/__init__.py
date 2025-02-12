@@ -20,9 +20,7 @@ class DefaultConfig:
 
 
 class CreateApp:
-
     def main(self):
-
         load_dotenv()
 
         config = os.environ.get("APP_SETTING")
@@ -30,13 +28,10 @@ class CreateApp:
         app = Flask(__name__)
 
         with app.app_context():
-
             app.config.from_object(DefaultConfig)
 
             app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
             app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-            app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-            app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
             app.config["CONTACT_EMAIL"] = os.environ.get("CONTACT_EMAIL")
 
             if config == "Development":
@@ -72,13 +67,10 @@ class CreateApp:
         app = Flask(__name__)
 
         with app.app_context():
-
             app.config.from_object(DefaultConfig)
 
             app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
             app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-            app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-            app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 
             if config == "Development":
                 app.config.from_pyfile("./development.py")

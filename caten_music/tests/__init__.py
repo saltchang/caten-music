@@ -12,7 +12,6 @@ from caten_music import CreateApp
 
 @pytest.fixture
 def client():
-
     app = CreateApp().test()
 
     # db_fd, app.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
@@ -25,7 +24,6 @@ def client():
 
 
 def dropAll():
-
     app = CreateApp().test()
 
     from caten_music.models.base import db
@@ -34,7 +32,6 @@ def dropAll():
 
 
 def createAll():
-
     app = CreateApp().test()
 
     from caten_music.models.base import db
@@ -43,7 +40,6 @@ def createAll():
 
 
 def create_test_user():
-
     app = CreateApp().test()
 
     from caten_music import models
@@ -51,12 +47,24 @@ def create_test_user():
     models.db.create_all()
 
     # 建立已經啟動的帳號
-    test_user = models.User(username="test", email="testmail@test.mail.commm", displayname="testDisplay", password="testpassword", is_authenticated=True, is_active=True)
+    test_user = models.UserModel(
+        username="test",
+        email="testmail@test.mail.commm",
+        displayname="testDisplay",
+        password="testpassword",
+        is_authenticated=True,
+        is_active=True,
+    )
 
     test_user.save()
 
     # 建立尚未啟動的帳號
-    test_user_not_activated = models.User(username="test_not_act", email="testmailnotact@test.mail.commm", displayname="testDisplay", password="testpasswordnotact")
+    test_user_not_activated = models.UserModel(
+        username="test_not_act",
+        email="testmailnotact@test.mail.commm",
+        displayname="testDisplay",
+        password="testpasswordnotact",
+    )
 
     test_user_not_activated.save()
 

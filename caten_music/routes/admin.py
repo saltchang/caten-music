@@ -1,9 +1,8 @@
 # routes/admin.py
 
-from flask import Blueprint, render_template, abort, flash, current_app, request, redirect, jsonify, url_for
-from jinja2 import TemplateNotFound
+from flask import Blueprint, render_template, abort, flash, request, redirect, url_for
 
-from caten_music.models import User, login_manager
+from caten_music.models import UserModel
 from caten_music import helper
 
 from flask_login import login_required, current_user
@@ -13,25 +12,22 @@ import json
 import os
 import re
 
-song_edit_bp = Blueprint("song_edit_bp", __name__,
-                    template_folder='templates')
+song_edit_bp = Blueprint("song_edit_bp", __name__, template_folder="templates")
 
-users_bp = Blueprint("users_bp", __name__,
-                    template_folder='templates')
+users_bp = Blueprint("users_bp", __name__, template_folder="templates")
 
-user_edit_bp = Blueprint("user_edit_bp", __name__,
-                    template_folder='templates')
+user_edit_bp = Blueprint("user_edit_bp", __name__, template_folder="templates")
 
-workspace_bp = Blueprint("workspace_bp", __name__,
-                    template_folder="templates")
+workspace_bp = Blueprint("workspace_bp", __name__, template_folder="templates")
 
-create_new_song_bp = Blueprint("create_new_song_bp", __name__,
-                    template_folder="templates")
+create_new_song_bp = Blueprint(
+    "create_new_song_bp", __name__, template_folder="templates"
+)
 
-@workspace_bp.route('/admin/workspace', methods=['GET'])
+
+@workspace_bp.route("/admin/workspace", methods=["GET"])
 @login_required
 def workspace():
-
     # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
@@ -43,32 +39,50 @@ def workspace():
     if request.method == "GET":
         return render_template("admin/workspace.html")
 
+
 # 新增歌曲資料
-@create_new_song_bp.route('/admin/create/song', methods=["GET", "POST"])
+@create_new_song_bp.route("/admin/create/song", methods=["GET", "POST"])
 @login_required
 def add():
-
     # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
-    
+
     # 確認使用者擁有管理員權限
     if not current_user.is_manager:
         flash("很抱歉，您並沒有新增歌曲的權限。", "danger")
         return redirect("/")
 
     if request.method == "GET":
-
         # Tonality Collection
-        toColl = ["C", "Cm", "C#", "D", "Dm", "Db", "E", "Em", "Eb", "F",
-                  "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", 
-                  "Bb"]
+        toColl = [
+            "C",
+            "Cm",
+            "C#",
+            "D",
+            "Dm",
+            "Db",
+            "E",
+            "Em",
+            "Eb",
+            "F",
+            "Fm",
+            "F#m",
+            "G",
+            "Gm",
+            "Gb",
+            "A",
+            "Am",
+            "Ab",
+            "B",
+            "Bm",
+            "Bb",
+        ]
 
         return render_template("admin/song_create.html", toColl=toColl)
-    
+
     elif request.method == "POST":
         try:
-
             # 取得表單資料
             # 新增歌曲時，可以自訂語言、集數, 首數及 SID 為自動產生
             title = request.values.get("title")
@@ -95,10 +109,10 @@ def add():
                 title_o = title_o.strip()
                 if len(title_o) > 0:
                     title_original.append(title_o)
-            
+
             lyrics_old = originLyrics.split("\n")
             lyrics = []
-            
+
             lyrics_len = len(lyrics_old)
             for i in range(lyrics_len):
                 p = lyrics_old[i]
@@ -113,7 +127,14 @@ def add():
 
             reqBase = helper.CHURCH_MUSIC_API_URL
 
-            reqURL = reqBase + "/api/songs/search?lang=" + language + "&c=" + num_c + "&to=&title=&lyrics=&test=0"
+            reqURL = (
+                reqBase
+                + "/api/songs/search?lang="
+                + language
+                + "&c="
+                + num_c
+                + "&to=&title=&lyrics=&test=0"
+            )
             searchRes = json.loads(requests.get(reqURL).text)
 
             newNumI = 0
@@ -144,7 +165,7 @@ def add():
                 "publisher": publisher,
                 "publisher_original": publisher_original,
                 "language": language,
-                "token" : mostAdminToken,
+                "token": mostAdminToken,
             }
 
             for key, value in newSong.items():
@@ -174,20 +195,20 @@ def add():
                     return redirect("/")
                 else:
                     return redirect(return_url)
-        
+
         except Exception as error:
             print(error)
             flash("發生錯誤，請洽網站管理員。", "danger")
             return redirect("/")
 
-@song_edit_bp.route('/admin/edit/song/<sid>', methods=["GET", "POST"])
+
+@song_edit_bp.route("/admin/edit/song/<sid>", methods=["GET", "POST"])
 @login_required
 def edit(sid):
-
     # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
-    
+
     # 確認使用者擁有管理員權限
     if not current_user.is_manager:
         flash("很抱歉，您並沒有編輯歌曲的權限。", "danger")
@@ -206,14 +227,33 @@ def edit(sid):
         song = result[0]
 
     if request.method == "GET":
-
         return_url = request.values.get("next")
-        
+
         # Tonality Collection
-        toColl = ["C", "Cm", "C#", "D", "Dm", "Db", "E", "Em", "Eb", "F",
-                  "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", 
-                  "Bb"]
-        
+        toColl = [
+            "C",
+            "Cm",
+            "C#",
+            "D",
+            "Dm",
+            "Db",
+            "E",
+            "Em",
+            "Eb",
+            "F",
+            "Fm",
+            "F#m",
+            "G",
+            "Gm",
+            "Gb",
+            "A",
+            "Am",
+            "Ab",
+            "B",
+            "Bm",
+            "Bb",
+        ]
+
         # Get original titles
         song_title_original = ""
         len_title_o = len(song["title_original"])
@@ -223,18 +263,23 @@ def edit(sid):
                     song_title_original += song["title_original"][i]
                 else:
                     song_title_original += song["title_original"][i] + " / "
-        
+
         # Get lyrics
         song_lyrics = ""
         for p in song["lyrics"]:
             song_lyrics += p + "\n"
 
-        return render_template("admin/song_edit.html", song=song, toColl=toColl, song_lyrics=song_lyrics, song_title_original=song_title_original, return_url=return_url)
-    
+        return render_template(
+            "admin/song_edit.html",
+            song=song,
+            toColl=toColl,
+            song_lyrics=song_lyrics,
+            song_title_original=song_title_original,
+            return_url=return_url,
+        )
+
     elif request.method == "POST":
-
         try:
-
             return_url = request.values.get("return_url")
 
             # 編輯歌曲時，不可更改語言、編號、sid
@@ -286,10 +331,10 @@ def edit(sid):
                 title_o = title_o.strip()
                 if len(title_o) > 0:
                     title_original.append(title_o)
-            
+
             lyrics_old = originLyrics.split("\n")
             lyrics = []
-            
+
             lyrics_len = len(lyrics_old)
             for i in range(lyrics_len):
                 p = lyrics_old[i]
@@ -321,7 +366,7 @@ def edit(sid):
                 "publisher": publisher,
                 "publisher_original": publisher_original,
                 "language": language,
-                "token" : mostAdminToken,
+                "token": mostAdminToken,
             }
 
             newSong_json = json.dumps(newSong)
@@ -333,7 +378,6 @@ def edit(sid):
             response = json.loads(r_put.text)
             # return r_put.text
 
-            
             if not helper.is_safe_url(return_url):
                 flash("不安全的連結", "danger")
                 return abort(400)
@@ -342,16 +386,16 @@ def edit(sid):
                     return redirect("/")
                 flash("成功編輯歌曲 #" + sid, "success")
                 return redirect(return_url)
-        
+
         except Exception as error:
             print(error)
             flash("發生錯誤，請洽網站管理員。", "danger")
             return redirect("/")
 
-@users_bp.route('/admin/users', methods=['GET'])
+
+@users_bp.route("/admin/users", methods=["GET"])
 @login_required
 def users():
-
     # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
@@ -361,13 +405,13 @@ def users():
         return redirect("/")
 
     if request.method == "GET":
-        users = User.query.order_by(User.id).all()
+        users = UserModel.query.order_by(UserModel.id).all()
         return render_template("admin/users.html", users=users)
 
-@user_edit_bp.route('/admin/users/edit/<id_>', methods=['GET', 'POST'])
+
+@user_edit_bp.route("/admin/users/edit/<id_>", methods=["GET", "POST"])
 @login_required
 def edit(id_):
-
     # 更新使用者登入時間
     if current_user.is_authenticated:
         current_user.login_update()
@@ -375,18 +419,17 @@ def edit(id_):
     if not current_user.is_admin:
         flash("您並沒有總管理員權限。", "danger")
         return redirect("/")
-    
+
     if request.method == "GET":
-        user = User.query.filter_by(id=id_).first()
+        user = UserModel.query.filter_by(id=id_).first()
         return render_template("admin/user_edit.html", user=user)
 
     elif request.method == "POST":
-        
         try:
-            user = User.query.filter_by(id=id_).first()
+            user = UserModel.query.filter_by(id=id_).first()
         except:
             flash("錯誤的使用者資訊", "danger")
-        
+
         displayname = request.values.get("displayname")
         authority = request.values.get("authority")
 
@@ -402,14 +445,14 @@ def edit(id_):
 
             if stringLen <= 16:
                 user.displayname = displayname
-            
+
             else:
                 flash("編輯使用者顯示名稱時發生錯誤", "danger")
                 return redirect("/")
         else:
             flash("編輯使用者顯示名稱時發生錯誤", "danger")
             return redirect("/")
-        
+
         # 確認權限
         if authority == "admin":
             user.is_admin = True
@@ -423,7 +466,7 @@ def edit(id_):
         else:
             flash("編輯使用者權限時發生錯誤", "danger")
             return redirect("/")
-        
+
         user.update()
 
         return redirect(url_for("users_bp.users"))

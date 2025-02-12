@@ -1,40 +1,43 @@
 # models/users.py
 
-import datetime
+from datetime import datetime
 
+from core.model.user import User
+from core.type import IDType
 from flask import current_app
 
+from sqlalchemy import Integer, String, DateTime, Boolean
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from itsdangerous import URLSafeTimedSerializer as sign
 
-from .base import db
+from .base import Base, db
 from caten_music import helper
 
 
-class User(db.Model):
-
+class UserModel(Base):
     __table_args__ = {"schema": "public"}
 
     # SQL Table Name
     __tablename__ = "users"
 
     # 資料欄位設定
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(24), unique=True, nullable=False)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    password_hash = db.Column(db.String(64), nullable=False)
-    displayname = db.Column(db.String(16), nullable=False)
-    register_time = db.Column(
-        db.DateTime, nullable=False, default=datetime.datetime.today()
+    id: Mapped[IDType] = mapped_column(Integer, primary_key=True)
+    username: Mapped[str] = mapped_column(String(24), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(128), unique=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    displayname: Mapped[str] = mapped_column(String(16), nullable=False)
+    register_time: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, default=datetime.today()
     )
-    last_login_time = db.Column(db.DateTime)
-    is_authenticated = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=True)
-    is_anonymous = db.Column(db.Boolean, default=False)
-    is_admin = db.Column(db.Boolean, default=False)
-    is_manager = db.Column(db.Boolean, default=False)
-    user_profile = db.relationship("UserProfile", backref="user", lazy=True)
-    song_list = db.relationship("SongList", backref="user", lazy=True)
-    song_report = db.relationship("SongReport", backref="user", lazy=True)
+    last_login_time: Mapped[datetime | None] = mapped_column(DateTime)
+    is_authenticated: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_anonymous: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_manager: Mapped = mapped_column(Boolean, default=False)
+    user_profile = relationship("UserProfile", backref="user", lazy=True)
+    song_list = relationship("SongList", backref="user", lazy=True)
+    song_report = relationship("SongReport", backref="user", lazy=True)
 
     # 定義 password 為不可讀
     @property
@@ -70,26 +73,14 @@ class User(db.Model):
 
     # 登入時更新用戶狀態資料
     def login_update(self):
-        self.last_login_time = datetime.datetime.today()
+        self.last_login_time = datetime.today()
         db.session.commit()
-        return self
-
-    # 預註冊到資料庫（特殊用途）
-
-    def flush(self):
-        db.session.add(self)
-        db.flush()
         return self
 
     # 註冊到資料庫
 
     def save(self):
         db.session.add(self)
-        db.session.commit()
-        return self
-
-    # 更新至資料庫
-    def update(self):
         db.session.commit()
         return self
 
@@ -100,4 +91,20 @@ class User(db.Model):
             self.id,
             self.username,
             self.email,
+        )
+
+    def to_core(self) -> User:
+        return User(
+            id=self.id,
+            username=self.username,
+            email=self.email,
+            display_name=self.displayname,
+            password_hash=self.password_hash,
+            register_time=self.register_time,
+            last_login_time=self.last_login_time,
+            is_authenticated=self.is_authenticated,
+            is_active=self.is_active,
+            is_anonymous=self.is_anonymous,
+            is_admin=self.is_admin,
+            is_manager=self.is_manager,
         )

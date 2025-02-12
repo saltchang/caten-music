@@ -2,7 +2,7 @@
 
 from .base import db
 from .dbx import get_dbx
-from .users import User
+from .users import UserModel
 from .users_profile import UserProfile
 from .songlists import SongList
 from .report import SongReport

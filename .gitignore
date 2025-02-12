@@ -1,39 +1,27 @@
-# 虛擬環境
+### VisualStudioCode ###
+.vscode/*
+!.vscode/extensions.json
+!.vscode/*.example.json
+
 .env
-*.env.*
 .venv
-env/
+/env
 venv/
-ENV/
+/ENV
 env.bak/
 venv.bak/
 
-# 資料
-sheetdata
-sheet/
-sheet
-
-# 機密
 secret.txt
-secret/
 secret
 ssl-info
 
-# vscode 設定
-.vscode
-
-# .DS_Store from MacOS
 .DS_Store
 
-# Flask.Python Stack
 __pycache__/
 *.py[cod]
 *$py.class
 
 instance/
-
-songs_data
-songs_data/
 
 .pytest_cache/
 .pytest_cache

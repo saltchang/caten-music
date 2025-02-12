@@ -1,40 +1,64 @@
-[tool.poetry]
+[project]
 name = "caten-music"
 version = "0.7.0"
 description = "A music web application for Caten Church."
-authors = ["Salt Chang <saltchang@outlook.com>"]
+authors = [
+    { name="Salt Chang", email="saltchang@outlook.com" }
+]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.11"
-certifi = "^2024.8.30"
-chardet = "^5.2.0"
-click = "^8.1.7"
-dropbox = "^12.0.2"
-gunicorn = "^23.0.0"
-idna = "^3.10"
-itsdangerous = "^2.2.0"
-requests = "^2.32.3"
-six = "^1.16.0"
-urllib3 = "^2.2.3"
-xlrd = "^2.0.1"
-flask = "2.2.5"
-flask-sqlalchemy = "2.5.1"
-jinja2 = "^3.1.4"
-markupsafe = "^3.0.2"
-sqlalchemy = "1.4.54"
-werkzeug = "^3.1.3"
-psycopg2 = "^2.9.10"
-flask-login = "^0.6.3"
-python-dotenv = "^1.0.1"
-flask-mail = "^0.10.0"
-pytest = "^8.3.3"
-flask-migrate = "^4.0.7"
-flask-apscheduler = "^1.13.1"
-pandas = "^2.2.3"
-openpyxl = "^3.1.5"
+requires-python = ">=3.11, <4.0"
 
+dependencies = [
+    "certifi (>=2024.8.30)",
+    "chardet (>=5.2.0)",
+    "click (>=8.1.7)",
+    "dropbox (>=12.0.2)",
+    "gunicorn (>=23.0.0)",
+    "idna (>=3.10)",
+    "itsdangerous (>=2.2.0)",
+    "requests (>=2.32.3)",
+    "six (>=1.16.0)",
+    "urllib3 (>=2.2.3)",
+    "xlrd (>=2.0.1)",
+    "flask (>=2.2.5)",
+    "flask-sqlalchemy (>=2.5.1)",
+    "jinja2 (>=3.1.4)",
+    "markupsafe (>=3.0.2)",
+    "sqlalchemy (==2.0.38)",
+    "werkzeug (>=3.1.3)",
+    "psycopg2 (>=2.9.10)",
+    "flask-login (>=0.6.3)",
+    "python-dotenv (>=1.0.1)",
+    "flask-mail (>=0.10.0)",
+    "pytest (>=8.3.3)",
+    "flask-migrate (>=4.0.7)",
+    "flask-apscheduler (>=1.13.1)",
+    "pandas (>=2.2.3)",
+    "openpyxl (>=3.1.5)",
+    "fastapi (>=0.115.8,<0.116.0)",
+    "pydantic (>=2.10.6,<3.0.0)",
+    "python-decouple (>=3.8,<4.0)",
+]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.5"
+
+[tool.pyright]
+include = ["caten_music"]
+exclude = ["**/node_modules", "**/__pycache__"]
+ignore = []
+stubPath = "type-stub"
+
+reportMissingImports = "error"
+reportMissingTypeStubs = false
+typeCheckingMode = "standard"
+
+pythonVersion = "3.11"
