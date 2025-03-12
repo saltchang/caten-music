@@ -43,6 +43,8 @@
 
     <hr class="navbar-hr">
 
+    {% if current_user.is_authenticated %}
+
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <form class="navbar-search-form" action="{{ url_for('search_bp.search') }}" method="GET">
@@ -70,6 +72,8 @@
     </ul>
 
     <hr class="navbar-hr">
+
+    {% endif %}
 
     <ul class="navbar-nav ml-auto">
 
