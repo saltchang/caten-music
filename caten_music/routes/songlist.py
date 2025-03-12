@@ -71,6 +71,7 @@ def delete(out_id):
 
 
 @song_list_by_id_bp.route('/songlist/<out_id>')
+@login_required
 def song_list_by_id(out_id):
     if current_user.is_authenticated:
         current_user.login_update()

@@ -1,84 +1,94 @@
 # routes/surfer.py
 
-from flask import Blueprint, render_template, abort, request, redirect, current_app
-from jinja2 import TemplateNotFound
-
-from flask_login import login_required, current_user
+import json
 
 import requests
-import json
+from flask import Blueprint, abort, redirect, render_template, request
+from flask_login import current_user, login_required
+from jinja2 import TemplateNotFound
 
 from caten_music import helper
 
-surfer_bp = Blueprint("surfer_bp", __name__,
-                      template_folder='templates')
+surfer_bp = Blueprint('surfer_bp', __name__, template_folder='templates')
 
-surf_bp = Blueprint("surf_bp", __name__,
-                    template_folder='templates')
+surf_bp = Blueprint('surf_bp', __name__, template_folder='templates')
 
-surf_one_bp = Blueprint("surf_one_bp", __name__,
-                        template_folder='templates')
+surf_one_bp = Blueprint('surf_one_bp', __name__, template_folder='templates')
 
 
 @surfer_bp.route('/surfer')
+@login_required
 def surfer():
-
     if current_user.is_authenticated:
         current_user.login_update()
 
     # Tonality Collection
-    toColl = ["C", "Cm", "C#", "D", "Dm", "Db", "E", "Em", "Eb", "F",
-              "Fm", "F#m", "G", "Gm", "Gb", "A", "Am", "Ab", "B", "Bm", "Bb"]
+    toColl = [
+        'C',
+        'Cm',
+        'C#',
+        'D',
+        'Dm',
+        'Db',
+        'E',
+        'Em',
+        'Eb',
+        'F',
+        'Fm',
+        'F#m',
+        'G',
+        'Gm',
+        'Gb',
+        'A',
+        'Am',
+        'Ab',
+        'B',
+        'Bm',
+        'Bb',
+    ]
 
     try:
-        return render_template("pages/surfer.html", toColl=toColl), 200
+        return render_template('pages/surfer.html', toColl=toColl), 200
     except TemplateNotFound:
         abort(404)
 
 
 @surf_bp.route('/surf')
+@login_required
 def surf():
-
     if current_user.is_authenticated:
         current_user.login_update()
 
-    surfMode = request.args.get("surfMode")
-    requestURL = ""
-    c = ""
-    lang = ""
-    to = ""
+    surfMode = request.args.get('surfMode')
+    requestURL = ''
+    c = ''
+    lang = ''
+    to = ''
 
     apiBaseUrl = helper.CHURCH_MUSIC_API_URL
 
-    if surfMode == "byLang":
-
+    if surfMode == 'byLang':
         # 關鍵字：集數
-        c = request.args.get("c").replace(" ", "")
-        if c == "":
-            return redirect("/"), 302
+        c = request.args.get('c').replace(' ', '')
+        if c == '':
+            return redirect('/'), 302
 
         # 關鍵字：語言
-        lang = request.args.get("lang").replace(" ", "")
-        if lang == "":
-            return redirect("/"), 302
+        lang = request.args.get('lang').replace(' ', '')
+        if lang == '':
+            return redirect('/'), 302
 
         # API 串接 搜尋
-        requestURL = apiBaseUrl + "/api/songs/search?lang=" + \
-        lang + "&c=" + c + "&to=&title=&lyrics=&test=0"
-    
+        requestURL = apiBaseUrl + '/api/songs/search?lang=' + lang + '&c=' + c + '&to=&title=&lyrics=&test=0'
 
-    if surfMode == "byTo":
-
+    if surfMode == 'byTo':
         # 關鍵字：調性
-        to = request.args.get("to")
-        if to == "":
-            return redirect("/"), 302
+        to = request.args.get('to')
+        if to == '':
+            return redirect('/'), 302
 
         # API 串接 搜尋
-        requestURL = apiBaseUrl + "/api/songs/search?lang=&c=&to=" + to + "&title=&lyrics=&test=0"
-    
-
-    
+        requestURL = apiBaseUrl + '/api/songs/search?lang=&c=&to=' + to + '&title=&lyrics=&test=0'
 
     r = requests.get(requestURL)
 
@@ -88,30 +98,39 @@ def surf():
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/songs.html", songs=result, songs_num=len(result), mode="surf", c=c, to=to, lang=lang, surfMode=surfMode), r.status_code
+        return render_template(
+            'songs/songs.html',
+            songs=result,
+            songs_num=len(result),
+            mode='surf',
+            c=c,
+            to=to,
+            lang=lang,
+            surfMode=surfMode,
+        ), r.status_code
 
     except TemplateNotFound:
         abort(404)
 
 
 @surf_one_bp.route('/song/<sid>')
+@login_required
 def surf_one(sid):
-
     if current_user.is_authenticated:
         current_user.login_update()
 
     # API
 
-    requestURL = helper.CHURCH_MUSIC_API_URL + "/api/songs/sid/" + sid
+    requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
 
     r = requests.get(requestURL)
 
     if not r.status_code == 200:
-        return redirect("/")
+        return redirect('/')
     else:
         result = json.loads(r.text)
 
     try:
-        return render_template("songs/songs.html", songs=result, mode="one"), r.status_code
+        return render_template('songs/songs.html', songs=result, mode='one'), r.status_code
     except TemplateNotFound:
         abort(404)

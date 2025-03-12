@@ -59,6 +59,31 @@
     margin-bottom: 1rem;
 }
 
+/* card-home-announcement */
+
+.card-home-announcement {
+    background: transparent;
+    padding: 1.8rem;
+    border-radius: 1rem;
+    border: none;
+    background: #ffcda9e0;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.card-home-announcement h1 {
+    font-size: 3.5rem;
+    margin: 1rem auto;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 4px #00000020;
+}
+
+.card-home-announcement p {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.586);
+}
+
 /* card-home-register */
 
 .card-home-register {

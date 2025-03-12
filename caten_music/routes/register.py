@@ -16,8 +16,6 @@ register_bp = Blueprint('register_bp', __name__, template_folder='templates')
 
 ajax_validate_register_bp = Blueprint('ajax_validate_register_bp', __name__, template_folder='templates')
 
-show_user_bp = Blueprint('show_user_bp', __name__, template_folder='templates')
-
 
 # 註冊
 @register_bp.route('/register', methods=['GET', 'POST'])
@@ -134,11 +132,3 @@ def ajax_validate_register(username_, email_):
 
     # 回傳 json
     return jsonify(result)
-
-
-# 顯示目前所有使用者 (開發用途)
-@show_user_bp.route('/show/user/<username>')
-def show_user(username):
-    user = UserModel.query.filter_by(username=username).first_or_404()
-
-    return render_template('account/show_user.html', user=user), 200

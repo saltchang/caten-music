@@ -31,6 +31,18 @@
 {% block content%}
 {% if not current_user.is_authenticated %}
 <div class="row row-card">
+    <div class="col-12 col-card">
+        <div class="card card-home-announcement">
+            <h1>公告</h1>
+            <p>
+                即日起本服務需要使用者登入才能使用。
+                <br>
+                如果需要使用本服務，請先建立帳號。
+                <br>
+                註冊帳號需要使用邀請碼，如需邀請碼，請聯絡管理員。
+            </p>
+        </div>
+    </div>
 
     <div class="col-12 col-lg-8 col-card">
         <div class="card card-home-register">
@@ -41,16 +53,17 @@
             </h1>
             <div class="container text-center">
                 <p>
-                    Caten Music 是一個音樂資料平台。
-                    這裡收集了每首歌曲的詳盡資料，並提供快速方便的檢索方式以及歌單功能。
-                    從此不用再為了回想歌曲的名字而煩惱！
+                    Caten Music 是一個教會音樂資料服務。
                     <br>
-                    <b>快速查找歌曲 + 整理歌單！</b>
-                    然後分享給你的<b>朋友、組員、同工！</b>
-                    現在就開始使用音樂資料庫吧！
+                    這裡收集了詩歌的資料，並提供搜尋及建立並分享歌單的功能。
+                    <br>
+                    <b>快速查找詩歌 + 建立歌單</b>
+                    並分享給你的<b>朋友、小組員、同工們。</b>
+                    <br>
+                    歡迎登入以使用 Caten Music！
                 </p>
             </div>
-            <a class="btn" href="{{ url_for('register_bp.register') }}">註冊 Caten Music</a>
+            <a class="btn" href="{{ url_for('register_bp.register') }}">建立帳號</a>
         </div>
     </div>
 
@@ -105,6 +118,7 @@
 
 {% endif %}
 
+{% if current_user.is_authenticated %}
 
 <div class="container search-container">
 
@@ -147,6 +161,8 @@
         </form>
     </div>
 </div>
+
+{% endif %}
 
 {% endblock %}
 

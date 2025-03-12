@@ -12,7 +12,7 @@ from .logout import logout_bp
 from .pages import pages_bp
 
 # from .files import download_ppt_bp, download_sheet_bp, export_songs_data_bp
-from .register import ajax_validate_register_bp, register_bp, show_user_bp
+from .register import ajax_validate_register_bp, register_bp
 from .report import report_bp
 from .search import search_bp
 from .songlist import (
@@ -43,7 +43,6 @@ def init_app(app):
     app.register_blueprint(register_bp)
     app.register_blueprint(activate_account_bp)
     app.register_blueprint(ajax_validate_register_bp)
-    app.register_blueprint(show_user_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(ajax_validate_login_bp)
