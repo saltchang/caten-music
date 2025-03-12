@@ -1,21 +1,20 @@
 # models/users.py
 
-import datetime
+from datetime import datetime
 
 from flask import current_app
-
 from itsdangerous import URLSafeTimedSerializer as sign
 
-from .base import db
 from caten_music import helper
 
+from .base import Base, db
 
-class User(db.Model):
 
-    __table_args__ = {"schema": "public"}
+class UserModel(Base):
+    __table_args__ = {'schema': 'public'}
 
     # SQL Table Name
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
     # 資料欄位設定
     id = db.Column(db.Integer, primary_key=True)
@@ -23,23 +22,21 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(db.String(64), nullable=False)
     displayname = db.Column(db.String(16), nullable=False)
-    register_time = db.Column(
-        db.DateTime, nullable=False, default=datetime.datetime.today()
-    )
+    register_time = db.Column(db.DateTime, nullable=False, default=datetime.today)
     last_login_time = db.Column(db.DateTime)
     is_authenticated = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
     is_anonymous = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_manager = db.Column(db.Boolean, default=False)
-    user_profile = db.relationship("UserProfile", backref="user", lazy=True)
-    song_list = db.relationship("SongList", backref="user", lazy=True)
-    song_report = db.relationship("SongReport", backref="user", lazy=True)
+    user_profile = db.relationship('UserProfile', backref='user', lazy=True)
+    song_list = db.relationship('SongList', backref='user', lazy=True)
+    song_report = db.relationship('SongReport', backref='user', lazy=True)
 
     # 定義 password 為不可讀
     @property
     def password(self):
-        raise AttributeError("Password is not a readable attribute.")
+        raise AttributeError('Password is not a readable attribute.')
 
     # 自動由密碼產生 hash
     @password.setter
@@ -54,9 +51,9 @@ class User(db.Model):
     # 產生帳號啟動碼
 
     def create_activate_token(self):
-        print("====>SECRET_KEY", current_app.config["SECRET_KEY"])
-        token_generator = sign(current_app.config["SECRET_KEY"])
-        return token_generator.dumps({"user_id": self.id})
+        print('====>SECRET_KEY', current_app.config['SECRET_KEY'])
+        token_generator = sign(current_app.config['SECRET_KEY'])
+        return token_generator.dumps({'user_id': self.id})
 
     # 取得用戶唯一識別碼
 
@@ -70,7 +67,7 @@ class User(db.Model):
 
     # 登入時更新用戶狀態資料
     def login_update(self):
-        self.last_login_time = datetime.datetime.today()
+        self.last_login_time = datetime.today()
         db.session.commit()
         return self
 
@@ -96,8 +93,4 @@ class User(db.Model):
     # 自身物件表示
 
     def __repr__(self):
-        return "<ID: %s, Username: %s, Email: %s>" % (
-            self.id,
-            self.username,
-            self.email,
-        )
+        return f'<ID: {self.id}, Username: {self.username}, Email: {self.email}>'

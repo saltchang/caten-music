@@ -1,100 +1,206 @@
 <!-- templates/register.html -->
 
-{% extends "base/base.html" %}
+{% extends "base/base.html" %} {% block head %} {{ super () }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/account/register.css') }}"
+/>
+{% endblock %} {% block title %} - 註冊{% endblock %} {% block header_title %}
+註冊 {% endblock%} {% block header_info %}
+<p>請填寫下列註冊表單以完成註冊</p>
+{% endblock%} {% block content %}
 
-{%  block  head  %}
-{{  super ()  }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/account/register.css') }}">
-{%  endblock  %}
-
-{% block title %} - 註冊{% endblock %}
-
-{% block header_title %}
-註冊
-{% endblock%}
-
-{% block header_info %}
-<!-- <p>請填寫下列註冊表單以完成註冊</p> -->
-{% endblock%}
-
-
-{% block content %}
-
-    <div class="container container-static">
-        <div class="alert alert-info text-center mt-5" role="alert">
-            <h4 class="alert-heading">網站暫停開放註冊</h4>
-            <p>目前網站暫停開放使用者註冊。</p>
-            <hr>
-            <p class="mt-3 mb-0">如需建立新帳號，請聯繫系統管理員：<a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
-            </p>
-        </div>
-
-        <!-- <form id="form-register" class="form-register" action="{{ url_for('register_bp.register') }}" method="POST"> -->
-
-            <!-- 使用者帳號 username -->
-            <!-- <div class="form-group">
-                <label for="input-register-username" class="ml-2">使用者帳號</label>
-                <input name="username" type="text" class="form-control focus-id-1" id="input-register-username"
-                    aria-describedby="usernameHelp" placeholder="請輸入您的使用者帳號" autofocus="true">
-                <small id="usernameHelp2-in"
-                    class="form-text text-left pl-2 invalid-feedback">4-24個英文或數字，接受底線('_')，<br>請注意不能含有空白</small>
-                <small id="usernameHelp" class="form-text text-left pl-2"><b>註冊之後無法更改你的帳號。</b></small>
-                <small id="usernameHelp2" class="form-text text-left pl-2 valid-feedback">OK</small>
-            </div> -->
-
-            <!-- E-mail email-->
-            <!-- <div class="form-group">
-                <label for="input-register-email" class="ml-2">電子郵件地址</label>
-                <input name="email" type="email" class="form-control focus-id-2" id="input-register-email"
-                    aria-describedby="emailHelp" placeholder="請輸入您的 E-mail">
-                <small id="emailHelp-in"
-                    class="form-text text-left pl-2 invalid-feedback">請填入可正確收信的電子郵件地址，用以啟動帳號</small>
-                <small id="emailHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
-            </div> -->
-
-            <!-- 顯示名稱（名字） displayname -->
-            <!-- <div class="form-group">
-                <label for="input-register-displayname" class="ml-2">名字</label>
-                <input name="displayname" type="text" class="form-control focus-id-3" id="input-register-displayname"
-                    aria-describedby="displaynameHelp" placeholder="請輸入您的名字">
-                <small id="displaynameHelp2-in"
-                    class="form-text text-left pl-2 invalid-feedback">2-16個英數字元或8個中文字，接受底線("_")<br>請注意不能含有空白</small>
-                <small id="displaynameHelp" class="form-text text-left pl-2"><b>註冊之後可以更改你的名字。</b></small>
-                <small id="displaynameHelp2" class="form-text text-left pl-2 valid-feedback">OK</small>
-            </div> -->
-
-            <!-- 密碼 password -->
-            <!-- <div class="form-group">
-                <label for="input-register-password" class="ml-2">密碼</label>
-                <input name="password" type="password" class="form-control focus-id-4" id="input-register-password"
-                    placeholder="請輸入您的密碼">
-                <small id="passwordHelp-in"
-                    class="form-text text-left pl-2 invalid-feedback">至少8個字元，可以使用英文字母、數字和(_!@#$%^&*+-/:)</small>
-                <small id="passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
-            </div> -->
-
-            <!-- 確認密碼 confirm_password -->
-            <!-- <div class="form-group">
-                <label for="input-register-confirm_password" class="ml-2">再次輸入密碼</label>
-                <input name="confirm_password" type="password" class="form-control focus-id-5"
-                    id="input-register-confirm_password" placeholder="請再次輸入您的密碼">
-                <small id="confirm_passwordHelp-in" class="form-text text-left pl-2 invalid-feedback">兩次輸入的密碼不相符</small>
-                <small id="confirm_passwordHelp" class="form-text text-left pl-2 valid-feedback">OK</small>
-            </div>
-
-            <button id="btn-register" type="button" class="btn btn-outline-info button-register">
-                註冊
-            </button> -->
-        <!-- </form> -->
+<div class="container container-static">
+  <form
+    id="form-register"
+    class="form-register"
+    action="{{ url_for('register_bp.register') }}"
+    method="POST"
+  >
+    <div class="form-group">
+      <label for="input-register-invitation_code" class="ml-2">邀請碼</label>
+      <input
+        name="invitation_code"
+        type="text"
+        class="form-control"
+        id="input-register-invitation_code"
+        aria-describedby="invitation_codeHelp"
+        placeholder="請輸入邀請碼"
+        value="{{ invitation_code }}"
+        {%
+        if
+        invitation_valid
+        %}readonly{%
+        endif
+        %}
+      />
+      {% if invitation_message %}
+      <small
+        id="invitation_codeHelp-in"
+        class="form-text text-left pl-2 invalid-feedback d-block"
+        >{{ invitation_message }}</small
+      >
+      {% elif invitation_valid %}
+      <small
+        id="invitation_codeHelp"
+        class="form-text text-left pl-2 valid-feedback d-block"
+        >有效的邀請碼</small
+      >
+      {% else %}
+      <small id="invitation_codeHelp" class="form-text text-left pl-2"
+        >請輸入管理員提供的邀請碼</small
+      >
+      {% endif %}
     </div>
 
-{% endblock %}
+    {% if invitation_valid %}
+    <div class="form-group">
+      <label for="input-register-username" class="ml-2">使用者帳號</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control focus-id-1"
+        id="input-register-username"
+        aria-describedby="usernameHelp"
+        placeholder="請輸入您的使用者帳號"
+        autofocus="true"
+      />
+      <small
+        id="usernameHelp2-in"
+        class="form-text text-left pl-2 invalid-feedback"
+        >4-24個英文或數字，接受底線('_')，<br />請注意不能含有空白</small
+      >
+      <small id="usernameHelp" class="form-text text-left pl-2"
+        ><b>註冊之後無法更改你的帳號。</b></small
+      >
+      <small id="usernameHelp2" class="form-text text-left pl-2 valid-feedback"
+        >OK</small
+      >
+    </div>
 
-{% block script %}
-{{ super () }}
+    <div class="form-group">
+      <label for="input-register-email" class="ml-2">電子郵件地址</label>
+      <input
+        name="email"
+        type="email"
+        class="form-control focus-id-2"
+        id="input-register-email"
+        aria-describedby="emailHelp"
+        placeholder="請輸入您的 E-mail"
+      />
+      <small id="emailHelp-in" class="form-text text-left pl-2 invalid-feedback"
+        >請填入可正確收信的電子郵件地址，用以啟動帳號</small
+      >
+      <small id="emailHelp" class="form-text text-left pl-2 valid-feedback"
+        >OK</small
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="input-register-displayname" class="ml-2">名字</label>
+      <input
+        name="displayname"
+        type="text"
+        class="form-control focus-id-3"
+        id="input-register-displayname"
+        aria-describedby="displaynameHelp"
+        placeholder="請輸入您的名字"
+      />
+      <small
+        id="displaynameHelp2-in"
+        class="form-text text-left pl-2 invalid-feedback"
+        >2-16個英數字元或8個中文字，接受底線("_")<br />請注意不能含有空白</small
+      >
+      <small id="displaynameHelp" class="form-text text-left pl-2"
+        ><b>註冊之後可以更改你的名字。</b></small
+      >
+      <small
+        id="displaynameHelp2"
+        class="form-text text-left pl-2 valid-feedback"
+        >OK</small
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="input-register-password" class="ml-2">密碼</label>
+      <input
+        name="password"
+        type="password"
+        class="form-control focus-id-4"
+        id="input-register-password"
+        placeholder="請輸入您的密碼"
+      />
+      <small
+        id="passwordHelp-in"
+        class="form-text text-left pl-2 invalid-feedback"
+        >至少8個字元，可以使用英文字母、數字和(_!@#$%^&*+-/:)</small
+      >
+      <small id="passwordHelp" class="form-text text-left pl-2 valid-feedback"
+        >OK</small
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="input-register-confirm_password" class="ml-2"
+        >再次輸入密碼</label
+      >
+      <input
+        name="confirm_password"
+        type="password"
+        class="form-control focus-id-5"
+        id="input-register-confirm_password"
+        placeholder="請再次輸入您的密碼"
+      />
+      <small
+        id="confirm_passwordHelp-in"
+        class="form-text text-left pl-2 invalid-feedback"
+        >兩次輸入的密碼不相符</small
+      >
+      <small
+        id="confirm_passwordHelp"
+        class="form-text text-left pl-2 valid-feedback"
+        >OK</small
+      >
+    </div>
+
+    <button
+      id="btn-register"
+      type="button"
+      class="btn btn-outline-info button-register"
+    >
+      註冊
+    </button>
+    {% else %}
+    <div class="text-center mt-4">
+      <button
+        id="btn-validate-invitation"
+        type="button"
+        class="btn btn-outline-info"
+      >
+        驗證邀請碼
+      </button>
+    </div>
+    {% endif %}
+  </form>
+</div>
+
+{% endblock %} {% block script %} {{ super () }}
 <script src="{{ url_for('static', filename='js/account/register.js') }}"></script>
-{% endblock script %}
+<script>
+  $(document).ready(function () {
+    $('#btn-validate-invitation').click(function () {
+      const invitationCode = $('#input-register-invitation_code').val()
+      if (!invitationCode) {
+        alert('請輸入邀請碼')
+        return
+      }
 
-{% block EOF_TAG %}
+      window.location.href =
+        "{{ url_for('register_bp.register') }}?invitation_code=" +
+        invitationCode
+    })
+  })
+</script>
+{% endblock script %} {% block EOF_TAG %}
 <!-- EOF templates/register.html -->
 {% endblock EOF_TAG %}

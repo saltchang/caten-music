@@ -15,7 +15,6 @@ A music web application for **[Caten Church](https://caten-church.org)**.
 - [Flask](https://flask.palletsprojects.com)
 - [PostgreSQL](https://www.postgresql.org)
 - [Docker](https://www.docker.com)
-- [Heroku](https://www.heroku.com/home)
 - [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
 
 ## Released
@@ -32,7 +31,7 @@ To launch the app locally and quickly, use the sample env file.
 Run the command to create a local environment file from default:
 
 ```bash
-cp env.test .env
+cp env.example .env
 ```
 
 See [Environment Variables](#environment-variables) for more information.
@@ -73,15 +72,11 @@ The format of the `.env` file must be like the following content:
 
 DROPBOX_ACCESS_TOKEN=<Dropbox_API_token>
 DATABASE_URL=<DATABASE_URL>
-DATABASE_URL_FOR_DEVELOPMENT=<DATABASE_URL_FOR_DEVELOPMENT>
-DATABASE_URL_FOR_TESTING = <DATABASE_URL_FOR_TESTING>
 APP_SETTING=<Mode:[Production, Development, Testing]>
 TEST_SETTING=Testing
-MAIL_USERNAME=<Mail_Account_Username>
-MAIL_PASSWORD=<Mail_Account_Password>
+=<Mail_Account_Username>
 HASH_SALT=<Hash_Salt>
 SECRET_KEY=<Secret_Key>
-FLASK_APP=run.py
 
 ```
 

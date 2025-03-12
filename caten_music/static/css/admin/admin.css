@@ -1,0 +1,65 @@
+/* static/css/admin/admin.css */
+
+.card {
+    margin-bottom: 20px;
+}
+
+.btn-icon {
+    margin-right: 5px;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #28a745;
+    background-color: #28a745;
+}
+
+.custom-switch .custom-control-label::before {
+    width: 2.5rem;
+}
+
+.custom-switch .custom-control-label::after {
+    left: calc(-2.5rem + 2px);
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(1.5rem);
+}
+
+.custom-control-label {
+    font-weight: bold;
+    padding-top: 2px;
+}
+
+.invitation-card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.invitation-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.invitation-link {
+    word-break: break-all;
+    font-family: monospace;
+    background-color: #f8f9fa;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.copy-btn {
+    cursor: pointer;
+}
+
+.expired {
+    color: #dc3545;
+}
+
+.valid {
+    color: #28a745;
+}
+
+.used {
+    color: #6c757d;
+} 
