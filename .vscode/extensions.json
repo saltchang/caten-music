@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "tamasfe.even-better-toml",
+    "bodil.prettier-toml",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "ms-python.isort",
+    "charliermarsh.ruff",
+    "fill-labs.dependi",
+  ]
+}

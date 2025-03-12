@@ -1,0 +1,66 @@
+<!-- templates/account/register_success.html -->
+
+{% extends "base/base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account/register.css') }}">
+<style>
+    .success-icon {
+        font-size: 5rem;
+        color: #28a745;
+        margin-bottom: 1rem;
+    }
+    .success-card {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+    .btn-login {
+        margin-top: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block title %} - 註冊成功{% endblock %}
+
+{% block header_title %}
+註冊成功
+{% endblock %}
+
+{% block header_info %}
+<p>您的帳號已成功建立</p>
+{% endblock %}
+
+{% block content %}
+<div class="container container-static">
+    <div class="success-card">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 class="mb-4">恭喜您，{{ username }}！</h2>
+        <p class="lead">您的帳號已成功建立，現在可以登入使用所有功能。</p>
+        <a href="{{ url_for('login_bp.login') }}" class="btn btn-primary btn-lg btn-login">
+            <i class="fas fa-sign-in-alt mr-2"></i> 立即登入
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            window.location.href = "{{ url_for('login_bp.login') }}";
+        }, 5000);
+    });
+</script>
+{% endblock %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/account/register_success.html -->
+{% endblock %} 

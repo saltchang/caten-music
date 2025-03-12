@@ -1,13 +1,13 @@
 """empty message
 
 Revision ID: b3d1f14e70cf
-Revises: 
+Revises:
 Create Date: 2019-06-15 19:39:37.747613
 
 """
-from alembic import op
-import sqlalchemy as sa
 
+import sqlalchemy as sa
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = 'b3d1f14e70cf'

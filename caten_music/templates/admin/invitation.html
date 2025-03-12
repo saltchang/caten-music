@@ -1,0 +1,163 @@
+<!-- templates/admin/invitation.html -->
+
+{% extends "base/base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+{% endblock %}
+
+{% block title %} - 邀請碼管理{% endblock %}
+
+{% block header_title %}
+邀請碼管理
+{% endblock %}
+
+{% block header_info %}
+<p>管理邀請碼系統</p>
+{% endblock %}
+
+{% block content %}
+<div class="container container-static">
+    <div class="row">
+        <div class="col-md-12">
+            <button id="generate-invitation" class="btn btn-primary mb-4">
+                <i class="fas fa-plus-circle btn-icon"></i> 產生新邀請碼
+            </button>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">邀請碼列表</h5>
+                </div>
+                <div class="card-body">
+                    <div id="invitation-list">
+                        {% if invitation_codes %}
+                            {% for code in invitation_codes %}
+                            <div class="card invitation-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        邀請碼: {{ code.code }}
+                                        {% if code.is_disabled %}
+                                        <span class="badge badge-secondary">已停用</span>
+                                        {% elif code.expires_at < now %}
+                                        <span class="badge badge-danger">已過期</span>
+                                        {% else %}
+                                        <span class="badge badge-success">有效</span>
+                                        {% endif %}
+                                    </h5>
+                                    <p class="card-text">
+                                        <strong>建立時間:</strong> {{ code.created_at.strftime('%Y-%m-%d %H:%M:%S') }}<br>
+                                        <strong>過期時間:</strong> 
+                                        <span class="{% if code.expires_at < now %}expired{% else %}valid{% endif %}">
+                                            {{ code.expires_at.strftime('%Y-%m-%d %H:%M:%S') }}
+                                        </span><br>
+                                        <strong>建立者:</strong> {{ admin_dict.get(code.created_by, '未知') }}<br>
+                                        <strong>使用次數:</strong> {{ code.usage_count }} 次<br>
+                                        
+                                        {% if code.last_used_at %}
+                                        <strong>最後使用時間:</strong> {{ code.last_used_at.strftime('%Y-%m-%d %H:%M:%S') }}<br>
+                                        {% endif %}
+                                        
+                                        <strong>邀請連結:</strong>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control invitation-link" readonly
+                                                value="{{ url_for('register_bp.register', invitation_code=code.code, _external=True) }}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary copy-btn" type="button" 
+                                                    data-link="{{ url_for('register_bp.register', invitation_code=code.code, _external=True) }}">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-3">
+                                            {% if not code.is_disabled %}
+                                            <button class="btn btn-sm btn-danger toggle-code-btn" data-id="{{ code.id }}" data-action="disable">
+                                                <i class="fas fa-ban"></i> 停用此邀請碼
+                                            </button>
+                                            {% else %}
+                                            <button class="btn btn-sm btn-success toggle-code-btn" data-id="{{ code.id }}" data-action="enable">
+                                                <i class="fas fa-check-circle"></i> 啟用此邀請碼
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                目前沒有任何邀請碼。點擊「產生新邀請碼」按鈕來建立邀請碼。
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+    $(document).ready(function() {
+        $('#generate-invitation').click(function() {
+            $.ajax({
+                url: '{{ url_for("invitation_api_bp.generate_invitation") }}',
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        alert('已成功產生新邀請碼: ' + response.code);
+                        location.reload();
+                    } else {
+                        alert('產生邀請碼失敗: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('發生錯誤，請稍後再試。');
+                }
+            });
+        });
+        
+        $('.copy-btn').click(function() {
+            const link = $(this).data('link');
+            const tempInput = $('<input>');
+            $('body').append(tempInput);
+            tempInput.val(link).select();
+            document.execCommand('copy');
+            tempInput.remove();
+            
+            alert('邀請連結已複製到剪貼簿');
+        });
+        
+        $('.toggle-code-btn').click(function() {
+            const codeId = $(this).data('id');
+            const action = $(this).data('action');
+            const isDisabled = action === 'disable';
+            
+            $.ajax({
+                url: '{{ url_for("invitation_api_bp.toggle_invitation_code", code_id=0) }}'.replace('0', codeId),
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ is_disabled: isDisabled }),
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert('操作失敗: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('發生錯誤，請稍後再試。');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% block EOF_TAG %}
+<!-- EOF templates/admin/invitation.html -->
+{% endblock %} 

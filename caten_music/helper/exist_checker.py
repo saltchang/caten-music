@@ -4,17 +4,14 @@ from caten_music import models
 
 
 class checkExist:
-
     def username(self, username):
-
-        if models.User.query.filter_by(username=username).first():
+        if models.UserModel.query.filter_by(username=username).first():
             return True
         else:
             return False
 
     def email(self, email):
-
-        if models.User.query.filter_by(email=email).first():
+        if models.UserModel.query.filter_by(email=email).first():
             return True
         else:
             return False
