@@ -13,11 +13,6 @@ class DefaultConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # flask-mail
-    MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PROT = '587'
-    MAIL_USE_TLS = True
-
 
 class CreateApp:
     def main(self):

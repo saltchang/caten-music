@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install poetry==2.0.1
+RUN pip install poetry==2.1.3
 
 COPY pyproject.toml poetry.lock /usr/src/app/
 

@@ -51,7 +51,6 @@ class UserModel(Base):
     # 產生帳號啟動碼
 
     def create_activate_token(self):
-        print('====>SECRET_KEY', current_app.config['SECRET_KEY'])
         token_generator = sign(current_app.config['SECRET_KEY'])
         return token_generator.dumps({'user_id': self.id})
 
