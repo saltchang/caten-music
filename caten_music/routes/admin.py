@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 
 from caten_music import helper
 from caten_music.config.api import CHURCH_MUSIC_API_URL
-from models import UserModel
+from caten_music.models import UserModel
 
 song_edit_bp = Blueprint('song_edit_bp', __name__, template_folder='templates')
 
