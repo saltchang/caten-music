@@ -9,7 +9,7 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 from flask_login import current_user, login_required
 
 from caten_music import helper
-from config.api import CHURCH_MUSIC_API_URL
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 from models import UserModel
 
 song_edit_bp = Blueprint('song_edit_bp', __name__, template_folder='templates')

@@ -7,7 +7,7 @@ import requests
 from flask import Blueprint, render_template
 from flask_login import current_user
 
-from config.api import CHURCH_MUSIC_API_URL
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 
 home_bp = Blueprint('home_bp', __name__, template_folder='templates')
 

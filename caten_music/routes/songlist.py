@@ -16,8 +16,8 @@ from flask import (
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 from caten_music.models import SongList, UserModel
-from config.api import CHURCH_MUSIC_API_URL
 
 user_songlist_bp = Blueprint('user_songlist_bp', __name__, template_folder='templates')
 

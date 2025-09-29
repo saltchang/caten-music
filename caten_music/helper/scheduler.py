@@ -5,7 +5,7 @@ import datetime
 import requests
 from flask_apscheduler import APScheduler
 
-from config.api import CHURCH_MUSIC_API_URL
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 
 
 def callChurchMusicAPI():

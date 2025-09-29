@@ -8,8 +8,8 @@ from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
 from caten_music import helper
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 from caten_music.models import SongReport
-from config.api import CHURCH_MUSIC_API_URL
 
 report_bp = Blueprint('report_bp', __name__, template_folder='templates')
 

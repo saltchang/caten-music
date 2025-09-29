@@ -7,7 +7,7 @@ from flask import Blueprint, abort, redirect, render_template, request
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
-from config.api import CHURCH_MUSIC_API_URL
+from caten_music.config.api import CHURCH_MUSIC_API_URL
 
 search_bp = Blueprint('search_bp', __name__, template_folder='templates')
 
