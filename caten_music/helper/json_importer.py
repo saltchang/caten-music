@@ -6,8 +6,7 @@ import json
 
 
 def importJSON(*args, **kwargs):
-
-    file_dir_base = "data/"
+    file_dir_base = 'data/'
     file_dir = []
     file = []
 
@@ -18,7 +17,7 @@ def importJSON(*args, **kwargs):
 
     for i in range(len(file_dir)):
         f_dir = file_dir_base + file_dir[i]
-        file.append(open(f_dir, "r"))
+        file.append(open(f_dir))
         db_temp = json.load(file[i])
 
         for data in db_temp:

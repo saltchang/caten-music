@@ -7,7 +7,7 @@ from flask import Blueprint, abort, redirect, render_template, request
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
-from caten_music import helper
+from config.api import CHURCH_MUSIC_API_URL
 
 surfer_bp = Blueprint('surfer_bp', __name__, template_folder='templates')
 
@@ -65,7 +65,7 @@ def surf():
     lang = ''
     to = ''
 
-    apiBaseUrl = helper.CHURCH_MUSIC_API_URL
+    apiBaseUrl = CHURCH_MUSIC_API_URL
 
     if surfMode == 'byLang':
         # 關鍵字：集數
@@ -121,7 +121,7 @@ def surf_one(sid):
 
     # API
 
-    requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
+    requestURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
 
     r = requests.get(requestURL)
 

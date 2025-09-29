@@ -7,7 +7,7 @@ import requests
 from flask import Blueprint, render_template
 from flask_login import current_user
 
-from caten_music import helper
+from config.api import CHURCH_MUSIC_API_URL
 
 home_bp = Blueprint('home_bp', __name__, template_folder='templates')
 
@@ -21,7 +21,7 @@ def seeHome():
     if current_user.is_authenticated:
         current_user.login_update()
 
-        requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/random/' + random_amount
+        requestURL = CHURCH_MUSIC_API_URL + '/api/songs/random/' + random_amount
         r = requests.get(requestURL)
 
         if r.status_code == 200:

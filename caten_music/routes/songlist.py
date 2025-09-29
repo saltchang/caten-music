@@ -16,8 +16,8 @@ from flask import (
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
-from caten_music import helper
 from caten_music.models import SongList, UserModel
+from config.api import CHURCH_MUSIC_API_URL
 
 user_songlist_bp = Blueprint('user_songlist_bp', __name__, template_folder='templates')
 
@@ -102,7 +102,7 @@ def song_list_by_id(out_id):
         else:
             sids += '+' + songlist.songs_sid_list[i]
 
-    requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sids
+    requestURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sids
     r = requests.get(requestURL)
     if r.status_code == 200:
         songs = json.loads(r.text)
@@ -152,7 +152,7 @@ def edit(out_id):
             else:
                 sids += '+' + songlist.songs_sid_list[i]
 
-        requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sids
+        requestURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sids
         r = requests.get(requestURL)
         if r.status_code == 200:
             songs = json.loads(r.text)

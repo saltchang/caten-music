@@ -53,7 +53,7 @@ def login():
 
             user_to_login.login_update()
 
-            if next_url == 'None':
+            if next_url == 'None' or next_url is None:
                 flash(user_to_login.displayname + '，歡迎回來', 'success')
                 return redirect('/'), 302
 

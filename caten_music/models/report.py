@@ -1,19 +1,16 @@
 # models/report.py
 
-from flask import current_app
-
-from .base import db
-from caten_music import helper
 
 import datetime
 
+from .base import db
+
 
 class SongReport(db.Model):
-
-    __table_args__ = {"schema": "public"}
+    __table_args__ = {'schema': 'public'}
 
     # SQL Table Name
-    __tablename__ = "song_reports"
+    __tablename__ = 'song_reports'
 
     # 資料欄位設定
     # 資料庫內 ID
@@ -30,8 +27,7 @@ class SongReport(db.Model):
 
     # 回報時間
     reported_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.today())
-        
-    
+
     # 預註冊到資料庫（特殊用途）
 
     def flush(self):

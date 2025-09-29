@@ -9,6 +9,7 @@ from jinja2 import TemplateNotFound
 
 from caten_music import helper
 from caten_music.models import SongReport
+from config.api import CHURCH_MUSIC_API_URL
 
 report_bp = Blueprint('report_bp', __name__, template_folder='templates')
 
@@ -20,7 +21,7 @@ def report_song(sid):
     if current_user.is_authenticated:
         current_user.login_update()
 
-    requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
+    requestURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
 
     r = requests.get(requestURL)
 

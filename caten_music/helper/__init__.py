@@ -1,7 +1,6 @@
 # helper/__init__.py
 
 from .activate_checker import checkActivateToken
-from .env import CHURCH_MUSIC_API_URL
 from .exist_checker import checkExist
 from .invitation import (
     create_invitation_code,

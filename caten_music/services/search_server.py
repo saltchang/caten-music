@@ -3,21 +3,22 @@
 # 目前已不使用
 
 import re
+
 from caten_music.models import songsDB
 
 
 # 關鍵字過濾器
 def keyword_filter(keyword):
-    replaceList = [u"\u3000", "+"]
+    replaceList = ['\u3000', '+']
     for string in replaceList:
-        keyword = keyword.replace(string, " ")
+        keyword = keyword.replace(string, ' ')
 
-    keywords = keyword.split(" ")
+    keywords = keyword.split(' ')
 
     if len(keywords) > 0:
         for i in range(len(keywords)):
             j = 0
-            if keywords[j] == "":
+            if keywords[j] == '':
                 keywords.pop(j)
             else:
                 j += 1
@@ -33,7 +34,7 @@ def search_title(keywords):
     for song in songsDB:
         matchs = []
         for word in keywords:
-            matchs.append(re.search(word, song["title"]))
+            matchs.append(re.search(word, song['title']))
         if None not in matchs:
             result.append(song)
 
@@ -42,29 +43,29 @@ def search_title(keywords):
     else:
         return False
 
+
 # 依語言瀏覽
 
 
 def surf_language(keyword):
-
     if not keyword:
         return False
 
     result = []
 
-    language = ""
+    language = ''
     langCode = keyword[0]
-    collection = keyword.replace(keyword[0], "")
-    if langCode == "c":
-        language = "Chinese"
-    elif langCode == "t":
-        language = "Taiwanese"
+    collection = keyword.replace(keyword[0], '')
+    if langCode == 'c':
+        language = 'Chinese'
+    elif langCode == 't':
+        language = 'Taiwanese'
     else:
         return False
 
     for song in songsDB:
-        if song["language"] == language:
-            if song["num_c"] == collection:
+        if song['language'] == language:
+            if song['num_c'] == collection:
                 result.append(song)
 
     if len(result) > 0:
@@ -72,11 +73,12 @@ def surf_language(keyword):
     else:
         return False
 
+
 # 瀏覽核心
 
 
 def surf_songs(scope, keyword):
-    if scope == "language":
+    if scope == 'language':
         result = surf_language(keyword)
         return result
     else:
@@ -86,7 +88,7 @@ def surf_songs(scope, keyword):
 # 搜尋核心
 def search_songs(scope, keyword):
     keywords = keyword_filter(keyword)
-    if scope == "title" and keywords:
+    if scope == 'title' and keywords:
         result = search_title(keywords)
         return result
     else:

@@ -9,7 +9,8 @@ from flask import Blueprint, abort, flash, redirect, render_template, request, u
 from flask_login import current_user, login_required
 
 from caten_music import helper
-from caten_music.models import UserModel
+from config.api import CHURCH_MUSIC_API_URL
+from models import UserModel
 
 song_edit_bp = Blueprint('song_edit_bp', __name__, template_folder='templates')
 
@@ -122,7 +123,7 @@ def add():
 
             mostAdminToken = os.environ.get('SONGS_DB_MOST_ADMIN_TOKEN')
 
-            reqBase = helper.CHURCH_MUSIC_API_URL
+            reqBase = CHURCH_MUSIC_API_URL
 
             reqURL = reqBase + '/api/songs/search?lang=' + language + '&c=' + num_c + '&to=&title=&lyrics=&test=0'
             searchRes = json.loads(requests.get(reqURL).text)
@@ -166,7 +167,7 @@ def add():
 
             print(newSong_json)
 
-            postURL = helper.CHURCH_MUSIC_API_URL
+            postURL = CHURCH_MUSIC_API_URL
 
             r_post = requests.post(postURL + '/api/songs', newSong_json)
 
@@ -205,7 +206,7 @@ def edit(sid):
         return redirect('/')
 
     # Get 歌曲資訊
-    requestURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
+    requestURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
 
     r = requests.get(requestURL)
 
@@ -361,7 +362,7 @@ def edit(sid):
 
             newSong_json = json.dumps(newSong)
 
-            putURL = helper.CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
+            putURL = CHURCH_MUSIC_API_URL + '/api/songs/sid/' + sid
 
             r_put = requests.put(putURL, newSong_json)
 

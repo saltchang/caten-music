@@ -7,7 +7,7 @@ from flask import Blueprint, abort, redirect, render_template, request
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
-from caten_music import helper
+from config.api import CHURCH_MUSIC_API_URL
 
 search_bp = Blueprint('search_bp', __name__, template_folder='templates')
 
@@ -19,7 +19,7 @@ def search():
         current_user.login_update()
 
     # 關鍵字：標題
-    primary = request.args.get('primary')
+    primary = request.args.get('primary') or ''
 
     # 搜尋模式
     searchMode = request.args.get('searchMode')
@@ -42,7 +42,8 @@ def search():
     if to != '':
         return redirect('/'), 302
 
-    apiBaseUrl = helper.CHURCH_MUSIC_API_URL
+    apiBaseUrl = CHURCH_MUSIC_API_URL
+    requestURL = ''
 
     # API 串接搜尋
     if searchMode == 'title':

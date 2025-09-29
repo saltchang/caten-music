@@ -5,9 +5,11 @@
             "name": "Flask",
             "type": "debugpy",
             "request": "launch",
-            "module": "flask",
+            "module": "gunicorn",
             "args": [
-                "run.py"
+                "--bind", "0.0.0.0:5000",
+                "--reload",
+                "run:app"
             ],
             "jinja": true,
             "justMyCode": true,
