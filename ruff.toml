@@ -31,22 +31,19 @@ exclude = [
 ]
 line-length = 120
 indent-width = 4
-target-version = "py311" # Python 3.11
+target-version = "py314" # Python 3.14
 
 # Add this section to exclude standard library and third-party packages
-extend-exclude = [
-    "*/site-packages/*",
-    "*/dist-packages/*",
-]
+extend-exclude = ["*/site-packages/*", "*/dist-packages/*"]
 
 [lint]
 select = [
-    "E", # pycodestyle errors
-    "W", # pycodestyle warnings
-    "F", # pyflakes
-    "I", # isort
-    "C", # flake8-comprehensions
-    "B", # flake8-bugbear
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
     "UP", # pyupgrade
 
 ]
