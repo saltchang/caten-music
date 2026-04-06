@@ -1,36 +1,41 @@
 # Commands
 
-**Dependencies** (uses `uv`):
-
-```bash
-uv sync                    # Install dependencies
-uv sync --group dev        # Include dev dependencies (ruff, colorlog)
-```
+All commands are wrapped and managed in the `Makefile`. Run `make <target>` from the project root.
 
 **Run locally**:
 
 ```bash
-python run.py              # Dev server on http://localhost:5000
+make dev                          # Dev server on http://localhost:3777 (auto-reload)
 ```
 
-**Lint**:
+**Test**:
 
 ```bash
-ruff check .               # Check (auto-fix enabled by default in ruff.toml)
-ruff format .              # Format (single quotes, 4-space indent, 120 line length)
+make test                         # All tests
+make test-unit                    # Unit tests only
+make test-integration             # Integration tests only
 ```
 
-**Tests**:
+**Code quality**:
 
 ```bash
-pytest caten_music/tests/                    # All tests
-pytest caten_music/tests/test_login.py       # Single test file
+make lint                         # Ruff linter
+make format                       # Ruff formatter
+make typecheck                    # Pyright type checker
+make check                        # All of the above + tests
 ```
 
-**Database migrations** (requires `PYTHONPATH=./caten_music:./migrations`):
+**Database**:
 
 ```bash
+make sync-db                                 # Dump production DB to local (reads DATABASE_URL from .env)
 make migrate-up                              # Apply latest migrations
 make migrate-down                            # Revert one migration
 make migrate-revision message="description"  # Generate new migration
+```
+
+**Misc**:
+
+```bash
+make clean                        # Remove __pycache__, .ruff_cache, .pytest_cache
 ```

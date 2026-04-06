@@ -1,15 +1,63 @@
 # Architecture
 
-This is a **Flask application** using the app factory pattern. `CreateApp` in `caten_music/__init__.py` wires everything together: it loads `.env`, selects a config file (`development.py` / `testing.py` / `production.py`) based on the `APP_SETTING` env var, then initializes models, routes (blueprints), and a background APScheduler job.
+This is a **FastAPI application** following Clean Architecture (Robert C. Martin). The backend lives in `app/` and serves a JSON API for a React frontend (pending).
 
-**Key structural points:**
+## Clean Architecture Layers
 
-- **Routes** (`caten_music/routes/`) — Each feature is a Flask blueprint (login, register, search, songlist, admin, surfer, etc.). `routes/__init__.py` calls `init_app()` to register all of them.
-- **Models** (`caten_music/models/`) — SQLAlchemy ORM over PostgreSQL. `models/__init__.py` exposes `init_app()`. Key models: `UserModel`, `UserProfile`, `SongList`, `InvitationCode`, `SongReport`.
-- **Helper** (`caten_music/helper/`) — Stateless utilities: password hashing, email token validation, registration input checks, invitation code logic, URL redirect safety (`url_defender`), and APScheduler setup.
-- **Services** (`caten_music/services/`) — `mail_server.py` sends HTML emails via Flask-Mail.
-- **Songs are not stored locally** — All song data is fetched from an external `CHURCH_MUSIC_API_URL` (a separate service). There is no songs table in this DB.
+Dependencies flow inward: **API → Service → Core ← Repository/Infrastructure**
 
-**Config** is selected via `APP_SETTING` env var (`Development`, `Testing`, `Production`). Tests use `CreateApp().test()` which reads `TEST_SETTING` instead and skips the scheduler.
+### Core Layer (`app/core/`)
 
-**Migrations** use Alembic with `PYTHONPATH=./caten_music:./migrations` so that models are importable during autogeneration.
+The innermost layer. Zero external dependencies — pure Python only.
+
+- **Entities** (`core/entities/`) — Plain `@dataclass` domain objects: `User`, `UserProfile`, `SongList`, `InvitationCode`, `SongReport`. These are NOT ORM models.
+- **Interfaces** (`core/interfaces/`) — `Protocol` contracts for repositories (`UserRepository`, `SonglistRepository`, etc.) and infrastructure (`PasswordHasher`, `TokenService`, `MailService`, `SongApiClient`, `FileService`). The service layer codes against these, never concrete implementations.
+- **Exceptions** (`core/exceptions.py`) — Domain-specific errors (`InvalidCredentialsError`, `SonglistNotFoundError`, etc.), mapped to HTTP codes in the API layer.
+- **Validators** (`core/validators.py`) — Pure validation functions for username, email, password, displayname formats.
+
+### Service Layer (`app/service/`)
+
+Use cases / business logic. Receives dependencies via constructor injection of Core interfaces.
+
+- `AuthService` — Login, register, activate, password reset, token refresh
+- `SonglistService` — CRUD, toggle songs in playlists
+- `InvitationService` — Generate, validate, toggle invitation codes
+- `ReportService` — Submit song problem reports
+- `UserService` — Admin user management
+- `SongService` — Proxy to external song API
+- `FileService` — Proxy to Dropbox file downloads
+
+### Repository Layer (`app/repository/`)
+
+SQLAlchemy 2.0 async implementations of Core repository interfaces.
+
+- **Models** (`repository/models/`) — `DeclarativeBase` ORM models (`UserModel`, `SongListModel`, etc.) mapping to existing PostgreSQL tables in `public` schema.
+- **Repositories** — Async CRUD operations, mapping between ORM models and Core entities.
+- **Database** (`repository/database.py`) — Async engine and session factory.
+
+### Infrastructure Layer (`app/infrastructure/`)
+
+Concrete implementations of non-database Core interfaces.
+
+- `Sha256PasswordHasher` — SHA256+salt hashing (backward compatible with legacy data)
+- `JwtTokenService` — JWT access/refresh/activation/reset tokens via PyJWT
+- `HttpxSongApiClient` — Async HTTP client for external church music API
+- `DropboxFileService` — PPT/sheet file download URLs from Dropbox
+- `SmtpMailService` — Activation and password reset emails via SMTP
+- `scheduler.py` — Background task pinging external API every 5 minutes
+
+### API Layer (`app/api/`)
+
+FastAPI routers, Pydantic schemas, and dependency injection.
+
+- **Dependencies** (`api/dependencies.py`) — The composition root. Wires concrete implementations to services via `Depends()`. Includes `get_current_user`, `get_current_admin`, `get_current_manager` auth guards.
+- **Routers** (`api/routers/`) — HTTP endpoints for health, auth, songs, songlists, admin, invitation, reports, files.
+- **Schemas** (`api/schemas/`) — Pydantic request/response models.
+
+## Key Structural Points
+
+- **Auth**: JWT token-based (access + refresh). `OAuth2PasswordBearer` extracts Bearer token.
+- **Songs are not stored locally** — All song data fetched from external `CHURCH_MUSIC_API_URL`.
+- **Config** via `pydantic-settings.BaseSettings`, reads from `.env` and environment variables.
+- **App factory**: `create_app()` in `app/__init__.py` sets up lifespan, routers, and scheduler.
+- **Entry point**: `uvicorn app.main:app`

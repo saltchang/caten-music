@@ -1,91 +1,85 @@
 # [Caten Music](https://music.caten-church.org)
 
-A music web application for **[Caten Church](https://caten-church.org)**.
+A music data management system for **[Caten Church](https://caten-church.org)**.
 
 - View and search the songs you need.
-- Signing up to create a song list and share it to your partner.
+- Sign up to create a song list and share it with your partner.
 - Become an admin and create a new song, or edit an old one.
 
-- See **[Changelog](https://github.com/saltchang/caten-music/blob/master/CHANGELOG.md)**
-- Also see **[Church Music API](https://github.com/saltchang/church-music-api)**
+Also see **[Church Music API](https://github.com/saltchang/church-music-api)**
 
-## Stack
+## Tech Stack
 
-- [Python](https://www.python.org)
-- [Flask](https://flask.palletsprojects.com)
-- [PostgreSQL](https://www.postgresql.org)
+- [Python 3.14](https://www.python.org)
+- [FastAPI](https://fastapi.tiangolo.com) + [uvicorn](https://www.uvicorn.org)
+- [PostgreSQL](https://www.postgresql.org) + [SQLAlchemy 2.0](https://www.sqlalchemy.org) (async)
 - [Docker](https://www.docker.com)
-- [DropBox API](https://www.dropbox.com/developers/documentation/http/overview)
-
-## Released
-
-### [0.6.0] - 2020-11-27
-
-- Update church music api url
+- [uv](https://docs.astral.sh/uv/) (package manager)
 
 ## Quick Start
 
-### Installation
+### Prerequisites
 
-To launch the app locally and quickly, use the sample env file.  
-Run the command to create a local environment file from default:
+- [Docker](https://www.docker.com) and Docker Compose
+- Or [uv](https://docs.astral.sh/uv/) for local development without Docker
+
+### Setup
+
+Create a local `.env` file from the example:
 
 ```bash
 cp env.example .env
 ```
 
-See [Environment Variables](#environment-variables) for more information.
+Edit `.env` and fill in the required values (`SECRET_KEY`, `HASH_SALT`, `CHURCH_MUSIC_API_URL`). See [Environment Variables](docs/ENVIRONMENT_VARIABLES.md) for details.
 
-### Build & Run
-
-Make sure you have [Docker](https://www.docker.com) installed and then continue.
-
-1. Build the app with docker-compose:
-
-    ```bash
-    docker-compose build
-    ```
-
-2. Launch the app:
-
-    ```bash
-    docker-compose up -d
-    ```
-
-    Visit [http://localhost:5000](http://localhost:5000) then you will see the website.
-
-3. See log of the service
-
-    - Use the terminal:
-
-    ```bash
-    docker-compose logs -f
-    ```
-
-    - Or use your docker GUI
-
-### Environment Variables
-
-The format of the `.env` file must be like the following content:
-
-```env
-
-DROPBOX_ACCESS_TOKEN=<Dropbox_API_token>
-DATABASE_URL=<DATABASE_URL>
-APP_SETTING=<Mode:[Production, Development, Testing]>
-TEST_SETTING=Testing
-=<Mail_Account_Username>
-HASH_SALT=<Hash_Salt>
-SECRET_KEY=<Secret_Key>
-
-```
-
-## Backup Database
-
-To backup the database, use the `backup_db` script, please try:
+### Run with Docker
 
 ```bash
-./backup_db.sh --help
+docker compose build
+docker compose up -d
 ```
 
-The default backup directory is `./backups`.
+The API will be available at [http://localhost:3777](http://localhost:3777).
+
+Check logs:
+
+```bash
+docker compose logs -f
+```
+
+### Run Locally (without Docker)
+
+```bash
+uv sync            # Install dependencies
+make dev            # Dev server on http://localhost:3777
+```
+
+Requires a running PostgreSQL instance (configure `DATABASE_URL` in `.env`).
+
+### Verify
+
+```bash
+curl http://localhost:3777/api/health
+# {"status":"OK"}
+```
+
+## Development
+
+```bash
+uv sync --group dev         # Install dev dependencies
+
+make test                   # Run all tests
+make lint                   # Lint
+make format                 # Format
+make typecheck              # Type check
+make check                  # All of the above
+```
+
+See [Commands](docs/COMMANDS.md) for the full list.
+
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md) - Clean Architecture layers and design decisions
+- [Commands](docs/COMMANDS.md) - All development commands
+- [Environment Variables](docs/ENVIRONMENT_VARIABLES.md) - Configuration reference

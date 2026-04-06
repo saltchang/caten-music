@@ -2,12 +2,13 @@
 
 ## Project Context
 
-This is a music data management system for church music, based on Python Flask and PostgreSQL.
-We are now going to refactor this project from a full-stack Flask project to a React and FastAPI project.
+This is a music data management system for church music. The backend is a FastAPI JSON API following Clean Architecture. A React frontend is planned but not yet implemented.
 
 ## Current Tech Stack
 
-- **Backend**: Python, Flask, PostgreSQL, SQLAlchemy, Alembic, Docker with Docker Compose
+- **Backend**: Python, FastAPI, PostgreSQL (asyncpg), SQLAlchemy 2.0 async, Alembic, PyJWT, httpx, pydantic-settings
+- **Testing**: pytest, pytest-asyncio, aiosqlite (in-memory SQLite for tests)
+- **Deployment**: Docker with Docker Compose, uvicorn
 
 ## Development Principle
 
@@ -40,13 +41,41 @@ Use TDD development workflow. Strictly adhere to the Red-Green-Refactor TDD cycl
 
 The task is considered complete and ready to report ONLY when **All Tests Pass** and the code is fully refactored with no redundancy.
 
-## Code Quality Principle
+## Testing Standards
 
-You MUST ALWAYS run the linter and formatter after changes to check the code quality.
+- **AAA Pattern**: All test implementations MUST strictly follow the **Arrange-Act-Assert** pattern. Visually separate these three phases within the test body using comments (`# Arrange`, `# Act`, `# Assert`) to maintain clear test structure.
+- **BDD-Style Test Docstrings**: Every test function MUST include a docstring describing its exact behavior using the **Given-When-Then** format.
 
-Use Ruff and Pyright as formatter and linter. Read `Project Commands` for more information if needed.
+  _Example:_
 
-Follow Clean Architecture principle by Robert C. Martin (Uncle Bob). Read `Clean Architecture Principle` for more information if needed.
+  ```python
+  def test_example_behavior():
+      """
+      GIVEN [precondition or initial state]
+      WHEN [action or trigger]
+      THEN [expected outcome or state change]
+      """
+      # Arrange
+      ...
+
+      # Act
+      ...
+
+      # Assert
+      ...
+  ```
+
+## Code Quality & Documentation Principle
+
+- **Type Hinting**: All arguments and return values in functions should be defined with strict types. No implicit types.
+- **Production Code Docstrings**: MUST use **Google Style** docstrings for all classes, methods, and functions in the production code. Clearly document the `Args`, `Returns`, and `Raises` sections to define the API contract.
+- **Linting & Formatting**: You MUST ALWAYS run the linter and formatter after changes to check the code quality. Use Ruff and Pyright as formatter and linter. Read `Project Commands` for more information if needed.
+- **Clean Architecture**: Follow Clean Architecture principle by Robert C. Martin (Uncle Bob). Read `Clean Architecture Principle` for more information if needed.
+
+## Check Documentation
+
+- After complete each task or TODO, ALWAYS check and update the relevant documentations, readme, etc.
+- Your document should be concise and hit the point, write down the critical note so that future maintainers can get started quickly.
 
 ## Key Documentation References
 
