@@ -15,3 +15,5 @@ RUN uv sync --frozen --no-dev
 
 # copy project
 COPY . /usr/src/app/
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3777"]

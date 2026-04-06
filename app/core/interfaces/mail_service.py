@@ -1,0 +1,6 @@
+from typing import Protocol
+
+
+class MailService(Protocol):
+    def send_activation_email(self, email: str, username: str, activation_url: str) -> None: ...
+    def send_password_reset_email(self, email: str, username: str, reset_url: str) -> None: ...

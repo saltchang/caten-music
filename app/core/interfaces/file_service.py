@@ -1,0 +1,6 @@
+from typing import Protocol
+
+
+class FileService(Protocol):
+    async def get_ppt_url(self, sid: str) -> str | None: ...
+    async def get_sheet_url(self, sid: str) -> str | None: ...

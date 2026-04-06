@@ -6,6 +6,7 @@ import sys
 
 from caten_music import CreateApp
 
+
 def dropAllMain():
 
     app = CreateApp().main()
@@ -13,6 +14,7 @@ def dropAllMain():
     from caten_music.models.base import db
 
     db.drop_all()
+
 
 def dropAllTest():
 
@@ -31,6 +33,7 @@ def createAllMain():
 
     db.create_all()
 
+
 def createAllTest():
 
     app = CreateApp().test()
@@ -43,31 +46,30 @@ def createAllTest():
 def print_usage():
 
     print()
-    print("Usage: database.py [command] [config_code]")
+    print('Usage: database.py [command] [config_code]')
     print()
-    print("[command]")
+    print('[command]')
     print()
-    print("drop : Drop all tables in the database.")
-    print("create : Create all tables into the database.")
+    print('drop : Drop all tables in the database.')
+    print('create : Create all tables into the database.')
     print()
-    print("[config_code]")
+    print('[config_code]')
     print()
-    print("default(null) : non-test")
-    print("test : test")
+    print('default(null) : non-test')
+    print('test : test')
 
 
-if __name__ == "__main__":
-
+if __name__ == '__main__':
     if len(sys.argv) == 3:
         command = sys.argv[1]
         config_code = sys.argv[2]
-        if command == "drop":
-            if config_code == "test":
+        if command == 'drop':
+            if config_code == 'test':
                 dropAllTest()
             else:
                 print_usage()
-        elif command == "create":
-            if config_code == "test":
+        elif command == 'create':
+            if config_code == 'test':
                 createAllTest()
             else:
                 print_usage()
@@ -75,9 +77,9 @@ if __name__ == "__main__":
             print_usage()
     elif len(sys.argv) == 2:
         command = sys.argv[1]
-        if command == "drop":
+        if command == 'drop':
             dropAllMain()
-        elif command == "create":
+        elif command == 'create':
             createAllMain()
         else:
             print_usage()
