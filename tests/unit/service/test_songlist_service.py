@@ -12,13 +12,8 @@ def songlist_repo():
 
 
 @pytest.fixture
-def song_api_client():
-    return AsyncMock()
-
-
-@pytest.fixture
-def service(songlist_repo, song_api_client):
-    return SonglistService(songlist_repo=songlist_repo, song_api_client=song_api_client)
+def service(songlist_repo):
+    return SonglistService(songlist_repo=songlist_repo)
 
 
 @pytest.fixture

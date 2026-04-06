@@ -2,8 +2,6 @@
 
 import pytest
 
-from . import client
-
 
 def search(client, title, c, lang, to):
     """搜尋模組"""

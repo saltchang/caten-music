@@ -16,9 +16,6 @@ class Settings(BaseSettings):
     jwt_refresh_token_expire_minutes: int = 60 * 24 * 30  # 30 days
     jwt_activation_token_expire_minutes: int = 120  # 2 hours
 
-    # External API
-    church_music_api_url: str = 'http://localhost:3000'
-
     # Dropbox
     dropbox_access_token: str = ''
 

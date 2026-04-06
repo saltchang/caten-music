@@ -65,6 +65,18 @@ async def update_song(
     return {'success': success}
 
 
+@router.delete('/songs/{sid}')
+async def delete_song(
+    sid: str,
+    _manager: Annotated[User, Depends(get_current_manager)],
+    song_service: Annotated[SongService, Depends(get_song_service)],
+) -> dict[str, Any]:
+    success = await song_service.delete_song(sid)
+    if not success:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
+    return {'success': True}
+
+
 def _user_to_response(user: User) -> UserResponse:
     return UserResponse(
         id=user.id,

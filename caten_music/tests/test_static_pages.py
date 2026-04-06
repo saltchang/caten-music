@@ -1,9 +1,7 @@
 # tests/test_static_pages.py
 
-from . import client, create_test_user
+from . import create_test_user
 from .test_login import get_login_client
-
-import pytest
 
 create_test_user()
 

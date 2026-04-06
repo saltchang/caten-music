@@ -1,13 +1,11 @@
 from app.core.entities.songlist import SongList
 from app.core.exceptions import PermissionDeniedError, SonglistNotFoundError
-from app.core.interfaces.song_api_client import SongApiClient
 from app.core.interfaces.songlist_repository import SonglistRepository
 
 
 class SonglistService:
-    def __init__(self, songlist_repo: SonglistRepository, song_api_client: SongApiClient):
+    def __init__(self, songlist_repo: SonglistRepository) -> None:
         self._songlist_repo = songlist_repo
-        self._song_api_client = song_api_client
 
     async def create_songlist(
         self,

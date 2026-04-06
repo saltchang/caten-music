@@ -11,11 +11,11 @@ from app.core.entities.user import User
 from app.infrastructure.dropbox_client import DropboxFileService
 from app.infrastructure.mail_service import SmtpMailService
 from app.infrastructure.password_hasher import Sha256PasswordHasher
-from app.infrastructure.song_api_client import HttpxSongApiClient
 from app.infrastructure.token_service import JwtTokenService
 from app.repository.database import get_session
 from app.repository.invitation_repository import SqlAlchemyInvitationRepository
 from app.repository.report_repository import SqlAlchemyReportRepository
+from app.repository.song_repository import SqlAlchemySongRepository
 from app.repository.songlist_repository import SqlAlchemySonglistRepository
 from app.repository.user_profile_repository import SqlAlchemyUserProfileRepository
 from app.repository.user_repository import SqlAlchemyUserRepository
@@ -89,10 +89,10 @@ def get_report_repo(
     return SqlAlchemyReportRepository(session)
 
 
-def get_song_api_client(
-    settings: Annotated[Settings, Depends(get_settings)],
-) -> HttpxSongApiClient:
-    return HttpxSongApiClient(base_url=settings.church_music_api_url)
+def get_song_repo(
+    session: Annotated[AsyncSession, Depends(get_db_session)],
+) -> SqlAlchemySongRepository:
+    return SqlAlchemySongRepository(session)
 
 
 def get_file_service(
@@ -133,9 +133,8 @@ def get_auth_service(
 
 def get_songlist_service(
     songlist_repo: Annotated[SqlAlchemySonglistRepository, Depends(get_songlist_repo)],
-    song_api_client: Annotated[HttpxSongApiClient, Depends(get_song_api_client)],
 ) -> SonglistService:
-    return SonglistService(songlist_repo=songlist_repo, song_api_client=song_api_client)
+    return SonglistService(songlist_repo=songlist_repo)
 
 
 def get_invitation_service(
@@ -157,9 +156,9 @@ def get_user_service(
 
 
 def get_song_service(
-    song_api_client: Annotated[HttpxSongApiClient, Depends(get_song_api_client)],
+    song_repo: Annotated[SqlAlchemySongRepository, Depends(get_song_repo)],
 ) -> SongService:
-    return SongService(song_api_client=song_api_client)
+    return SongService(song_repo=song_repo)
 
 
 def get_file_download_service(

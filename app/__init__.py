@@ -1,4 +1,3 @@
-import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -15,20 +14,7 @@ async def lifespan(app: FastAPI):
     engine = create_engine_from_url(settings.database_url)
     create_session_factory(engine)
 
-    scheduler_task = None
-    if not settings.testing:
-        from app.infrastructure.scheduler import start_scheduler
-
-        scheduler_task = asyncio.create_task(start_scheduler(settings.church_music_api_url))
-
     yield
-
-    if scheduler_task is not None:
-        scheduler_task.cancel()
-        try:
-            await scheduler_task
-        except asyncio.CancelledError:
-            pass
 
     await engine.dispose()
 

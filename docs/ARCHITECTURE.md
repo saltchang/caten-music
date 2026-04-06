@@ -10,8 +10,8 @@ Dependencies flow inward: **API → Service → Core ← Repository/Infrastructu
 
 The innermost layer. Zero external dependencies — pure Python only.
 
-- **Entities** (`core/entities/`) — Plain `@dataclass` domain objects: `User`, `UserProfile`, `SongList`, `InvitationCode`, `SongReport`. These are NOT ORM models.
-- **Interfaces** (`core/interfaces/`) — `Protocol` contracts for repositories (`UserRepository`, `SonglistRepository`, etc.) and infrastructure (`PasswordHasher`, `TokenService`, `MailService`, `SongApiClient`, `FileService`). The service layer codes against these, never concrete implementations.
+- **Entities** (`core/entities/`) — Plain `@dataclass` domain objects: `User`, `UserProfile`, `SongList`, `InvitationCode`, `SongReport`, `MusicWork`, `MusicVersion`. These are NOT ORM models.
+- **Interfaces** (`core/interfaces/`) — `Protocol` contracts for repositories (`UserRepository`, `SonglistRepository`, `SongRepository`, etc.) and infrastructure (`PasswordHasher`, `TokenService`, `MailService`, `FileService`). The service layer codes against these, never concrete implementations.
 - **Exceptions** (`core/exceptions.py`) — Domain-specific errors (`InvalidCredentialsError`, `SonglistNotFoundError`, etc.), mapped to HTTP codes in the API layer.
 - **Validators** (`core/validators.py`) — Pure validation functions for username, email, password, displayname formats.
 
@@ -24,14 +24,14 @@ Use cases / business logic. Receives dependencies via constructor injection of C
 - `InvitationService` — Generate, validate, toggle invitation codes
 - `ReportService` — Submit song problem reports
 - `UserService` — Admin user management
-- `SongService` — Proxy to external song API
+- `SongService` — Song CRUD, search, browse, random via local `SongRepository`
 - `FileService` — Proxy to Dropbox file downloads
 
 ### Repository Layer (`app/repository/`)
 
 SQLAlchemy 2.0 async implementations of Core repository interfaces.
 
-- **Models** (`repository/models/`) — `DeclarativeBase` ORM models (`UserModel`, `SongListModel`, etc.) mapping to existing PostgreSQL tables in `public` schema.
+- **Models** (`repository/models/`) — `DeclarativeBase` ORM models (`UserModel`, `SongListModel`, `MusicWorkModel`, `MusicVersionModel`, etc.) mapping to PostgreSQL tables in `public` schema.
 - **Repositories** — Async CRUD operations, mapping between ORM models and Core entities.
 - **Database** (`repository/database.py`) — Async engine and session factory.
 
@@ -41,10 +41,8 @@ Concrete implementations of non-database Core interfaces.
 
 - `Sha256PasswordHasher` — SHA256+salt hashing (backward compatible with legacy data)
 - `JwtTokenService` — JWT access/refresh/activation/reset tokens via PyJWT
-- `HttpxSongApiClient` — Async HTTP client for external church music API
 - `DropboxFileService` — PPT/sheet file download URLs from Dropbox
 - `SmtpMailService` — Activation and password reset emails via SMTP
-- `scheduler.py` — Background task pinging external API every 5 minutes
 
 ### API Layer (`app/api/`)
 
@@ -57,7 +55,7 @@ FastAPI routers, Pydantic schemas, and dependency injection.
 ## Key Structural Points
 
 - **Auth**: JWT token-based (access + refresh). `OAuth2PasswordBearer` extracts Bearer token.
-- **Songs are not stored locally** — All song data fetched from external `CHURCH_MUSIC_API_URL`.
+- **Songs are stored locally** �� Song data lives in `music_works` + `music_versions` tables (migrated from the external church-music-api MongoDB). `SqlAlchemySongRepository` provides full CRUD access.
 - **Config** via `pydantic-settings.BaseSettings`, reads from `.env` and environment variables.
-- **App factory**: `create_app()` in `app/__init__.py` sets up lifespan, routers, and scheduler.
+- **App factory**: `create_app()` in `app/__init__.py` sets up lifespan and routers.
 - **Entry point**: `uvicorn app.main:app`

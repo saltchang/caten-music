@@ -2,8 +2,6 @@
 
 import pytest
 
-from . import client
-
 
 def surf(client, title, c, lang, to):
     """瀏覽模組"""

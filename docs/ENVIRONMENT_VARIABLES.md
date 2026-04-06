@@ -8,7 +8,6 @@ Configuration is managed via `pydantic-settings` (`app/config/settings.py`). All
 DATABASE_URL=postgresql://user:pass@host:5432/db   # Auto-converted to postgresql+asyncpg://
 SECRET_KEY=your-secret-key                         # HMAC-SHA256 signing for JWT tokens
 HASH_SALT=your-hash-salt                           # SHA256 password hashing salt
-CHURCH_MUSIC_API_URL=https://...                   # External church music API base URL
 ```
 
 ## Optional (with defaults)

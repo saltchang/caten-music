@@ -1,8 +1,8 @@
 # helper/activate_checker.py
 
 from flask import current_app
+from itsdangerous import BadSignature, SignatureExpired
 from itsdangerous import URLSafeTimedSerializer as sign
-from itsdangerous import SignatureExpired, BadSignature
 
 
 def checkActivateToken(token: str, hours=2) -> bool:

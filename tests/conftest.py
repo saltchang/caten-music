@@ -1,10 +1,10 @@
 from collections.abc import AsyncGenerator
 from datetime import datetime, timedelta
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 from app import create_app
-from app.api.dependencies import get_db_session, get_mail_service, get_settings, get_song_api_client
+from app.api.dependencies import get_db_session, get_mail_service, get_settings
 from app.config.settings import Settings
 from app.core.entities.invitation_code import InvitationCode
 from app.core.entities.user import User
@@ -23,7 +23,6 @@ def settings() -> Settings:
         database_url='sqlite+aiosqlite://',
         secret_key='test-secret-key-long-enough-for-hmac-sha256',
         hash_salt='test-hash-salt',
-        church_music_api_url='http://test-api:3000',
         testing=True,
     )
 
@@ -88,7 +87,6 @@ async def api_session(_shared_db: async_sessionmaker[AsyncSession]) -> AsyncGene
 @pytest.fixture
 async def client(_shared_db: async_sessionmaker[AsyncSession], settings: Settings) -> AsyncGenerator[AsyncClient]:
     mock_mail_service = MagicMock()
-    mock_song_api_client = AsyncMock()
 
     async def override_get_db_session():
         async with _shared_db() as session:
@@ -98,7 +96,6 @@ async def client(_shared_db: async_sessionmaker[AsyncSession], settings: Setting
     app.dependency_overrides[get_settings] = lambda: settings
     app.dependency_overrides[get_db_session] = override_get_db_session
     app.dependency_overrides[get_mail_service] = lambda: mock_mail_service
-    app.dependency_overrides[get_song_api_client] = lambda: mock_song_api_client
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url='http://test') as ac:

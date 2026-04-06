@@ -1,6 +1,5 @@
 # tests/test_download.py
 
-from . import client
 
 import pytest
 

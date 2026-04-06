@@ -2,7 +2,7 @@
 
 import pytest
 
-from . import client, dropAll
+from . import dropAll
 
 dropAll()
 

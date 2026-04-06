@@ -2,7 +2,7 @@
 
 import pytest
 
-from . import client, dropAll, create_test_user
+from . import create_test_user, dropAll
 
 dropAll()
 
