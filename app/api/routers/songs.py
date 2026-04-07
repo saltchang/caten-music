@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from app.api.dependencies import get_current_active_user, get_song_service, oauth2_scheme_optional
+from app.api.dependencies import get_current_active_user, get_song_service
 from app.api.schemas.song import SongResponse
 from app.core.entities.user import User
 from app.service.song_service import SongService
@@ -13,11 +13,9 @@ router = APIRouter(prefix='/songs', tags=['songs'])
 @router.get('/random', response_model=list[SongResponse])
 async def get_random_songs(
     song_service: Annotated[SongService, Depends(get_song_service)],
-    token: Annotated[str | None, Depends(oauth2_scheme_optional)] = None,
+    _user: Annotated[User, Depends(get_current_active_user)],
     amount: int = Query(default=6),
 ) -> list[SongResponse]:
-    if token is None:
-        return []
     versions = await song_service.get_random(amount)
     return [SongResponse.from_entity(v) for v in versions]
 

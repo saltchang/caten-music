@@ -19,7 +19,7 @@ async def list_users(
     user_service: Annotated[UserService, Depends(get_user_service)],
 ):
     users = await user_service.list_users()
-    return [_user_to_response(u) for u in users]
+    return [UserResponse.from_entity(u) for u in users]
 
 
 @router.put('/users/{user_id}', response_model=UserResponse)
@@ -38,7 +38,7 @@ async def update_user(
         if request.displayname is not None:
             user = await user_service.update_user_displayname(user_id, request.displayname)
 
-        return _user_to_response(user)
+        return UserResponse.from_entity(user)
     except UserNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found') from None
     except InvalidInputError as e:
@@ -78,16 +78,3 @@ async def delete_song(
     success = await song_service.delete_song(sid)
     if not success:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
-
-
-def _user_to_response(user: User) -> UserResponse:
-    return UserResponse(
-        id=user.id,
-        username=user.username,
-        email=user.email,
-        displayname=user.displayname,
-        is_admin=user.is_admin,
-        is_manager=user.is_manager,
-        is_active=user.is_active,
-        is_authenticated=user.is_authenticated,
-    )

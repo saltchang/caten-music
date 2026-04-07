@@ -102,18 +102,17 @@ class TestGetRandomSongs:
         assert len(data) <= 2
         assert all('sid' in song for song in data)
 
-    async def test_returns_empty_without_token(self, client: AsyncClient):
+    async def test_requires_auth(self, client: AsyncClient):
         """
         GIVEN no authentication token is provided
         WHEN GET /api/songs/random is requested
-        THEN it returns an empty list
+        THEN it returns 401
         """
         # Arrange & Act
         response = await client.get('/api/songs/random')
 
         # Assert
-        assert response.status_code == 200
-        assert response.json() == []
+        assert response.status_code == 401
 
 
 # ── GET /api/songs/search ─────────────────────────────

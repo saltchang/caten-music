@@ -23,7 +23,7 @@ async def get_songlists(
     songlist_service: Annotated[SonglistService, Depends(get_songlist_service)],
 ):
     songlists = await songlist_service.get_user_songlists(user.id)
-    return [_songlist_to_response(s) for s in songlists]
+    return [SonglistResponse.from_entity(s) for s in songlists]
 
 
 @router.post('/', response_model=SonglistResponse, status_code=status.HTTP_201_CREATED)
@@ -38,7 +38,7 @@ async def create_songlist(
         song_sid=request.song_sid,
         is_private=request.is_private,
     )
-    return _songlist_to_response(songlist)
+    return SonglistResponse.from_entity(songlist)
 
 
 @router.get('/{out_id}', response_model=SonglistResponse)
@@ -49,7 +49,7 @@ async def get_songlist(
 ):
     try:
         songlist = await songlist_service.get_songlist(out_id, user.id)
-        return _songlist_to_response(songlist)
+        return SonglistResponse.from_entity(songlist)
     except SonglistNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
     except PermissionDeniedError:
@@ -73,7 +73,7 @@ async def update_songlist(
             is_archived=request.is_archived,
             songs_sid_list=request.songs_sid_list,
         )
-        return _songlist_to_response(songlist)
+        return SonglistResponse.from_entity(songlist)
     except SonglistNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
     except PermissionDeniedError:
@@ -95,7 +95,7 @@ async def delete_songlist(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
 
 
-@router.put('/{out_id}/songs/{song_sid}', response_model=SonglistToggleResponse)
+@router.patch('/{out_id}/songs/{song_sid}', response_model=SonglistToggleResponse)
 async def toggle_song(
     out_id: str,
     song_sid: str,
@@ -109,19 +109,3 @@ async def toggle_song(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
     except PermissionDeniedError:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
-
-
-def _songlist_to_response(songlist):
-    return SonglistResponse(
-        id=songlist.id,
-        out_id=songlist.out_id,
-        title=songlist.title,
-        description=songlist.description,
-        user_id=songlist.user_id,
-        songs_sid_list=songlist.songs_sid_list,
-        songs_amount=songlist.songs_amount,
-        created_time=songlist.created_time,
-        edited_time=songlist.edited_time,
-        is_private=songlist.is_private,
-        is_archived=songlist.is_archived,
-    )

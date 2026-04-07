@@ -18,18 +18,7 @@ async def list_codes(
     invitation_service: Annotated[InvitationService, Depends(get_invitation_service)],
 ):
     codes = await invitation_service.list_codes()
-    return [
-        InvitationResponse(
-            id=c.id,
-            code=c.code,
-            created_by=c.created_by,
-            created_at=c.created_at,
-            expires_at=c.expires_at,
-            is_disabled=c.is_disabled,
-            usage_count=c.usage_count,
-        )
-        for c in codes
-    ]
+    return [InvitationResponse.from_entity(c) for c in codes]
 
 
 @router.post('/codes', response_model=InvitationGenerateResponse)
@@ -38,11 +27,7 @@ async def generate_code(
     invitation_service: Annotated[InvitationService, Depends(get_invitation_service)],
 ):
     code = await invitation_service.generate_code(admin.id)
-    return InvitationGenerateResponse(
-        id=code.id,
-        code=code.code,
-        expires_at=code.expires_at,
-    )
+    return InvitationGenerateResponse.from_entity(code)
 
 
 @router.patch('/codes/{code_id}', response_model=MessageResponse)

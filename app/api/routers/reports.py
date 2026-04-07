@@ -23,12 +23,6 @@ async def create_report(
             song_sid=request.song_sid,
             user_id=user.id,
         )
-        return ReportResponse(
-            id=report.id,
-            description=report.description,
-            song_sid=report.song_sid,
-            user_id=report.user_id,
-            reported_time=report.reported_time,
-        )
+        return ReportResponse.from_entity(report)
     except InvalidInputError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from None

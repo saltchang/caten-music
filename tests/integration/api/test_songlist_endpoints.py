@@ -165,7 +165,7 @@ async def test_toggle_song(
     out_id = create_resp.json()['out_id']
 
     # Act & Assert (toggle add)
-    response = await client.put(
+    response = await client.patch(
         f'/api/songlists/{out_id}/songs/123',
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -175,7 +175,7 @@ async def test_toggle_song(
     assert data['song_sid'] == '123'
 
     # Act & Assert (toggle remove)
-    response2 = await client.put(
+    response2 = await client.patch(
         f'/api/songlists/{out_id}/songs/123',
         headers={'Authorization': f'Bearer {token}'},
     )
