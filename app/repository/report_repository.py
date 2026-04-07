@@ -28,7 +28,7 @@ class SqlAlchemyReportRepository:
         return SongReport(
             id=model.id,
             description=model.description or '',
-            song_sid=model.song_sid or 0,
+            song_sid=model.song_sid or '',
             user_id=model.user_id,
             reported_time=model.reported_time,
         )

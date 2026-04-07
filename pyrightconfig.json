@@ -1,6 +1,6 @@
 {
   "pythonVersion": "3.14",
-  "include": ["app", "tests", "scripts"],
+  "include": ["app", "tests", "scripts", "migrations"],
   "exclude": ["**/node_modules", "**/__pycache__"],
   "ignore": ["**/site-packages/*", "**/dist-packages/*", "**/python3.1*/*"],
   "stubPath": "type-stub",

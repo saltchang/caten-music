@@ -6,6 +6,6 @@ from datetime import datetime
 class SongReport:
     id: int
     description: str
-    song_sid: int
+    song_sid: str
     user_id: int
     reported_time: datetime = field(default_factory=datetime.now)

@@ -33,7 +33,7 @@ async def test_create_report(async_session: AsyncSession):
     report = SongReport(
         id=0,
         description='Broken audio link',
-        song_sid=42,
+        song_sid='1011054',
         user_id=user.id,
         reported_time=datetime(2025, 6, 15, 10, 0, 0),
     )
@@ -45,7 +45,7 @@ async def test_create_report(async_session: AsyncSession):
     assert created.id is not None
     assert created.id > 0
     assert created.description == 'Broken audio link'
-    assert created.song_sid == 42
+    assert created.song_sid == '1011054'
     assert created.user_id == user.id
 
 
@@ -61,7 +61,7 @@ async def test_get_by_id(async_session: AsyncSession):
     report = SongReport(
         id=0,
         description='Wrong lyrics',
-        song_sid=99,
+        song_sid='1010066',
         user_id=user.id,
         reported_time=datetime(2025, 6, 15, 10, 0, 0),
     )
@@ -74,7 +74,7 @@ async def test_get_by_id(async_session: AsyncSession):
     assert found is not None
     assert found.id == created.id
     assert found.description == 'Wrong lyrics'
-    assert found.song_sid == 99
+    assert found.song_sid == '1010066'
 
 
 async def test_get_by_id_not_found(async_session: AsyncSession):

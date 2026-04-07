@@ -1,6 +1,6 @@
 fix = true
 extend = "./pyproject.toml"
-src = ["./app", "./tests", "./scripts"]
+src = ["./app", "./tests", "./scripts", "./migrations"]
 exclude = [
     ".bzr",
     ".direnv",

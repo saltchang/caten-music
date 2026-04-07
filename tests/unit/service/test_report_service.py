@@ -27,14 +27,14 @@ class TestCreateReport:
         report_repo.create.return_value = SongReport(
             id=1,
             description='Wrong lyrics in verse 2',
-            song_sid=1001001,
+            song_sid='1001001',
             user_id=1,
         )
 
         # Act
         result = await service.create_report(
             description='Wrong lyrics in verse 2',
-            song_sid=1001001,
+            song_sid='1001001',
             user_id=1,
         )
 
@@ -52,6 +52,6 @@ class TestCreateReport:
         with pytest.raises(InvalidInputError):
             await service.create_report(
                 description='Hi',
-                song_sid=1001001,
+                song_sid='1001001',
                 user_id=1,
             )

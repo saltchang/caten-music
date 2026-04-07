@@ -25,7 +25,7 @@ async def test_create_report(
         '/api/reports/',
         json={
             'description': 'This song has wrong lyrics in verse 2',
-            'song_sid': 42,
+            'song_sid': '1011054',
         },
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -34,5 +34,5 @@ async def test_create_report(
     assert response.status_code == 201
     data = response.json()
     assert data['description'] == 'This song has wrong lyrics in verse 2'
-    assert data['song_sid'] == 42
+    assert data['song_sid'] == '1011054'
     assert data['user_id'] == user.id

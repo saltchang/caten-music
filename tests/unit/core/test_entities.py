@@ -254,11 +254,11 @@ class TestSongReportEntity:
         report = SongReport(
             id=1,
             description='Wrong lyrics',
-            song_sid=1001001,
+            song_sid='1001001',
             user_id=1,
         )
 
         # Assert
         assert report.id == 1
         assert report.description == 'Wrong lyrics'
-        assert report.song_sid == 1001001
+        assert report.song_sid == '1001001'
