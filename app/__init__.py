@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api.dependencies import get_settings
-from app.api.routers import admin, auth, files, health, invitation, reports, songlists, songs
+from app.api.routers import auth, files, health, invitation, reports, songlists, songs, users
 from app.config.settings import Settings
 from app.repository.database import create_engine_from_url, create_session_factory
 
@@ -30,7 +30,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(auth.router)
     app.include_router(songs.router)
     app.include_router(songlists.router)
-    app.include_router(admin.router)
+    app.include_router(users.router)
     app.include_router(invitation.router)
     app.include_router(reports.router)
     app.include_router(files.router)

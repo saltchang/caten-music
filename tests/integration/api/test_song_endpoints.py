@@ -258,7 +258,7 @@ class TestGetSongBySid:
         assert response.status_code == 401
 
 
-# ── POST /admin/songs ─────────────────────────────
+# ── POST /songs ───────────────────────────────────
 
 
 class TestCreateSong:
@@ -271,7 +271,7 @@ class TestCreateSong:
     ):
         """
         GIVEN a manager user is authenticated
-        WHEN POST /admin/songs is requested with song data
+        WHEN POST /songs is requested with song data
         THEN the song is created and the new SID is returned
         """
         # Arrange
@@ -279,7 +279,7 @@ class TestCreateSong:
 
         # Act
         response = await client.post(
-            '/admin/songs',
+            '/songs',
             json={
                 'sid': '9990001',
                 'title': '新歌',
@@ -307,7 +307,7 @@ class TestCreateSong:
     ):
         """
         GIVEN a normal (non-manager) user is authenticated
-        WHEN POST /admin/songs is requested
+        WHEN POST /songs is requested
         THEN it returns 403
         """
         # Arrange
@@ -315,7 +315,7 @@ class TestCreateSong:
 
         # Act
         response = await client.post(
-            '/admin/songs',
+            '/songs',
             json={'sid': '9990002', 'title': '新歌', 'num_c': '99', 'num_i': '2'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -324,7 +324,7 @@ class TestCreateSong:
         assert response.status_code == 403
 
 
-# ── PUT /admin/songs/{sid} ────────────────────────
+# ── PUT /songs/{sid} ──────────────────────────────
 
 
 class TestUpdateSong:
@@ -337,7 +337,7 @@ class TestUpdateSong:
     ):
         """
         GIVEN a song exists and a manager is authenticated
-        WHEN PUT /admin/songs/{sid} is requested with updated fields
+        WHEN PUT /songs/{sid} is requested with updated fields
         THEN the song is updated and the updated resource is returned
         """
         # Arrange
@@ -346,7 +346,7 @@ class TestUpdateSong:
 
         # Act
         response = await client.put(
-            '/admin/songs/1011054',
+            '/songs/1011054',
             json={'tonality': 'A', 'album': '新專輯'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -367,7 +367,7 @@ class TestUpdateSong:
     ):
         """
         GIVEN a normal user is authenticated
-        WHEN PUT /admin/songs/{sid} is requested
+        WHEN PUT /songs/{sid} is requested
         THEN it returns 403
         """
         # Arrange
@@ -375,7 +375,7 @@ class TestUpdateSong:
 
         # Act
         response = await client.put(
-            '/admin/songs/1011054',
+            '/songs/1011054',
             json={'tonality': 'A'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -384,7 +384,7 @@ class TestUpdateSong:
         assert response.status_code == 403
 
 
-# ── DELETE /admin/songs/{sid} ─────────────────────
+# ── DELETE /songs/{sid} ───────────────────────────
 
 
 class TestDeleteSong:
@@ -397,7 +397,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN a song exists and a manager is authenticated
-        WHEN DELETE /admin/songs/{sid} is requested
+        WHEN DELETE /songs/{sid} is requested
         THEN the song is deleted and 204 No Content is returned
         """
         # Arrange
@@ -406,7 +406,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/admin/songs/1011054',
+            '/songs/1011054',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -422,7 +422,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN no song with the given SID exists
-        WHEN DELETE /admin/songs/{sid} is requested by a manager
+        WHEN DELETE /songs/{sid} is requested by a manager
         THEN it returns 404
         """
         # Arrange
@@ -430,7 +430,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/admin/songs/9999999',
+            '/songs/9999999',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -446,7 +446,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN a normal user is authenticated
-        WHEN DELETE /admin/songs/{sid} is requested
+        WHEN DELETE /songs/{sid} is requested
         THEN it returns 403
         """
         # Arrange
@@ -454,7 +454,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/admin/songs/1011054',
+            '/songs/1011054',
             headers={'Authorization': f'Bearer {token}'},
         )
 

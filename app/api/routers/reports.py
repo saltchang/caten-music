@@ -2,13 +2,22 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.api.dependencies import get_current_active_user, get_report_service
+from app.api.dependencies import get_current_active_user, get_current_admin, get_report_service
 from app.api.schemas.report import ReportCreateRequest, ReportResponse
 from app.core.entities.user import User
 from app.core.exceptions import InvalidInputError
 from app.service.report_service import ReportService
 
 router = APIRouter(prefix='/reports', tags=['reports'])
+
+
+@router.get('/', response_model=list[ReportResponse])
+async def list_reports(
+    _admin: Annotated[User, Depends(get_current_admin)],
+    report_service: Annotated[ReportService, Depends(get_report_service)],
+):
+    reports = await report_service.list_reports()
+    return [ReportResponse.from_entity(r) for r in reports]
 
 
 @router.post('/', response_model=ReportResponse, status_code=status.HTTP_201_CREATED)

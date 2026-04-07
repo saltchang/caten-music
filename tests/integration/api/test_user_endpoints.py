@@ -14,7 +14,7 @@ async def test_list_users_as_admin(
 ):
     """
     GIVEN an admin user and a normal user exist
-    WHEN the admin requests GET /admin/users
+    WHEN the admin requests GET /users
     THEN it should return 200 with all users
     """
     # Arrange
@@ -36,7 +36,7 @@ async def test_list_users_as_admin(
 
     # Act
     response = await client.get(
-        '/admin/users',
+        '/users',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -54,7 +54,7 @@ async def test_list_users_unauthorized(
 ):
     """
     GIVEN a non-admin user
-    WHEN the user requests GET /admin/users
+    WHEN the user requests GET /users
     THEN it should return 403 Forbidden
     """
     # Arrange
@@ -69,7 +69,7 @@ async def test_list_users_unauthorized(
 
     # Act
     response = await client.get(
-        '/admin/users',
+        '/users',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -85,7 +85,7 @@ async def test_update_user_role(
 ):
     """
     GIVEN an admin user and a normal target user
-    WHEN the admin requests PUT /admin/users/{id} with role 'manager'
+    WHEN the admin requests PUT /users/{id} with role 'manager'
     THEN it should return 200 with is_manager=True and is_admin=False
     """
     # Arrange
@@ -107,7 +107,7 @@ async def test_update_user_role(
 
     # Act
     response = await client.put(
-        f'/admin/users/{target_user.id}',
+        f'/users/{target_user.id}',
         json={'role': 'manager'},
         headers={'Authorization': f'Bearer {token}'},
     )

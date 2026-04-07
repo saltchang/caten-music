@@ -49,7 +49,7 @@ Concrete implementations of non-database Core interfaces.
 FastAPI routers, Pydantic schemas, and dependency injection.
 
 - **Dependencies** (`api/dependencies.py`) — The composition root. Wires concrete implementations to services via `Depends()`. Includes `get_current_user`, `get_current_admin`, `get_current_manager` auth guards.
-- **Routers** (`api/routers/`) — HTTP endpoints for health, auth, songs, songlists, admin, invitation, reports, files. No `/api` prefix — this service is a dedicated API.
+- **Routers** (`api/routers/`) — HTTP endpoints for health, auth, songs, songlists, users, invitation, reports, files. No `/api` prefix — this service is a dedicated API. Each router owns its resource; authorization is enforced via `Depends()` guards, not URL namespacing.
 - **Schemas** (`api/schemas/`) — Pydantic request/response models. Response schemas use `from_entity()` classmethods to map domain entities to API responses. Request schemas use `to_*_entity()` methods to map input to domain entities at the API boundary.
 
 ## API Endpoints
@@ -69,20 +69,20 @@ All routes are mounted directly (no `/api` prefix).
 | GET | `/songs` | active user | Unified search with pagination (title, lyrics, lang, collection, tonality, limit, offset) |
 | GET | `/songs/random` | active user | Random song |
 | GET | `/songs/{sid}` | active user | Get song by SID |
+| POST | `/songs` | manager | Create song → 201 |
+| PUT | `/songs/{sid}` | manager | Update song, returns full resource |
+| DELETE | `/songs/{sid}` | manager | Delete song → 204 |
 | POST | `/songlists/` | active user | Create songlist → 201 |
 | GET | `/songlists/` | active user | List user's songlists |
 | GET | `/songlists/{out_id}` | active user | Get songlist detail |
 | DELETE | `/songlists/{out_id}` | active user | Delete songlist |
 | PATCH | `/songlists/{out_id}/songs/{sid}` | active user | Toggle song in songlist |
+| GET | `/users` | admin | List all users |
+| PUT | `/users/{id}` | admin | Update user role |
+| GET | `/reports/` | admin | List all reports |
 | POST | `/reports/` | active user | Submit song report |
 | GET | `/files/ppt/{sid}` | active user | Download PPT file |
 | GET | `/files/sheet/{sid}` | active user | Download sheet file |
-| POST | `/admin/songs` | admin | Create song → 201 |
-| PUT | `/admin/songs/{sid}` | admin | Update song, returns full resource |
-| DELETE | `/admin/songs/{sid}` | admin | Delete song → 204 |
-| GET | `/admin/users` | admin | List all users |
-| PUT | `/admin/users/{id}` | admin | Update user role |
-| GET | `/admin/reports` | admin | List all reports |
 | POST | `/invitation/codes` | manager | Generate invitation code → 201 |
 | PATCH | `/invitation/codes/{id}` | manager | Toggle invitation code |
 | GET | `/invitation/codes` | manager | List invitation codes |

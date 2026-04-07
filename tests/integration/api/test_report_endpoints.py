@@ -14,7 +14,7 @@ async def test_list_reports_as_admin(
 ):
     """
     GIVEN an admin user and a report exists
-    WHEN GET /admin/reports is requested
+    WHEN GET /reports/ is requested
     THEN it returns 200 with the list of all reports
     """
     # Arrange – create a normal user and submit a report
@@ -40,7 +40,7 @@ async def test_list_reports_as_admin(
 
     # Act
     response = await client.get(
-        '/admin/reports',
+        '/reports/',
         headers={'Authorization': f'Bearer {admin_token}'},
     )
 
@@ -59,7 +59,7 @@ async def test_list_reports_requires_admin(
 ):
     """
     GIVEN a non-admin user
-    WHEN GET /admin/reports is requested
+    WHEN GET /reports/ is requested
     THEN it returns 403
     """
     # Arrange
@@ -69,7 +69,7 @@ async def test_list_reports_requires_admin(
 
     # Act
     response = await client.get(
-        '/admin/reports',
+        '/reports/',
         headers={'Authorization': f'Bearer {token}'},
     )
 

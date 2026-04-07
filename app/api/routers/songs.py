@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from app.api.dependencies import get_current_active_user, get_song_service
-from app.api.schemas.song import SongResponse
+from app.api.dependencies import get_current_active_user, get_current_manager, get_song_service
+from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.core.entities.user import User
 from app.service.song_service import SongService
 
@@ -44,6 +44,16 @@ async def list_songs(
     return [SongResponse.from_entity(v) for v in versions]
 
 
+@router.post('', response_model=SongResponse, status_code=status.HTTP_201_CREATED)
+async def create_song(
+    request: SongCreateRequest,
+    _manager: Annotated[User, Depends(get_current_manager)],
+    song_service: Annotated[SongService, Depends(get_song_service)],
+) -> SongResponse:
+    created = await song_service.create_song(request.to_version_entity(), request.to_work_entity())
+    return SongResponse.from_entity(created)
+
+
 @router.get('/{sid}', response_model=SongResponse)
 async def get_song(
     sid: str,
@@ -54,3 +64,28 @@ async def get_song(
     if version is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
     return SongResponse.from_entity(version)
+
+
+@router.put('/{sid}', response_model=SongResponse)
+async def update_song(
+    sid: str,
+    request: SongUpdateRequest,
+    _manager: Annotated[User, Depends(get_current_manager)],
+    song_service: Annotated[SongService, Depends(get_song_service)],
+) -> SongResponse:
+    version = request.to_version_entity()
+    updated = await song_service.update_song(sid, version)
+    if updated is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
+    return SongResponse.from_entity(updated)
+
+
+@router.delete('/{sid}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_song(
+    sid: str,
+    _manager: Annotated[User, Depends(get_current_manager)],
+    song_service: Annotated[SongService, Depends(get_song_service)],
+) -> None:
+    success = await song_service.delete_song(sid)
+    if not success:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
