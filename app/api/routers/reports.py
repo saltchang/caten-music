@@ -11,7 +11,7 @@ from app.service.report_service import ReportService
 router = APIRouter(prefix='/reports', tags=['reports'])
 
 
-@router.get('/', response_model=list[ReportResponse])
+@router.get('', response_model=list[ReportResponse])
 async def list_reports(
     _admin: Annotated[User, Depends(get_current_admin)],
     report_service: Annotated[ReportService, Depends(get_report_service)],
@@ -20,7 +20,7 @@ async def list_reports(
     return [ReportResponse.from_entity(r) for r in reports]
 
 
-@router.post('/', response_model=ReportResponse, status_code=status.HTTP_201_CREATED)
+@router.post('', response_model=ReportResponse, status_code=status.HTTP_201_CREATED)
 async def create_report(
     request: ReportCreateRequest,
     user: Annotated[User, Depends(get_current_active_user)],

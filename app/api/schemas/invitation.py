@@ -41,8 +41,8 @@ class InvitationResponse(BaseModel):
         )
 
 
-class InvitationToggleRequest(BaseModel):
-    """Request body for toggling an invitation code."""
+class InvitationUpdateRequest(BaseModel):
+    """Request body for updating an invitation code's status."""
 
     is_disabled: bool
 

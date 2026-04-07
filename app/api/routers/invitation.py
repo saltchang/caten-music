@@ -3,8 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.dependencies import get_current_admin, get_invitation_service
-from app.api.schemas.common import MessageResponse
-from app.api.schemas.invitation import InvitationGenerateResponse, InvitationResponse, InvitationToggleRequest
+from app.api.schemas.invitation import InvitationGenerateResponse, InvitationResponse, InvitationUpdateRequest
 from app.core.entities.user import User
 from app.core.exceptions import InvitationCodeDisabledError, InvitationCodeExpiredError, InvitationCodeInvalidError
 from app.service.invitation_service import InvitationService
@@ -30,32 +29,31 @@ async def generate_code(
     return InvitationGenerateResponse.from_entity(code)
 
 
-@router.patch('/codes/{code_id}', response_model=MessageResponse)
-async def toggle_code(
+@router.patch('/codes/{code_id}', response_model=InvitationResponse)
+async def update_code(
     code_id: int,
-    request: InvitationToggleRequest,
+    request: InvitationUpdateRequest,
     _admin: Annotated[User, Depends(get_current_admin)],
     invitation_service: Annotated[InvitationService, Depends(get_invitation_service)],
 ):
     try:
-        await invitation_service.toggle_code(code_id, request.is_disabled)
-        action = 'disabled' if request.is_disabled else 'enabled'
-        return MessageResponse(message=f'Invitation code {action} successfully')
+        invitation = await invitation_service.update_code_status(code_id, request.is_disabled)
+        return InvitationResponse.from_entity(invitation)
     except InvitationCodeInvalidError:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invitation code not found') from None
 
 
-@router.get('/validate/{code}', response_model=MessageResponse)
-async def validate_code(
+@router.get('/codes/{code}', response_model=InvitationResponse)
+async def get_code(
     code: str,
     invitation_service: Annotated[InvitationService, Depends(get_invitation_service)],
 ):
     try:
-        await invitation_service.validate_code(code)
-        return MessageResponse(message='Invitation code is valid')
+        invitation = await invitation_service.validate_code(code)
+        return InvitationResponse.from_entity(invitation)
     except InvitationCodeInvalidError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid invitation code') from None
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Invitation code not found') from None
     except InvitationCodeExpiredError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invitation code expired') from None
+        raise HTTPException(status_code=status.HTTP_410_GONE, detail='Invitation code expired') from None
     except InvitationCodeDisabledError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invitation code is disabled') from None
+        raise HTTPException(status_code=status.HTTP_410_GONE, detail='Invitation code is disabled') from None

@@ -49,21 +49,23 @@ async def test_validate_invitation_code(
 ):
     """
     GIVEN a valid invitation code exists
-    WHEN validating the code via GET /invitation/validate/{code}
-    THEN it should return 200 with a validity message
+    WHEN GET /invitation/codes/{code} is requested
+    THEN it should return 200 with the invitation code details
     """
     # Arrange
     invitation = await create_test_invitation_code(api_session)
 
     # Act
-    response = await client.get(f'/invitation/validate/{invitation.code}')
+    response = await client.get(f'/invitation/codes/{invitation.code}')
 
     # Assert
     assert response.status_code == 200
-    assert response.json()['message'] == 'Invitation code is valid'
+    data = response.json()
+    assert data['code'] == invitation.code
+    assert data['is_disabled'] is False
 
 
-async def test_toggle_invitation_code(
+async def test_update_invitation_code_status(
     client: AsyncClient,
     api_session: AsyncSession,
     password_hasher: Sha256PasswordHasher,
@@ -71,8 +73,8 @@ async def test_toggle_invitation_code(
 ):
     """
     GIVEN an admin manager user and an existing invitation code
-    WHEN toggling the code's disabled status to True
-    THEN it should return 200 with a disabled confirmation message
+    WHEN updating the code's disabled status to True via PATCH
+    THEN it should return 200 with the updated invitation code showing is_disabled=True
     """
     # Arrange
     token, admin = await get_auth_token(
@@ -95,4 +97,6 @@ async def test_toggle_invitation_code(
 
     # Assert
     assert response.status_code == 200
-    assert 'disabled' in response.json()['message']
+    data = response.json()
+    assert data['is_disabled'] is True
+    assert data['id'] == invitation.id

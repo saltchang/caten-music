@@ -6,7 +6,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.api.dependencies import get_auth_service
 from app.api.schemas.auth import (
     ActivateRequest,
-    CheckAvailabilityRequest,
     CheckAvailabilityResponse,
     PasswordResetConfirm,
     PasswordResetRequest,
@@ -137,13 +136,14 @@ async def refresh(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid refresh token') from None
 
 
-@router.post('/check-availability', response_model=CheckAvailabilityResponse)
+@router.get('/availability', response_model=CheckAvailabilityResponse)
 async def check_availability(
-    request: CheckAvailabilityRequest,
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    username: str | None = None,
+    email: str | None = None,
 ):
     result = await auth_service.check_availability(
-        username=request.username,
-        email=request.email,
+        username=username,
+        email=email,
     )
     return CheckAvailabilityResponse(**result)

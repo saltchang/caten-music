@@ -38,7 +38,19 @@ class InvitationService:
 
         return invitation
 
-    async def toggle_code(self, code_id: int, is_disabled: bool) -> InvitationCode:
+    async def update_code_status(self, code_id: int, is_disabled: bool) -> InvitationCode:
+        """Update the disabled status of an invitation code.
+
+        Args:
+            code_id: ID of the invitation code.
+            is_disabled: Whether to disable (True) or enable (False) the code.
+
+        Returns:
+            Updated InvitationCode entity.
+
+        Raises:
+            InvitationCodeInvalidError: If the code does not exist.
+        """
         invitation = await self._invitation_repo.get_by_id(code_id)
         if not invitation:
             raise InvitationCodeInvalidError('Invitation code not found')

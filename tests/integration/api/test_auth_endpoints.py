@@ -198,7 +198,7 @@ async def test_check_availability(
 ):
     """
     GIVEN a user with username 'takenuser' exists
-    WHEN checking availability for that username and a free email
+    WHEN GET /auth/availability?username=takenuser&email=free@example.com is requested
     THEN it should return username_taken=True and email_taken=False
     """
     # Arrange
@@ -210,9 +210,9 @@ async def test_check_availability(
     )
 
     # Act
-    response = await client.post(
-        '/auth/check-availability',
-        json={'username': 'takenuser', 'email': 'free@example.com'},
+    response = await client.get(
+        '/auth/availability',
+        params={'username': 'takenuser', 'email': 'free@example.com'},
     )
 
     # Assert

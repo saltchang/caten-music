@@ -59,12 +59,13 @@ All routes are mounted directly (no `/api` prefix).
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
 | GET | `/health` | — | Health check |
-| POST | `/auth/register` | — | Register with invitation code |
-| POST | `/auth/login` | — | Login, returns access + refresh tokens |
+| POST | `/auth/register` | — | Register with invitation code → 201 |
+| POST | `/auth/login` | — | Login (OAuth2 form), returns access + refresh tokens |
 | POST | `/auth/activate` | — | Activate account via token |
+| POST | `/auth/resend-activation` | — | Resend activation email |
 | POST | `/auth/refresh` | — | Refresh tokens |
-| POST | `/auth/check-availability` | — | Check username/email availability |
-| POST | `/auth/forgot-password` | — | Request password reset |
+| GET | `/auth/availability` | — | Check username/email availability |
+| POST | `/auth/request-password-reset` | — | Request password reset email |
 | POST | `/auth/reset-password` | — | Reset password via token |
 | GET | `/songs` | active user | Unified search with pagination (title, lyrics, lang, collection, tonality, limit, offset) |
 | GET | `/songs/random` | active user | Random song |
@@ -72,23 +73,23 @@ All routes are mounted directly (no `/api` prefix).
 | POST | `/songs` | manager | Create song → 201 |
 | PATCH | `/songs/{sid}` | manager | Partial update song |
 | DELETE | `/songs/{sid}` | manager | Delete song → 204 |
-| POST | `/songlists/` | active user | Create songlist → 201 |
-| GET | `/songlists/` | active user | List user's songlists |
+| POST | `/songlists` | active user | Create songlist → 201 |
+| GET | `/songlists` | active user | List user's songlists |
 | GET | `/songlists/{out_id}` | active user | Get songlist detail |
 | PATCH | `/songlists/{out_id}` | active user | Partial update songlist |
-| DELETE | `/songlists/{out_id}` | active user | Delete songlist |
+| DELETE | `/songlists/{out_id}` | active user | Delete songlist → 204 |
 | PUT | `/songlists/{out_id}/songs/{sid}` | active user | Add song to songlist (idempotent) |
 | DELETE | `/songlists/{out_id}/songs/{sid}` | active user | Remove song from songlist (idempotent) |
 | GET | `/users` | admin | List all users |
 | PATCH | `/users/{id}` | admin | Partial update user role/displayname |
-| GET | `/reports/` | admin | List all reports |
-| POST | `/reports/` | active user | Submit song report |
+| GET | `/reports` | admin | List all reports |
+| POST | `/reports` | active user | Submit song report → 201 |
 | GET | `/files/ppt/{sid}` | active user | Download PPT file |
 | GET | `/files/sheet/{sid}` | active user | Download sheet file |
 | POST | `/invitation/codes` | manager | Generate invitation code → 201 |
-| PATCH | `/invitation/codes/{id}` | manager | Toggle invitation code |
+| PATCH | `/invitation/codes/{id}` | admin | Update invitation code status, returns updated resource |
 | GET | `/invitation/codes` | manager | List invitation codes |
-| GET | `/invitation/validate/{code}` | — | Validate invitation code |
+| GET | `/invitation/codes/{code}` | — | Get invitation code details (404/410 for invalid/expired) |
 
 ## Key Structural Points
 

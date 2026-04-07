@@ -3,7 +3,6 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.dependencies import get_current_active_user, get_songlist_service
-from app.api.schemas.common import MessageResponse
 from app.api.schemas.songlist import (
     SonglistCreateRequest,
     SonglistResponse,
@@ -16,7 +15,7 @@ from app.service.songlist_service import SonglistService
 router = APIRouter(prefix='/songlists', tags=['songlists'])
 
 
-@router.get('/', response_model=list[SonglistResponse])
+@router.get('', response_model=list[SonglistResponse])
 async def get_songlists(
     user: Annotated[User, Depends(get_current_active_user)],
     songlist_service: Annotated[SonglistService, Depends(get_songlist_service)],
@@ -25,7 +24,7 @@ async def get_songlists(
     return [SonglistResponse.from_entity(s) for s in songlists]
 
 
-@router.post('/', response_model=SonglistResponse, status_code=status.HTTP_201_CREATED)
+@router.post('', response_model=SonglistResponse, status_code=status.HTTP_201_CREATED)
 async def create_songlist(
     request: SonglistCreateRequest,
     user: Annotated[User, Depends(get_current_active_user)],
@@ -79,7 +78,7 @@ async def update_songlist(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
 
 
-@router.delete('/{out_id}', response_model=MessageResponse)
+@router.delete('/{out_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_songlist(
     out_id: str,
     user: Annotated[User, Depends(get_current_active_user)],
@@ -87,7 +86,6 @@ async def delete_songlist(
 ):
     try:
         await songlist_service.delete_songlist(out_id, user.id)
-        return MessageResponse(message='Songlist deleted successfully')
     except SonglistNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
     except PermissionDeniedError:

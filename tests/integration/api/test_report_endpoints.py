@@ -14,7 +14,7 @@ async def test_list_reports_as_admin(
 ):
     """
     GIVEN an admin user and a report exists
-    WHEN GET /reports/ is requested
+    WHEN GET /reports is requested
     THEN it returns 200 with the list of all reports
     """
     # Arrange – create a normal user and submit a report
@@ -22,7 +22,7 @@ async def test_list_reports_as_admin(
         api_session, password_hasher, token_service, username='reporter', email='reporter@example.com'
     )
     await client.post(
-        '/reports/',
+        '/reports',
         json={'description': 'Wrong lyrics in verse 2', 'song_sid': '1011054'},
         headers={'Authorization': f'Bearer {user_token}'},
     )
@@ -40,7 +40,7 @@ async def test_list_reports_as_admin(
 
     # Act
     response = await client.get(
-        '/reports/',
+        '/reports',
         headers={'Authorization': f'Bearer {admin_token}'},
     )
 
@@ -59,7 +59,7 @@ async def test_list_reports_requires_admin(
 ):
     """
     GIVEN a non-admin user
-    WHEN GET /reports/ is requested
+    WHEN GET /reports is requested
     THEN it returns 403
     """
     # Arrange
@@ -69,7 +69,7 @@ async def test_list_reports_requires_admin(
 
     # Act
     response = await client.get(
-        '/reports/',
+        '/reports',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -85,7 +85,7 @@ async def test_create_report(
 ):
     """
     GIVEN an authenticated user
-    WHEN creating a song report via POST /reports/
+    WHEN creating a song report via POST /reports
     THEN it should return 201 with the report data including the user's id
     """
     # Arrange
@@ -93,7 +93,7 @@ async def test_create_report(
 
     # Act
     response = await client.post(
-        '/reports/',
+        '/reports',
         json={
             'description': 'This song has wrong lyrics in verse 2',
             'song_sid': '1011054',

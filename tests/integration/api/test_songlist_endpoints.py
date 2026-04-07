@@ -14,7 +14,7 @@ async def test_create_songlist(
 ):
     """
     GIVEN an authenticated user
-    WHEN creating a songlist via POST /songlists/
+    WHEN creating a songlist via POST /songlists
     THEN it should return 201 with the songlist data including a generated out_id
     """
     # Arrange
@@ -22,7 +22,7 @@ async def test_create_songlist(
 
     # Act
     response = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'My Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -43,25 +43,25 @@ async def test_get_songlists(
 ):
     """
     GIVEN an authenticated user who owns two songlists
-    WHEN requesting GET /songlists/
+    WHEN requesting GET /songlists
     THEN it should return 200 with both songlists
     """
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Songlist 1'},
         headers={'Authorization': f'Bearer {token}'},
     )
     await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Songlist 2'},
         headers={'Authorization': f'Bearer {token}'},
     )
 
     # Act
     response = await client.get(
-        '/songlists/',
+        '/songlists',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -85,7 +85,7 @@ async def test_get_songlist_by_out_id(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Detail Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -111,14 +111,12 @@ async def test_delete_songlist(
     """
     GIVEN a songlist exists for an authenticated user
     WHEN deleting the songlist and then fetching it
-    THEN it should return 200 on delete and 404 on subsequent fetch
-
-    Note: This test uses a multi-step pattern (delete then GET) to verify deletion.
+    THEN it should return 204 No Content on delete and 404 on subsequent fetch
     """
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'To Delete'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -131,8 +129,8 @@ async def test_delete_songlist(
     )
 
     # Assert
-    assert response.status_code == 200
-    assert response.json()['message'] == 'Songlist deleted successfully'
+    assert response.status_code == 204
+    assert response.content == b''
 
     get_resp = await client.get(
         f'/songlists/{out_id}',
@@ -155,7 +153,7 @@ async def test_update_songlist_partial(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Original Title'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -189,7 +187,7 @@ async def test_add_song_to_songlist(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Song Sub-resource Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -222,7 +220,7 @@ async def test_add_song_idempotent(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Idempotent Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -259,7 +257,7 @@ async def test_remove_song_from_songlist(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Remove Song Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -296,7 +294,7 @@ async def test_remove_song_idempotent(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/songlists/',
+        '/songlists',
         json={'title': 'Idempotent Remove Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )

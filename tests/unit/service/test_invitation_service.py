@@ -119,11 +119,11 @@ class TestValidateCode:
             await service.validate_code('DISABLED')
 
 
-class TestToggleCode:
+class TestUpdateCodeStatus:
     async def test_disable_code(self, service, invitation_repo):
         """
         GIVEN an active invitation code
-        WHEN toggle_code is called with is_disabled=True
+        WHEN update_code_status is called with is_disabled=True
         THEN the code is disabled
         """
         # Arrange
@@ -137,7 +137,7 @@ class TestToggleCode:
         invitation_repo.update.return_value = code
 
         # Act
-        result = await service.toggle_code(code_id=1, is_disabled=True)
+        result = await service.update_code_status(code_id=1, is_disabled=True)
 
         # Assert
         assert result.is_disabled is True
@@ -145,7 +145,7 @@ class TestToggleCode:
     async def test_enable_code(self, service, invitation_repo):
         """
         GIVEN a disabled invitation code
-        WHEN toggle_code is called with is_disabled=False
+        WHEN update_code_status is called with is_disabled=False
         THEN the code is re-enabled
         """
         # Arrange
@@ -160,15 +160,15 @@ class TestToggleCode:
         invitation_repo.update.return_value = code
 
         # Act
-        result = await service.toggle_code(code_id=1, is_disabled=False)
+        result = await service.update_code_status(code_id=1, is_disabled=False)
 
         # Assert
         assert result.is_disabled is False
 
-    async def test_toggle_nonexistent(self, service, invitation_repo):
+    async def test_update_nonexistent(self, service, invitation_repo):
         """
         GIVEN a code_id that does not exist
-        WHEN toggle_code is called
+        WHEN update_code_status is called
         THEN InvitationCodeInvalidError is raised
         """
         # Arrange
@@ -176,4 +176,4 @@ class TestToggleCode:
 
         # Act & Assert
         with pytest.raises(InvitationCodeInvalidError):
-            await service.toggle_code(code_id=999, is_disabled=True)
+            await service.update_code_status(code_id=999, is_disabled=True)
