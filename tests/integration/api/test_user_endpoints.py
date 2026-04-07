@@ -117,3 +117,42 @@ async def test_update_user_role(
     data = response.json()
     assert data['is_manager'] is True
     assert data['is_admin'] is False
+
+
+async def test_update_user_role_invalid(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an admin user
+    WHEN the admin requests PUT /users/{id} with an invalid role value
+    THEN it should return 422 because role must be a valid UserRole enum
+    """
+    # Arrange
+    token, _admin = await get_auth_token(
+        api_session,
+        password_hasher,
+        token_service,
+        username='adminuser4',
+        email='admin4@example.com',
+        is_admin=True,
+        is_manager=True,
+    )
+    target_user = await create_test_user(
+        api_session,
+        password_hasher,
+        username='targetuser2',
+        email='target2@example.com',
+    )
+
+    # Act
+    response = await client.put(
+        f'/users/{target_user.id}',
+        json={'role': 'superadmin'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 422

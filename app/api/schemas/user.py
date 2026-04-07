@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING
 
 from pydantic import BaseModel
 
+from app.core.enums import UserRole
+
 if TYPE_CHECKING:
     from app.core.entities.user import User
 
@@ -44,4 +46,4 @@ class UserResponse(BaseModel):
 
 class UserUpdateRequest(BaseModel):
     displayname: str | None = None
-    role: str | None = None
+    role: UserRole | None = None

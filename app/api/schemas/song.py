@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from app.core.entities.music_version import MusicVersion
 from app.core.entities.music_work import MusicWork
+from app.core.enums import Language, Tonality
 
 
 class SongCreateRequest(BaseModel):
@@ -15,11 +16,11 @@ class SongCreateRequest(BaseModel):
     num_c: str
     num_i: str
     title: str
-    language: str | None = None
+    language: Language | None = None
     artist: str | None = None
     translator: str | None = None
     album: str | None = None
-    tonality: str | None = None
+    tonality: Tonality | None = None
     year: str | None = None
     lyrics: list[str] = []
     tempo: str | None = None
@@ -78,11 +79,11 @@ class SongUpdateRequest(BaseModel):
     """
 
     title: str | None = None
-    language: str | None = None
+    language: Language | None = None
     artist: str | None = None
     translator: str | None = None
     album: str | None = None
-    tonality: str | None = None
+    tonality: Tonality | None = None
     year: str | None = None
     lyrics: list[str] | None = None
     tempo: str | None = None

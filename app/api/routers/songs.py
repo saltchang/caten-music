@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from app.api.dependencies import get_current_active_user, get_current_manager, get_song_service
 from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.core.entities.user import User
+from app.core.enums import Language, Tonality
 from app.service.song_service import SongService
 
 router = APIRouter(prefix='/songs', tags=['songs'])
@@ -26,18 +27,18 @@ async def list_songs(
     _user: Annotated[User, Depends(get_current_active_user)],
     title: str = Query(default=''),
     lyrics: str = Query(default=''),
-    lang: str = Query(default=''),
+    lang: Language | None = None,
     collection: str = Query(default=''),
-    tonality: str = Query(default=''),
+    tonality: Tonality | None = None,
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
 ) -> list[SongResponse]:
     versions = await song_service.list_songs(
         title=title,
         lyrics=lyrics,
-        lang=lang,
+        lang=lang or '',
         collection=collection,
-        tonality=tonality,
+        tonality=tonality or '',
         limit=limit,
         offset=offset,
     )

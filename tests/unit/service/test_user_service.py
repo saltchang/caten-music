@@ -2,7 +2,8 @@ from unittest.mock import AsyncMock
 
 import pytest
 from app.core.entities.user import User
-from app.core.exceptions import InvalidInputError, UserNotFoundError
+from app.core.enums import UserRole
+from app.core.exceptions import UserNotFoundError
 from app.service.user_service import UserService
 
 
@@ -91,7 +92,7 @@ class TestUpdateUserRole:
         user_repo.update.return_value = sample_user
 
         # Act
-        result = await service.update_user_role(user_id=1, role='admin')
+        result = await service.update_user_role(user_id=1, role=UserRole.ADMIN)
 
         # Assert
         assert result.is_admin is True
@@ -108,7 +109,7 @@ class TestUpdateUserRole:
         user_repo.update.return_value = sample_user
 
         # Act
-        result = await service.update_user_role(user_id=1, role='manager')
+        result = await service.update_user_role(user_id=1, role=UserRole.MANAGER)
 
         # Assert
         assert result.is_admin is False
@@ -125,24 +126,11 @@ class TestUpdateUserRole:
         user_repo.update.return_value = sample_user
 
         # Act
-        result = await service.update_user_role(user_id=1, role='normal')
+        result = await service.update_user_role(user_id=1, role=UserRole.NORMAL)
 
         # Assert
         assert result.is_admin is False
         assert result.is_manager is False
-
-    async def test_invalid_role(self, service, user_repo, sample_user):
-        """
-        GIVEN an existing user
-        WHEN update_user_role is called with an unrecognized role
-        THEN InvalidInputError is raised
-        """
-        # Arrange
-        user_repo.get_by_id.return_value = sample_user
-
-        # Act & Assert
-        with pytest.raises(InvalidInputError):
-            await service.update_user_role(user_id=1, role='superuser')
 
     async def test_update_displayname(self, service, user_repo, sample_user):
         """

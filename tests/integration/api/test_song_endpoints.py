@@ -175,6 +175,54 @@ class TestListSongs:
         assert len(data) == 1
         assert data[0]['language'] == 'Chinese'
 
+    async def test_list_rejects_invalid_language(
+        self,
+        client: AsyncClient,
+        api_session: AsyncSession,
+        password_hasher: Sha256PasswordHasher,
+        token_service: JwtTokenService,
+    ):
+        """
+        GIVEN an authenticated user
+        WHEN GET /songs?lang=InvalidLang is requested
+        THEN it returns 422 because lang must be a valid Language enum
+        """
+        # Arrange
+        token = await _get_user_token(api_session, password_hasher, token_service)
+
+        # Act
+        response = await client.get(
+            '/songs?lang=InvalidLang',
+            headers={'Authorization': f'Bearer {token}'},
+        )
+
+        # Assert
+        assert response.status_code == 422
+
+    async def test_list_rejects_invalid_tonality(
+        self,
+        client: AsyncClient,
+        api_session: AsyncSession,
+        password_hasher: Sha256PasswordHasher,
+        token_service: JwtTokenService,
+    ):
+        """
+        GIVEN an authenticated user
+        WHEN GET /songs?tonality=X is requested
+        THEN it returns 422 because tonality must be a valid Tonality enum
+        """
+        # Arrange
+        token = await _get_user_token(api_session, password_hasher, token_service)
+
+        # Act
+        response = await client.get(
+            '/songs?tonality=X',
+            headers={'Authorization': f'Bearer {token}'},
+        )
+
+        # Assert
+        assert response.status_code == 422
+
     async def test_list_requires_auth(self, client: AsyncClient):
         """
         GIVEN no authentication token is provided
