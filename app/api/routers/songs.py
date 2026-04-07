@@ -67,7 +67,7 @@ async def get_song(
     return SongResponse.from_entity(version)
 
 
-@router.put('/{sid}', response_model=SongResponse)
+@router.patch('/{sid}', response_model=SongResponse)
 async def update_song(
     sid: str,
     request: SongUpdateRequest,

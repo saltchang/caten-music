@@ -85,7 +85,7 @@ async def test_update_user_role(
 ):
     """
     GIVEN an admin user and a normal target user
-    WHEN the admin requests PUT /users/{id} with role 'manager'
+    WHEN the admin requests PATCH /users/{id} with role 'manager'
     THEN it should return 200 with is_manager=True and is_admin=False
     """
     # Arrange
@@ -106,7 +106,7 @@ async def test_update_user_role(
     )
 
     # Act
-    response = await client.put(
+    response = await client.patch(
         f'/users/{target_user.id}',
         json={'role': 'manager'},
         headers={'Authorization': f'Bearer {token}'},
@@ -127,7 +127,7 @@ async def test_update_user_role_invalid(
 ):
     """
     GIVEN an admin user
-    WHEN the admin requests PUT /users/{id} with an invalid role value
+    WHEN the admin requests PATCH /users/{id} with an invalid role value
     THEN it should return 422 because role must be a valid UserRole enum
     """
     # Arrange
@@ -148,7 +148,7 @@ async def test_update_user_role_invalid(
     )
 
     # Act
-    response = await client.put(
+    response = await client.patch(
         f'/users/{target_user.id}',
         json={'role': 'superadmin'},
         headers={'Authorization': f'Bearer {token}'},

@@ -20,7 +20,7 @@ async def list_users(
     return [UserResponse.from_entity(u) for u in users]
 
 
-@router.put('/{user_id}', response_model=UserResponse)
+@router.patch('/{user_id}', response_model=UserResponse)
 async def update_user(
     user_id: int,
     request: UserUpdateRequest,

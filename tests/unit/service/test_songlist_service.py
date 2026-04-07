@@ -194,35 +194,71 @@ class TestDeleteSonglist:
             await service.delete_songlist(out_id='20240101001', user_id=999)
 
 
-class TestToggleSong:
-    async def test_add_song(self, service, songlist_repo, sample_songlist):
+class TestAddSong:
+    async def test_add_new_song(self, service, songlist_repo, sample_songlist):
         """
         GIVEN a songlist that does not contain the given song
-        WHEN toggle_song is called with that song's sid
-        THEN the song is added and action is 'add'
+        WHEN add_song is called with that song's sid
+        THEN the song is added and the updated songlist is returned
         """
         # Arrange
         songlist_repo.get_by_out_id.return_value = sample_songlist
         songlist_repo.update.return_value = sample_songlist
 
         # Act
-        result = await service.toggle_song(out_id='20240101001', song_sid='1002001', user_id=1)
+        result = await service.add_song(out_id='20240101001', song_sid='1002001', user_id=1)
 
         # Assert
-        assert result['action'] == 'add'
+        assert '1002001' in result.songs_sid_list
+        songlist_repo.update.assert_called_once()
 
-    async def test_remove_song(self, service, songlist_repo, sample_songlist):
+    async def test_add_existing_song_is_idempotent(self, service, songlist_repo, sample_songlist):
         """
         GIVEN a songlist that already contains the given song
-        WHEN toggle_song is called with that song's sid
-        THEN the song is removed and action is 'remove'
+        WHEN add_song is called with the same sid
+        THEN the songlist is unchanged and no update is performed
+        """
+        # Arrange
+        songlist_repo.get_by_out_id.return_value = sample_songlist
+
+        # Act
+        result = await service.add_song(out_id='20240101001', song_sid='1001001', user_id=1)
+
+        # Assert
+        assert result.songs_sid_list.count('1001001') == 1
+        songlist_repo.update.assert_not_called()
+
+
+class TestRemoveSong:
+    async def test_remove_existing_song(self, service, songlist_repo, sample_songlist):
+        """
+        GIVEN a songlist that contains the given song
+        WHEN remove_song is called with that song's sid
+        THEN the song is removed and the updated songlist is returned
         """
         # Arrange
         songlist_repo.get_by_out_id.return_value = sample_songlist
         songlist_repo.update.return_value = sample_songlist
 
         # Act
-        result = await service.toggle_song(out_id='20240101001', song_sid='1001001', user_id=1)
+        result = await service.remove_song(out_id='20240101001', song_sid='1001001', user_id=1)
 
         # Assert
-        assert result['action'] == 'remove'
+        assert '1001001' not in result.songs_sid_list
+        songlist_repo.update.assert_called_once()
+
+    async def test_remove_absent_song_is_idempotent(self, service, songlist_repo, sample_songlist):
+        """
+        GIVEN a songlist that does not contain the given song
+        WHEN remove_song is called with that song's sid
+        THEN the songlist is unchanged and no update is performed
+        """
+        # Arrange
+        songlist_repo.get_by_out_id.return_value = sample_songlist
+
+        # Act
+        result = await service.remove_song(out_id='20240101001', song_sid='9999999', user_id=1)
+
+        # Assert
+        assert '9999999' not in result.songs_sid_list
+        songlist_repo.update.assert_not_called()

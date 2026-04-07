@@ -18,13 +18,13 @@ class SonglistCreateRequest(BaseModel):
 
 
 class SonglistUpdateRequest(BaseModel):
-    """Request body for updating an existing songlist."""
+    """Request body for partially updating a songlist. All fields optional."""
 
-    title: str
-    description: str
-    is_private: bool
-    is_archived: bool
-    songs_sid_list: list[str]
+    title: str | None = None
+    description: str | None = None
+    is_private: bool | None = None
+    is_archived: bool | None = None
+    songs_sid_list: list[str] | None = None
 
 
 class SonglistResponse(BaseModel):
@@ -65,9 +65,3 @@ class SonglistResponse(BaseModel):
             is_private=songlist.is_private,
             is_archived=songlist.is_archived,
         )
-
-
-class SonglistToggleResponse(BaseModel):
-    action: str
-    song_sid: str
-    out_id: str

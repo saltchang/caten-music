@@ -42,12 +42,30 @@ class SonglistService:
         self,
         out_id: str,
         user_id: int,
-        title: str,
-        description: str,
-        is_private: bool,
-        is_archived: bool,
-        songs_sid_list: list[str],
+        title: str | None = None,
+        description: str | None = None,
+        is_private: bool | None = None,
+        is_archived: bool | None = None,
+        songs_sid_list: list[str] | None = None,
     ) -> SongList:
+        """Partially update a songlist. Only non-None fields are applied.
+
+        Args:
+            out_id: External songlist ID.
+            user_id: ID of the requesting user (ownership check).
+            title: New title, if provided.
+            description: New description, if provided.
+            is_private: New privacy flag, if provided.
+            is_archived: New archived flag, if provided.
+            songs_sid_list: New song list, if provided.
+
+        Returns:
+            Updated SongList entity.
+
+        Raises:
+            SonglistNotFoundError: If songlist does not exist.
+            PermissionDeniedError: If user is not the owner.
+        """
         songlist = await self._songlist_repo.get_by_out_id(out_id)
         if not songlist:
             raise SonglistNotFoundError('Songlist not found')
@@ -55,12 +73,17 @@ class SonglistService:
         if songlist.user_id != user_id:
             raise PermissionDeniedError('Not the owner of this songlist')
 
-        songlist.title = title
-        songlist.description = description
-        songlist.is_private = is_private
-        songlist.is_archived = is_archived
-        songlist.songs_sid_list = songs_sid_list
-        songlist.songs_amount = len(songs_sid_list)
+        if title is not None:
+            songlist.title = title
+        if description is not None:
+            songlist.description = description
+        if is_private is not None:
+            songlist.is_private = is_private
+        if is_archived is not None:
+            songlist.is_archived = is_archived
+        if songs_sid_list is not None:
+            songlist.songs_sid_list = songs_sid_list
+            songlist.songs_amount = len(songs_sid_list)
 
         return await self._songlist_repo.update(songlist)
 
@@ -74,7 +97,50 @@ class SonglistService:
 
         await self._songlist_repo.delete(songlist.id)
 
-    async def toggle_song(self, out_id: str, song_sid: str, user_id: int) -> dict:
+    async def add_song(self, out_id: str, song_sid: str, user_id: int) -> SongList:
+        """Add a song to a songlist (idempotent).
+
+        Args:
+            out_id: External songlist ID.
+            song_sid: Song SID to add.
+            user_id: ID of the requesting user.
+
+        Returns:
+            Updated SongList entity.
+
+        Raises:
+            SonglistNotFoundError: If songlist does not exist.
+            PermissionDeniedError: If user is not the owner.
+        """
+        songlist = await self._songlist_repo.get_by_out_id(out_id)
+        if not songlist:
+            raise SonglistNotFoundError('Songlist not found')
+
+        if songlist.user_id != user_id:
+            raise PermissionDeniedError('Not the owner of this songlist')
+
+        if song_sid not in songlist.songs_sid_list:
+            songlist.songs_sid_list.append(song_sid)
+            songlist.songs_amount += 1
+            await self._songlist_repo.update(songlist)
+
+        return songlist
+
+    async def remove_song(self, out_id: str, song_sid: str, user_id: int) -> SongList:
+        """Remove a song from a songlist (idempotent).
+
+        Args:
+            out_id: External songlist ID.
+            song_sid: Song SID to remove.
+            user_id: ID of the requesting user.
+
+        Returns:
+            Updated SongList entity.
+
+        Raises:
+            SonglistNotFoundError: If songlist does not exist.
+            PermissionDeniedError: If user is not the owner.
+        """
         songlist = await self._songlist_repo.get_by_out_id(out_id)
         if not songlist:
             raise SonglistNotFoundError('Songlist not found')
@@ -85,12 +151,6 @@ class SonglistService:
         if song_sid in songlist.songs_sid_list:
             songlist.songs_sid_list.remove(song_sid)
             songlist.songs_amount -= 1
-            action = 'remove'
-        else:
-            songlist.songs_sid_list.append(song_sid)
-            songlist.songs_amount += 1
-            action = 'add'
+            await self._songlist_repo.update(songlist)
 
-        await self._songlist_repo.update(songlist)
-
-        return {'action': action, 'song_sid': song_sid, 'out_id': out_id}
+        return songlist

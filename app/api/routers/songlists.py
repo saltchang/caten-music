@@ -7,7 +7,6 @@ from app.api.schemas.common import MessageResponse
 from app.api.schemas.songlist import (
     SonglistCreateRequest,
     SonglistResponse,
-    SonglistToggleResponse,
     SonglistUpdateRequest,
 )
 from app.core.entities.user import User
@@ -56,7 +55,7 @@ async def get_songlist(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
 
 
-@router.put('/{out_id}', response_model=SonglistResponse)
+@router.patch('/{out_id}', response_model=SonglistResponse)
 async def update_songlist(
     out_id: str,
     request: SonglistUpdateRequest,
@@ -95,16 +94,32 @@ async def delete_songlist(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
 
 
-@router.patch('/{out_id}/songs/{song_sid}', response_model=SonglistToggleResponse)
-async def toggle_song(
+@router.put('/{out_id}/songs/{song_sid}', response_model=SonglistResponse)
+async def add_song(
     out_id: str,
     song_sid: str,
     user: Annotated[User, Depends(get_current_active_user)],
     songlist_service: Annotated[SonglistService, Depends(get_songlist_service)],
 ):
     try:
-        result = await songlist_service.toggle_song(out_id, song_sid, user.id)
-        return SonglistToggleResponse(**result)
+        songlist = await songlist_service.add_song(out_id, song_sid, user.id)
+        return SonglistResponse.from_entity(songlist)
+    except SonglistNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
+    except PermissionDeniedError:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Access denied') from None
+
+
+@router.delete('/{out_id}/songs/{song_sid}', response_model=SonglistResponse)
+async def remove_song(
+    out_id: str,
+    song_sid: str,
+    user: Annotated[User, Depends(get_current_active_user)],
+    songlist_service: Annotated[SonglistService, Depends(get_songlist_service)],
+):
+    try:
+        songlist = await songlist_service.remove_song(out_id, song_sid, user.id)
+        return SonglistResponse.from_entity(songlist)
     except SonglistNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Songlist not found') from None
     except PermissionDeniedError:

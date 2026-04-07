@@ -70,15 +70,17 @@ All routes are mounted directly (no `/api` prefix).
 | GET | `/songs/random` | active user | Random song |
 | GET | `/songs/{sid}` | active user | Get song by SID |
 | POST | `/songs` | manager | Create song → 201 |
-| PUT | `/songs/{sid}` | manager | Update song, returns full resource |
+| PATCH | `/songs/{sid}` | manager | Partial update song |
 | DELETE | `/songs/{sid}` | manager | Delete song → 204 |
 | POST | `/songlists/` | active user | Create songlist → 201 |
 | GET | `/songlists/` | active user | List user's songlists |
 | GET | `/songlists/{out_id}` | active user | Get songlist detail |
+| PATCH | `/songlists/{out_id}` | active user | Partial update songlist |
 | DELETE | `/songlists/{out_id}` | active user | Delete songlist |
-| PATCH | `/songlists/{out_id}/songs/{sid}` | active user | Toggle song in songlist |
+| PUT | `/songlists/{out_id}/songs/{sid}` | active user | Add song to songlist (idempotent) |
+| DELETE | `/songlists/{out_id}/songs/{sid}` | active user | Remove song from songlist (idempotent) |
 | GET | `/users` | admin | List all users |
-| PUT | `/users/{id}` | admin | Update user role |
+| PATCH | `/users/{id}` | admin | Partial update user role/displayname |
 | GET | `/reports/` | admin | List all reports |
 | POST | `/reports/` | active user | Submit song report |
 | GET | `/files/ppt/{sid}` | active user | Download PPT file |

@@ -372,7 +372,7 @@ class TestCreateSong:
         assert response.status_code == 403
 
 
-# ── PUT /songs/{sid} ──────────────────────────────
+# ── PATCH /songs/{sid} ────────────────────────────
 
 
 class TestUpdateSong:
@@ -385,7 +385,7 @@ class TestUpdateSong:
     ):
         """
         GIVEN a song exists and a manager is authenticated
-        WHEN PUT /songs/{sid} is requested with updated fields
+        WHEN PATCH /songs/{sid} is requested with updated fields
         THEN the song is updated and the updated resource is returned
         """
         # Arrange
@@ -393,7 +393,7 @@ class TestUpdateSong:
         token = await _get_manager_token(api_session, password_hasher, token_service)
 
         # Act
-        response = await client.put(
+        response = await client.patch(
             '/songs/1011054',
             json={'tonality': 'A', 'album': '新專輯'},
             headers={'Authorization': f'Bearer {token}'},
@@ -415,14 +415,14 @@ class TestUpdateSong:
     ):
         """
         GIVEN a normal user is authenticated
-        WHEN PUT /songs/{sid} is requested
+        WHEN PATCH /songs/{sid} is requested
         THEN it returns 403
         """
         # Arrange
         token = await _get_user_token(api_session, password_hasher, token_service)
 
         # Act
-        response = await client.put(
+        response = await client.patch(
             '/songs/1011054',
             json={'tonality': 'A'},
             headers={'Authorization': f'Bearer {token}'},

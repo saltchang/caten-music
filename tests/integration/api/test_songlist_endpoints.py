@@ -141,7 +141,7 @@ async def test_delete_songlist(
     assert get_resp.status_code == 404
 
 
-async def test_toggle_song(
+async def test_update_songlist_partial(
     client: AsyncClient,
     api_session: AsyncSession,
     password_hasher: Sha256PasswordHasher,
@@ -149,34 +149,166 @@ async def test_toggle_song(
 ):
     """
     GIVEN a songlist exists for an authenticated user
-    WHEN toggling a song twice (add then remove)
-    THEN the first toggle should add the song and the second should remove it
-
-    Note: This test uses a multi-step pattern (toggle-add then toggle-remove) to verify
-    both directions of the toggle behavior.
+    WHEN PATCH /songlists/{out_id} is requested with only a new title
+    THEN it should return 200 with the title updated and other fields unchanged
     """
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
         '/songlists/',
-        json={'title': 'Toggle Songlist'},
+        json={'title': 'Original Title'},
         headers={'Authorization': f'Bearer {token}'},
     )
     out_id = create_resp.json()['out_id']
 
-    # Act & Assert (toggle add)
+    # Act
     response = await client.patch(
-        f'/songlists/{out_id}/songs/123',
+        f'/songlists/{out_id}',
+        json={'title': 'Updated Title'},
         headers={'Authorization': f'Bearer {token}'},
     )
+
+    # Assert
     assert response.status_code == 200
     data = response.json()
-    assert data['action'] == 'add'
-    assert data['song_sid'] == '123'
+    assert data['title'] == 'Updated Title'
+    assert data['is_private'] is False  # unchanged
 
-    # Act & Assert (toggle remove)
-    response2 = await client.patch(
+
+async def test_add_song_to_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN a songlist exists for an authenticated user
+    WHEN PUT /songlists/{out_id}/songs/{sid} is requested
+    THEN the song is added and the updated songlist is returned
+    """
+    # Arrange
+    token, _user = await get_auth_token(api_session, password_hasher, token_service)
+    create_resp = await client.post(
+        '/songlists/',
+        json={'title': 'Song Sub-resource Songlist'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    # Act
+    response = await client.put(
         f'/songlists/{out_id}/songs/123',
         headers={'Authorization': f'Bearer {token}'},
     )
-    assert response2.json()['action'] == 'remove'
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert '123' in data['songs_sid_list']
+    assert data['songs_amount'] == 1
+
+
+async def test_add_song_idempotent(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN a song is already in the songlist
+    WHEN PUT /songlists/{out_id}/songs/{sid} is requested again
+    THEN the song is still present (idempotent) and amount unchanged
+    """
+    # Arrange
+    token, _user = await get_auth_token(api_session, password_hasher, token_service)
+    create_resp = await client.post(
+        '/songlists/',
+        json={'title': 'Idempotent Songlist'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+    out_id = create_resp.json()['out_id']
+    await client.put(
+        f'/songlists/{out_id}/songs/123',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Act — add same song again
+    response = await client.put(
+        f'/songlists/{out_id}/songs/123',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert data['songs_sid_list'].count('123') == 1
+    assert data['songs_amount'] == 1
+
+
+async def test_remove_song_from_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN a songlist contains song '123'
+    WHEN DELETE /songlists/{out_id}/songs/123 is requested
+    THEN the song is removed and the updated songlist is returned
+    """
+    # Arrange
+    token, _user = await get_auth_token(api_session, password_hasher, token_service)
+    create_resp = await client.post(
+        '/songlists/',
+        json={'title': 'Remove Song Songlist'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+    out_id = create_resp.json()['out_id']
+    await client.put(
+        f'/songlists/{out_id}/songs/123',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Act
+    response = await client.delete(
+        f'/songlists/{out_id}/songs/123',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert '123' not in data['songs_sid_list']
+    assert data['songs_amount'] == 0
+
+
+async def test_remove_song_idempotent(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN a songlist does not contain song '999'
+    WHEN DELETE /songlists/{out_id}/songs/999 is requested
+    THEN it returns 200 with the songlist unchanged (idempotent)
+    """
+    # Arrange
+    token, _user = await get_auth_token(api_session, password_hasher, token_service)
+    create_resp = await client.post(
+        '/songlists/',
+        json={'title': 'Idempotent Remove Songlist'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    # Act
+    response = await client.delete(
+        f'/songlists/{out_id}/songs/999',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert data['songs_amount'] == 0
