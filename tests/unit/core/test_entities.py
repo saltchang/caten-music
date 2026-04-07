@@ -21,7 +21,7 @@ class TestUserEntity:
             email='test@example.com',
             password_hash='abc123hash',
             displayname='TestUser',
-            register_time=datetime(2024, 1, 1),
+            registered_at=datetime(2024, 1, 1),
             is_authenticated=True,
             is_active=True,
             is_admin=False,
@@ -58,7 +58,7 @@ class TestUserEntity:
         assert user.is_anonymous is False
         assert user.is_admin is False
         assert user.is_manager is False
-        assert user.last_login_time is None
+        assert user.last_login_at is None
 
 
 class TestUserProfileEntity:
@@ -122,7 +122,7 @@ class TestSongListEntity:
 
     def test_generate_out_id(self):
         """
-        GIVEN a SongList with a known id and created_time
+        GIVEN a SongList with a known id and created_at
         WHEN generate_out_id is called
         THEN out_id should be formatted as YYYYMMDD + zero-padded id
         """
@@ -130,7 +130,7 @@ class TestSongListEntity:
         songlist = SongList(
             id=42,
             user_id=1,
-            created_time=datetime(2024, 3, 15),
+            created_at=datetime(2024, 3, 15),
         )
 
         # Act
@@ -149,7 +149,7 @@ class TestSongListEntity:
         songlist = SongList(
             id=1234,
             user_id=1,
-            created_time=datetime(2024, 3, 15),
+            created_at=datetime(2024, 3, 15),
         )
 
         # Act
@@ -168,7 +168,7 @@ class TestSongListEntity:
         then set_default_title) because set_default_title depends on out_id.
         """
         # Arrange
-        songlist = SongList(id=42, user_id=1, title='', created_time=datetime(2024, 3, 15))
+        songlist = SongList(id=42, user_id=1, title='', created_at=datetime(2024, 3, 15))
         songlist.generate_out_id()
 
         # Act

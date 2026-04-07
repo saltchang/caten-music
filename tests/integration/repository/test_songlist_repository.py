@@ -16,7 +16,7 @@ async def _create_test_user(session: AsyncSession) -> User:
             email='owner@example.com',
             password_hash='hashed_pw',
             displayname='Owner',
-            register_time=datetime(2025, 1, 1, 12, 0, 0),
+            registered_at=datetime(2025, 1, 1, 12, 0, 0),
         )
     )
 
@@ -28,8 +28,8 @@ def _make_songlist(user_id: int) -> SongList:
         description='Test songlist',
         songs_sid_list=['s1', 's2'],
         songs_amount=2,
-        created_time=datetime(2025, 6, 15, 10, 0, 0),
-        edited_time=datetime(2025, 6, 15, 10, 0, 0),
+        created_at=datetime(2025, 6, 15, 10, 0, 0),
+        updated_at=datetime(2025, 6, 15, 10, 0, 0),
     )
 
 
@@ -60,9 +60,9 @@ async def test_create_songlist(async_session: AsyncSession):
 
 async def test_create_songlist_generates_out_id(async_session: AsyncSession):
     """
-    GIVEN a songlist with a specific created_time
+    GIVEN a songlist with a specific created_at
     WHEN creating the songlist via the repository
-    THEN the generated out_id should start with the date portion of created_time
+    THEN the generated out_id should start with the date portion of created_at
     """
     # Arrange
     user = await _create_test_user(async_session)

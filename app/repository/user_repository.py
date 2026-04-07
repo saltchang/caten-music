@@ -6,10 +6,25 @@ from app.repository.models.user import UserModel
 
 
 class SqlAlchemyUserRepository:
+    """SQLAlchemy repository for User entities backed by PostgreSQL."""
+
     def __init__(self, session: AsyncSession) -> None:
+        """Initialize the repository.
+
+        Args:
+            session: Async SQLAlchemy session for database operations.
+        """
         self._session = session
 
     async def get_by_id(self, user_id: int) -> User | None:
+        """Fetch a user by primary key.
+
+        Args:
+            user_id: Primary key of the user.
+
+        Returns:
+            The matching User entity, or None if not found.
+        """
         result = await self._session.execute(select(UserModel).where(UserModel.id == user_id))
         model = result.scalars().first()
         if model is None:
@@ -17,6 +32,14 @@ class SqlAlchemyUserRepository:
         return self._to_entity(model)
 
     async def get_by_username(self, username: str) -> User | None:
+        """Fetch a user by username.
+
+        Args:
+            username: Unique username string.
+
+        Returns:
+            The matching User entity, or None if not found.
+        """
         result = await self._session.execute(select(UserModel).where(UserModel.username == username))
         model = result.scalars().first()
         if model is None:
@@ -24,6 +47,14 @@ class SqlAlchemyUserRepository:
         return self._to_entity(model)
 
     async def get_by_email(self, email: str) -> User | None:
+        """Fetch a user by email address.
+
+        Args:
+            email: The user's email address.
+
+        Returns:
+            The matching User entity, or None if not found.
+        """
         result = await self._session.execute(select(UserModel).where(UserModel.email == email))
         model = result.scalars().first()
         if model is None:
@@ -31,6 +62,14 @@ class SqlAlchemyUserRepository:
         return self._to_entity(model)
 
     async def create(self, user: User) -> User:
+        """Persist a new user.
+
+        Args:
+            user: The User entity to create.
+
+        Returns:
+            The persisted User with a generated id.
+        """
         model = self._to_model(user)
         self._session.add(model)
         await self._session.flush()
@@ -46,8 +85,8 @@ class SqlAlchemyUserRepository:
         model.email = user.email
         model.password_hash = user.password_hash
         model.displayname = user.displayname
-        model.register_time = user.register_time
-        model.last_login_time = user.last_login_time
+        model.registered_at = user.registered_at
+        model.last_login_at = user.last_login_at
         model.is_authenticated = user.is_authenticated
         model.is_active = user.is_active
         model.is_anonymous = user.is_anonymous
@@ -78,8 +117,8 @@ class SqlAlchemyUserRepository:
             email=model.email,
             password_hash=model.password_hash,
             displayname=model.displayname,
-            register_time=model.register_time,
-            last_login_time=model.last_login_time,
+            registered_at=model.registered_at,
+            last_login_at=model.last_login_at,
             is_authenticated=model.is_authenticated,
             is_active=model.is_active,
             is_anonymous=model.is_anonymous,
@@ -94,8 +133,8 @@ class SqlAlchemyUserRepository:
             email=user.email,
             password_hash=user.password_hash,
             displayname=user.displayname,
-            register_time=user.register_time,
-            last_login_time=user.last_login_time,
+            registered_at=user.registered_at,
+            last_login_at=user.last_login_at,
             is_authenticated=user.is_authenticated,
             is_active=user.is_active,
             is_anonymous=user.is_anonymous,

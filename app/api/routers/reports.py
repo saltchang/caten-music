@@ -16,6 +16,15 @@ async def list_reports(
     _admin: Annotated[User, Depends(get_current_admin)],
     report_service: Annotated[ReportService, Depends(get_report_service)],
 ):
+    """List all reports. Requires admin role.
+
+    Args:
+        _admin: Current authenticated admin (used for authorization).
+        report_service: Injected report service.
+
+    Returns:
+        List of ReportResponse for all reports.
+    """
     reports = await report_service.list_reports()
     return [ReportResponse.from_entity(r) for r in reports]
 
@@ -26,6 +35,19 @@ async def create_report(
     user: Annotated[User, Depends(get_current_active_user)],
     report_service: Annotated[ReportService, Depends(get_report_service)],
 ):
+    """Create a new report for a song. Requires an active user.
+
+    Args:
+        request: Payload with the report description and song SID.
+        user: Current authenticated active user.
+        report_service: Injected report service.
+
+    Returns:
+        ReportResponse for the newly created report.
+
+    Raises:
+        HTTPException: 400 for invalid input.
+    """
     try:
         report = await report_service.create_report(
             description=request.description,

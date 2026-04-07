@@ -127,11 +127,11 @@ class SongResponse(BaseModel):
     num_i: str
     title: str
     title_original: str = ''
-    language: str | None = None
+    language: Language | None = None
     artist: str | None = None
     translator: str | None = None
     album: str | None = None
-    tonality: str | None = None
+    tonality: Tonality | None = None
     year: str | None = None
     lyrics: list[str] = []
     tempo: str | None = None
@@ -159,11 +159,11 @@ class SongResponse(BaseModel):
             num_i=version.num_i,
             title=version.title,
             title_original=work.title_original if work else '',
-            language=version.language,
+            language=Language(version.language) if version.language else None,
             artist=version.artist,
             translator=version.translator,
             album=version.album,
-            tonality=version.tonality,
+            tonality=Tonality(version.tonality) if version.tonality else None,
             year=version.year,
             lyrics=version.lyrics or [],
             tempo=version.tempo,

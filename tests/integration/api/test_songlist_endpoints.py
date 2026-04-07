@@ -310,3 +310,228 @@ async def test_remove_song_idempotent(
     assert response.status_code == 200
     data = response.json()
     assert data['songs_amount'] == 0
+
+
+async def test_get_other_users_private_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN User A owns a private songlist
+    WHEN User B tries to GET /songlists/{out_id} for that songlist
+    THEN it should return 403 Forbidden
+    """
+    # Arrange
+    token_a, _user_a = await get_auth_token(
+        api_session, password_hasher, token_service, username='owner_user', email='owner@example.com'
+    )
+    create_resp = await client.post(
+        '/songlists',
+        json={'title': 'Private Songlist', 'is_private': True},
+        headers={'Authorization': f'Bearer {token_a}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    token_b, _user_b = await get_auth_token(
+        api_session, password_hasher, token_service, username='other_user', email='other@example.com'
+    )
+
+    # Act
+    response = await client.get(
+        f'/songlists/{out_id}',
+        headers={'Authorization': f'Bearer {token_b}'},
+    )
+
+    # Assert
+    assert response.status_code == 403
+
+
+async def test_update_other_users_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN User A owns a songlist
+    WHEN User B tries to PATCH /songlists/{out_id} for that songlist
+    THEN it should return 403 Forbidden
+    """
+    # Arrange
+    token_a, _user_a = await get_auth_token(
+        api_session, password_hasher, token_service, username='patch_owner', email='patch_owner@example.com'
+    )
+    create_resp = await client.post(
+        '/songlists',
+        json={'title': 'Owner Songlist'},
+        headers={'Authorization': f'Bearer {token_a}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    token_b, _user_b = await get_auth_token(
+        api_session, password_hasher, token_service, username='patch_intruder', email='patch_intruder@example.com'
+    )
+
+    # Act
+    response = await client.patch(
+        f'/songlists/{out_id}',
+        json={'title': 'Hijacked Title'},
+        headers={'Authorization': f'Bearer {token_b}'},
+    )
+
+    # Assert
+    assert response.status_code == 403
+
+
+async def test_delete_other_users_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN User A owns a songlist
+    WHEN User B tries to DELETE /songlists/{out_id} for that songlist
+    THEN it should return 403 Forbidden
+    """
+    # Arrange
+    token_a, _user_a = await get_auth_token(
+        api_session, password_hasher, token_service, username='del_owner', email='del_owner@example.com'
+    )
+    create_resp = await client.post(
+        '/songlists',
+        json={'title': 'Owner Only Songlist'},
+        headers={'Authorization': f'Bearer {token_a}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    token_b, _user_b = await get_auth_token(
+        api_session, password_hasher, token_service, username='del_intruder', email='del_intruder@example.com'
+    )
+
+    # Act
+    response = await client.delete(
+        f'/songlists/{out_id}',
+        headers={'Authorization': f'Bearer {token_b}'},
+    )
+
+    # Assert
+    assert response.status_code == 403
+
+
+async def test_patch_songlist_with_empty_body(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN a songlist exists for an authenticated user
+    WHEN PATCH /songlists/{out_id} is requested with an empty JSON body
+    THEN it returns 200 with no changes applied and the title remains unchanged
+    """
+    # Arrange
+    token, _user = await get_auth_token(
+        api_session,
+        password_hasher,
+        token_service,
+        username='emptypatch',
+        email='emptypatch@example.com',
+    )
+    create_resp = await client.post(
+        '/songlists',
+        json={'title': 'Unchanged Title'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+    out_id = create_resp.json()['out_id']
+
+    # Act
+    response = await client.patch(
+        f'/songlists/{out_id}',
+        json={},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 200
+    data = response.json()
+    assert data['title'] == 'Unchanged Title'
+
+
+async def test_get_nonexistent_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an authenticated user
+    WHEN GET /songlists/{out_id} is requested with a nonexistent out_id
+    THEN it should return 404 Not Found
+    """
+    # Arrange
+    token, _user = await get_auth_token(api_session, password_hasher, token_service)
+
+    # Act
+    response = await client.get(
+        '/songlists/nonexistent-id',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 404
+
+
+async def test_update_nonexistent_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an authenticated user
+    WHEN PATCH /songlists/{out_id} is requested with a nonexistent out_id
+    THEN it should return 404 Not Found
+    """
+    # Arrange
+    token, _user = await get_auth_token(
+        api_session, password_hasher, token_service, username='patchuser', email='patchuser@example.com'
+    )
+
+    # Act
+    response = await client.patch(
+        '/songlists/nonexistent-id',
+        json={'title': 'Updated Title'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 404
+
+
+async def test_delete_nonexistent_songlist(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an authenticated user
+    WHEN DELETE /songlists/{out_id} is requested with a nonexistent out_id
+    THEN it should return 404 Not Found
+    """
+    # Arrange
+    token, _user = await get_auth_token(
+        api_session, password_hasher, token_service, username='deluser', email='deluser@example.com'
+    )
+
+    # Act
+    response = await client.delete(
+        '/songlists/nonexistent-id',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 404

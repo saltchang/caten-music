@@ -8,4 +8,4 @@ class SongReport:
     description: str
     song_sid: str
     user_id: int
-    reported_time: datetime = field(default_factory=datetime.now)
+    reported_at: datetime = field(default_factory=datetime.now)

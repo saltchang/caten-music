@@ -9,8 +9,8 @@ class User:
     email: str
     password_hash: str
     displayname: str
-    register_time: datetime = field(default_factory=datetime.now)
-    last_login_time: datetime | None = None
+    registered_at: datetime = field(default_factory=datetime.now)
+    last_login_at: datetime | None = None
     is_authenticated: bool = False
     is_active: bool = True
     is_anonymous: bool = False

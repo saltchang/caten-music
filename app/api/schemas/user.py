@@ -45,5 +45,7 @@ class UserResponse(BaseModel):
 
 
 class UserUpdateRequest(BaseModel):
+    """Request body for updating a user's role and/or displayname."""
+
     displayname: str | None = None
     role: UserRole | None = None

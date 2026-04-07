@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock
 import pytest
 from app.core.entities.music_version import MusicVersion
 from app.core.entities.music_work import MusicWork
+from app.core.exceptions import SongNotFoundError
 from app.service.song_service import SongService
 
 
@@ -217,32 +218,29 @@ class TestDeleteSong:
         """
         GIVEN a song with the given SID exists
         WHEN delete_song is called
-        THEN the repository delete is called and True is returned
+        THEN the repository delete is called without error
         """
         # Arrange
         song_repo.delete.return_value = True
 
         # Act
-        result = await service.delete_song('1011054')
+        await service.delete_song('1011054')
 
         # Assert
-        assert result is True
         song_repo.delete.assert_called_once_with('1011054')
 
     async def test_delete_nonexistent_song(self, service, song_repo):
         """
         GIVEN no song with the given SID exists
         WHEN delete_song is called
-        THEN False is returned
+        THEN SongNotFoundError is raised
         """
         # Arrange
         song_repo.delete.return_value = False
 
-        # Act
-        result = await service.delete_song('9999999')
-
-        # Assert
-        assert result is False
+        # Act & Assert
+        with pytest.raises(SongNotFoundError):
+            await service.delete_song('9999999')
 
 
 class TestUpdateSong:
@@ -269,15 +267,12 @@ class TestUpdateSong:
         """
         GIVEN no song with the given SID exists
         WHEN update_song is called
-        THEN None is returned
+        THEN SongNotFoundError is raised
         """
         # Arrange
         song_repo.get_by_sid.return_value = None
         update_version = MusicVersion(id=0, work_id=0, sid='', tonality='A')
 
-        # Act
-        result = await service.update_song('9999999', update_version)
-
-        # Assert
-        assert result is None
-        song_repo.update.assert_not_called()
+        # Act & Assert
+        with pytest.raises(SongNotFoundError):
+            await service.update_song('9999999', update_version)

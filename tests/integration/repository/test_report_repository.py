@@ -16,7 +16,7 @@ async def _create_test_user(session: AsyncSession) -> User:
             email='reporter@example.com',
             password_hash='hashed_pw',
             displayname='Reporter',
-            register_time=datetime(2025, 1, 1, 12, 0, 0),
+            registered_at=datetime(2025, 1, 1, 12, 0, 0),
         )
     )
 
@@ -35,7 +35,7 @@ async def test_create_report(async_session: AsyncSession):
         description='Broken audio link',
         song_sid='1011054',
         user_id=user.id,
-        reported_time=datetime(2025, 6, 15, 10, 0, 0),
+        reported_at=datetime(2025, 6, 15, 10, 0, 0),
     )
 
     # Act
@@ -63,7 +63,7 @@ async def test_get_by_id(async_session: AsyncSession):
         description='Wrong lyrics',
         song_sid='1010066',
         user_id=user.id,
-        reported_time=datetime(2025, 6, 15, 10, 0, 0),
+        reported_at=datetime(2025, 6, 15, 10, 0, 0),
     )
     created = await repo.create(report)
 
@@ -93,7 +93,7 @@ async def test_list_all(async_session: AsyncSession):
                 description=f'Issue with {sid}',
                 song_sid=sid,
                 user_id=user.id,
-                reported_time=datetime(2025, 6, 15, 10, 0, 0),
+                reported_at=datetime(2025, 6, 15, 10, 0, 0),
             )
         )
 

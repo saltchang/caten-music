@@ -16,7 +16,7 @@ def _make_user(
         email=email,
         password_hash='hashed_pw',
         displayname=displayname,
-        register_time=datetime(2025, 1, 1, 12, 0, 0),
+        registered_at=datetime(2025, 1, 1, 12, 0, 0),
     )
 
 

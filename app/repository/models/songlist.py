@@ -31,8 +31,8 @@ class SongListModel(Base):
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('public.users.id'), nullable=False)
     songs_sid_list: Mapped[list | None] = mapped_column(StringArray, nullable=True)
     songs_amount: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
-    created_time: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
-    edited_time: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    created_at: Mapped[datetime] = mapped_column('created_time', DateTime, nullable=False, default=datetime.now)
+    updated_at: Mapped[datetime] = mapped_column('edited_time', DateTime, nullable=False, default=datetime.now)
     is_private: Mapped[bool] = mapped_column(Boolean, default=False)
     is_archived: Mapped[bool] = mapped_column(Boolean, default=False)
 

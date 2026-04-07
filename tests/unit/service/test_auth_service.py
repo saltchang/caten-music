@@ -66,8 +66,8 @@ class TestLogin:
         result = await auth_service.login('testuser', 'password123')
 
         # Assert
-        assert result['access_token'] == 'access_token'
-        assert result['refresh_token'] == 'refresh_token'
+        assert result.access_token == 'access_token'
+        assert result.refresh_token == 'refresh_token'
         deps['user_repo'].get_by_username.assert_called_once_with('testuser')
 
     async def test_login_with_valid_email(self, auth_service, deps, sample_user):
@@ -86,7 +86,7 @@ class TestLogin:
         result = await auth_service.login('test@example.com', 'password123')
 
         # Assert
-        assert result['access_token'] == 'access_token'
+        assert result.access_token == 'access_token'
         deps['user_repo'].get_by_email.assert_called_once_with('test@example.com')
 
     async def test_login_wrong_password(self, auth_service, deps, sample_user):
@@ -416,5 +416,5 @@ class TestRefreshToken:
         result = await auth_service.refresh_token('valid_refresh')
 
         # Assert
-        assert result['access_token'] == 'new_access'
-        assert result['refresh_token'] == 'new_refresh'
+        assert result.access_token == 'new_access'
+        assert result.refresh_token == 'new_refresh'

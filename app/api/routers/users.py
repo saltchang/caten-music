@@ -16,6 +16,7 @@ async def list_users(
     _admin: Annotated[User, Depends(get_current_admin)],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ):
+    """List all users. Admin-only."""
     users = await user_service.list_users()
     return [UserResponse.from_entity(u) for u in users]
 
@@ -27,15 +28,13 @@ async def update_user(
     _admin: Annotated[User, Depends(get_current_admin)],
     user_service: Annotated[UserService, Depends(get_user_service)],
 ):
+    """Update a user's role and/or displayname. Admin-only."""
     try:
-        user = await user_service.get_user(user_id)
-
-        if request.role is not None:
-            user = await user_service.update_user_role(user_id, request.role)
-
-        if request.displayname is not None:
-            user = await user_service.update_user_displayname(user_id, request.displayname)
-
+        user = await user_service.update_user(
+            user_id=user_id,
+            role=request.role,
+            displayname=request.displayname,
+        )
         return UserResponse.from_entity(user)
     except UserNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found') from None

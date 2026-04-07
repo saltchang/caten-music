@@ -16,7 +16,7 @@ async def _create_test_user(session: AsyncSession) -> User:
             email='inviter@example.com',
             password_hash='hashed_pw',
             displayname='Inviter',
-            register_time=datetime(2025, 1, 1, 12, 0, 0),
+            registered_at=datetime(2025, 1, 1, 12, 0, 0),
         )
     )
 

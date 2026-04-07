@@ -14,7 +14,7 @@ class SongReportModel(Base):
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     song_sid: Mapped[str | None] = mapped_column(String(7), nullable=True)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('public.users.id'), nullable=False)
-    reported_time: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
+    reported_at: Mapped[datetime] = mapped_column('reported_time', DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self) -> str:
         return f'<SongReportModel id={self.id} song_sid={self.song_sid}>'

@@ -23,7 +23,7 @@ class ReportResponse(BaseModel):
     description: str
     song_sid: str
     user_id: int
-    reported_time: datetime
+    reported_at: datetime
 
     @classmethod
     def from_entity(cls, report: SongReport) -> ReportResponse:
@@ -40,5 +40,5 @@ class ReportResponse(BaseModel):
             description=report.description,
             song_sid=report.song_sid,
             user_id=report.user_id,
-            reported_time=report.reported_time,
+            reported_at=report.reported_at,
         )

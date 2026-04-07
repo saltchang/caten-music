@@ -8,18 +8,22 @@ CHINESE_CHAR_PATTERN = re.compile(r'^[\u4e00-\u9fa5]+$')
 
 
 def validate_username(username: str) -> bool:
+    """Check if username matches the allowed pattern (4-25 alphanumeric/underscore chars)."""
     return bool(USERNAME_PATTERN.fullmatch(username))
 
 
 def validate_email(email: str) -> bool:
+    """Check if email matches the allowed format."""
     return bool(EMAIL_PATTERN.fullmatch(email))
 
 
 def validate_password(password: str) -> bool:
+    """Check if password meets strength requirements (8-65 chars, alphanumeric + symbols)."""
     return bool(PASSWORD_PATTERN.fullmatch(password))
 
 
 def validate_displayname(displayname: str) -> bool:
+    """Check if displayname is valid (CJK/alphanumeric, max 16 display-width units)."""
     if not DISPLAYNAME_PATTERN.fullmatch(displayname):
         return False
 
@@ -34,6 +38,11 @@ def validate_displayname(displayname: str) -> bool:
 
 
 def check_login_format(primary: str, password: str) -> dict:
+    """Determine login identifier type (email or username) and validate password format.
+
+    Returns:
+        Dict with 'primary_type' ('email'/'username'/None) and 'password_valid' (bool).
+    """
     result: dict = {'primary_type': None, 'password_valid': False}
 
     if EMAIL_PATTERN.fullmatch(primary):

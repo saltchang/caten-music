@@ -37,8 +37,8 @@ class SonglistResponse(BaseModel):
     user_id: int
     songs_sid_list: list[str]
     songs_amount: int
-    created_time: datetime
-    edited_time: datetime
+    created_at: datetime
+    updated_at: datetime
     is_private: bool
     is_archived: bool
 
@@ -60,8 +60,8 @@ class SonglistResponse(BaseModel):
             user_id=songlist.user_id,
             songs_sid_list=songlist.songs_sid_list,
             songs_amount=songlist.songs_amount,
-            created_time=songlist.created_time,
-            edited_time=songlist.edited_time,
+            created_at=songlist.created_at,
+            updated_at=songlist.updated_at,
             is_private=songlist.is_private,
             is_archived=songlist.is_archived,
         )

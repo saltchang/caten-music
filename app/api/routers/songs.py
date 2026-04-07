@@ -12,6 +12,7 @@ from app.api.dependencies import (
 from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.core.entities.user import User
 from app.core.enums import Language, Tonality
+from app.core.exceptions import SongNotFoundError
 from app.service.file_service import FileService
 from app.service.song_service import SongService
 
@@ -24,6 +25,7 @@ async def get_random_songs(
     _user: Annotated[User, Depends(get_current_active_user)],
     amount: int = Query(default=6),
 ) -> list[SongResponse]:
+    """Return a random selection of songs."""
     versions = await song_service.get_random(amount)
     return [SongResponse.from_entity(v) for v in versions]
 
@@ -40,6 +42,7 @@ async def list_songs(
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
 ) -> list[SongResponse]:
+    """Search songs with optional filters and pagination."""
     versions = await song_service.list_songs(
         title=title,
         lyrics=lyrics,
@@ -58,6 +61,7 @@ async def create_song(
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
 ) -> SongResponse:
+    """Create a new song entry. Manager-only."""
     created = await song_service.create_song(request.to_version_entity(), request.to_work_entity())
     return SongResponse.from_entity(created)
 
@@ -68,6 +72,7 @@ async def get_song(
     song_service: Annotated[SongService, Depends(get_song_service)],
     _user: Annotated[User, Depends(get_current_active_user)],
 ) -> SongResponse:
+    """Get a song by its SID. Returns 404 if not found."""
     version = await song_service.get_by_sid(sid)
     if version is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
@@ -81,11 +86,13 @@ async def update_song(
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
 ) -> SongResponse:
-    version = request.to_version_entity()
-    updated = await song_service.update_song(sid, version)
-    if updated is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
-    return SongResponse.from_entity(updated)
+    """Partially update a song by SID. Manager-only."""
+    try:
+        version = request.to_version_entity()
+        updated = await song_service.update_song(sid, version)
+        return SongResponse.from_entity(updated)
+    except SongNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found') from None
 
 
 @router.delete('/{sid}', status_code=status.HTTP_204_NO_CONTENT)
@@ -94,9 +101,11 @@ async def delete_song(
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
 ) -> None:
-    success = await song_service.delete_song(sid)
-    if not success:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
+    """Delete a song by SID. Manager-only. Returns 204 on success."""
+    try:
+        await song_service.delete_song(sid)
+    except SongNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found') from None
 
 
 @router.get('/{sid}/files/ppt')
@@ -105,6 +114,7 @@ async def get_ppt(
     _user: Annotated[User, Depends(get_current_active_user)],
     file_service: Annotated[FileService, Depends(get_file_download_service)],
 ):
+    """Redirect to the PPT download URL for a song. Returns 404 if unavailable."""
     url = await file_service.get_ppt_url(sid)
     if url is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='PPT file not found')
@@ -117,6 +127,7 @@ async def get_sheet(
     _user: Annotated[User, Depends(get_current_active_user)],
     file_service: Annotated[FileService, Depends(get_file_download_service)],
 ):
+    """Redirect to the sheet music download URL for a song. Returns 404 if unavailable."""
     url = await file_service.get_sheet_url(sid)
     if url is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Sheet file not found')

@@ -1,5 +1,6 @@
 from app.core.entities.music_version import MusicVersion
 from app.core.entities.music_work import MusicWork
+from app.core.exceptions import SongNotFoundError
 from app.core.interfaces.song_repository import SongRepository
 
 
@@ -95,18 +96,20 @@ class SongService:
         """
         return await self._song_repo.create(version, work)
 
-    async def delete_song(self, sid: str) -> bool:
+    async def delete_song(self, sid: str) -> None:
         """Delete a song by its SID.
 
         Args:
             sid: SID of the song to delete.
 
-        Returns:
-            True if the song was found and deleted, False otherwise.
+        Raises:
+            SongNotFoundError: If no song with the given SID exists.
         """
-        return await self._song_repo.delete(sid)
+        deleted = await self._song_repo.delete(sid)
+        if not deleted:
+            raise SongNotFoundError(f'Song not found: {sid}')
 
-    async def update_song(self, sid: str, version: MusicVersion) -> MusicVersion | None:
+    async def update_song(self, sid: str, version: MusicVersion) -> MusicVersion:
         """Update an existing song.
 
         Args:
@@ -114,11 +117,14 @@ class SongService:
             version: MusicVersion entity with updated fields to apply.
 
         Returns:
-            The updated MusicVersion entity, or None if not found.
+            The updated MusicVersion entity.
+
+        Raises:
+            SongNotFoundError: If no song with the given SID exists.
         """
         existing = await self._song_repo.get_by_sid(sid)
         if existing is None:
-            return None
+            raise SongNotFoundError(f'Song not found: {sid}')
 
         existing.title = version.title if version.title else existing.title
         existing.language = version.language if version.language is not None else existing.language

@@ -12,10 +12,21 @@ from app.core.interfaces.invitation_repository import InvitationRepository
 
 
 class InvitationService:
+    """Manages invitation code lifecycle: generation, validation, and status updates."""
+
     def __init__(self, invitation_repo: InvitationRepository):
         self._invitation_repo = invitation_repo
 
     async def generate_code(self, admin_id: int, expiration_hours: int = 48) -> InvitationCode:
+        """Generate a new random invitation code.
+
+        Args:
+            admin_id: ID of the admin creating the code.
+            expiration_hours: Hours until the code expires (default 48).
+
+        Returns:
+            Newly created InvitationCode entity.
+        """
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
         invitation = InvitationCode(
             id=0,
@@ -26,6 +37,19 @@ class InvitationService:
         return await self._invitation_repo.create(invitation)
 
     async def validate_code(self, code: str) -> InvitationCode:
+        """Validate an invitation code and return it if usable.
+
+        Args:
+            code: The invitation code string.
+
+        Returns:
+            Valid InvitationCode entity.
+
+        Raises:
+            InvitationCodeInvalidError: If the code does not exist.
+            InvitationCodeDisabledError: If the code is disabled.
+            InvitationCodeExpiredError: If the code has expired.
+        """
         invitation = await self._invitation_repo.get_by_code(code)
         if not invitation:
             raise InvitationCodeInvalidError('Invalid invitation code')
@@ -59,4 +83,9 @@ class InvitationService:
         return await self._invitation_repo.update(invitation)
 
     async def list_codes(self) -> list[InvitationCode]:
+        """List all invitation codes.
+
+        Returns:
+            List of all InvitationCode entities.
+        """
         return await self._invitation_repo.list_all()

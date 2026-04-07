@@ -508,3 +508,84 @@ class TestDeleteSong:
 
         # Assert
         assert response.status_code == 403
+
+
+# ── Boundary value tests for GET /songs ──────────
+
+
+class TestListSongsBoundary:
+    async def test_list_songs_with_limit_exceeding_max(
+        self,
+        client: AsyncClient,
+        api_session: AsyncSession,
+        password_hasher: Sha256PasswordHasher,
+        token_service: JwtTokenService,
+    ):
+        """
+        GIVEN an authenticated user
+        WHEN GET /songs?limit=201 is requested (exceeds max of 200)
+        THEN it returns 422 due to FastAPI validation (le=200)
+        """
+        # Arrange
+        token = await _get_user_token(api_session, password_hasher, token_service)
+
+        # Act
+        response = await client.get(
+            '/songs?limit=201',
+            headers={'Authorization': f'Bearer {token}'},
+        )
+
+        # Assert
+        assert response.status_code == 422
+
+    async def test_list_songs_with_negative_offset(
+        self,
+        client: AsyncClient,
+        api_session: AsyncSession,
+        password_hasher: Sha256PasswordHasher,
+        token_service: JwtTokenService,
+    ):
+        """
+        GIVEN an authenticated user
+        WHEN GET /songs?offset=-1 is requested (negative offset)
+        THEN it returns 422 due to FastAPI validation (ge=0)
+        """
+        # Arrange
+        token = await _get_user_token(api_session, password_hasher, token_service)
+
+        # Act
+        response = await client.get(
+            '/songs?offset=-1',
+            headers={'Authorization': f'Bearer {token}'},
+        )
+
+        # Assert
+        assert response.status_code == 422
+
+    async def test_list_songs_with_limit_one(
+        self,
+        client: AsyncClient,
+        api_session: AsyncSession,
+        password_hasher: Sha256PasswordHasher,
+        token_service: JwtTokenService,
+    ):
+        """
+        GIVEN two songs exist and an authenticated user
+        WHEN GET /songs?limit=1 is requested (boundary valid value)
+        THEN it returns 200 with at most one song
+        """
+        # Arrange
+        await _seed_song(api_session, sid='1011054')
+        await _seed_song(api_session, sid='1010066', title='前來敬拜')
+        token = await _get_user_token(api_session, password_hasher, token_service)
+
+        # Act
+        response = await client.get(
+            '/songs?limit=1',
+            headers={'Authorization': f'Bearer {token}'},
+        )
+
+        # Assert
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data) <= 1

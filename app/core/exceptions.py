@@ -38,6 +38,10 @@ class InvitationCodeDisabledError(DomainError):
     pass
 
 
+class SongNotFoundError(DomainError):
+    pass
+
+
 class SonglistNotFoundError(DomainError):
     pass
 
@@ -47,10 +51,6 @@ class UserNotFoundError(DomainError):
 
 
 class PermissionDeniedError(DomainError):
-    pass
-
-
-class TokenExpiredError(DomainError):
     pass
 
 

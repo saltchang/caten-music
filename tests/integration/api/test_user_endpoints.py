@@ -156,3 +156,36 @@ async def test_update_user_role_invalid(
 
     # Assert
     assert response.status_code == 422
+
+
+async def test_update_nonexistent_user(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an admin user and no user with id 99999 exists
+    WHEN PATCH /users/99999 is requested with a role update
+    THEN it should return 404 Not Found
+    """
+    # Arrange
+    token, _admin = await get_auth_token(
+        api_session,
+        password_hasher,
+        token_service,
+        username='adminuser5',
+        email='admin5@example.com',
+        is_admin=True,
+        is_manager=True,
+    )
+
+    # Act
+    response = await client.patch(
+        '/users/99999',
+        json={'role': 'manager'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 404

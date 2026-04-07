@@ -107,3 +107,34 @@ async def test_create_report(
     assert data['description'] == 'This song has wrong lyrics in verse 2'
     assert data['song_sid'] == '1011054'
     assert data['user_id'] == user.id
+
+
+async def test_create_report_with_short_description(
+    client: AsyncClient,
+    api_session: AsyncSession,
+    password_hasher: Sha256PasswordHasher,
+    token_service: JwtTokenService,
+):
+    """
+    GIVEN an authenticated user
+    WHEN creating a report with a description shorter than 5 characters
+    THEN it returns 400 due to ReportService validation
+    """
+    # Arrange
+    token, _user = await get_auth_token(
+        api_session,
+        password_hasher,
+        token_service,
+        username='shortdesc',
+        email='shortdesc@example.com',
+    )
+
+    # Act
+    response = await client.post(
+        '/reports',
+        json={'description': 'Hi', 'song_sid': '1011054'},
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    # Assert
+    assert response.status_code == 400

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from app.core.entities.auth import AvailabilityResult, TokenPair
 from app.core.entities.user import User
 from app.core.entities.user_profile import UserProfile
 from app.core.exceptions import (
@@ -25,6 +26,8 @@ from app.core.validators import check_login_format, validate_email, validate_pas
 
 
 class AuthService:
+    """Handles authentication workflows including login, registration, and password management."""
+
     def __init__(
         self,
         user_repo: UserRepository,
@@ -41,7 +44,22 @@ class AuthService:
         self._token_service = token_service
         self._mail_service = mail_service
 
-    async def login(self, primary: str, password: str) -> dict:
+    async def login(self, primary: str, password: str) -> TokenPair:
+        """Authenticate a user by email or username and return token pair.
+
+        Args:
+            primary: Email address or username.
+            password: Plain-text password.
+
+        Returns:
+            TokenPair containing access and refresh tokens.
+
+        Raises:
+            InvalidInputError: If the login format is invalid.
+            InvalidCredentialsError: If credentials do not match.
+            UserNotActivatedError: If the account is not yet activated.
+            UserDeactivatedError: If the account has been deactivated.
+        """
         login_check = check_login_format(primary, password)
 
         if login_check['primary_type'] is None or not login_check['password_valid']:
@@ -64,14 +82,13 @@ class AuthService:
         if not user.is_active:
             raise UserDeactivatedError('Account deactivated')
 
-        user.last_login_time = datetime.now()
+        user.last_login_at = datetime.now()
         await self._user_repo.update(user)
 
-        return {
-            'access_token': self._token_service.create_access_token(user.id),
-            'refresh_token': self._token_service.create_refresh_token(user.id),
-            'token_type': 'bearer',
-        }
+        return TokenPair(
+            access_token=self._token_service.create_access_token(user.id),
+            refresh_token=self._token_service.create_refresh_token(user.id),
+        )
 
     async def register(
         self,
@@ -82,6 +99,27 @@ class AuthService:
         confirm_password: str,
         invitation_code: str,
     ) -> User:
+        """Register a new user with invitation code validation.
+
+        Args:
+            username: Desired username.
+            email: User email address.
+            displayname: Display name for the user.
+            password: Plain-text password.
+            confirm_password: Password confirmation (must match password).
+            invitation_code: Valid invitation code for registration.
+
+        Returns:
+            Newly created User entity (not yet activated).
+
+        Raises:
+            InvalidInputError: If passwords don't match or input format is invalid.
+            UsernameExistsError: If username is already taken.
+            EmailExistsError: If email is already registered.
+            InvitationCodeInvalidError: If the invitation code does not exist.
+            InvitationCodeDisabledError: If the invitation code is disabled.
+            InvitationCodeExpiredError: If the invitation code has expired.
+        """
         if password != confirm_password:
             raise InvalidInputError('Passwords do not match')
 
@@ -140,6 +178,15 @@ class AuthService:
         return created_user
 
     async def activate_account(self, token: str) -> None:
+        """Activate a user account using an activation token.
+
+        Args:
+            token: Activation token from the email link.
+
+        Raises:
+            TokenInvalidError: If the token is invalid or expired.
+            UserNotFoundError: If the user referenced by the token does not exist.
+        """
         payload = self._token_service.verify_purpose_token(token, 'activation')
         if not payload:
             raise TokenInvalidError('Invalid or expired activation token')
@@ -153,6 +200,11 @@ class AuthService:
         await self._user_repo.update(user)
 
     async def request_password_reset(self, email: str) -> None:
+        """Send a password reset email. Silently no-ops if email is not found.
+
+        Args:
+            email: Email address of the account to reset.
+        """
         user = await self._user_repo.get_by_email(email)
         if not user:
             return
@@ -165,6 +217,18 @@ class AuthService:
         )
 
     async def reset_password(self, token: str, password: str, confirm_password: str) -> None:
+        """Reset a user's password using a reset token.
+
+        Args:
+            token: Password reset token from the email link.
+            password: New plain-text password.
+            confirm_password: Password confirmation (must match password).
+
+        Raises:
+            InvalidInputError: If passwords don't match or format is invalid.
+            TokenInvalidError: If the reset token is invalid or expired.
+            UserNotFoundError: If the user referenced by the token does not exist.
+        """
         if password != confirm_password:
             raise InvalidInputError('Passwords do not match')
 
@@ -182,7 +246,19 @@ class AuthService:
         user.password_hash = self._password_hasher.hash(password)
         await self._user_repo.update(user)
 
-    async def refresh_token(self, refresh_token_str: str) -> dict:
+    async def refresh_token(self, refresh_token_str: str) -> TokenPair:
+        """Issue a new token pair from a valid refresh token.
+
+        Args:
+            refresh_token_str: The refresh token string.
+
+        Returns:
+            New TokenPair with fresh access and refresh tokens.
+
+        Raises:
+            TokenInvalidError: If the refresh token is invalid or not a refresh type.
+            UserNotFoundError: If the user referenced by the token does not exist.
+        """
         payload = self._token_service.decode_token(refresh_token_str)
         if not payload or payload.get('type') != 'refresh':
             raise TokenInvalidError('Invalid refresh token')
@@ -191,21 +267,37 @@ class AuthService:
         if not user:
             raise UserNotFoundError('User not found')
 
-        return {
-            'access_token': self._token_service.create_access_token(user.id),
-            'refresh_token': self._token_service.create_refresh_token(user.id),
-            'token_type': 'bearer',
-        }
+        return TokenPair(
+            access_token=self._token_service.create_access_token(user.id),
+            refresh_token=self._token_service.create_refresh_token(user.id),
+        )
 
-    async def check_availability(self, username: str | None = None, email: str | None = None) -> dict:
-        result = {}
+    async def check_availability(self, username: str | None = None, email: str | None = None) -> AvailabilityResult:
+        """Check whether a username or email is already taken.
+
+        Args:
+            username: Username to check (optional).
+            email: Email to check (optional).
+
+        Returns:
+            AvailabilityResult indicating which identifiers are taken.
+        """
+        result = AvailabilityResult()
         if username is not None:
-            result['username_taken'] = await self._user_repo.exists_username(username)
+            result.username_taken = await self._user_repo.exists_username(username)
         if email is not None:
-            result['email_taken'] = await self._user_repo.exists_email(email)
+            result.email_taken = await self._user_repo.exists_email(email)
         return result
 
     async def resend_activation_email(self, email: str) -> None:
+        """Resend the activation email. Silently no-ops if email is not found.
+
+        Args:
+            email: Email address of the account.
+
+        Raises:
+            InvalidInputError: If the account is already activated.
+        """
         user = await self._user_repo.get_by_email(email)
         if not user:
             return
