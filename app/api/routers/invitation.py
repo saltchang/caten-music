@@ -21,7 +21,7 @@ async def list_codes(
     return [InvitationResponse.from_entity(c) for c in codes]
 
 
-@router.post('/codes', response_model=InvitationGenerateResponse)
+@router.post('/codes', response_model=InvitationGenerateResponse, status_code=status.HTTP_201_CREATED)
 async def generate_code(
     admin: Annotated[User, Depends(get_current_admin)],
     invitation_service: Annotated[InvitationService, Depends(get_invitation_service)],

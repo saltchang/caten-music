@@ -27,8 +27,8 @@ from app.service.song_service import SongService
 from app.service.songlist_service import SonglistService
 from app.service.user_service import UserService
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/api/auth/login')
-oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl='/api/auth/login', auto_error=False)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/login')
+oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl='/auth/login', auto_error=False)
 
 
 @lru_cache

@@ -16,39 +16,39 @@ class SongService:
     def __init__(self, song_repo: SongRepository) -> None:
         self._song_repo = song_repo
 
-    async def search(self, mode: str, query: str) -> list[MusicVersion]:
-        """Search songs by title or lyrics.
-
-        Args:
-            mode: Search mode ('title' or 'lyric').
-            query: Search query string.
-
-        Returns:
-            List of matching MusicVersion entities.
-        """
-        if mode == 'title':
-            return await self._song_repo.search(title=query)
-        elif mode == 'lyric':
-            return await self._song_repo.search(lyrics=query)
-        return []
-
-    async def browse(
+    async def list_songs(
         self,
+        title: str = '',
+        lyrics: str = '',
         lang: str = '',
         collection: str = '',
         tonality: str = '',
+        limit: int = 50,
+        offset: int = 0,
     ) -> list[MusicVersion]:
-        """Browse songs by language, collection, and tonality filters.
+        """Search and filter songs with pagination.
 
         Args:
-            lang: Language filter.
-            collection: Collection number filter.
-            tonality: Tonality filter.
+            title: Partial title match (case-insensitive).
+            lyrics: Partial lyrics match (case-insensitive).
+            lang: Exact language filter.
+            collection: Exact collection number filter.
+            tonality: Exact tonality filter.
+            limit: Maximum number of results.
+            offset: Number of results to skip.
 
         Returns:
             List of matching MusicVersion entities.
         """
-        return await self._song_repo.search(lang=lang, collection=collection, tonality=tonality)
+        return await self._song_repo.search(
+            title=title,
+            lyrics=lyrics,
+            lang=lang,
+            collection=collection,
+            tonality=tonality,
+            limit=limit,
+            offset=offset,
+        )
 
     async def get_by_sid(self, sid: str) -> MusicVersion | None:
         """Get a single song by its SID.

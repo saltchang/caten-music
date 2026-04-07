@@ -14,7 +14,7 @@ async def test_create_songlist(
 ):
     """
     GIVEN an authenticated user
-    WHEN creating a songlist via POST /api/songlists/
+    WHEN creating a songlist via POST /songlists/
     THEN it should return 201 with the songlist data including a generated out_id
     """
     # Arrange
@@ -22,7 +22,7 @@ async def test_create_songlist(
 
     # Act
     response = await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'My Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -43,25 +43,25 @@ async def test_get_songlists(
 ):
     """
     GIVEN an authenticated user who owns two songlists
-    WHEN requesting GET /api/songlists/
+    WHEN requesting GET /songlists/
     THEN it should return 200 with both songlists
     """
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'Songlist 1'},
         headers={'Authorization': f'Bearer {token}'},
     )
     await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'Songlist 2'},
         headers={'Authorization': f'Bearer {token}'},
     )
 
     # Act
     response = await client.get(
-        '/api/songlists/',
+        '/songlists/',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -79,13 +79,13 @@ async def test_get_songlist_by_out_id(
 ):
     """
     GIVEN a songlist exists for an authenticated user
-    WHEN requesting GET /api/songlists/{out_id}
+    WHEN requesting GET /songlists/{out_id}
     THEN it should return 200 with the songlist details
     """
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'Detail Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -93,7 +93,7 @@ async def test_get_songlist_by_out_id(
 
     # Act
     response = await client.get(
-        f'/api/songlists/{out_id}',
+        f'/songlists/{out_id}',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -118,7 +118,7 @@ async def test_delete_songlist(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'To Delete'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -126,7 +126,7 @@ async def test_delete_songlist(
 
     # Act
     response = await client.delete(
-        f'/api/songlists/{out_id}',
+        f'/songlists/{out_id}',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -135,7 +135,7 @@ async def test_delete_songlist(
     assert response.json()['message'] == 'Songlist deleted successfully'
 
     get_resp = await client.get(
-        f'/api/songlists/{out_id}',
+        f'/songlists/{out_id}',
         headers={'Authorization': f'Bearer {token}'},
     )
     assert get_resp.status_code == 404
@@ -158,7 +158,7 @@ async def test_toggle_song(
     # Arrange
     token, _user = await get_auth_token(api_session, password_hasher, token_service)
     create_resp = await client.post(
-        '/api/songlists/',
+        '/songlists/',
         json={'title': 'Toggle Songlist'},
         headers={'Authorization': f'Bearer {token}'},
     )
@@ -166,7 +166,7 @@ async def test_toggle_song(
 
     # Act & Assert (toggle add)
     response = await client.patch(
-        f'/api/songlists/{out_id}/songs/123',
+        f'/songlists/{out_id}/songs/123',
         headers={'Authorization': f'Bearer {token}'},
     )
     assert response.status_code == 200
@@ -176,7 +176,7 @@ async def test_toggle_song(
 
     # Act & Assert (toggle remove)
     response2 = await client.patch(
-        f'/api/songlists/{out_id}/songs/123',
+        f'/songlists/{out_id}/songs/123',
         headers={'Authorization': f'Bearer {token}'},
     )
     assert response2.json()['action'] == 'remove'

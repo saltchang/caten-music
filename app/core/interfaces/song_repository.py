@@ -51,8 +51,10 @@ class SongRepository(Protocol):
         lang: str = '',
         collection: str = '',
         tonality: str = '',
+        limit: int = 50,
+        offset: int = 0,
     ) -> list[MusicVersion]:
-        """Search versions by various criteria.
+        """Search versions by various criteria with pagination.
 
         Args:
             title: Partial title match (case-insensitive).
@@ -60,6 +62,8 @@ class SongRepository(Protocol):
             lang: Exact language filter.
             collection: Exact num_c (collection number) filter.
             tonality: Exact tonality filter.
+            limit: Maximum number of results to return.
+            offset: Number of results to skip.
 
         Returns:
             List of matching MusicVersion entities.

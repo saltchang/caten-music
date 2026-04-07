@@ -77,6 +77,33 @@ async def test_get_by_id(async_session: AsyncSession):
     assert found.song_sid == '1010066'
 
 
+async def test_list_all(async_session: AsyncSession):
+    """
+    GIVEN two reports exist in the database
+    WHEN list_all is called
+    THEN both reports are returned
+    """
+    # Arrange
+    user = await _create_test_user(async_session)
+    repo = SqlAlchemyReportRepository(async_session)
+    for sid in ['1011054', '1010066']:
+        await repo.create(
+            SongReport(
+                id=0,
+                description=f'Issue with {sid}',
+                song_sid=sid,
+                user_id=user.id,
+                reported_time=datetime(2025, 6, 15, 10, 0, 0),
+            )
+        )
+
+    # Act
+    reports = await repo.list_all()
+
+    # Assert
+    assert len(reports) == 2
+
+
 async def test_get_by_id_not_found(async_session: AsyncSession):
     """
     GIVEN no report with the given id exists

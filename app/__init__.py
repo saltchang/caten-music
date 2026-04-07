@@ -26,13 +26,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title='Caten Music API', lifespan=lifespan)
     app.state.settings = settings
 
-    app.include_router(health.router, prefix='/api')
-    app.include_router(auth.router, prefix='/api')
-    app.include_router(songs.router, prefix='/api')
-    app.include_router(songlists.router, prefix='/api')
-    app.include_router(admin.router, prefix='/api')
-    app.include_router(invitation.router, prefix='/api')
-    app.include_router(reports.router, prefix='/api')
-    app.include_router(files.router, prefix='/api')
+    app.include_router(health.router)
+    app.include_router(auth.router)
+    app.include_router(songs.router)
+    app.include_router(songlists.router)
+    app.include_router(admin.router)
+    app.include_router(invitation.router)
+    app.include_router(reports.router)
+    app.include_router(files.router)
 
     return app

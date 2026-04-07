@@ -16,6 +16,15 @@ class SqlAlchemyReportRepository:
         await self._session.commit()
         return self._to_entity(model)
 
+    async def list_all(self) -> list[SongReport]:
+        """Fetch all reports ordered by most recent first.
+
+        Returns:
+            List of all SongReport entities.
+        """
+        result = await self._session.execute(select(SongReportModel).order_by(SongReportModel.reported_time.desc()))
+        return [self._to_entity(m) for m in result.scalars().all()]
+
     async def get_by_id(self, report_id: int) -> SongReport | None:
         result = await self._session.execute(select(SongReportModel).where(SongReportModel.id == report_id))
         model = result.scalars().first()

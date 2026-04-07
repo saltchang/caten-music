@@ -69,7 +69,7 @@ async def _get_manager_token(
     return token
 
 
-# ── GET /api/songs/random ─────────────────────────────
+# ── GET /songs/random ─────────────────────────────
 
 
 class TestGetRandomSongs:
@@ -82,7 +82,7 @@ class TestGetRandomSongs:
     ):
         """
         GIVEN songs exist and user is authenticated
-        WHEN GET /api/songs/random is requested
+        WHEN GET /songs/random is requested
         THEN it returns a list of songs
         """
         # Arrange
@@ -92,7 +92,7 @@ class TestGetRandomSongs:
 
         # Act
         response = await client.get(
-            '/api/songs/random?amount=2',
+            '/songs/random?amount=2',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -105,21 +105,21 @@ class TestGetRandomSongs:
     async def test_requires_auth(self, client: AsyncClient):
         """
         GIVEN no authentication token is provided
-        WHEN GET /api/songs/random is requested
+        WHEN GET /songs/random is requested
         THEN it returns 401
         """
         # Arrange & Act
-        response = await client.get('/api/songs/random')
+        response = await client.get('/songs/random')
 
         # Assert
         assert response.status_code == 401
 
 
-# ── GET /api/songs/search ─────────────────────────────
+# ── GET /songs ────────────────────────────────────
 
 
-class TestSearchSongs:
-    async def test_search_by_title(
+class TestListSongs:
+    async def test_list_by_title(
         self,
         client: AsyncClient,
         api_session: AsyncSession,
@@ -128,7 +128,7 @@ class TestSearchSongs:
     ):
         """
         GIVEN a song with title '我獻上我心' exists
-        WHEN GET /api/songs/search?mode=title&q=獻上 is requested
+        WHEN GET /songs?title=獻上 is requested
         THEN the matching song is returned
         """
         # Arrange
@@ -137,7 +137,7 @@ class TestSearchSongs:
 
         # Act
         response = await client.get(
-            '/api/songs/search?mode=title&q=獻上',
+            '/songs?title=獻上',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -147,24 +147,7 @@ class TestSearchSongs:
         assert len(data) == 1
         assert data[0]['sid'] == '1011054'
 
-    async def test_search_requires_auth(self, client: AsyncClient):
-        """
-        GIVEN no authentication token is provided
-        WHEN GET /api/songs/search is requested
-        THEN it returns 401
-        """
-        # Arrange & Act
-        response = await client.get('/api/songs/search?mode=title&q=test')
-
-        # Assert
-        assert response.status_code == 401
-
-
-# ── GET /api/songs/browse ─────────────────────────────
-
-
-class TestBrowseSongs:
-    async def test_browse_by_language(
+    async def test_list_by_language(
         self,
         client: AsyncClient,
         api_session: AsyncSession,
@@ -173,7 +156,7 @@ class TestBrowseSongs:
     ):
         """
         GIVEN a Chinese song exists
-        WHEN GET /api/songs/browse?lang=Chinese is requested
+        WHEN GET /songs?lang=Chinese is requested
         THEN the matching song is returned
         """
         # Arrange
@@ -182,7 +165,7 @@ class TestBrowseSongs:
 
         # Act
         response = await client.get(
-            '/api/songs/browse?lang=Chinese',
+            '/songs?lang=Chinese',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -192,20 +175,20 @@ class TestBrowseSongs:
         assert len(data) == 1
         assert data[0]['language'] == 'Chinese'
 
-    async def test_browse_requires_auth(self, client: AsyncClient):
+    async def test_list_requires_auth(self, client: AsyncClient):
         """
         GIVEN no authentication token is provided
-        WHEN GET /api/songs/browse is requested
+        WHEN GET /songs is requested
         THEN it returns 401
         """
         # Arrange & Act
-        response = await client.get('/api/songs/browse')
+        response = await client.get('/songs?title=test')
 
         # Assert
         assert response.status_code == 401
 
 
-# ── GET /api/songs/{sid} ──────────────────────────────
+# ── GET /songs/{sid} ──────────────────────────────
 
 
 class TestGetSongBySid:
@@ -218,7 +201,7 @@ class TestGetSongBySid:
     ):
         """
         GIVEN a song with SID '1011054' exists
-        WHEN GET /api/songs/1011054 is requested
+        WHEN GET /songs/1011054 is requested
         THEN the song is returned with all fields
         """
         # Arrange
@@ -227,7 +210,7 @@ class TestGetSongBySid:
 
         # Act
         response = await client.get(
-            '/api/songs/1011054',
+            '/songs/1011054',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -247,7 +230,7 @@ class TestGetSongBySid:
     ):
         """
         GIVEN no song with SID '9999999' exists
-        WHEN GET /api/songs/9999999 is requested
+        WHEN GET /songs/9999999 is requested
         THEN it returns 404
         """
         # Arrange
@@ -255,7 +238,7 @@ class TestGetSongBySid:
 
         # Act
         response = await client.get(
-            '/api/songs/9999999',
+            '/songs/9999999',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -265,17 +248,17 @@ class TestGetSongBySid:
     async def test_get_song_requires_auth(self, client: AsyncClient):
         """
         GIVEN no authentication token is provided
-        WHEN GET /api/songs/1011054 is requested
+        WHEN GET /songs/1011054 is requested
         THEN it returns 401
         """
         # Arrange & Act
-        response = await client.get('/api/songs/1011054')
+        response = await client.get('/songs/1011054')
 
         # Assert
         assert response.status_code == 401
 
 
-# ── POST /api/admin/songs ─────────────────────────────
+# ── POST /admin/songs ─────────────────────────────
 
 
 class TestCreateSong:
@@ -288,7 +271,7 @@ class TestCreateSong:
     ):
         """
         GIVEN a manager user is authenticated
-        WHEN POST /api/admin/songs is requested with song data
+        WHEN POST /admin/songs is requested with song data
         THEN the song is created and the new SID is returned
         """
         # Arrange
@@ -296,7 +279,7 @@ class TestCreateSong:
 
         # Act
         response = await client.post(
-            '/api/admin/songs',
+            '/admin/songs',
             json={
                 'sid': '9990001',
                 'title': '新歌',
@@ -324,7 +307,7 @@ class TestCreateSong:
     ):
         """
         GIVEN a normal (non-manager) user is authenticated
-        WHEN POST /api/admin/songs is requested
+        WHEN POST /admin/songs is requested
         THEN it returns 403
         """
         # Arrange
@@ -332,7 +315,7 @@ class TestCreateSong:
 
         # Act
         response = await client.post(
-            '/api/admin/songs',
+            '/admin/songs',
             json={'sid': '9990002', 'title': '新歌', 'num_c': '99', 'num_i': '2'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -341,7 +324,7 @@ class TestCreateSong:
         assert response.status_code == 403
 
 
-# ── PUT /api/admin/songs/{sid} ────────────────────────
+# ── PUT /admin/songs/{sid} ────────────────────────
 
 
 class TestUpdateSong:
@@ -354,7 +337,7 @@ class TestUpdateSong:
     ):
         """
         GIVEN a song exists and a manager is authenticated
-        WHEN PUT /api/admin/songs/{sid} is requested with updated fields
+        WHEN PUT /admin/songs/{sid} is requested with updated fields
         THEN the song is updated and the updated resource is returned
         """
         # Arrange
@@ -363,7 +346,7 @@ class TestUpdateSong:
 
         # Act
         response = await client.put(
-            '/api/admin/songs/1011054',
+            '/admin/songs/1011054',
             json={'tonality': 'A', 'album': '新專輯'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -384,7 +367,7 @@ class TestUpdateSong:
     ):
         """
         GIVEN a normal user is authenticated
-        WHEN PUT /api/admin/songs/{sid} is requested
+        WHEN PUT /admin/songs/{sid} is requested
         THEN it returns 403
         """
         # Arrange
@@ -392,7 +375,7 @@ class TestUpdateSong:
 
         # Act
         response = await client.put(
-            '/api/admin/songs/1011054',
+            '/admin/songs/1011054',
             json={'tonality': 'A'},
             headers={'Authorization': f'Bearer {token}'},
         )
@@ -401,7 +384,7 @@ class TestUpdateSong:
         assert response.status_code == 403
 
 
-# ── DELETE /api/admin/songs/{sid} ─────────────────────
+# ── DELETE /admin/songs/{sid} ─────────────────────
 
 
 class TestDeleteSong:
@@ -414,7 +397,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN a song exists and a manager is authenticated
-        WHEN DELETE /api/admin/songs/{sid} is requested
+        WHEN DELETE /admin/songs/{sid} is requested
         THEN the song is deleted and 204 No Content is returned
         """
         # Arrange
@@ -423,7 +406,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/api/admin/songs/1011054',
+            '/admin/songs/1011054',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -439,7 +422,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN no song with the given SID exists
-        WHEN DELETE /api/admin/songs/{sid} is requested by a manager
+        WHEN DELETE /admin/songs/{sid} is requested by a manager
         THEN it returns 404
         """
         # Arrange
@@ -447,7 +430,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/api/admin/songs/9999999',
+            '/admin/songs/9999999',
             headers={'Authorization': f'Bearer {token}'},
         )
 
@@ -463,7 +446,7 @@ class TestDeleteSong:
     ):
         """
         GIVEN a normal user is authenticated
-        WHEN DELETE /api/admin/songs/{sid} is requested
+        WHEN DELETE /admin/songs/{sid} is requested
         THEN it returns 403
         """
         # Arrange
@@ -471,7 +454,7 @@ class TestDeleteSong:
 
         # Act
         response = await client.delete(
-            '/api/admin/songs/1011054',
+            '/admin/songs/1011054',
             headers={'Authorization': f'Bearer {token}'},
         )
 

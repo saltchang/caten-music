@@ -2,11 +2,19 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.api.dependencies import get_current_admin, get_current_manager, get_song_service, get_user_service
+from app.api.dependencies import (
+    get_current_admin,
+    get_current_manager,
+    get_report_service,
+    get_song_service,
+    get_user_service,
+)
+from app.api.schemas.report import ReportResponse
 from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.api.schemas.user import UserResponse, UserUpdateRequest
 from app.core.entities.user import User
 from app.core.exceptions import InvalidInputError, UserNotFoundError
+from app.service.report_service import ReportService
 from app.service.song_service import SongService
 from app.service.user_service import UserService
 
@@ -43,6 +51,15 @@ async def update_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found') from None
     except InvalidInputError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from None
+
+
+@router.get('/reports', response_model=list[ReportResponse])
+async def list_reports(
+    _admin: Annotated[User, Depends(get_current_admin)],
+    report_service: Annotated[ReportService, Depends(get_report_service)],
+):
+    reports = await report_service.list_reports()
+    return [ReportResponse.from_entity(r) for r in reports]
 
 
 @router.post('/songs', response_model=SongResponse, status_code=status.HTTP_201_CREATED)

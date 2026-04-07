@@ -14,8 +14,8 @@ async def test_generate_invitation_code(
 ):
     """
     GIVEN an admin manager user
-    WHEN requesting POST /api/invitation/codes
-    THEN it should return 200 with a generated 12-character invitation code and expiry
+    WHEN requesting POST /invitation/codes
+    THEN it should return 201 with a generated 12-character invitation code and expiry
     """
     # Arrange
     token, _admin = await get_auth_token(
@@ -30,12 +30,12 @@ async def test_generate_invitation_code(
 
     # Act
     response = await client.post(
-        '/api/invitation/codes',
+        '/invitation/codes',
         headers={'Authorization': f'Bearer {token}'},
     )
 
     # Assert
-    assert response.status_code == 200
+    assert response.status_code == 201
     data = response.json()
     assert 'code' in data
     assert 'expires_at' in data
@@ -49,14 +49,14 @@ async def test_validate_invitation_code(
 ):
     """
     GIVEN a valid invitation code exists
-    WHEN validating the code via GET /api/invitation/validate/{code}
+    WHEN validating the code via GET /invitation/validate/{code}
     THEN it should return 200 with a validity message
     """
     # Arrange
     invitation = await create_test_invitation_code(api_session)
 
     # Act
-    response = await client.get(f'/api/invitation/validate/{invitation.code}')
+    response = await client.get(f'/invitation/validate/{invitation.code}')
 
     # Assert
     assert response.status_code == 200
@@ -88,7 +88,7 @@ async def test_toggle_invitation_code(
 
     # Act
     response = await client.patch(
-        f'/api/invitation/codes/{invitation.id}',
+        f'/invitation/codes/{invitation.id}',
         json={'is_disabled': True},
         headers={'Authorization': f'Bearer {token}'},
     )

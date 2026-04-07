@@ -43,68 +43,77 @@ def _make_version(
     )
 
 
-class TestSearch:
-    async def test_search_by_title(self, service, song_repo):
+class TestListSongs:
+    async def test_list_by_title(self, service, song_repo):
         """
         GIVEN the repository returns one song matching the title
-        WHEN search is called with mode='title'
-        THEN the repository search is called with title parameter
+        WHEN list_songs is called with title filter
+        THEN the repository search is called with all parameters
         """
         # Arrange
         song_repo.search.return_value = [_make_version()]
 
         # Act
-        result = await service.search(mode='title', query='獻上')
+        result = await service.list_songs(title='獻上')
 
         # Assert
-        song_repo.search.assert_called_once_with(title='獻上')
+        song_repo.search.assert_called_once_with(
+            title='獻上', lyrics='', lang='', collection='', tonality='', limit=50, offset=0
+        )
         assert len(result) == 1
 
-    async def test_search_by_lyric(self, service, song_repo):
+    async def test_list_by_lyrics(self, service, song_repo):
         """
         GIVEN the repository returns one song matching the lyrics
-        WHEN search is called with mode='lyric'
+        WHEN list_songs is called with lyrics filter
         THEN the repository search is called with lyrics parameter
         """
         # Arrange
         song_repo.search.return_value = [_make_version()]
 
         # Act
-        result = await service.search(mode='lyric', query='渴望')
+        result = await service.list_songs(lyrics='渴望')
 
         # Assert
-        song_repo.search.assert_called_once_with(lyrics='渴望')
+        song_repo.search.assert_called_once_with(
+            title='', lyrics='渴望', lang='', collection='', tonality='', limit=50, offset=0
+        )
         assert len(result) == 1
 
-    async def test_search_invalid_mode(self, service, song_repo):
+    async def test_list_with_combined_filters(self, service, song_repo):
         """
-        GIVEN an unsupported search mode
-        WHEN search is called
-        THEN an empty list is returned without calling the repository
-        """
-        # Arrange & Act
-        result = await service.search(mode='invalid', query='test')
-
-        # Assert
-        assert result == []
-        song_repo.search.assert_not_called()
-
-
-class TestBrowse:
-    async def test_browse_with_filters(self, service, song_repo):
-        """
-        GIVEN the repository returns songs matching the browse filters
-        WHEN browse is called with lang, collection, and tonality
+        GIVEN the repository returns songs matching combined filters
+        WHEN list_songs is called with lang, collection, and tonality
         THEN the repository search is called with all filters
         """
         # Arrange
         song_repo.search.return_value = [_make_version()]
 
         # Act
-        result = await service.browse(lang='Chinese', collection='11', tonality='G')
+        result = await service.list_songs(lang='Chinese', collection='11', tonality='G')
 
         # Assert
-        song_repo.search.assert_called_once_with(lang='Chinese', collection='11', tonality='G')
+        song_repo.search.assert_called_once_with(
+            title='', lyrics='', lang='Chinese', collection='11', tonality='G', limit=50, offset=0
+        )
+        assert len(result) == 1
+
+    async def test_list_with_pagination(self, service, song_repo):
+        """
+        GIVEN pagination parameters are provided
+        WHEN list_songs is called with limit and offset
+        THEN the repository search is called with pagination
+        """
+        # Arrange
+        song_repo.search.return_value = [_make_version()]
+
+        # Act
+        result = await service.list_songs(title='test', limit=10, offset=20)
+
+        # Assert
+        song_repo.search.assert_called_once_with(
+            title='test', lyrics='', lang='', collection='', tonality='', limit=10, offset=20
+        )
         assert len(result) == 1
 
 

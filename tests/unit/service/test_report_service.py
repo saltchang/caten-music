@@ -42,6 +42,29 @@ class TestCreateReport:
         assert result.description == 'Wrong lyrics in verse 2'
         report_repo.create.assert_called_once()
 
+
+class TestListReports:
+    async def test_list_reports(self, service, report_repo):
+        """
+        GIVEN two reports exist
+        WHEN list_reports is called
+        THEN all reports are returned
+        """
+        # Arrange
+        report_repo.list_all.return_value = [
+            SongReport(id=1, description='Wrong lyrics', song_sid='1011054', user_id=1),
+            SongReport(id=2, description='Broken audio', song_sid='1010066', user_id=2),
+        ]
+
+        # Act
+        result = await service.list_reports()
+
+        # Assert
+        assert len(result) == 2
+        report_repo.list_all.assert_called_once()
+
+
+class TestCreateReportValidation:
     async def test_create_report_too_short(self, service):
         """
         GIVEN a description that is too short

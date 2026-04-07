@@ -20,26 +20,27 @@ async def get_random_songs(
     return [SongResponse.from_entity(v) for v in versions]
 
 
-@router.get('/search', response_model=list[SongResponse])
-async def search_songs(
+@router.get('', response_model=list[SongResponse])
+async def list_songs(
     song_service: Annotated[SongService, Depends(get_song_service)],
     _user: Annotated[User, Depends(get_current_active_user)],
-    mode: str = Query(...),
-    q: str = Query(...),
-) -> list[SongResponse]:
-    versions = await song_service.search(mode, q)
-    return [SongResponse.from_entity(v) for v in versions]
-
-
-@router.get('/browse', response_model=list[SongResponse])
-async def browse_songs(
-    song_service: Annotated[SongService, Depends(get_song_service)],
-    _user: Annotated[User, Depends(get_current_active_user)],
+    title: str = Query(default=''),
+    lyrics: str = Query(default=''),
     lang: str = Query(default=''),
     collection: str = Query(default=''),
     tonality: str = Query(default=''),
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
 ) -> list[SongResponse]:
-    versions = await song_service.browse(lang=lang, collection=collection, tonality=tonality)
+    versions = await song_service.list_songs(
+        title=title,
+        lyrics=lyrics,
+        lang=lang,
+        collection=collection,
+        tonality=tonality,
+        limit=limit,
+        offset=offset,
+    )
     return [SongResponse.from_entity(v) for v in versions]
 
 

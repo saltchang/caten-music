@@ -17,7 +17,7 @@ async def test_register_success(client: AsyncClient, api_session: AsyncSession, 
 
     # Act
     response = await client.post(
-        '/api/auth/register',
+        '/auth/register',
         json={
             'username': 'newuser',
             'email': 'newuser@example.com',
@@ -48,7 +48,7 @@ async def test_register_duplicate_username(
 
     # Act
     response = await client.post(
-        '/api/auth/register',
+        '/auth/register',
         json={
             'username': 'existinguser',
             'email': 'another@example.com',
@@ -83,7 +83,7 @@ async def test_login_success(client: AsyncClient, api_session: AsyncSession, pas
 
     # Act
     response = await client.post(
-        '/api/auth/login',
+        '/auth/login',
         json={
             'primary': 'loginuser',
             'password': 'Test1234!',
@@ -117,7 +117,7 @@ async def test_login_wrong_password(
 
     # Act
     response = await client.post(
-        '/api/auth/login',
+        '/auth/login',
         json={
             'primary': 'loginuser2',
             'password': 'WrongPass1!',
@@ -151,7 +151,7 @@ async def test_activate_account(
 
     # Act
     response = await client.post(
-        '/api/auth/activate',
+        '/auth/activate',
         json={'token': activation_token},
     )
 
@@ -182,7 +182,7 @@ async def test_refresh_token(
 
     # Act
     response = await client.post(
-        '/api/auth/refresh',
+        '/auth/refresh',
         json={'refresh_token': refresh_tok},
     )
 
@@ -211,7 +211,7 @@ async def test_check_availability(
 
     # Act
     response = await client.post(
-        '/api/auth/check-availability',
+        '/auth/check-availability',
         json={'username': 'takenuser', 'email': 'free@example.com'},
     )
 

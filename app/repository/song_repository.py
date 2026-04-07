@@ -72,8 +72,10 @@ class SqlAlchemySongRepository:
         lang: str = '',
         collection: str = '',
         tonality: str = '',
+        limit: int = 50,
+        offset: int = 0,
     ) -> list[MusicVersion]:
-        """Search versions by various criteria.
+        """Search versions by various criteria with pagination.
 
         Args:
             title: Partial title match (case-insensitive).
@@ -81,6 +83,8 @@ class SqlAlchemySongRepository:
             lang: Exact language filter.
             collection: Exact num_c filter.
             tonality: Exact tonality filter.
+            limit: Maximum number of results to return.
+            offset: Number of results to skip.
 
         Returns:
             List of matching MusicVersion entities.
@@ -97,6 +101,8 @@ class SqlAlchemySongRepository:
             stmt = stmt.where(MusicVersionModel.num_c == collection)
         if tonality:
             stmt = stmt.where(MusicVersionModel.tonality == tonality)
+
+        stmt = stmt.offset(offset).limit(limit)
 
         result = await self._session.execute(stmt)
         return [self._to_entity(m) for m in result.scalars().all()]
