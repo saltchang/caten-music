@@ -84,8 +84,8 @@ All routes are mounted directly (no `/api` prefix).
 | PATCH | `/users/{id}` | admin | Partial update user role/displayname |
 | GET | `/reports` | admin | List all reports |
 | POST | `/reports` | active user | Submit song report → 201 |
-| GET | `/files/ppt/{sid}` | active user | Download PPT file |
-| GET | `/files/sheet/{sid}` | active user | Download sheet file |
+| GET | `/songs/{sid}/files/ppt` | active user | Download PPT file (redirect) |
+| GET | `/songs/{sid}/files/sheet` | active user | Download sheet file (redirect) |
 | POST | `/invitation/codes` | manager | Generate invitation code → 201 |
 | PATCH | `/invitation/codes/{id}` | admin | Update invitation code status, returns updated resource |
 | GET | `/invitation/codes` | manager | List invitation codes |

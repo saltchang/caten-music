@@ -1,11 +1,18 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi.responses import RedirectResponse
 
-from app.api.dependencies import get_current_active_user, get_current_manager, get_song_service
+from app.api.dependencies import (
+    get_current_active_user,
+    get_current_manager,
+    get_file_download_service,
+    get_song_service,
+)
 from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.core.entities.user import User
 from app.core.enums import Language, Tonality
+from app.service.file_service import FileService
 from app.service.song_service import SongService
 
 router = APIRouter(prefix='/songs', tags=['songs'])
@@ -90,3 +97,27 @@ async def delete_song(
     success = await song_service.delete_song(sid)
     if not success:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
+
+
+@router.get('/{sid}/files/ppt')
+async def get_ppt(
+    sid: str,
+    _user: Annotated[User, Depends(get_current_active_user)],
+    file_service: Annotated[FileService, Depends(get_file_download_service)],
+):
+    url = await file_service.get_ppt_url(sid)
+    if url is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='PPT file not found')
+    return RedirectResponse(url=url)
+
+
+@router.get('/{sid}/files/sheet')
+async def get_sheet(
+    sid: str,
+    _user: Annotated[User, Depends(get_current_active_user)],
+    file_service: Annotated[FileService, Depends(get_file_download_service)],
+):
+    url = await file_service.get_sheet_url(sid)
+    if url is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Sheet file not found')
+    return RedirectResponse(url=url)

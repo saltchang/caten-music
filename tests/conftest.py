@@ -1,10 +1,10 @@
 from collections.abc import AsyncGenerator
 from datetime import datetime, timedelta
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from app import create_app
-from app.api.dependencies import get_db_session, get_mail_service, get_settings
+from app.api.dependencies import get_db_session, get_file_download_service, get_mail_service, get_settings
 from app.config.settings import Settings
 from app.core.entities.invitation_code import InvitationCode
 from app.core.entities.user import User
@@ -85,7 +85,19 @@ async def api_session(_shared_db: async_sessionmaker[AsyncSession]) -> AsyncGene
 
 
 @pytest.fixture
-async def client(_shared_db: async_sessionmaker[AsyncSession], settings: Settings) -> AsyncGenerator[AsyncClient]:
+def mock_file_service() -> MagicMock:
+    mock = MagicMock()
+    mock.get_ppt_url = AsyncMock(return_value=None)
+    mock.get_sheet_url = AsyncMock(return_value=None)
+    return mock
+
+
+@pytest.fixture
+async def client(
+    _shared_db: async_sessionmaker[AsyncSession],
+    settings: Settings,
+    mock_file_service: MagicMock,
+) -> AsyncGenerator[AsyncClient]:
     mock_mail_service = MagicMock()
 
     async def override_get_db_session():
@@ -96,6 +108,7 @@ async def client(_shared_db: async_sessionmaker[AsyncSession], settings: Setting
     app.dependency_overrides[get_settings] = lambda: settings
     app.dependency_overrides[get_db_session] = override_get_db_session
     app.dependency_overrides[get_mail_service] = lambda: mock_mail_service
+    app.dependency_overrides[get_file_download_service] = lambda: mock_file_service
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url='http://test') as ac:
