@@ -185,29 +185,22 @@ class TestGetRandom:
 class TestCreateSong:
     async def test_create_song(self, service, song_repo):
         """
-        GIVEN valid song data
+        GIVEN a valid MusicVersion and MusicWork entity
         WHEN create_song is called
-        THEN a new version is created with associated work and the SID is returned
+        THEN the repository create is called and the created entity is returned
         """
         # Arrange
         created = _make_version(sid='9990001')
         song_repo.create.return_value = created
-
-        data = {
-            'sid': '9990001',
-            'title': '新歌',
-            'num_c': '99',
-            'num_i': '1',
-            'composer': 'Test',
-            'lyricist': 'Test',
-        }
+        version = MusicVersion(id=0, work_id=0, sid='9990001', num_c='99', num_i='1', title='新歌')
+        work = MusicWork(id=0, title_original='新歌', composer='Test', lyricist='Test')
 
         # Act
-        new_sid = await service.create_song(data)
+        result = await service.create_song(version, work)
 
         # Assert
-        assert new_sid == '9990001'
-        song_repo.create.assert_called_once()
+        assert result.sid == '9990001'
+        song_repo.create.assert_called_once_with(version, work)
 
 
 class TestDeleteSong:
@@ -247,33 +240,35 @@ class TestUpdateSong:
     async def test_update_song(self, service, song_repo):
         """
         GIVEN a song with the given SID exists
-        WHEN update_song is called with modified fields
-        THEN the repository update is called and True is returned
+        WHEN update_song is called with a MusicVersion carrying updated fields
+        THEN the repository update is called and the updated entity is returned
         """
         # Arrange
         existing = _make_version()
         song_repo.get_by_sid.return_value = existing
         song_repo.update.return_value = existing
+        update_version = MusicVersion(id=0, work_id=0, sid='', tonality='A', album='新專輯')
 
         # Act
-        result = await service.update_song('1011054', {'tonality': 'A', 'album': '新專輯'})
+        result = await service.update_song('1011054', update_version)
 
         # Assert
-        assert result is True
+        assert result is not None
         song_repo.update.assert_called_once()
 
     async def test_update_nonexistent_song(self, service, song_repo):
         """
         GIVEN no song with the given SID exists
         WHEN update_song is called
-        THEN False is returned
+        THEN None is returned
         """
         # Arrange
         song_repo.get_by_sid.return_value = None
+        update_version = MusicVersion(id=0, work_id=0, sid='', tonality='A')
 
         # Act
-        result = await service.update_song('9999999', {'tonality': 'A'})
+        result = await service.update_song('9999999', update_version)
 
         # Assert
-        assert result is False
+        assert result is None
         song_repo.update.assert_not_called()

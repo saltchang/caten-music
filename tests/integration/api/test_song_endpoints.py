@@ -310,9 +310,11 @@ class TestCreateSong:
         )
 
         # Assert
-        assert response.status_code == 200
+        assert response.status_code == 201
         data = response.json()
-        assert data['NewSID'] == '9990001'
+        assert data['sid'] == '9990001'
+        assert data['title'] == '新歌'
+        assert data['composer'] == 'Test Composer'
 
     async def test_create_song_requires_manager(
         self,
@@ -354,7 +356,7 @@ class TestUpdateSong:
         """
         GIVEN a song exists and a manager is authenticated
         WHEN PUT /api/admin/songs/{sid} is requested with updated fields
-        THEN the song is updated and success is returned
+        THEN the song is updated and the updated resource is returned
         """
         # Arrange
         await _seed_song(api_session)
@@ -370,7 +372,9 @@ class TestUpdateSong:
         # Assert
         assert response.status_code == 200
         data = response.json()
-        assert data['success'] is True
+        assert data['sid'] == '1011054'
+        assert data['tonality'] == 'A'
+        assert data['album'] == '新專輯'
 
     async def test_update_song_requires_manager(
         self,
@@ -412,7 +416,7 @@ class TestDeleteSong:
         """
         GIVEN a song exists and a manager is authenticated
         WHEN DELETE /api/admin/songs/{sid} is requested
-        THEN the song is deleted and success is returned
+        THEN the song is deleted and 204 No Content is returned
         """
         # Arrange
         await _seed_song(api_session)
@@ -425,9 +429,7 @@ class TestDeleteSong:
         )
 
         # Assert
-        assert response.status_code == 200
-        data = response.json()
-        assert data['success'] is True
+        assert response.status_code == 204
 
     async def test_delete_nonexistent_song(
         self,

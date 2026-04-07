@@ -1,5 +1,3 @@
-from typing import Any
-
 from app.core.entities.music_version import MusicVersion
 from app.core.entities.music_work import MusicWork
 from app.core.interfaces.song_repository import SongRepository
@@ -85,43 +83,17 @@ class SongService:
         """
         return await self._song_repo.get_random(amount)
 
-    async def create_song(self, data: dict[str, Any]) -> str:
-        """Create a new song from raw data.
+    async def create_song(self, version: MusicVersion, work: MusicWork) -> MusicVersion:
+        """Create a new song.
 
         Args:
-            data: Song data dictionary (matching the legacy API format).
+            version: MusicVersion entity to create (id=0).
+            work: MusicWork entity for find-or-create.
 
         Returns:
-            The SID of the newly created song.
+            The persisted MusicVersion with generated id and work populated.
         """
-        work = MusicWork(
-            id=0,
-            title_original=data.get('title', ''),
-            composer=data.get('composer') or None,
-            lyricist=data.get('lyricist') or None,
-            scripture=data.get('scripture') or None,
-        )
-        version = MusicVersion(
-            id=0,
-            work_id=0,
-            sid=data.get('sid', ''),
-            num_c=data.get('num_c', ''),
-            num_i=data.get('num_i', ''),
-            title=data.get('title', ''),
-            language=data.get('language') or None,
-            artist=data.get('artist') or None,
-            translator=data.get('translator') or None,
-            album=data.get('album') or None,
-            tonality=data.get('tonality') or None,
-            year=data.get('year') or None,
-            lyrics=data.get('lyrics') or [],
-            tempo=data.get('tempo') or None,
-            time_signature=data.get('time_signature') or None,
-            publisher=data.get('publisher') or None,
-            publisher_original=data.get('publisher_original') or None,
-        )
-        created = await self._song_repo.create(version, work)
-        return created.sid
+        return await self._song_repo.create(version, work)
 
     async def delete_song(self, sid: str) -> bool:
         """Delete a song by its SID.
@@ -134,23 +106,35 @@ class SongService:
         """
         return await self._song_repo.delete(sid)
 
-    async def update_song(self, sid: str, data: dict[str, Any]) -> bool:
+    async def update_song(self, sid: str, version: MusicVersion) -> MusicVersion | None:
         """Update an existing song.
 
         Args:
             sid: SID of the song to update.
-            data: Dictionary of fields to update.
+            version: MusicVersion entity with updated fields to apply.
 
         Returns:
-            True if the song was found and updated, False otherwise.
+            The updated MusicVersion entity, or None if not found.
         """
         existing = await self._song_repo.get_by_sid(sid)
         if existing is None:
-            return False
+            return None
 
-        for key, value in data.items():
-            if hasattr(existing, key) and key not in ('id', 'work_id', 'sid'):
-                setattr(existing, key, value)
+        existing.title = version.title if version.title else existing.title
+        existing.language = version.language if version.language is not None else existing.language
+        existing.artist = version.artist if version.artist is not None else existing.artist
+        existing.translator = version.translator if version.translator is not None else existing.translator
+        existing.album = version.album if version.album is not None else existing.album
+        existing.tonality = version.tonality if version.tonality is not None else existing.tonality
+        existing.year = version.year if version.year is not None else existing.year
+        existing.lyrics = version.lyrics if version.lyrics else existing.lyrics
+        existing.tempo = version.tempo if version.tempo is not None else existing.tempo
+        existing.time_signature = (
+            version.time_signature if version.time_signature is not None else existing.time_signature
+        )
+        existing.publisher = version.publisher if version.publisher is not None else existing.publisher
+        existing.publisher_original = (
+            version.publisher_original if version.publisher_original is not None else existing.publisher_original
+        )
 
-        await self._song_repo.update(existing)
-        return True
+        return await self._song_repo.update(existing)

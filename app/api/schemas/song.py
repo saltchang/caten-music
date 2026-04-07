@@ -1,6 +1,118 @@
 from pydantic import BaseModel
 
 from app.core.entities.music_version import MusicVersion
+from app.core.entities.music_work import MusicWork
+
+
+class SongCreateRequest(BaseModel):
+    """Request body for creating a new song.
+
+    Flat format combining MusicWork and MusicVersion fields,
+    matching the API consumer's perspective.
+    """
+
+    sid: str
+    num_c: str
+    num_i: str
+    title: str
+    language: str | None = None
+    artist: str | None = None
+    translator: str | None = None
+    album: str | None = None
+    tonality: str | None = None
+    year: str | None = None
+    lyrics: list[str] = []
+    tempo: str | None = None
+    time_signature: str | None = None
+    publisher: str | None = None
+    publisher_original: str | None = None
+    composer: str | None = None
+    lyricist: str | None = None
+    scripture: str | None = None
+
+    def to_version_entity(self) -> MusicVersion:
+        """Map request fields to a MusicVersion entity (id=0, work_id=0).
+
+        Returns:
+            A new MusicVersion entity ready for creation.
+        """
+        return MusicVersion(
+            id=0,
+            work_id=0,
+            sid=self.sid,
+            num_c=self.num_c,
+            num_i=self.num_i,
+            title=self.title,
+            language=self.language,
+            artist=self.artist,
+            translator=self.translator,
+            album=self.album,
+            tonality=self.tonality,
+            year=self.year,
+            lyrics=self.lyrics,
+            tempo=self.tempo,
+            time_signature=self.time_signature,
+            publisher=self.publisher,
+            publisher_original=self.publisher_original,
+        )
+
+    def to_work_entity(self) -> MusicWork:
+        """Map request fields to a MusicWork entity (id=0).
+
+        Returns:
+            A new MusicWork entity for find-or-create.
+        """
+        return MusicWork(
+            id=0,
+            title_original=self.title,
+            composer=self.composer,
+            lyricist=self.lyricist,
+            scripture=self.scripture,
+        )
+
+
+class SongUpdateRequest(BaseModel):
+    """Request body for updating an existing song.
+
+    All fields are optional — only provided fields are applied.
+    """
+
+    title: str | None = None
+    language: str | None = None
+    artist: str | None = None
+    translator: str | None = None
+    album: str | None = None
+    tonality: str | None = None
+    year: str | None = None
+    lyrics: list[str] | None = None
+    tempo: str | None = None
+    time_signature: str | None = None
+    publisher: str | None = None
+    publisher_original: str | None = None
+
+    def to_version_entity(self) -> MusicVersion:
+        """Map update fields to a MusicVersion entity for partial update.
+
+        Returns:
+            A MusicVersion with only the provided fields set.
+        """
+        return MusicVersion(
+            id=0,
+            work_id=0,
+            sid='',
+            title=self.title or '',
+            language=self.language,
+            artist=self.artist,
+            translator=self.translator,
+            album=self.album,
+            tonality=self.tonality,
+            year=self.year,
+            lyrics=self.lyrics or [],
+            tempo=self.tempo,
+            time_signature=self.time_signature,
+            publisher=self.publisher,
+            publisher_original=self.publisher_original,
+        )
 
 
 class SongResponse(BaseModel):

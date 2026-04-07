@@ -1,8 +1,9 @@
-from typing import Annotated, Any
+from typing import Annotated
 
-from fastapi import APIRouter, Body, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.dependencies import get_current_admin, get_current_manager, get_song_service, get_user_service
+from app.api.schemas.song import SongCreateRequest, SongResponse, SongUpdateRequest
 from app.api.schemas.user import UserResponse, UserUpdateRequest
 from app.core.entities.user import User
 from app.core.exceptions import InvalidInputError, UserNotFoundError
@@ -44,37 +45,39 @@ async def update_user(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from None
 
 
-@router.post('/songs')
+@router.post('/songs', response_model=SongResponse, status_code=status.HTTP_201_CREATED)
 async def create_song(
+    request: SongCreateRequest,
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
-    data: Annotated[dict[str, Any], Body()],
-) -> dict[str, Any]:
-    new_sid = await song_service.create_song(data)
-    return {'NewSID': new_sid}
+) -> SongResponse:
+    created = await song_service.create_song(request.to_version_entity(), request.to_work_entity())
+    return SongResponse.from_entity(created)
 
 
-@router.put('/songs/{sid}')
+@router.put('/songs/{sid}', response_model=SongResponse)
 async def update_song(
     sid: str,
+    request: SongUpdateRequest,
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
-    data: Annotated[dict[str, Any], Body()],
-) -> dict[str, Any]:
-    success = await song_service.update_song(sid, data)
-    return {'success': success}
+) -> SongResponse:
+    version = request.to_version_entity()
+    updated = await song_service.update_song(sid, version)
+    if updated is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
+    return SongResponse.from_entity(updated)
 
 
-@router.delete('/songs/{sid}')
+@router.delete('/songs/{sid}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_song(
     sid: str,
     _manager: Annotated[User, Depends(get_current_manager)],
     song_service: Annotated[SongService, Depends(get_song_service)],
-) -> dict[str, Any]:
+) -> None:
     success = await song_service.delete_song(sid)
     if not success:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Song not found')
-    return {'success': True}
 
 
 def _user_to_response(user: User) -> UserResponse:
