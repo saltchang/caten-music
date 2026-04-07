@@ -1,13 +1,13 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 
 from app.api.dependencies import get_auth_service
 from app.api.schemas.auth import (
     ActivateRequest,
     CheckAvailabilityRequest,
     CheckAvailabilityResponse,
-    LoginRequest,
     PasswordResetConfirm,
     PasswordResetRequest,
     RefreshTokenRequest,
@@ -35,11 +35,11 @@ router = APIRouter(prefix='/auth', tags=['auth'])
 
 @router.post('/login', response_model=TokenResponse)
 async def login(
-    request: LoginRequest,
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
 ):
     try:
-        result = await auth_service.login(request.primary, request.password)
+        result = await auth_service.login(form_data.username, form_data.password)
         return TokenResponse(**result)
     except InvalidCredentialsError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials') from None

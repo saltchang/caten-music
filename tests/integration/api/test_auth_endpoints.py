@@ -67,7 +67,7 @@ async def test_register_duplicate_username(
 async def test_login_success(client: AsyncClient, api_session: AsyncSession, password_hasher: Sha256PasswordHasher):
     """
     GIVEN an active, authenticated user exists
-    WHEN logging in with correct credentials
+    WHEN logging in with correct credentials via form data
     THEN it should return 200 with access and refresh tokens
     """
     # Arrange
@@ -84,8 +84,8 @@ async def test_login_success(client: AsyncClient, api_session: AsyncSession, pas
     # Act
     response = await client.post(
         '/auth/login',
-        json={
-            'primary': 'loginuser',
+        data={
+            'username': 'loginuser',
             'password': 'Test1234!',
         },
     )
@@ -103,7 +103,7 @@ async def test_login_wrong_password(
 ):
     """
     GIVEN a user exists with a known password
-    WHEN logging in with the wrong password
+    WHEN logging in with the wrong password via form data
     THEN it should return 401 Unauthorized
     """
     # Arrange
@@ -118,8 +118,8 @@ async def test_login_wrong_password(
     # Act
     response = await client.post(
         '/auth/login',
-        json={
-            'primary': 'loginuser2',
+        data={
+            'username': 'loginuser2',
             'password': 'WrongPass1!',
         },
     )
