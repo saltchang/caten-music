@@ -64,8 +64,9 @@ function get_ajax_validate_login(primary, password, primary_type) {
         type: "POST",
         async: true,
         dataType: "json",
-        url: "ajax/validate/login/" + primary_type + "/" + primary + "/" + password,
+        url: "/ajax/validate/login",
         contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({ primary_type: primary_type, primary: primary, password: password }),
         success: function (msg) {
             login_pass = msg.login_pass
             if (!login_pass) {

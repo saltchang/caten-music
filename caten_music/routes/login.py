@@ -76,13 +76,17 @@ def login():
 
 
 # 前端 ajax 驗證即將登入的表單資料是否通過登入驗證
-@ajax_validate_login_bp.route('/ajax/validate/login/<primary_type_>/<primary_>/<password_>', methods=['POST'])
-def ajax_validate_login(primary_type_, primary_, password_):
+# 密碼放在 body 而非 URL，避免出現在 access log
+@ajax_validate_login_bp.route('/ajax/validate/login', methods=['POST'])
+def ajax_validate_login():
+    data = request.get_json(silent=True) or {}
     # 預設為不通過
     result = {'login_pass': False}
 
     # 如果通過
-    if helper.checkLogin(primary_type=primary_type_, primary=primary_, password=password_):
+    if helper.checkLogin(
+        primary_type=data.get('primary_type'), primary=data.get('primary'), password=data.get('password')
+    ):
         result['login_pass'] = True
 
     # 回傳 json

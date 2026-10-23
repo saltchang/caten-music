@@ -6,6 +6,10 @@ from caten_music import models
 
 
 def checkLogin(primary_type, primary, password):
+    user_to_check = None
+    if not isinstance(password, str):
+        return False
+
     if primary_type == 'email':
         user_to_check = models.UserModel.query.filter_by(email=primary).first()
 
