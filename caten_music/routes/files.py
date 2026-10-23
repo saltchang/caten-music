@@ -4,7 +4,7 @@
 from flask import Blueprint, flash, redirect, request
 from flask_login import current_user, login_required
 
-from caten_music import models
+from caten_music import helper, models
 
 download_ppt_bp = Blueprint('download_ppt_bp', __name__, template_folder='templates')
 
@@ -34,7 +34,7 @@ def download_ppt(sid):
 
     except Exception:
         flash('很抱歉，這首歌目前沒有投影片。', 'warning')
-        return redirect(return_url)
+        return redirect(return_url if return_url and helper.is_safe_url(return_url) else '/')
 
 
 @download_sheet_bp.route('/download/sheet/<sid>')
@@ -53,4 +53,4 @@ def download_sheet(sid):
     except Exception as no_pdf_error:
         print(no_pdf_error)
         flash('很抱歉，這首歌目前沒有歌譜。', 'warning')
-        return redirect(return_url)
+        return redirect(return_url if return_url and helper.is_safe_url(return_url) else '/')

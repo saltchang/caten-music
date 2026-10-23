@@ -3,6 +3,8 @@
 from flask import Blueprint, flash, redirect, request
 from flask_login import current_user, login_required, logout_user
 
+from caten_music import helper
+
 logout_bp = Blueprint('logout_bp', __name__, template_folder='templates')
 
 
@@ -17,7 +19,7 @@ def logout():
 
         logout_user()
         flash('您已成功登出', 'primary')
-        return redirect(return_url), 302
+        return redirect(return_url if return_url and helper.is_safe_url(return_url) else '/'), 302
     except:
         flash('發生錯誤，請回報管理員', 'danger')
         return redirect('/'), 302
